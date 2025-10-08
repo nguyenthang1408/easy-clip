@@ -83,11 +83,11 @@ namespace ReviewMovie
                     if (checkver.IsNewerVersion(latestVersion, currentVersion))
                     {
                         DialogResult result = MessageBox.Show(
-                            $"Bạn đang sử dụng phiên bản {currentVersion}. Phiên bản mới nhất là {latestVersion}. Bạn có muốn cập nhật không?",
-                            "Cập nhật phiên bản",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Warning,
-                            MessageBoxDefaultButton.Button1);
+                           $"Bạn đang sử dụng phiên bản {currentVersion}. Phiên bản mới nhất là {latestVersion}. Bạn có muốn cập nhật không?",
+                           "Cập nhật phiên bản",
+                           MessageBoxButtons.YesNo,
+                           MessageBoxIcon.Warning,
+                           MessageBoxDefaultButton.Button1);
 
                         if (result == DialogResult.Yes)
                         {
@@ -103,6 +103,7 @@ namespace ReviewMovie
                     // Mở form chính và đóng form đăng nhập
                     this.Hide();
                     FormMain mainForm = new FormMain(txAppCodeShow.Text, txInsertApiKey.Text);
+
                     mainForm.ShowDialog();
                     // Sau khi đóng form chính, thoát ứng dụng
                     Application.Exit();
@@ -111,6 +112,7 @@ namespace ReviewMovie
                 {
                     lbstatus.Text = "API Key không hợp lệ, API cần được Kích Hoạt!";
                     lbstatus.ForeColor = Color.Red;
+                    //MessageBox.Show("API Key không hợp lệ, API cần được Kích Hoạt!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch
@@ -125,7 +127,6 @@ namespace ReviewMovie
                 btnLoginApiKey.Enabled = true;
             }
         }
-
         private void lkHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://www.facebook.com/La.studio.top");
