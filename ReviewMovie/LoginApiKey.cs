@@ -57,6 +57,9 @@ namespace ReviewMovie
 
         private async void btnLoginApiKey_Click(object sender, EventArgs e)
         {
+            // Disable nút để tránh click nhiều lần
+            btnLoginApiKey.Enabled = false;
+
             lbstatus.Text = string.Empty;
             lbstatus.ForeColor = Color.Black;
             // Kiểm tra API Key
@@ -64,6 +67,7 @@ namespace ReviewMovie
             if (string.IsNullOrEmpty(apiKey))
             {
                 MessageBox.Show("Vui lòng nhập API Key!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                btnLoginApiKey.Enabled = true; // Bật lại nút nếu lỗi
                 return;
             }
 
@@ -79,11 +83,11 @@ namespace ReviewMovie
                     if (checkver.IsNewerVersion(latestVersion, currentVersion))
                     {
                         DialogResult result = MessageBox.Show(
-                           $"Bạn đang sử dụng phiên bản {currentVersion}. Phiên bản mới nhất là {latestVersion}. Bạn có muốn cập nhật không?",
-                           "Cập nhật phiên bản",
-                           MessageBoxButtons.YesNo,
-                           MessageBoxIcon.Warning,
-                           MessageBoxDefaultButton.Button1);
+                            $"Bạn đang sử dụng phiên bản {currentVersion}. Phiên bản mới nhất là {latestVersion}. Bạn có muốn cập nhật không?",
+                            "Cập nhật phiên bản",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Warning,
+                            MessageBoxDefaultButton.Button1);
 
                         if (result == DialogResult.Yes)
                         {
@@ -100,7 +104,6 @@ namespace ReviewMovie
                     this.Hide();
                     FormMain mainForm = new FormMain(txAppCodeShow.Text, txInsertApiKey.Text);
                     mainForm.ShowDialog();
-
                     // Sau khi đóng form chính, thoát ứng dụng
                     Application.Exit();
                 }
@@ -108,7 +111,6 @@ namespace ReviewMovie
                 {
                     lbstatus.Text = "API Key không hợp lệ, API cần được Kích Hoạt!";
                     lbstatus.ForeColor = Color.Red;
-                    //MessageBox.Show("API Key không hợp lệ, API cần được Kích Hoạt!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch
@@ -117,7 +119,13 @@ namespace ReviewMovie
                 lbstatus.ForeColor = Color.Red;
                 //MessageBox.Show("Không Kết nối Được, API cần được Kích Hoạt!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                // Bật lại nút dù có lỗi hay không
+                btnLoginApiKey.Enabled = true;
+            }
         }
+
         private void lkHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://www.facebook.com/La.studio.top");
