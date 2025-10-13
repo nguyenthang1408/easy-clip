@@ -57,6 +57,9 @@ namespace ReviewMovie
 
         private async void btnLoginApiKey_Click(object sender, EventArgs e)
         {
+            // Disable nút để tránh click nhiều lần
+            btnLoginApiKey.Enabled = false;
+
             lbstatus.Text = string.Empty;
             lbstatus.ForeColor = Color.Black;
             // Kiểm tra API Key
@@ -64,6 +67,7 @@ namespace ReviewMovie
             if (string.IsNullOrEmpty(apiKey))
             {
                 MessageBox.Show("Vui lòng nhập API Key!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                btnLoginApiKey.Enabled = true; // Bật lại nút nếu lỗi
                 return;
             }
 
@@ -99,8 +103,8 @@ namespace ReviewMovie
                     // Mở form chính và đóng form đăng nhập
                     this.Hide();
                     FormMain mainForm = new FormMain(txAppCodeShow.Text, txInsertApiKey.Text);
-                    mainForm.ShowDialog();
 
+                    mainForm.ShowDialog();
                     // Sau khi đóng form chính, thoát ứng dụng
                     Application.Exit();
                 }
@@ -116,6 +120,11 @@ namespace ReviewMovie
                 lbstatus.Text = "Không Kết nối Được, API cần được Kích Hoạt!";
                 lbstatus.ForeColor = Color.Red;
                 //MessageBox.Show("Không Kết nối Được, API cần được Kích Hoạt!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Bật lại nút dù có lỗi hay không
+                btnLoginApiKey.Enabled = true;
             }
         }
         private void lkHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
