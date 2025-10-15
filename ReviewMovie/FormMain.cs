@@ -19,7 +19,6 @@ using ReviewMovie.Model;
 using ReviewMovie.Services;
 using SubtitlesParser;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
