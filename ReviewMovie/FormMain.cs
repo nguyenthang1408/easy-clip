@@ -232,6 +232,12 @@ namespace ReviewMovie
                 var subtitleValue = SubtitleReaderV2.ReadSubtitle(_infoProject.InforSubtitleFile.SubtitleFile);
                 _indexRowMax = subtitleValue.Count;
 
+                if(_indexRowMax == 0)
+                {
+                    MessageBox.Show("File SubTitle sai format hoặc đang không có dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }    
+
                 bool hasVideoZero = false;
                 string checkZeroFile = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, "0");
 
