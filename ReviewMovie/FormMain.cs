@@ -1868,7 +1868,7 @@ namespace ReviewMovie
                 if (fileNames?.Length > 0)
                 {
                     // Gọi background thread
-                     Task.Run(() =>
+                    Task.Run(() =>
                     {
                         try
                         {
@@ -2065,7 +2065,7 @@ namespace ReviewMovie
                     }
                 };
 
-                 if (CheckMedia.IsImageExtension(inputImagePath))
+                if (CheckMedia.IsImageExtension(inputImagePath))
                 {
                     using (var inputImage = Image.FromFile(checkwebp ? outputImagePath : inputImagePath))
                     {
