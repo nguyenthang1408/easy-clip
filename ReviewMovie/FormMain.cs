@@ -328,6 +328,7 @@ namespace ReviewMovie
                             txtTextInput.Text = string.Empty;
                             txtTextInput.ReadOnly = true;
                             txtImPortMedia.Text = string.Empty;
+                            _indexRowMax = 0;
                             return;
                         }
                         else
