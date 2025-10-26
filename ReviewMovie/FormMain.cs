@@ -60,6 +60,9 @@ namespace ReviewMovie
 
         const string ERR_PROJECT_EMPTY = "Nhập Đường Dẫn & Khởi Tạo Project !";
         const string ERR_ROW_INDEX = "Chọn 1 Row để nạp thông tin !";
+        private const string VALID_SUBTITLE_EXTENSION = ".srt";
+        private const string REGEX_VALID_LINE = @"^[a-zA-Z0-9\s,.\?!-]*$";
+        private static readonly Regex SubtitleLineRegex = new Regex(@"^[a-zA-Z0-9\s,.\?!-]*$", RegexOptions.Compiled);
 
         private ToolTip toolTipPL;
 
@@ -228,14 +231,25 @@ namespace ReviewMovie
                 _allInfoRender = new List<InfoRenderVd>();
 
                 token.ThrowIfCancellationRequested();
-
                 var subtitleValue = SubtitleReaderV2.ReadSubtitle(_infoProject.InforSubtitleFile.SubtitleFile);
                 _indexRowMax = subtitleValue.Count;
 
-                if(_indexRowMax == 0)
+                string filePathTtile = _infoProject.InforSubtitleFile.SubtitleFile;
+                if(_indexRowMax == 0 || !File.Exists(filePathTtile) || Path.GetExtension(filePathTtile).ToLower() != VALID_SUBTITLE_EXTENSION)
                 {
-                    MessageBox.Show("File SubTitle sai format hoặc đang không có dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    DialogResult result = MessageBox.Show("File SubTitle sai format.\nBạn có muốn xóa dữ liệu hiện tại và tiếp tục không?","Xác nhận",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+                    if (result == DialogResult.Yes)
+                    {
+                        // Thực hiện hành động xóa dữ liệu ở đây
+                        dgvMainView.DataSource = null;
+                        dgvMainView.DataSource = _listdata;
+                        dgvMainView.Refresh();
+                    }
+                    else
+                    {
+                        // Người dùng chọn No => không làm gì hoặc return
+                        return;
+                    }
                 }    
 
                 bool hasVideoZero = false;
@@ -267,6 +281,7 @@ namespace ReviewMovie
                     string filePath;
                     string subtitleText;
 
+
                     if (i == 0)
                     {
                         filePath = checkZeroFile;
@@ -293,6 +308,33 @@ namespace ReviewMovie
                         subtitleText = !string.IsNullOrEmpty(filePath) && CFuncion.CheckMediaType(filePath)
                                         ? string.Join(",", subtitleValue[subtitleIndex].InlineTextList)
                                         : string.Join(",", subtitleValue[subtitleIndex].InlineTextList);
+                    }
+
+                    if (!string.IsNullOrEmpty(subtitleText) && !SubtitleLineRegex.IsMatch(subtitleText))
+                    {
+                        DialogResult result = MessageBox.Show(
+                            $"Subtitle ở dòng {i + 1} chứa ký tự không hợp lệ:\n\"{subtitleText}\"\n\nBạn có muốn xóa dữ liệu hiện tại và tiếp tục không?",
+                            "Xác nhận",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Warning
+                        );
+
+                        if (result == DialogResult.Yes)
+                        {
+                            // Thực hiện hành động xóa dữ liệu ở đây
+                            dgvMainView.DataSource = null;
+                            dgvMainView.DataSource = _listdata;
+                            dgvMainView.Refresh();
+                            txtTextInput.Text = string.Empty;
+                            txtTextInput.ReadOnly = true;
+                            txtImPortMedia.Text = string.Empty;
+                            return;
+                        }
+                        else
+                        {
+                            // Người dùng chọn No => không làm gì hoặc return
+                            return;
+                        }
                     }
 
                     PrepareSubtitleData(i, subtitleText, filePath);
