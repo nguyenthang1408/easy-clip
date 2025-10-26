@@ -291,11 +291,21 @@ namespace ReviewMovie
 
                     if(string.IsNullOrEmpty(filePath))
                     {
-                        _listdata.Clear();
-                        dgvMainView.DataSource = null;
-                        dgvMainView.DataSource = _listdata;
-                        dgvMainView.Refresh();
-                        return;
+                        DialogResult result = MessageBox.Show("File Subtitle đang không có dữ liệu.\nBạn có muốn xóa dữ liệu hiện tại và tiếp tục không?","Xác nhận",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+                        if (result == DialogResult.Yes)
+                        {
+                            // Thực hiện hành động xóa dữ liệu ở đây
+                            _listdata.Clear();
+                            dgvMainView.DataSource = null;
+                            dgvMainView.DataSource = _listdata;
+                            dgvMainView.Refresh();
+                            return;
+                        }
+                        else
+                        {
+                            // Người dùng chọn No => không làm gì hoặc return
+                            return;
+                        }
                     }  
 
                     PrepareSubtitleData(i, subtitleText, filePath);
