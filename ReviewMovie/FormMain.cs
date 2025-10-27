@@ -2539,16 +2539,16 @@ namespace ReviewMovie
 
             try
             {
-                // Reset lại state trước khi tạo project mới
-                ResetProjectState();
-
-                _loadConfig.EnsureDirectory(projectPath);
-
                 if (_loadConfig.IsDuplicate(projectPath))
                 {
                     MessageBox.Show("Project đã tồn tại. Vui lòng chọn tên khác hoặc kiểm tra danh sách!");
                     return;
                 }
+
+                // Reset lại state trước khi tạo project mới
+                ResetProjectState();
+
+                _loadConfig.EnsureDirectory(projectPath);
 
                 var newProject = _loadConfig.CreateNewProject(projectPath, _manualSelected.ToString(), nbSpeechRatio.Value.ToString("0.0"), CkZoom.Checked);
                 _projectName = projectPath;
