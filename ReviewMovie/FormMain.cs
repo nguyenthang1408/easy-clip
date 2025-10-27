@@ -275,7 +275,7 @@ namespace ReviewMovie
                             filePath = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, "1");
                             subtitleText = (!string.IsNullOrEmpty(filePath) && CFuncion.CheckMediaType(filePath))
                                 ? string.Join(",", subtitleValue[0].InlineTextList)
-                                : string.Empty;
+                                : string.Join(",", subtitleValue[0].InlineTextList);
                         }
                     }
                     else
@@ -302,9 +302,7 @@ namespace ReviewMovie
                 dgvMainView.DataSource = _listdata;
                 dgvMainView.Refresh();
 
-                txtTextInput.Text = string.Empty;
                 txtTextInput.ReadOnly = true;
-                txtImPortMedia.Text = string.Empty;
 
                 if (_listdata.Count > 0)
                 {
