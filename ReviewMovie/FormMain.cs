@@ -275,7 +275,7 @@ namespace ReviewMovie
                             filePath = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, "1");
                             subtitleText = (!string.IsNullOrEmpty(filePath) && CFuncion.CheckMediaType(filePath))
                                 ? string.Join(",", subtitleValue[0].InlineTextList)
-                                : string.Empty;
+                                : string.Join(",", subtitleValue[0].InlineTextList);
                         }
                     }
                     else
@@ -321,9 +321,7 @@ namespace ReviewMovie
                 dgvMainView.DataSource = _listdata;
                 dgvMainView.Refresh();
 
-                txtTextInput.Text = string.Empty;
                 txtTextInput.ReadOnly = true;
-                txtImPortMedia.Text = string.Empty;
 
                 if (_listdata.Count > 0)
                 {
@@ -2560,16 +2558,16 @@ namespace ReviewMovie
 
             try
             {
-                // Reset lại state trước khi tạo project mới
-                ResetProjectState();
-
-                _loadConfig.EnsureDirectory(projectPath);
-
                 if (_loadConfig.IsDuplicate(projectPath))
                 {
                     MessageBox.Show("Project đã tồn tại. Vui lòng chọn tên khác hoặc kiểm tra danh sách!");
                     return;
                 }
+
+                // Reset lại state trước khi tạo project mới
+                ResetProjectState();
+
+                _loadConfig.EnsureDirectory(projectPath);
 
                 var newProject = _loadConfig.CreateNewProject(projectPath, _manualSelected.ToString(), nbSpeechRatio.Value.ToString("0.0"), CkZoom.Checked);
                 _projectName = projectPath;
