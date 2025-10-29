@@ -273,9 +273,13 @@ namespace ReviewMovie
                         {
                             // Sử dụng video số 1 nếu video số 0 không tồn tại  -> liên quan QUAN TRỌNG đến tool cut video
                             filePath = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, "1");
-                            subtitleText = (!string.IsNullOrEmpty(filePath) && CFuncion.CheckMediaType(filePath))
-                                ? string.Join(",", subtitleValue[0].InlineTextList)
-                                : string.Join(",", subtitleValue[0].InlineTextList);
+
+                            if(string.IsNullOrEmpty(filePath) && !CFuncion.CheckMediaType(filePath))
+                            {
+                                MessageBox.Show("Folder split video không đúng định dạng hoặc chưa được chọn!\n Vui lòng chọn đúng folder đúng định dạng ảnh hoặc video.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }    
+                            subtitleText = string.Join(",", subtitleValue[0].InlineTextList);
                         }
                     }
                     else
@@ -284,29 +288,14 @@ namespace ReviewMovie
                         int subtitleIndex = hasVideoZero ? i - 1 : i; // Điều chỉnh index nếu có video số 0
 
                         filePath = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, (i + (hasVideoZero ? 0 : 1)).ToString());
-                        subtitleText = !string.IsNullOrEmpty(filePath) && CFuncion.CheckMediaType(filePath)
-                                        ? string.Join(",", subtitleValue[subtitleIndex].InlineTextList)
-                                        : string.Join(",", subtitleValue[subtitleIndex].InlineTextList);
-                    }
 
-                    if(string.IsNullOrEmpty(filePath))
-                    {
-                        DialogResult result = MessageBox.Show("File Subtitle đang không có dữ liệu.\nBạn có muốn xóa dữ liệu hiện tại và tiếp tục không?","Xác nhận",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
-                        if (result == DialogResult.Yes)
+                        if(string.IsNullOrEmpty(filePath) && !CFuncion.CheckMediaType(filePath))
                         {
-                            // Thực hiện hành động xóa dữ liệu ở đây
-                            _listdata.Clear();
-                            dgvMainView.DataSource = null;
-                            dgvMainView.DataSource = _listdata;
-                            dgvMainView.Refresh();
+                            MessageBox.Show("Folder split video không đúng định dạng hoặc chưa được chọn!\n Vui lòng chọn đúng folder đúng định dạng ảnh hoặc video.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
-                        }
-                        else
-                        {
-                            // Người dùng chọn No => không làm gì hoặc return
-                            return;
-                        }
-                    }  
+                        }    
+                        subtitleText = string.Join(",", subtitleValue[subtitleIndex].InlineTextList);
+                    }
 
                     PrepareSubtitleData(i, subtitleText, filePath);
                 }
