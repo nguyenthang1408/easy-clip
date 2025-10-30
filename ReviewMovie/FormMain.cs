@@ -1904,11 +1904,13 @@ namespace ReviewMovie
                 switch (checkMedia)
                 {
                     case MediaType.Picture:
-                        outputMedia = CheckMedia.CreateNewExtensionMedia(fileNames, _mediaPath, "jpg");
+                        //outputMedia = CheckMedia.CreateNewExtensionMedia(fileNames, _mediaPath, "jpg");
+                        outputMedia = CheckMedia.CreateNewExtensionMedia(fileNames, _mediaPath, "jpg", index.ToString()); // Save file with index to import media
                         timeOfpart = info?.Audiotime ?? 5;
                         break;
                     case MediaType.Video:
-                        outputMedia = CheckMedia.CreateNewExtensionMedia(fileNames, _mediaPath, "mp4");
+                        //outputMedia = CheckMedia.CreateNewExtensionMedia(fileNames, _mediaPath, "mp4");
+                        outputMedia = CheckMedia.CreateNewExtensionMedia(fileNames, _mediaPath, "mp4", index.ToString()); // Save file with index to import media
 
                         // Lỗi chưa xác định
                         //decimal valuetime = RVFuncion.GetMediaTime(fileNames);
