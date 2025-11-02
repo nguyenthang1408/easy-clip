@@ -60,7 +60,6 @@ namespace ReviewMovie
 
         const string ERR_PROJECT_EMPTY = "Nhập Đường Dẫn & Khởi Tạo Project !";
         const string ERR_ROW_INDEX = "Chọn 1 Row để nạp thông tin !";
-        private const string VALID_SUBTITLE_EXTENSION = ".srt";
 
         private ToolTip toolTipPL;
 
@@ -222,6 +221,11 @@ namespace ReviewMovie
 
         private async Task LoadSubtitleAsync(CancellationToken token)
         {
+            bool isSubtitleError = true;
+            var oldListData = _listdata;
+            var oldListSubtitleData = _listSubtitleData;
+            var oldAllInfoRender = _allInfoRender;
+
             try
             {
                 _listSubtitleData = new List<InfoMainView>();
@@ -230,25 +234,22 @@ namespace ReviewMovie
 
                 token.ThrowIfCancellationRequested();
 
-                var subtitleValue = SubtitleReaderV2.ReadSubtitle(_infoProject.InforSubtitleFile.SubtitleFile);
-                _indexRowMax = subtitleValue.Count;
-
-                string filePathTtile = _infoProject.InforSubtitleFile.SubtitleFile;
-                if(_indexRowMax == 0 || !File.Exists(filePathTtile) || Path.GetExtension(filePathTtile).ToLower() != VALID_SUBTITLE_EXTENSION)
+                var subtitleValue = SubtitleReaderV2.ReadSubtitle(_infoProject.InforSubtitleFile.SubtitleFile,ref isSubtitleError);
+                if(!isSubtitleError)
                 {
-                    DialogResult result = MessageBox.Show("File SubTitle sai format.\nBạn có muốn xóa dữ liệu hiện tại và tiếp tục không?","Xác nhận",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
-                    if (result == DialogResult.Yes)
-                    {
-                        // Thực hiện hành động xóa dữ liệu ở đây
-                        dgvMainView.DataSource = null;
-                        dgvMainView.DataSource = _listdata;
-                        dgvMainView.Refresh();
-                    }
-                    else
-                    {
-                        // Người dùng chọn No => không làm gì hoặc return
-                        return;
-                    }
+                    RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
+                    ShowMessage("File SubTitle sai định dạng!", "Thông báo");
+                    return;
+                }   
+                
+                _indexRowMax = subtitleValue.Count;
+                string filePathTtile = _infoProject.InforSubtitleFile.SubtitleFile;
+
+                if(_indexRowMax == 0 || !File.Exists(filePathTtile))
+                {
+                    RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
+                    ShowMessage("File SubTitle không có dữ liệu!", "Thông báo");
+                    return;
                 }    
 
                 bool hasVideoZero = false;
@@ -338,6 +339,20 @@ namespace ReviewMovie
             {
                 throw;
             }
+        }
+
+        // Hàm phục hồi dữ liệu cũ
+        private void RestoreOldData(BindingList<InfoMainView> oldListData, List<InfoMainView> oldListSubtitleData, List<InfoRenderVd> oldAllInfoRender)
+        {
+            _listdata = oldListData;
+            _listSubtitleData = oldListSubtitleData;
+            _allInfoRender = oldAllInfoRender;
+        }
+
+        // Hàm gọi show message Thông báo
+        private void ShowMessage(string message, string tileMessage)
+        {
+            MessageBox.Show(message, tileMessage, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void PrepareSubtitleData(int i, string textCmt, string mediaFilePath)

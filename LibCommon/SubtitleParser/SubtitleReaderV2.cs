@@ -21,10 +21,10 @@ namespace SubtitlesParser
 
         private static readonly SubtitleTimeFormat _defaultSubtitleTimeFormat = new SubtitleTimeFormat();
 
-        public static List<SubtitleBlock> ReadSubtitle (string filepath)
+        public static List<SubtitleBlock> ReadSubtitle (string filepath, ref bool isSubtitleError)
         {
             var getline = GetTextByLines(filepath);
-            var data = ParseSubtitleList(getline);
+            var data = ParseSubtitleList(getline, ref isSubtitleError);
             if(data != null)
             {
                 return data.ToList();
@@ -77,7 +77,7 @@ namespace SubtitlesParser
         /// <param name="subtitleLines">Lines of contents to be parsed</param>
         /// <param name="subtitleTimeFormat"></param>
         /// <returns>List of SubtitleBlock (List[SubtitleBlock])</returns>
-        public static List<SubtitleBlock> ParseSubtitleList(string[] subtitleLines, SubtitleTimeFormat subtitleTimeFormat = null)
+        public static List<SubtitleBlock> ParseSubtitleList(string[] subtitleLines, ref bool isSubtitleError, SubtitleTimeFormat subtitleTimeFormat = null)
         {
             //
             if (subtitleTimeFormat == null)
@@ -167,10 +167,11 @@ namespace SubtitlesParser
                     return innerTextList;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 // Returning exception.
-                throw ex;
+                isSubtitleError = false;
+                return null;
             }
         }
 
