@@ -269,7 +269,7 @@ namespace ReviewMovie
                     if (i == 0)
                     {
                         filePath = checkZeroFile;
-
+                         
                         if (hasVideoZero)
                         {
                             subtitleText = string.Empty; // Media 0, không có subtitle
@@ -285,7 +285,7 @@ namespace ReviewMovie
                                 _listSubtitleData = oldListSubtitleData;
                                 _allInfoRender = oldAllInfoRender;
 
-                                MessageBox.Show("Folder split video không có dữ liệu hoặc không đúng định dạng!\nBạn Vui lòng chọn lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("Folder split video không có dữ liệu!\nBạn Vui lòng chọn lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }    
                             if (!CFuncion.CheckMediaType(filePath))
@@ -302,19 +302,27 @@ namespace ReviewMovie
 
                         filePath = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, (i + (hasVideoZero ? 0 : 1)).ToString());
 
-                        if(string.IsNullOrEmpty(filePath) && !CFuncion.CheckMediaType(filePath))
+                        if(!CFuncion.CheckMediaType(filePath))
                         {
                             countFileError++;
-                        }    
+                        }     
                         subtitleText = string.Join(",", subtitleValue[subtitleIndex].InlineTextList);
                     }
 
                     PrepareSubtitleData(i, subtitleText, filePath);
                 }
 
-                if (countFileError > 0)
+                // Đếm số lượng file Split video chưa đúng
+                if (countFileError == _indexRowMax)
                 {
-                    MessageBox.Show($"Folder split video có {countFileError + 1} file không đúng định dạng!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"File split video không đúng định dạng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // CHọn file không đúng định dạng
+                if (_indexRowMax > 0)
+                {
+                    MessageBox.Show($"File split video có {countFileError} file không đúng định dạng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
                 // Clear trước khi load mới
