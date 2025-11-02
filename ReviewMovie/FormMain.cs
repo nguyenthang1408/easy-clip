@@ -221,6 +221,10 @@ namespace ReviewMovie
 
         private async Task LoadSubtitleAsync(CancellationToken token)
         {
+            var oldListData = _listdata;
+            var oldListSubtitleData = _listSubtitleData;
+            var oldAllInfoRender = _allInfoRender;
+
             try
             {
                 _listSubtitleData = new List<InfoMainView>();
@@ -274,9 +278,22 @@ namespace ReviewMovie
                             // Sử dụng video số 1 nếu video số 0 không tồn tại  -> liên quan QUAN TRỌNG đến tool cut video
                             filePath = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, "1");
 
-                            if(string.IsNullOrEmpty(filePath) && !CFuncion.CheckMediaType(filePath))
+                            if(string.IsNullOrEmpty(filePath))
                             {
-                                MessageBox.Show("Folder split video không đúng định dạng hoặc chưa được chọn!\n Vui lòng chọn đúng folder đúng định dạng ảnh hoặc video.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                _listdata = oldListData;
+                                _listSubtitleData = oldListSubtitleData;
+                                _allInfoRender = oldAllInfoRender;
+
+                                MessageBox.Show("Folder split video không có dữ liệu!\nBạn Vui lòng chọn lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }    
+                            if (!CFuncion.CheckMediaType(filePath))
+                            {
+                                _listdata = oldListData;
+                                _listSubtitleData = oldListSubtitleData;
+                                _allInfoRender = oldAllInfoRender;
+
+                                MessageBox.Show("Folder split video không đúng định dạng!\nVui lòng chọn đúng định dạng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }    
                             subtitleText = string.Join(",", subtitleValue[0].InlineTextList);
@@ -291,7 +308,11 @@ namespace ReviewMovie
 
                         if(string.IsNullOrEmpty(filePath) && !CFuncion.CheckMediaType(filePath))
                         {
-                            MessageBox.Show("Folder split video không đúng định dạng hoặc chưa được chọn!\n Vui lòng chọn đúng folder đúng định dạng ảnh hoặc video.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            _listdata = oldListData;
+                            _listSubtitleData = oldListSubtitleData;
+                            _allInfoRender = oldAllInfoRender;
+
+                            MessageBox.Show("Folder split video không đúng định dạng!\nVui lòng chọn đúng định dạng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }    
                         subtitleText = string.Join(",", subtitleValue[subtitleIndex].InlineTextList);
@@ -2698,6 +2719,7 @@ namespace ReviewMovie
             btnAddAll.Enabled = false;
             btnOpenProject.Enabled = false;
             cbProjectName.Enabled = false;
+            bool isLoadDataGridInit = true;
 
             try
             {
