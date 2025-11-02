@@ -281,11 +281,8 @@ namespace ReviewMovie
 
                             if(string.IsNullOrEmpty(filePath))
                             {
-                                _listdata = oldListData;
-                                _listSubtitleData = oldListSubtitleData;
-                                _allInfoRender = oldAllInfoRender;
-
-                                MessageBox.Show("Folder split video không có dữ liệu!\nBạn Vui lòng chọn lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
+                                ShowMessage("Folder split video không có dữ liệu!\nBạn Vui lòng chọn lại!", "Thông báo");
                                 return;
                             }    
                             if (!CFuncion.CheckMediaType(filePath))
@@ -315,14 +312,15 @@ namespace ReviewMovie
                 // Đếm số lượng file Split video chưa đúng
                 if (countFileError == _indexRowMax)
                 {
-                    MessageBox.Show($"File split video không đúng định dạng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
+                    ShowMessage("File split video không đúng định dạng!", "Thông báo");
                     return;
                 }
 
                 // CHọn file không đúng định dạng
-                if (_indexRowMax > 0)
+                if (countFileError > 0)
                 {
-                    MessageBox.Show($"File split video có {countFileError} file không đúng định dạng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    ShowMessage($"File split video có {countFileError} file không đúng định dạng!", "Thông báo");
                 }
 
                 // Clear trước khi load mới
@@ -350,6 +348,20 @@ namespace ReviewMovie
             {
                 throw;
             }
+        }
+
+        // Hàm phục hồi dữ liệu cũ
+        private void RestoreOldData(BindingList<InfoMainView> oldListData, List<InfoMainView> oldListSubtitleData, List<InfoRenderVd> oldAllInfoRender)
+        {
+            _listdata = oldListData;
+            _listSubtitleData = oldListSubtitleData;
+            _allInfoRender = oldAllInfoRender;
+        }
+
+        // Hàm gọi show message Thông báo
+        private void ShowMessage(string message, string tileMessage)
+        {
+            MessageBox.Show(message, tileMessage, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void PrepareSubtitleData(int i, string textCmt, string mediaFilePath)
