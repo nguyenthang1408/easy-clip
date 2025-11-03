@@ -319,6 +319,12 @@ namespace ReviewMovie
             }
         }
 
+        // Hàm gọi show message Thông báo
+        private void ShowMessage(string message, string tileMessage)
+        {
+            MessageBox.Show(message, tileMessage, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
         private void PrepareSubtitleData(int i, string textCmt, string mediaFilePath)
         {
             var addEmptydata = new InfoMainView
@@ -1888,6 +1894,20 @@ namespace ReviewMovie
         private void InSertInputMediaData(string fileNames, int index)
         {
             var info = _allInfoRender.FirstOrDefault(c => c.NoID == index);
+
+            if (fileNames.ToLower().Contains(".webp"))
+            {
+                WebP webp = new WebP();
+                try
+                {
+                    Bitmap bitmap = webp.Load(fileNames);
+                }
+                catch
+                {
+                    ShowMessage("File media bị lỗi định dạng!", "Thông báo");
+                    return;
+                }
+            };
 
             if (CheckMedia.IsImageExtension(fileNames) || CheckMedia.IsVideoExtension(fileNames))
             {
