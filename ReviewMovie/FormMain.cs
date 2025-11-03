@@ -282,7 +282,7 @@ namespace ReviewMovie
                             if(string.IsNullOrEmpty(filePath))
                             {
                                 RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
-                                ShowMessage("Folder split video không có dữ liệu!\nBạn Vui lòng chọn lại!", "Thông báo");
+                                ShowMessage("Thư mục không có media . Hãy chọn lại !", "Thông báo");
                                 return;
                             }    
                             if (!CFuncion.CheckMediaType(filePath))
@@ -2765,6 +2765,11 @@ namespace ReviewMovie
                             {
                                 subtitleMediaPath = Path.GetDirectoryName(potentialPath);
                             }
+                        }
+                        else
+                        {
+                            ShowMessage("Chưa chọn thư mục chứa media. Hãy chọn lại !", "Thông báo");
+                            return;
                         }
                     }
                     _infoProject.InforSubtitleFile = new InforSubtitleFile
