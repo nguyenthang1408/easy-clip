@@ -61,6 +61,8 @@ namespace ReviewMovie
         const string ERR_PROJECT_EMPTY = "Nhập Đường Dẫn & Khởi Tạo Project !";
         const string ERR_ROW_INDEX = "Chọn 1 Row để nạp thông tin !";
 
+        const long MAX_SIZE_BYTES = 1 * 1024 * 1024; // 1 MB = 1,048,576 bytes
+
         private ToolTip toolTipPL;
 
         private SemaphoreSlim semaphore = new SemaphoreSlim(1, 15); // Giới hạn số lượng nhóm được render đồng thời
@@ -2733,10 +2735,18 @@ namespace ReviewMovie
                 string subtitleMediaPath = string.Empty;
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Title = "Chọn File Subtitle để Split video !";
-                openFileDialog.Filter = "Subtitle (*.srt)|*.srt|All Files (*.*)|*.*";
+                openFileDialog.Filter = "Subtitle (*.srt)|*.srt";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     subtitleFile = openFileDialog.FileName;
+                    // Kiểm tra dung lượng file (<= 1 MB)
+                    long fileSize = new System.IO.FileInfo(subtitleFile).Length;
+
+                    if (fileSize > MAX_SIZE_BYTES)
+                    {
+                        ShowMessage("File subtitle vượt quá 1MB! Vui lòng chọn file nhỏ hơn.", "Thông báo");
+                        return;
+                    }
                     using (OpenFileDialog openFolderDialog = new OpenFileDialog()) // Không dùng FolderBrowserDialog vì nó hạn chế giao diện lựa chọn
                     {
                         openFolderDialog.Title = "Chọn thư mục";
