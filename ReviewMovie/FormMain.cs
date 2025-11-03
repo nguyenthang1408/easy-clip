@@ -279,12 +279,6 @@ namespace ReviewMovie
                             // Sử dụng video số 1 nếu video số 0 không tồn tại  -> liên quan QUAN TRỌNG đến tool cut video
                             filePath = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, "1");
 
-                            if(string.IsNullOrEmpty(filePath))
-                            {
-                                RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
-                                ShowMessage("Thư mục không có media . Hãy chọn lại !", "Thông báo");
-                                return;
-                            }    
                             if (!CFuncion.CheckMediaType(filePath))
                             {
                                 countFileError++;
@@ -313,14 +307,14 @@ namespace ReviewMovie
                 if (countFileError == _indexRowMax)
                 {
                     RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
-                    ShowMessage("File split video không đúng định dạng!", "Thông báo");
+                    ShowMessage("File media không đúng định dạng!", "Thông báo");
                     return;
                 }
 
                 // CHọn file không đúng định dạng
                 if (countFileError > 0)
                 {
-                    ShowMessage($"File split video có {countFileError} file không đúng định dạng!", "Thông báo");
+                    ShowMessage($"Thư mục có {countFileError} file không đúng định dạng!", "Thông báo");
                 }
 
                 // Clear trước khi load mới
@@ -2764,6 +2758,20 @@ namespace ReviewMovie
                             else
                             {
                                 subtitleMediaPath = Path.GetDirectoryName(potentialPath);
+                            }
+
+                            var files = System.IO.Directory.GetFiles(subtitleMediaPath);
+                            if (files.Length == 0)
+                            {
+                                ShowMessage("Thư mục không có media . Hãy chọn lại !", "Thông báo");
+                                return;
+                            }
+
+                            // Check file có đúng định dạng hay không?
+                            if (!CFuncion.CheckMediaType(potentialPath))
+                            {
+                                ShowMessage("File media không đúng định dạng!", "Thông báo");
+                                return;
                             }
                         }
                         else
