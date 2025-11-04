@@ -1917,9 +1917,16 @@ namespace ReviewMovie
                 string mediaStatus = string.Empty;
                 decimal timeOfpart = 0;
                 string outputMedia = string.Empty;
+                bool isMediaInfo = true;
 
                 MediaType checkMedia = CheckMedia.GetMediaType(fileNames);
-                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames);
+                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames, ref isMediaInfo);
+
+                if(!isMediaInfo)
+                {
+                    ShowMessage("File media bị lỗi định dạng!", "Thông báo");
+                    return;
+                }    
 
                 switch (checkMedia)
                 {
