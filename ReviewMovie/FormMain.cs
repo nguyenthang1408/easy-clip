@@ -1969,8 +1969,10 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    TextboxInThread(txtImPortMedia, string.Empty);
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.White); // cái gì đây , file sao lại có status
+                    //TextboxInThread(txtImPortMedia, string.Empty);
+                    //FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.White); // cái gì đây , file sao lại có status
+                    MessageBox.Show("File không đúng định dạng !", "Thông báo lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
                 }
 
                 if (info != null)
