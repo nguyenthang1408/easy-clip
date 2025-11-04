@@ -307,7 +307,7 @@ namespace ReviewMovie
                 if (countFileError == _indexRowMax)
                 {
                     RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
-                    ShowMessage("File media không đúng định dạng!", "Thông báo");
+                    ShowMessage("Chọn thư mục chứa media . Không Chọn file !", "Thông báo");
                     return;
                 }
 
@@ -2743,7 +2743,7 @@ namespace ReviewMovie
                     subtitleFile = openFileDialog.FileName;
                     using (OpenFileDialog openFolderDialog = new OpenFileDialog()) // Không dùng FolderBrowserDialog vì nó hạn chế giao diện lựa chọn
                     {
-                        openFolderDialog.Title = "Chọn thư mục";
+                        openFolderDialog.Title = "Chọn thư mục media";
                         openFolderDialog.CheckFileExists = false;
                         openFolderDialog.CheckPathExists = false;
                         openFolderDialog.FileName = "Folder Selection";
@@ -2764,13 +2764,6 @@ namespace ReviewMovie
                             if (files.Length == 0)
                             {
                                 ShowMessage("Thư mục không có media . Hãy chọn lại !", "Thông báo");
-                                return;
-                            }
-
-                            // Check file có đúng định dạng hay không?
-                            if (!CFuncion.CheckMediaType(potentialPath))
-                            {
-                                ShowMessage("File media không đúng định dạng!", "Thông báo");
                                 return;
                             }
                         }
