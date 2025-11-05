@@ -1867,7 +1867,7 @@ namespace ReviewMovie
                     {
                         try
                         {
-                            var isValidMedia = ValidateImportedMedia(fileNames[0]);
+                            var isValidMedia = ValidateImportedMedia(fileNames[0], _indexRowSelect);
 
                             if (!isValidMedia)
                             {
@@ -1899,21 +1899,35 @@ namespace ReviewMovie
             e.Effect = DragDropEffects.Copy;
         }
 
-        private bool ValidateImportedMedia(string fileNames)
+        private bool ValidateImportedMedia(string fileNames, int index)
         {
+            string outputMedia = string.Empty;
+            int newWidth = 0;
+            int newHeight = 0;
+            string mediaStatus = string.Empty;
             try
             {
-                // Kiểm tra file .webp
-                WebP webp = new WebP();
-                Bitmap bitmap = webp.Load(fileNames);
-
                 // Kiểm tra định dạng file
                 MediaType checkMedia = CheckMedia.GetMediaType(fileNames);
 
                 // Lấy thời lượng video (nếu là video)
                 decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames);
 
-                return true;
+                switch (checkMedia)
+                {
+                    case MediaType.Picture:
+                        outputMedia = CheckMedia.CreateNewExtensionMedia(fileNames, _mediaPath, "jpg", index.ToString()); // Save file with index to import media
+                        break;
+                    case MediaType.Video:
+                        outputMedia = CheckMedia.CreateNewExtensionMedia(fileNames, _mediaPath, "mp4", index.ToString()); // Save file with index to import media
+                        break;
+                    default:
+                        break;
+                }
+
+                bool resized = FormatImage(ref newWidth, ref newHeight, ref mediaStatus, fileNames, outputMedia);
+
+                return resized;
             }
             catch (Exception)
             {
