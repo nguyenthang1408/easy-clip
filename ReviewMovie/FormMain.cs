@@ -1879,7 +1879,7 @@ namespace ReviewMovie
                         }
                         catch (Exception ex)
                         {
-                            //Gọi lại UI thread nếu cần show lỗi
+                            // Gọi lại UI thread nếu cần show lỗi
                             this.Invoke((Action)(() =>
                             {
                                 MessageBox.Show($"Lỗi: {ex.Message}", "Import Media", MessageBoxButtons.OK, MessageBoxIcon.Error);
