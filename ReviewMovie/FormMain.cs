@@ -1867,11 +1867,19 @@ namespace ReviewMovie
                     {
                         try
                         {
+                            var isValidMedia = ValidateImportedMedia(fileNames[0]);
+
+                            if (!isValidMedia)
+                            {
+                                ShowMessage("File media bị lỗi định dạng!", "Thông báo");
+                                return;
+                            }
+
                             InSertInputMediaData(fileNames[0], _indexRowSelect);
                         }
                         catch (Exception ex)
                         {
-                            // Gọi lại UI thread nếu cần show lỗi
+                            //Gọi lại UI thread nếu cần show lỗi
                             this.Invoke((Action)(() =>
                             {
                                 MessageBox.Show($"Lỗi: {ex.Message}", "Import Media", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1891,23 +1899,31 @@ namespace ReviewMovie
             e.Effect = DragDropEffects.Copy;
         }
 
+        private bool ValidateImportedMedia(string fileNames)
+        {
+            try
+            {
+                // Kiểm tra file .webp
+                WebP webp = new WebP();
+                Bitmap bitmap = webp.Load(fileNames);
+
+                // Kiểm tra định dạng file
+                MediaType checkMedia = CheckMedia.GetMediaType(fileNames);
+
+                // Lấy thời lượng video (nếu là video)
+                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         private void InSertInputMediaData(string fileNames, int index)
         {
             var info = _allInfoRender.FirstOrDefault(c => c.NoID == index);
-
-            if (fileNames.ToLower().Contains(".webp"))
-            {
-                WebP webp = new WebP();
-                try
-                {
-                    Bitmap bitmap = webp.Load(fileNames);
-                }
-                catch
-                {
-                    ShowMessage("File media bị lỗi định dạng!", "Thông báo");
-                    return;
-                }
-            };
 
             if (CheckMedia.IsImageExtension(fileNames) || CheckMedia.IsVideoExtension(fileNames))
             {
@@ -1917,16 +1933,9 @@ namespace ReviewMovie
                 string mediaStatus = string.Empty;
                 decimal timeOfpart = 0;
                 string outputMedia = string.Empty;
-                bool isMediaInfo = true;
 
                 MediaType checkMedia = CheckMedia.GetMediaType(fileNames);
-                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames, ref isMediaInfo);
-
-                if(!isMediaInfo)
-                {
-                    ShowMessage("File media bị lỗi định dạng!", "Thông báo");
-                    return;
-                }    
+                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames);  
 
                 switch (checkMedia)
                 {
@@ -1976,10 +1985,8 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    //TextboxInThread(txtImPortMedia, string.Empty);
-                    //FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.White); // cái gì đây , file sao lại có status
-                    MessageBox.Show("File không đúng định dạng !", "Thông báo lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
+                    TextboxInThread(txtImPortMedia, string.Empty);
+                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.White); // cái gì đây , file sao lại có status
                 }
 
                 if (info != null)
