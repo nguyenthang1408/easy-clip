@@ -1905,14 +1905,13 @@ namespace ReviewMovie
             int newWidth = 0;
             int newHeight = 0;
             string mediaStatus = string.Empty;
-            bool isMediaType = true;
             try
             {
                 // Kiểm tra định dạng file
                 MediaType checkMedia = CheckMedia.GetMediaType(fileNames);
 
                 // Lấy thời lượng video (nếu là video)
-                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames, ref isMediaType);
+                VideoInfoResult timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames);
 
                 switch (checkMedia)
                 {
@@ -1948,12 +1947,11 @@ namespace ReviewMovie
                 string mediaStatus = string.Empty;
                 decimal timeOfpart = 0;
                 string outputMedia = string.Empty;
-                bool isMediaType = true;
 
                 MediaType checkMedia = CheckMedia.GetMediaType(fileNames);
-                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames, ref isMediaType);  
+                VideoInfoResult videoInfoResult = FFmpegFuncion.timeOfVideoPart(fileNames);  
 
-                if(!isMediaType)
+                if(!videoInfoResult.IsMediaType)
                 {
                     mediaStatus = "Media Missing!";
                     TextboxInThread(txtImPortMedia, mediaStatus);
@@ -1978,8 +1976,8 @@ namespace ReviewMovie
 
                         decimal audioTime = info?.Audiotime ?? 0;
                         timeOfpart = _statusMuted
-                                        ? timeVideo
-                                        : audioTime > timeVideo ? audioTime : timeVideo;
+                                        ? videoInfoResult.Duration
+                                        : audioTime > videoInfoResult.Duration ? audioTime : videoInfoResult.Duration;
                         break;
                     default:
                         break;

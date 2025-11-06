@@ -38,4 +38,10 @@ namespace Lib
             return Display;
         }
     }
+
+    public class VideoInfoResult
+    {
+        public decimal Duration { get; set; }
+        public bool IsMediaType { get; set; }
+    }
 }
