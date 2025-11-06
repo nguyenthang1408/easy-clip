@@ -1905,13 +1905,14 @@ namespace ReviewMovie
             int newWidth = 0;
             int newHeight = 0;
             string mediaStatus = string.Empty;
+            bool isMediaType = true;
             try
             {
                 // Kiểm tra định dạng file
                 MediaType checkMedia = CheckMedia.GetMediaType(fileNames);
 
                 // Lấy thời lượng video (nếu là video)
-                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames);
+                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames, ref isMediaType);
 
                 switch (checkMedia)
                 {
@@ -1947,9 +1948,17 @@ namespace ReviewMovie
                 string mediaStatus = string.Empty;
                 decimal timeOfpart = 0;
                 string outputMedia = string.Empty;
+                bool isMediaType = true;
 
                 MediaType checkMedia = CheckMedia.GetMediaType(fileNames);
-                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames);  
+                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames, ref isMediaType);  
+
+                if(!isMediaType)
+                {
+                    mediaStatus = "Media Missing!";
+                    TextboxInThread(txtImPortMedia, mediaStatus);
+                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.Red);
+                }    
 
                 switch (checkMedia)
                 {
@@ -1999,8 +2008,9 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    TextboxInThread(txtImPortMedia, string.Empty);
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.White); // cái gì đây , file sao lại có status
+                    mediaStatus = "Media Missing!";
+                    TextboxInThread(txtImPortMedia, mediaStatus);
+                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.Red); // cái gì đây , file sao lại có status
                 }
 
                 if (info != null)
