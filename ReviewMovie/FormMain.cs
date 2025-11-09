@@ -223,7 +223,7 @@ namespace ReviewMovie
         {
             var oldListData = _listdata;
             var oldListSubtitleData = _listSubtitleData;
-            var oldAllInfoRender = _allInfoRender;
+            var oldAllInfoRender = _allInfoRender; // Hàm này cần lưu ý chỉ sử dụng trong 1 session, cần lưu ý khi muốn sử dụng nhiều thread chạy song song.
             var countFileError = 0;
 
             try
@@ -269,7 +269,7 @@ namespace ReviewMovie
                     if (i == 0)
                     {
                         filePath = checkZeroFile;
-                         
+ 
                         if (hasVideoZero)
                         {
                             subtitleText = string.Empty; // Media 0, không có subtitle
