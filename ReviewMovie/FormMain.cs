@@ -226,7 +226,8 @@ namespace ReviewMovie
             bool isSubtitleError = true;
             var oldListData = _listdata;
             var oldListSubtitleData = _listSubtitleData;
-            var oldAllInfoRender = _allInfoRender;
+            var oldAllInfoRender = _allInfoRender; // Hàm này cần lưu ý chỉ sử dụng trong 1 session, cần lưu ý khi muốn sử dụng nhiều thread chạy song song.
+            var countFileError = 0;
 
             try
             {
@@ -295,9 +296,12 @@ namespace ReviewMovie
                         {
                             // Sử dụng video số 1 nếu video số 0 không tồn tại  -> liên quan QUAN TRỌNG đến tool cut video
                             filePath = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, "1");
-                            subtitleText = (!string.IsNullOrEmpty(filePath) && CFuncion.CheckMediaType(filePath))
-                                ? string.Join(",", subtitleValue[0].InlineTextList)
-                                : string.Empty;
+
+                            if (!CFuncion.CheckMediaType(filePath))
+                            {
+                                countFileError++;
+                            }    
+                            subtitleText = string.Join(",", subtitleValue[0].InlineTextList);
                         }
                     }
                     else
@@ -306,12 +310,29 @@ namespace ReviewMovie
                         int subtitleIndex = hasVideoZero ? i - 1 : i; // Điều chỉnh index nếu có video số 0
 
                         filePath = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, (i + (hasVideoZero ? 0 : 1)).ToString());
-                        subtitleText = !string.IsNullOrEmpty(filePath) && CFuncion.CheckMediaType(filePath)
-                                        ? string.Join(",", subtitleValue[subtitleIndex].InlineTextList)
-                                        : string.Join(",", subtitleValue[subtitleIndex].InlineTextList);
+
+                        if(!CFuncion.CheckMediaType(filePath))
+                        {
+                            countFileError++;
+                        }     
+                        subtitleText = string.Join(",", subtitleValue[subtitleIndex].InlineTextList);
                     }
 
                     PrepareSubtitleData(i, subtitleText, filePath);
+                }
+
+                // Đếm số lượng file Split video chưa đúng
+                if (countFileError == _indexRowMax)
+                {
+                    RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
+                    ShowMessage("Chọn thư mục chứa media . Không Chọn file !", "Thông báo");
+                    return;
+                }
+
+                // CHọn file không đúng định dạng
+                if (countFileError > 0)
+                {
+                    ShowMessage($"Thư mục có {countFileError} file không đúng định dạng!", "Thông báo");
                 }
 
                 // Clear trước khi load mới
@@ -324,9 +345,7 @@ namespace ReviewMovie
                 dgvMainView.DataSource = _listdata;
                 dgvMainView.Refresh();
 
-                txtTextInput.Text = string.Empty;
                 txtTextInput.ReadOnly = true;
-                txtImPortMedia.Text = string.Empty;
 
                 if (_listdata.Count > 0)
                 {
@@ -2577,16 +2596,16 @@ namespace ReviewMovie
 
             try
             {
-                // Reset lại state trước khi tạo project mới
-                ResetProjectState();
-
-                _loadConfig.EnsureDirectory(projectPath);
-
                 if (_loadConfig.IsDuplicate(projectPath))
                 {
                     MessageBox.Show("Project đã tồn tại. Vui lòng chọn tên khác hoặc kiểm tra danh sách!");
                     return;
                 }
+
+                // Reset lại state trước khi tạo project mới
+                ResetProjectState();
+
+                _loadConfig.EnsureDirectory(projectPath);
 
                 var newProject = _loadConfig.CreateNewProject(projectPath, _manualSelected.ToString(), nbSpeechRatio.Value.ToString("0.0"), CkZoom.Checked);
                 _projectName = projectPath;
@@ -2728,6 +2747,7 @@ namespace ReviewMovie
             btnAddAll.Enabled = false;
             btnOpenProject.Enabled = false;
             cbProjectName.Enabled = false;
+            bool isLoadDataGridInit = true;
 
             try
             {
@@ -2749,7 +2769,7 @@ namespace ReviewMovie
                     }
                     using (OpenFileDialog openFolderDialog = new OpenFileDialog()) // Không dùng FolderBrowserDialog vì nó hạn chế giao diện lựa chọn
                     {
-                        openFolderDialog.Title = "Chọn thư mục";
+                        openFolderDialog.Title = "Chọn thư mục media";
                         openFolderDialog.CheckFileExists = false;
                         openFolderDialog.CheckPathExists = false;
                         openFolderDialog.FileName = "Folder Selection";
@@ -2765,6 +2785,18 @@ namespace ReviewMovie
                             {
                                 subtitleMediaPath = Path.GetDirectoryName(potentialPath);
                             }
+
+                            var files = System.IO.Directory.GetFiles(subtitleMediaPath);
+                            if (files.Length == 0)
+                            {
+                                ShowMessage("Thư mục không có media . Hãy chọn lại !", "Thông báo");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            ShowMessage("Chưa chọn thư mục chứa media. Hãy chọn lại !", "Thông báo");
+                            return;
                         }
                     }
                     _infoProject.InforSubtitleFile = new InforSubtitleFile
