@@ -269,7 +269,7 @@ namespace ReviewMovie
                     if (i == 0)
                     {
                         filePath = checkZeroFile;
- 
+
                         if (hasVideoZero)
                         {
                             subtitleText = string.Empty; // Media 0, không có subtitle
