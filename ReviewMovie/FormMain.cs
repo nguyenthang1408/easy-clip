@@ -2318,8 +2318,12 @@ namespace ReviewMovie
                     if (MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         _configService.DeleteProjectName(Guid.Parse(selectID));
+                        ReloadProjectList();
                     }
-                    ReloadProjectList();
+                    else
+                    {
+                        cbProjectName.Text = oldProjectPath;
+                    }
                     return;
                 }
 
