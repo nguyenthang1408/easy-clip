@@ -2269,6 +2269,7 @@ namespace ReviewMovie
 
         private async void cbProjectName_SelectedIndexChanged(object sender, EventArgs e)
         {
+            var oldProjectPath = _infoProject.ProjectPath;
             // Chặn gọi liên tục khi đang xử lý
             if (_isCheckingAndCancelingProjectChange) return;
             _isCheckingAndCancelingProjectChange = true;
@@ -2309,10 +2310,9 @@ namespace ReviewMovie
                 }
 
                 // ==== 4. Load project mới từ DB ====
-                DefaultProjectData();
-                _infoProject = _projectService.GetProjectDetail(Guid.Parse(selectID), selectPath);
+                var tempProject = _projectService.GetProjectDetail(Guid.Parse(selectID), selectPath);
 
-                if (_infoProject.IsEmpty)
+                if (tempProject.IsEmpty)
                 {
                     MessageBox.Show("Không Tìm thấy Project !");
                     if (MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -2326,6 +2326,9 @@ namespace ReviewMovie
                 // ==== 5. Mở project nếu người dùng xác nhận ====
                 if (MessageBox.Show($"Bạn muốn mở Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
+                    _infoProject = tempProject;
+                    DefaultProjectData();
+
                     _projectName = _infoProject.ProjectPath;
                     CkZoom.Checked = _infoProject.ChkZoomvideo;
 
@@ -2374,11 +2377,17 @@ namespace ReviewMovie
                 {
                     if (MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        _configService.DeleteProjectName(Guid.Parse(selectID));
-                    }
+                        _infoProject = tempProject;
+                        DefaultProjectData();
 
-                    ReloadProjectList();
-                    ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, false);
+                        _configService.DeleteProjectName(Guid.Parse(selectID));
+                        ReloadProjectList();
+                        ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, false);
+                    }
+                    else
+                    {
+                        cbProjectName.Text = oldProjectPath;
+                    }
                 }
             }
             finally
