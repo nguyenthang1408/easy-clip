@@ -2322,20 +2322,7 @@ namespace ReviewMovie
                     }
                     else
                     {
-                        if (!string.IsNullOrEmpty(oldProjectPath))
-                        {
-                            var oldIndex = cbProjectName.Items
-                                .Cast<ComboboxModel>()
-                                .ToList()
-                                .FindIndex(x => x.Display == oldProjectPath);
-
-                            if (oldIndex >= 0)
-                            {
-                                _isCheckingAndCancelingProjectChange = true;
-                                cbProjectName.SelectedIndex = oldIndex; // set lại item cũ
-                                _isCheckingAndCancelingProjectChange = false;
-                            }
-                        }
+                        RevertToOldProject(oldProjectPath);
                     }
                     return;
                 }
@@ -2402,20 +2389,7 @@ namespace ReviewMovie
                     }
                     else if (result == DialogResult.No)
                     {
-                        if (!string.IsNullOrEmpty(oldProjectPath))
-                        {
-                            var oldIndex = cbProjectName.Items
-                                .Cast<ComboboxModel>()
-                                .ToList()
-                                .FindIndex(x => x.Display == oldProjectPath);
-
-                            if (oldIndex >= 0)
-                            {
-                                _isCheckingAndCancelingProjectChange = true;
-                                cbProjectName.SelectedIndex = oldIndex; // set lại item cũ
-                                _isCheckingAndCancelingProjectChange = false;
-                            }
-                        }
+                        RevertToOldProject(oldProjectPath);
                     }
                 }
             }
@@ -2424,6 +2398,25 @@ namespace ReviewMovie
                 _isCheckingAndCancelingProjectChange = false;
             }
         }
+
+        // ==== Hàm phụ để revert project cũ ====
+        private void RevertToOldProject(string oldProjectPath)
+        {
+            if (string.IsNullOrEmpty(oldProjectPath)) return;
+
+            var oldIndex = cbProjectName.Items
+                .Cast<ComboboxModel>()
+                .ToList()
+                .FindIndex(x => x.Display == oldProjectPath);
+
+            if (oldIndex >= 0)
+            {
+                _isCheckingAndCancelingProjectChange = true;
+                cbProjectName.SelectedIndex = oldIndex;
+                _isCheckingAndCancelingProjectChange = false;
+            }
+        }
+
 
 
         private void cbLanguageSelect_SelectedIndexChanged(object sender, EventArgs e)
