@@ -2322,7 +2322,20 @@ namespace ReviewMovie
                     }
                     else
                     {
-                        cbProjectName.Text = oldProjectPath;
+                        if (!string.IsNullOrEmpty(oldProjectPath))
+                        {
+                            var oldIndex = cbProjectName.Items
+                                .Cast<ComboboxModel>()
+                                .ToList()
+                                .FindIndex(x => x.Display == oldProjectPath);
+
+                            if (oldIndex >= 0)
+                            {
+                                _isCheckingAndCancelingProjectChange = true;
+                                cbProjectName.SelectedIndex = oldIndex; // set lại item cũ
+                                _isCheckingAndCancelingProjectChange = false;
+                            }
+                        }
                     }
                     return;
                 }
@@ -2379,18 +2392,30 @@ namespace ReviewMovie
                 }
                 else // User không muốn mở → gợi ý xóa
                 {
-                    if (MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    var result = MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
                     {
-                        _infoProject = tempProject;
                         DefaultProjectData();
-
                         _configService.DeleteProjectName(Guid.Parse(selectID));
                         ReloadProjectList();
                         ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, false);
                     }
-                    else
+                    else if (result == DialogResult.No)
                     {
-                        cbProjectName.Text = oldProjectPath;
+                        if (!string.IsNullOrEmpty(oldProjectPath))
+                        {
+                            var oldIndex = cbProjectName.Items
+                                .Cast<ComboboxModel>()
+                                .ToList()
+                                .FindIndex(x => x.Display == oldProjectPath);
+
+                            if (oldIndex >= 0)
+                            {
+                                _isCheckingAndCancelingProjectChange = true;
+                                cbProjectName.SelectedIndex = oldIndex; // set lại item cũ
+                                _isCheckingAndCancelingProjectChange = false;
+                            }
+                        }
                     }
                 }
             }
