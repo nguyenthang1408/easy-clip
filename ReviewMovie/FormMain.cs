@@ -2315,13 +2315,14 @@ namespace ReviewMovie
                 if (tempProject.IsEmpty)
                 {
                     MessageBox.Show("Không Tìm thấy Project !");
-                    if (MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    var result = MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo);
+                    if(result == DialogResult.Yes)
                     {
                         oldProjectPath.ProjectPath = string.Empty;
                         _configService.DeleteProjectName(Guid.Parse(selectID));
                         ReloadProjectList();
                     }
-                    else
+                    else if (result == DialogResult.No)
                     {
                         cbProjectName.Text = oldProjectPath.ProjectPath;
                     }
