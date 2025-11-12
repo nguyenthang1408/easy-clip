@@ -2268,8 +2268,8 @@ namespace ReviewMovie
         private bool _isCheckingAndCancelingProjectChange = false;
 
         private async void cbProjectName_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var oldProjectPath = _infoProject.ProjectPath;
+         {
+            var oldProjectPath = _infoProject;
             // Chặn gọi liên tục khi đang xử lý
             if (_isCheckingAndCancelingProjectChange) return;
             _isCheckingAndCancelingProjectChange = true;
@@ -2317,12 +2317,13 @@ namespace ReviewMovie
                     MessageBox.Show("Không Tìm thấy Project !");
                     if (MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
+                        oldProjectPath.ProjectPath = string.Empty;
                         _configService.DeleteProjectName(Guid.Parse(selectID));
                         ReloadProjectList();
                     }
                     else
                     {
-                        RevertToOldProject(oldProjectPath);
+                        cbProjectName.Text = oldProjectPath.ProjectPath;
                     }
                     return;
                 }
@@ -2389,7 +2390,7 @@ namespace ReviewMovie
                     }
                     else if (result == DialogResult.No)
                     {
-                        RevertToOldProject(oldProjectPath);
+                        cbProjectName.Text = oldProjectPath.ProjectPath;
                     }
                 }
             }
@@ -2398,25 +2399,6 @@ namespace ReviewMovie
                 _isCheckingAndCancelingProjectChange = false;
             }
         }
-
-        // ==== Hàm phụ để revert project cũ ====
-        private void RevertToOldProject(string oldProjectPath)
-        {
-            if (string.IsNullOrEmpty(oldProjectPath)) return;
-
-            var oldIndex = cbProjectName.Items
-                .Cast<ComboboxModel>()
-                .ToList()
-                .FindIndex(x => x.Display == oldProjectPath);
-
-            if (oldIndex >= 0)
-            {
-                _isCheckingAndCancelingProjectChange = true;
-                cbProjectName.SelectedIndex = oldIndex;
-                _isCheckingAndCancelingProjectChange = false;
-            }
-        }
-
 
 
         private void cbLanguageSelect_SelectedIndexChanged(object sender, EventArgs e)
