@@ -2269,7 +2269,7 @@ namespace ReviewMovie
         private bool _isCheckingAndCancelingProjectChange = false;
 
         private async void cbProjectName_SelectedIndexChanged(object sender, EventArgs e)
-         {
+        {
             var combo = (ComboBox)sender;
 
             // Chặn gọi liên tục khi đang xử lý
@@ -2304,7 +2304,6 @@ namespace ReviewMovie
 
                 if (string.IsNullOrEmpty(selectPath))
                 {
-                    // Lựa chọn mặc định - không có giá trị
                     ClearTextInput();
                     ReloadProjectList();
                     ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, false);
@@ -2318,7 +2317,7 @@ namespace ReviewMovie
                 {
                     MessageBox.Show("Không Tìm thấy Project !");
                     var result = MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo);
-                    if(result == DialogResult.Yes)
+                    if (result == DialogResult.Yes)
                     {
                         _previousText = string.Empty;
                         _configService.DeleteProjectName(Guid.Parse(selectID));
@@ -2326,6 +2325,7 @@ namespace ReviewMovie
                     }
                     else if (result == DialogResult.No)
                     {
+                        // Rollback về project cũ
                         cbProjectName.Text = _previousText;
                     }
                     return;
@@ -2336,10 +2336,8 @@ namespace ReviewMovie
                 {
                     _infoProject = tempProject;
                     DefaultProjectData();
-
                     _projectName = _infoProject.ProjectPath;
                     CkZoom.Checked = _infoProject.ChkZoomvideo;
-
                     ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, true);
 
                     var voiceSite = _infoProject.VoiceSelect;
@@ -2360,7 +2358,6 @@ namespace ReviewMovie
                         GenProjectData();
                         LoadOtherData(_infoProject, false);
 
-                        // Cập nhật vào project
                         _renderSyncService.UpdateProjectRenderList(_infoProject, _infoProject.InfoRenders, _allInfoRender);
                     }
                     else
@@ -2368,7 +2365,6 @@ namespace ReviewMovie
                         addRow(_infoProject);
                     }
 
-                    // Bind lại combo site nếu có
                     if (!string.IsNullOrEmpty(voiceSite))
                     {
                         ComboBoxFuncion.CbBlinding(
@@ -2394,16 +2390,19 @@ namespace ReviewMovie
                     }
                     else if (result == DialogResult.No)
                     {
+                        // Rollback về project cũ
                         cbProjectName.Text = _previousText;
                     }
                 }
             }
             finally
             {
-                _previousText = combo.Text;
+                // Chỉ cập nhật lại _previousText sau khi đã xác nhận mở project mới thành công
+                _previousText = cbProjectName.Text;
                 _isCheckingAndCancelingProjectChange = false;
             }
         }
+
 
 
         private void cbLanguageSelect_SelectedIndexChanged(object sender, EventArgs e)
