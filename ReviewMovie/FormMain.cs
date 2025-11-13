@@ -80,6 +80,7 @@ namespace ReviewMovie
         private EffectTypeSelect _effectType;
         private ModeTypeSelect _modeType;
         private ManualSelect _manualSelected;
+        private string _previousText;
 
         private string _projectName;
         private string _vdquality;
@@ -2269,7 +2270,8 @@ namespace ReviewMovie
 
         private async void cbProjectName_SelectedIndexChanged(object sender, EventArgs e)
          {
-            var oldProjectPath = _infoProject;
+            var combo = (ComboBox)sender;
+
             // Chặn gọi liên tục khi đang xử lý
             if (_isCheckingAndCancelingProjectChange) return;
             _isCheckingAndCancelingProjectChange = true;
@@ -2318,13 +2320,13 @@ namespace ReviewMovie
                     var result = MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo);
                     if(result == DialogResult.Yes)
                     {
-                        oldProjectPath.ProjectPath = string.Empty;
+                        _previousText = string.Empty;
                         _configService.DeleteProjectName(Guid.Parse(selectID));
                         ReloadProjectList();
                     }
                     else if (result == DialogResult.No)
                     {
-                        cbProjectName.Text = oldProjectPath.ProjectPath;
+                        cbProjectName.Text = _previousText;
                     }
                     return;
                 }
@@ -2384,7 +2386,7 @@ namespace ReviewMovie
                     var result = MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes)
                     {
-                        oldProjectPath.ProjectPath = string.Empty;
+                        _previousText = string.Empty;
                         DefaultProjectData();
                         _configService.DeleteProjectName(Guid.Parse(selectID));
                         ReloadProjectList();
@@ -2392,12 +2394,13 @@ namespace ReviewMovie
                     }
                     else if (result == DialogResult.No)
                     {
-                        cbProjectName.Text = oldProjectPath.ProjectPath;
+                        cbProjectName.Text = _previousText;
                     }
                 }
             }
             finally
             {
+                _previousText = combo.Text;
                 _isCheckingAndCancelingProjectChange = false;
             }
         }
