@@ -2384,6 +2384,7 @@ namespace ReviewMovie
                     var result = MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes)
                     {
+                        oldProjectPath.ProjectPath = string.Empty;
                         DefaultProjectData();
                         _configService.DeleteProjectName(Guid.Parse(selectID));
                         ReloadProjectList();
