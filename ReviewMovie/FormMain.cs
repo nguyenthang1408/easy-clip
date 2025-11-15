@@ -61,6 +61,8 @@ namespace ReviewMovie
         const string ERR_PROJECT_EMPTY = "Nhập Đường Dẫn & Khởi Tạo Project !";
         const string ERR_ROW_INDEX = "Chọn 1 Row để nạp thông tin !";
 
+        const long MAX_SIZE_BYTES = 1 * 1024 * 1024; // 1 MB = 1,048,576 bytes
+
         private ToolTip toolTipPL;
 
         private SemaphoreSlim semaphore = new SemaphoreSlim(1, 15); // Giới hạn số lượng nhóm được render đồng thời
@@ -221,6 +223,12 @@ namespace ReviewMovie
 
         private async Task LoadSubtitleAsync(CancellationToken token)
         {
+            bool isSubtitleError = true;
+            var oldListData = _listdata;
+            var oldListSubtitleData = _listSubtitleData;
+            var oldAllInfoRender = _allInfoRender; // Hàm này cần lưu ý chỉ sử dụng trong 1 session, cần lưu ý khi muốn sử dụng nhiều thread chạy song song.
+            var countFileError = 0;
+
             try
             {
                 _listSubtitleData = new List<InfoMainView>();
@@ -229,8 +237,23 @@ namespace ReviewMovie
 
                 token.ThrowIfCancellationRequested();
 
-                var subtitleValue = SubtitleReaderV2.ReadSubtitle(_infoProject.InforSubtitleFile.SubtitleFile);
+                var subtitleValue = SubtitleReaderV2.ReadSubtitle(_infoProject.InforSubtitleFile.SubtitleFile,ref isSubtitleError);
+                if(!isSubtitleError)
+                {
+                    RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
+                    ShowMessage("File SubTitle sai định dạng!", "Thông báo");
+                    return;
+                }   
+                
                 _indexRowMax = subtitleValue.Count;
+                string filePathTtile = _infoProject.InforSubtitleFile.SubtitleFile;
+
+                if(_indexRowMax == 0 || !File.Exists(filePathTtile))
+                {
+                    RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
+                    ShowMessage("File SubTitle không có dữ liệu!", "Thông báo");
+                    return;
+                }    
 
                 bool hasVideoZero = false;
                 string checkZeroFile = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, "0");
@@ -273,9 +296,12 @@ namespace ReviewMovie
                         {
                             // Sử dụng video số 1 nếu video số 0 không tồn tại  -> liên quan QUAN TRỌNG đến tool cut video
                             filePath = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, "1");
-                            subtitleText = (!string.IsNullOrEmpty(filePath) && CFuncion.CheckMediaType(filePath))
-                                ? string.Join(",", subtitleValue[0].InlineTextList)
-                                : string.Join(",", subtitleValue[0].InlineTextList);
+
+                            if (!CFuncion.CheckMediaType(filePath))
+                            {
+                                countFileError++;
+                            }    
+                            subtitleText = string.Join(",", subtitleValue[0].InlineTextList);
                         }
                     }
                     else
@@ -284,12 +310,29 @@ namespace ReviewMovie
                         int subtitleIndex = hasVideoZero ? i - 1 : i; // Điều chỉnh index nếu có video số 0
 
                         filePath = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, (i + (hasVideoZero ? 0 : 1)).ToString());
-                        subtitleText = !string.IsNullOrEmpty(filePath) && CFuncion.CheckMediaType(filePath)
-                                        ? string.Join(",", subtitleValue[subtitleIndex].InlineTextList)
-                                        : string.Join(",", subtitleValue[subtitleIndex].InlineTextList);
+
+                        if(!CFuncion.CheckMediaType(filePath))
+                        {
+                            countFileError++;
+                        }     
+                        subtitleText = string.Join(",", subtitleValue[subtitleIndex].InlineTextList);
                     }
 
                     PrepareSubtitleData(i, subtitleText, filePath);
+                }
+
+                // Đếm số lượng file Split video chưa đúng
+                if (countFileError == _indexRowMax)
+                {
+                    RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
+                    ShowMessage("Chọn thư mục chứa media . Không Chọn file !", "Thông báo");
+                    return;
+                }
+
+                // CHọn file không đúng định dạng
+                if (countFileError > 0)
+                {
+                    ShowMessage($"Thư mục có {countFileError} file không đúng định dạng!", "Thông báo");
                 }
 
                 // Clear trước khi load mới
@@ -317,6 +360,20 @@ namespace ReviewMovie
             {
                 throw;
             }
+        }
+
+        // Hàm phục hồi dữ liệu cũ
+        private void RestoreOldData(BindingList<InfoMainView> oldListData, List<InfoMainView> oldListSubtitleData, List<InfoRenderVd> oldAllInfoRender)
+        {
+            _listdata = oldListData;
+            _listSubtitleData = oldListSubtitleData;
+            _allInfoRender = oldAllInfoRender;
+        }
+
+        // Hàm gọi show message Thông báo
+        private void ShowMessage(string message, string tileMessage)
+        {
+            MessageBox.Show(message, tileMessage, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void PrepareSubtitleData(int i, string textCmt, string mediaFilePath)
@@ -2690,6 +2747,7 @@ namespace ReviewMovie
             btnAddAll.Enabled = false;
             btnOpenProject.Enabled = false;
             cbProjectName.Enabled = false;
+            bool isLoadDataGridInit = true;
 
             try
             {
@@ -2697,13 +2755,21 @@ namespace ReviewMovie
                 string subtitleMediaPath = string.Empty;
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Title = "Chọn File Subtitle để Split video !";
-                openFileDialog.Filter = "Subtitle (*.srt)|*.srt|All Files (*.*)|*.*";
+                openFileDialog.Filter = "Subtitle (*.srt)|*.srt";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     subtitleFile = openFileDialog.FileName;
+                    // Kiểm tra dung lượng file (<= 1 MB)
+                    long fileSize = new System.IO.FileInfo(subtitleFile).Length;
+
+                    if (fileSize > MAX_SIZE_BYTES)
+                    {
+                        ShowMessage("File subtitle vượt quá 1MB! Vui lòng chọn file nhỏ hơn.", "Thông báo");
+                        return;
+                    }
                     using (OpenFileDialog openFolderDialog = new OpenFileDialog()) // Không dùng FolderBrowserDialog vì nó hạn chế giao diện lựa chọn
                     {
-                        openFolderDialog.Title = "Chọn thư mục";
+                        openFolderDialog.Title = "Chọn thư mục media";
                         openFolderDialog.CheckFileExists = false;
                         openFolderDialog.CheckPathExists = false;
                         openFolderDialog.FileName = "Folder Selection";
@@ -2719,6 +2785,18 @@ namespace ReviewMovie
                             {
                                 subtitleMediaPath = Path.GetDirectoryName(potentialPath);
                             }
+
+                            var files = System.IO.Directory.GetFiles(subtitleMediaPath);
+                            if (files.Length == 0)
+                            {
+                                ShowMessage("Thư mục không có media . Hãy chọn lại !", "Thông báo");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            ShowMessage("Chưa chọn thư mục chứa media. Hãy chọn lại !", "Thông báo");
+                            return;
                         }
                     }
                     _infoProject.InforSubtitleFile = new InforSubtitleFile
