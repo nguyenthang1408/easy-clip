@@ -1956,7 +1956,26 @@ namespace ReviewMovie
                 string outputMedia = string.Empty;
 
                 MediaType checkMedia = CheckMedia.GetMediaType(fileNames);
-                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames);
+                decimal timeVideo = 0m;
+
+                // CHỈ gọi FFmpeg cho video, và bắt lỗi
+                if (checkMedia == MediaType.Video)
+                {
+                    try
+                    {
+                        timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames);
+                    }
+                    catch
+                    {
+                        // File giả / FFmpeg lỗi => xử lý như Media Missing
+                        SetMediaError(info, index, "Media Error!");
+
+                        // Đồng bộ lại vào project giống luồng bình thường
+                        _renderSyncService.UpdateProjectRenderList(_infoProject, _infoProject.InfoRenders, _allInfoRender);
+                        _sessionMerge = false;
+                        return;
+                    }
+                }
 
                 switch (checkMedia)
                 {
@@ -1964,6 +1983,7 @@ namespace ReviewMovie
                         outputMedia = CheckMedia.CreateNewExtensionMedia(fileNames, _mediaPath, "jpg");
                         timeOfpart = info?.Audiotime ?? 5;
                         break;
+
                     case MediaType.Video:
                         outputMedia = CheckMedia.CreateNewExtensionMedia(fileNames, _mediaPath, "mp4");
 
@@ -1971,15 +1991,16 @@ namespace ReviewMovie
                         //decimal valuetime = RVFuncion.GetMediaTime(fileNames);
                         //decimal timeVideo = index < 6 ? (valuetime + 41) / 1000 : valuetime / 1000;  // đang so sánh giữ FFmpeg với MediaInfoDotnet
                         //timeOfpart = info?.Audiotime.Value > timeVideo ? info.Audiotime.Value : timeVideo;
-
                         decimal audioTime = info?.Audiotime ?? 0;
                         timeOfpart = _statusMuted
                                         ? timeVideo
                                         : audioTime > timeVideo ? audioTime : timeVideo;
                         break;
+
                     default:
                         break;
                 }
+
                 bool resized = FormatImage(ref newWidth, ref newHeight, ref mediaStatus, fileNames, outputMedia);
                 if (File.Exists(outputMedia) && resized)
                 {
@@ -1987,7 +2008,7 @@ namespace ReviewMovie
                     {
                         TextboxInThread(txtImPortMedia, fileNames);
                         FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", fileNames, Color.White);
-                    }  
+                    }
 
                     string vlvideotime = string.Format("{0}s", timeOfpart.ToString("0.000"));
                     FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_timevideo", vlvideotime, Color.White);
@@ -2005,7 +2026,7 @@ namespace ReviewMovie
                 else
                 {
                     TextboxInThread(txtImPortMedia, string.Empty);
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.White); // cái gì đây , file sao lại có status
+                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.Red); // file lỗi , ko có file chuyển màu Đỏ
                 }
 
                 if (info != null)
@@ -2017,15 +2038,7 @@ namespace ReviewMovie
             else
             {
                 //MessageBox.Show("Nhập vào phải là Ảnh hoặc Video. ");
-
-                string mediaStatus = "Media Missing!";
-                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.Red);
-                if (info != null)
-                {
-                    info.LblVdtime = "0";
-                    info.MediaFilePath = mediaStatus;
-                    info.MediaMiss = true;
-                }
+                SetMediaError(info, index, "Media Missing!");
             }
 
             // Đồng bộ lại vào project
@@ -2033,6 +2046,20 @@ namespace ReviewMovie
 
             _sessionMerge = false;
         }
+
+        private void SetMediaError(InfoRenderVd info, int index,string msgerror)
+        {
+            string mediaStatus = msgerror;
+            FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.Red);
+
+            if (info != null)
+            {
+                info.LblVdtime = "0";
+                info.MediaFilePath = mediaStatus;
+                info.MediaMiss = true;
+            }
+        }
+
         private void lblaudio_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
@@ -2105,6 +2132,7 @@ namespace ReviewMovie
                     }
                     catch
                     {
+                        failStatus = "Picture Error !";
                         newWidth = 0;
                         newHeight = 0;
                         return false;
@@ -2144,7 +2172,7 @@ namespace ReviewMovie
             }
             catch
             {
-                failStatus = "Lỗi Ảnh !";
+                failStatus = "Picture Error !";
                 newWidth = 0;
                 newHeight = 0;
                 return false;
