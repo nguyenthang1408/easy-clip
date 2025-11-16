@@ -82,6 +82,7 @@ namespace ReviewMovie
         private EffectTypeSelect _effectType;
         private ModeTypeSelect _modeType;
         private ManualSelect _manualSelected;
+        private string _previousText;
 
         private string _projectName;
         private string _vdquality;
@@ -2356,6 +2357,8 @@ namespace ReviewMovie
 
         private async void cbProjectName_SelectedIndexChanged(object sender, EventArgs e)
         {
+            var combo = (ComboBox)sender;
+
             // Chặn gọi liên tục khi đang xử lý
             if (_isCheckingAndCancelingProjectChange) return;
             _isCheckingAndCancelingProjectChange = true;
@@ -2388,7 +2391,6 @@ namespace ReviewMovie
 
                 if (string.IsNullOrEmpty(selectPath))
                 {
-                    // Lựa chọn mặc định - không có giá trị
                     ClearTextInput();
                     ReloadProjectList();
                     ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, false);
@@ -2396,26 +2398,33 @@ namespace ReviewMovie
                 }
 
                 // ==== 4. Load project mới từ DB ====
-                DefaultProjectData();
-                _infoProject = _projectService.GetProjectDetail(Guid.Parse(selectID), selectPath);
+                var tempProject = _projectService.GetProjectDetail(Guid.Parse(selectID), selectPath);
 
-                if (_infoProject.IsEmpty)
+                if (tempProject.IsEmpty)
                 {
                     MessageBox.Show("Không Tìm thấy Project !");
-                    if (MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    var result = MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
                     {
+                        _previousText = string.Empty;
                         _configService.DeleteProjectName(Guid.Parse(selectID));
+                        ReloadProjectList();
                     }
-                    ReloadProjectList();
+                    else if (result == DialogResult.No)
+                    {
+                        // Rollback về project cũ
+                        cbProjectName.Text = _previousText;
+                    }
                     return;
                 }
 
                 // ==== 5. Mở project nếu người dùng xác nhận ====
                 if (MessageBox.Show($"Bạn muốn mở Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
+                    _infoProject = tempProject;
+                    DefaultProjectData();
                     _projectName = _infoProject.ProjectPath;
                     CkZoom.Checked = _infoProject.ChkZoomvideo;
-
                     ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, true);
 
                     var voiceSite = _infoProject.VoiceSelect;
@@ -2436,7 +2445,6 @@ namespace ReviewMovie
                         GenProjectData();
                         LoadOtherData(_infoProject, false);
 
-                        // Cập nhật vào project
                         _renderSyncService.UpdateProjectRenderList(_infoProject, _infoProject.InfoRenders, _allInfoRender);
                     }
                     else
@@ -2444,7 +2452,6 @@ namespace ReviewMovie
                         addRow(_infoProject);
                     }
 
-                    // Bind lại combo site nếu có
                     if (!string.IsNullOrEmpty(voiceSite))
                     {
                         ComboBoxFuncion.CbBlinding(
@@ -2459,20 +2466,30 @@ namespace ReviewMovie
                 }
                 else // User không muốn mở → gợi ý xóa
                 {
-                    if (MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    var result = MessageBox.Show($"Bạn Xóa Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
                     {
+                        _previousText = string.Empty;
+                        DefaultProjectData();
                         _configService.DeleteProjectName(Guid.Parse(selectID));
+                        ReloadProjectList();
+                        ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, false);
                     }
-
-                    ReloadProjectList();
-                    ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, false);
+                    else if (result == DialogResult.No)
+                    {
+                        // Rollback về project cũ
+                        cbProjectName.Text = _previousText;
+                    }
                 }
             }
             finally
             {
+                // Chỉ cập nhật lại _previousText sau khi đã xác nhận mở project mới thành công
+                _previousText = cbProjectName.Text;
                 _isCheckingAndCancelingProjectChange = false;
             }
         }
+
 
 
         private void cbLanguageSelect_SelectedIndexChanged(object sender, EventArgs e)
