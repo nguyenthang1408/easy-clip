@@ -2026,7 +2026,9 @@ namespace ReviewMovie
                 else
                 {
                     TextboxInThread(txtImPortMedia, string.Empty);
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.Red); // file lỗi , ko có file chuyển màu Đỏ
+
+                    //FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.Red); // file lỗi , ko có file chuyển màu Đỏ
+                    SetMediaError(info, index, mediaStatus);
                 }
 
                 if (info != null)
