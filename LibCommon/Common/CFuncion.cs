@@ -36,21 +36,16 @@ namespace LibCommon.Common
             FFProbe probe = new FFProbe();
             return Convert.ToString(probe.GetMediaInfo(string_0).Duration.TotalMilliseconds);
         }
-        public static VideoInfoResult timeOfVideoPart(string filePath)
+        public static decimal timeOfVideoPart(string filePath)
         {
-            var videoInfoResult = new VideoInfoResult();
             try
             {
                 FFProbe probe = new FFProbe();
-                videoInfoResult.Duration = (decimal)(probe.GetMediaInfo(filePath).Duration.TotalMilliseconds / 1000);
-                videoInfoResult.IsMediaType = true;
-                return videoInfoResult;
+                return (decimal)(probe.GetMediaInfo(filePath).Duration.TotalMilliseconds / 1000);
             }
             catch (Exception)
             {
-                videoInfoResult.IsMediaType = false;
-                videoInfoResult.Duration = 0;
-                return videoInfoResult;
+                throw;
             }
         }
         public static bool CheckIfVideoHasAudio(string videoPath)

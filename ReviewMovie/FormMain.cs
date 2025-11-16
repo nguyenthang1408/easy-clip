@@ -1963,7 +1963,7 @@ namespace ReviewMovie
                 MediaType checkMedia = CheckMedia.GetMediaType(fileNames);
 
                 // Lấy thời lượng video (nếu là video)
-                VideoInfoResult timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames);
+                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames);
 
                 switch (checkMedia)
                 {
@@ -2001,14 +2001,7 @@ namespace ReviewMovie
                 string outputMedia = string.Empty;
 
                 MediaType checkMedia = CheckMedia.GetMediaType(fileNames);
-                VideoInfoResult videoInfoResult = FFmpegFuncion.timeOfVideoPart(fileNames);  
-
-                if(!videoInfoResult.IsMediaType)
-                {
-                    mediaStatus = "Media Missing!";
-                    TextboxInThread(txtImPortMedia, mediaStatus);
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.Red);
-                }    
+                decimal timeVideo = 0m;
 
                 // CHỈ gọi FFmpeg cho video, và bắt lỗi
                 if (checkMedia == MediaType.Video)
@@ -2047,8 +2040,8 @@ namespace ReviewMovie
                         //timeOfpart = info?.Audiotime.Value > timeVideo ? info.Audiotime.Value : timeVideo;
                         decimal audioTime = info?.Audiotime ?? 0;
                         timeOfpart = _statusMuted
-                                        ? videoInfoResult.Duration
-                                        : audioTime > videoInfoResult.Duration ? audioTime : videoInfoResult.Duration;
+                                        ? timeVideo
+                                        : audioTime > timeVideo ? audioTime : timeVideo;
                         break;
 
                     default:
