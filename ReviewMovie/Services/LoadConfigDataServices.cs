@@ -5,6 +5,7 @@ using ReviewMovie.Infrastructure.Project;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
 
 namespace EasyClip.Services
 {
@@ -71,14 +72,23 @@ namespace EasyClip.Services
 
         public void AddProjectToConfig(InfoProject project)
         {
-            var config = _configDataService.GetItem(1);
-            config.ProjectNames.Add(new ProjectName
+            try
             {
-                ID = project.ID,
-                ProjectPath = project.ProjectPath,
-                date = DateTime.Now
-            });
-            _configDataService.Insert(config);
+                var config = _configDataService.GetItem(1);
+                config.ProjectNames.Add(new ProjectName
+                {
+                    ID = project.ID,
+                    ProjectPath = project.ProjectPath,
+                    date = DateTime.Now
+                });
+                _configDataService.Insert(config);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Dữ liệu đang gặp lỗi, hệ thống sẽ tắt ứng dụng!", "Lỗi nghiêm trọng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                Application.Exit();
+            }
         }
 
         public void SaveToDatabase(InfoProject project)
