@@ -1919,14 +1919,6 @@ namespace ReviewMovie
                     {
                         try
                         {
-                            var isValidMedia = ValidateImportedMedia(fileNames[0], _indexRowSelect);
-
-                            if (!isValidMedia)
-                            {
-                                ShowMessage("File media bị lỗi định dạng!", "Thông báo");
-                                return;
-                            }
-
                             InSertInputMediaData(fileNames[0], _indexRowSelect);
                         }
                         catch (Exception ex)
@@ -1949,42 +1941,6 @@ namespace ReviewMovie
         private void txtImPortMedia_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
-        }
-
-        private bool ValidateImportedMedia(string fileNames, int index)
-        {
-            string outputMedia = string.Empty;
-            int newWidth = 0;
-            int newHeight = 0;
-            string mediaStatus = string.Empty;
-            try
-            {
-                // Kiểm tra định dạng file
-                MediaType checkMedia = CheckMedia.GetMediaType(fileNames);
-
-                // Lấy thời lượng video (nếu là video)
-                decimal timeVideo = FFmpegFuncion.timeOfVideoPart(fileNames);
-
-                switch (checkMedia)
-                {
-                    case MediaType.Picture:
-                        outputMedia = CheckMedia.CreateNewExtensionMedia(fileNames, _mediaPath, "jpg", index.ToString()); // Save file with index to import media
-                        break;
-                    case MediaType.Video:
-                        outputMedia = CheckMedia.CreateNewExtensionMedia(fileNames, _mediaPath, "mp4", index.ToString()); // Save file with index to import media
-                        break;
-                    default:
-                        break;
-                }
-
-                bool resized = FormatImage(ref newWidth, ref newHeight, ref mediaStatus, fileNames, outputMedia);
-
-                return resized;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         private void InSertInputMediaData(string fileNames, int index)
@@ -2072,7 +2028,7 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    TextboxInThread(txtImPortMedia, "Media Missing!");
+                    TextboxInThread(txtImPortMedia, string.Empty);
 
                     //FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_filemediapath", mediaStatus, Color.Red); // file lỗi , ko có file chuyển màu Đỏ
                     SetMediaError(info, index, mediaStatus);

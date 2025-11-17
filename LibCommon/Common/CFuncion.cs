@@ -38,15 +38,8 @@ namespace LibCommon.Common
         }
         public static decimal timeOfVideoPart(string filePath)
         {
-            try
-            {
-                FFProbe probe = new FFProbe();
-                return (decimal)(probe.GetMediaInfo(filePath).Duration.TotalMilliseconds / 1000);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            FFProbe probe = new FFProbe();
+            return (decimal)(probe.GetMediaInfo(filePath).Duration.TotalMilliseconds / 1000);
         }
         public static bool CheckIfVideoHasAudio(string videoPath)
         {
