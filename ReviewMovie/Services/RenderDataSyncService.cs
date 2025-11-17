@@ -19,20 +19,27 @@ namespace EasyClip.Services
             if (project == null || allCurrent == null || updatedList == null)
                 return;
 
+            // Sao chép danh sách để tránh lỗi khi duyệt và sửa
+            var currentCopy = allCurrent.ToList();
             var updatedIds = updatedList.Select(x => x.NoID).ToHashSet();
 
-            allCurrent.RemoveAll(x => !updatedIds.Contains(x.NoID));
+            currentCopy.RemoveAll(x => !updatedIds.Contains(x.NoID));
+
+            var itemsToAdd = new List<InfoRenderVd>();
 
             foreach (var updated in updatedList)
             {
-                var existing = allCurrent.FirstOrDefault(x => x.NoID == updated.NoID);
+                var existing = currentCopy.FirstOrDefault(x => x.NoID == updated.NoID);
                 if (existing != null)
                     UpdateProperties(existing, updated);
                 else
-                    allCurrent.Add(updated.Clone());
+                    itemsToAdd.Add(updated.Clone());
             }
 
-            project.InfoRenders = allCurrent.OrderBy(x => x.NoID).ToList();
+            currentCopy.AddRange(itemsToAdd);
+
+            project.InfoRenders = currentCopy.OrderBy(x => x.NoID).ToList();
+
             _projectDataService.InsertInfoProjectList(project);
         }
 
