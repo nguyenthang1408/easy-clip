@@ -74,7 +74,11 @@ namespace EasyClip.Services
             try
             {
                 var config = _configDataService.GetItem(1);
-                config.ProjectNames.Add(new ProjectName
+                if (config == null|| config.ProjectNames == null)
+                    return false;
+
+                if (config.ProjectNames == null)
+                    config.ProjectNames.Add(new ProjectName
                 {
                     ID = project.ID,
                     ProjectPath = project.ProjectPath,
