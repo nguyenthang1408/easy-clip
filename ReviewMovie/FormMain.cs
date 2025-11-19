@@ -2668,7 +2668,9 @@ namespace ReviewMovie
 
                 _infoProject = _projectService.GetProjectDetail(newProject.ID, projectPath);
                 DefaultProjectData();
+                CkZoom.Checked = true;
                 _statusZoom = true; // Khai báo cờ check
+                SaveEffectSetting();
                 MessageBox.Show("Tạo Project Thành Công !");
             }
             catch (Exception ex)
