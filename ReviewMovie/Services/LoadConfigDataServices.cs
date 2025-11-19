@@ -70,7 +70,7 @@ namespace EasyClip.Services
 
         public bool IsDuplicate(string path) => _configDataService.IsProjectPathUnique(path);
 
-        public void AddProjectToConfig(InfoProject project)
+        public bool AddProjectToConfig(InfoProject project)
         {
             try
             {
@@ -82,12 +82,11 @@ namespace EasyClip.Services
                     date = DateTime.Now
                 });
                 _configDataService.Insert(config);
+                return true;
             }
             catch (Exception)
             {
-                MessageBox.Show("Dữ liệu đang gặp lỗi, hệ thống sẽ tắt ứng dụng!", "Lỗi nghiêm trọng", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                Application.Exit();
+                return false;
             }
         }
 
