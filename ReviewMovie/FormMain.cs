@@ -2507,7 +2507,7 @@ namespace ReviewMovie
                             ComboBoxFuncion.CbBlinding(cbxSpeechType
                                 , ApiFptAI.FptAIVoiceCodeTemplate().ToList()
                                 , !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                                    ? ApiFptAI.FptAIVoiceCodeTemplate().ToList().FindIndex(x => x.Display.Equals(ckSetting.SspeechType))
+                                    ? Math.Max(ApiFptAI.FptAIVoiceCodeTemplate().ToList().FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
                                     : 0);
                             break;
                         default:
@@ -2525,7 +2525,7 @@ namespace ReviewMovie
                     ComboBoxFuncion.CbBlinding(cbxSpeechType
                               , serviceGoogleTTS.GetVoicesByLanguage(languageCode)
                               , !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                                  ? serviceGoogleTTS.GetVoicesByLanguage(languageCode).ToList().FindIndex(x => x.Display.Equals(ckSetting.SspeechType))
+                                  ? Math.Max(serviceGoogleTTS.GetVoicesByLanguage(languageCode).ToList().FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
                                   : 0);
                 }
                 else if (_manualSelected == ManualSelect.Elevenlab)
@@ -2534,7 +2534,7 @@ namespace ReviewMovie
                     ComboBoxFuncion.CbBlinding(cbxSpeechType
                            , GetVoiceTemplate.SearchVoicesByLanguageAccent(_listVoice, cbLanguageSelect.Text)
                            , !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                               ? GetVoiceTemplate.SearchVoicesByLanguageAccent(_listVoice, cbLanguageSelect.Text).ToList().FindIndex(x => x.Display.Equals(ckSetting.SspeechType))
+                               ? Math.Max(GetVoiceTemplate.SearchVoicesByLanguageAccent(_listVoice, cbLanguageSelect.Text).ToList().FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
                                : 0);
                 }
                 else if (_manualSelected == ManualSelect.Vbee)
@@ -2548,7 +2548,7 @@ namespace ReviewMovie
                     ComboBoxFuncion.CbBlinding(cbxSpeechType
                           , vietnamVoices
                           , !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                              ? vietnamVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType))
+                              ? Math.Max(vietnamVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
                               : 0);
                 }
             }
@@ -3037,7 +3037,7 @@ namespace ReviewMovie
                 ComboBoxFuncion.CbBlinding(cbLanguageSelect
                                             , ApiFptAI.FptAILanguageTemplate().ToList()
                                             , !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                                ? ApiFptAI.FptAILanguageTemplate().ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect))
+                                                ? Math.Max(ApiFptAI.FptAILanguageTemplate().ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                                                 : 0);
 
                 //cbLanguageSelect.DataSource = ApiFptAI.FptAILanguageTemplate().ToList();
@@ -3060,7 +3060,7 @@ namespace ReviewMovie
                 ComboBoxFuncion.CbBlinding(cbLanguageSelect
                             , _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null
                             , _listVoice != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect))
+                                ? Math.Max(GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                                 : 0);
 
                 //cbLanguageSelect.DataSource = _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null;
@@ -3085,7 +3085,7 @@ namespace ReviewMovie
                     ComboBoxFuncion.CbBlinding(cbLanguageSelect
                                           , listlanguage
                                           , !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                              ? listlanguage.ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect))
+                                              ? Math.Max(listlanguage.ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                                               : 0);
                 }
                 else
@@ -3108,7 +3108,7 @@ namespace ReviewMovie
                 ComboBoxFuncion.CbBlinding(cbLanguageSelect
                                           , ApiVbee.VbeeLanguageTemplate().ToList()
                                           , !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                              ? ApiVbee.VbeeLanguageTemplate().ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect))
+                                              ? Math.Max(ApiVbee.VbeeLanguageTemplate().ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                                               : 0);
 
                 //cbLanguageSelect.DataSource = ApiVbee.VbeeLanguageTemplate().ToList();
