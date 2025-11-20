@@ -209,6 +209,11 @@ namespace Lib
             return Path.Combine(newMediaPath, fileNameWithoutExtension + "." + newExtension).ToString();
 
         }
+        public static string CreateNewExtensionMedia(string mediaPath, string newMediaPath, string newExtension, string overrideFileNameWithoutExtension = null)
+        {
+            string fileNameWithoutExtension = overrideFileNameWithoutExtension ?? Path.GetFileNameWithoutExtension(mediaPath);
+            return Path.Combine(newMediaPath, fileNameWithoutExtension + "." + newExtension);
+        }
 
         public static bool IsImageExtension(string ext)
         {
