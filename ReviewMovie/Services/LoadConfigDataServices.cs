@@ -69,16 +69,27 @@ namespace EasyClip.Services
 
         public bool IsDuplicate(string path) => _configDataService.IsProjectPathUnique(path);
 
-        public void AddProjectToConfig(InfoProject project)
+        public bool AddProjectToConfig(InfoProject project)
         {
-            var config = _configDataService.GetItem(1);
-            config.ProjectNames.Add(new ProjectName
+            try
             {
-                ID = project.ID,
-                ProjectPath = project.ProjectPath,
-                date = DateTime.Now
-            });
-            _configDataService.Insert(config);
+                var config = _configDataService.GetItem(1);
+                if (config == null || config.ProjectNames == null)
+                    return false;
+
+                config.ProjectNames.Add(new ProjectName
+                {
+                    ID = project.ID,
+                    ProjectPath = project.ProjectPath,
+                    date = DateTime.Now
+                });
+                _configDataService.Insert(config);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public void SaveToDatabase(InfoProject project)

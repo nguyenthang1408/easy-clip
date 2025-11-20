@@ -2659,7 +2659,12 @@ namespace ReviewMovie
                 var newProject = _loadConfig.CreateNewProject(projectPath, _manualSelected.ToString(), nbSpeechRatio.Value.ToString("0.0"), CkZoom.Checked);
                 _projectName = projectPath;
 
-                _loadConfig.AddProjectToConfig(newProject);
+                var isSuccess = _loadConfig.AddProjectToConfig(newProject);
+                if(!isSuccess)
+                {
+                    MessageBox.Show("Dữ liệu đang gặp lỗi, hệ thống sẽ tắt ứng dụng!", "Lỗi nghiêm trọng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Environment.Exit(0);
+                }
                 _loadConfig.SaveToDatabase(newProject);
 
 
