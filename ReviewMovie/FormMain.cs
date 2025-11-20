@@ -545,8 +545,8 @@ namespace ReviewMovie
                 nScaleAudioRangeStart.Value = stdefault ? (decimal)1.1 : valEffectSettup.SscaleAudioRangeStart;
                 nScaleAudioRangeEnd.Value = stdefault ? (decimal)1.2 : valEffectSettup.SscaleAudioRangeEnd;
 
-                CkZoom.Checked = stdefault ? true
-                                            : valEffectSettup.SckZoom ? true : true;
+                CkZoom.Checked = stdefault ? false
+                                            : valEffectSettup.SckZoom ? true : false;
                 ckRotate.Checked = stdefault ? false
                                             : valEffectSettup.SckRotate ? true : false;
                 ckHflip.Checked = stdefault ? false
@@ -2675,6 +2675,9 @@ namespace ReviewMovie
 
                 _infoProject = _projectService.GetProjectDetail(newProject.ID, projectPath);
                 DefaultProjectData();
+                CkZoom.Checked = true;
+                _statusZoom = true; // Khai báo cờ check
+                SaveEffectSetting();
                 MessageBox.Show("Tạo Project Thành Công !");
             }
             catch (Exception ex)
