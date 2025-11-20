@@ -2661,7 +2661,7 @@ namespace ReviewMovie
                 if(!isSuccess)
                 {
                     MessageBox.Show("Dữ liệu đang gặp lỗi, hệ thống sẽ tắt ứng dụng!", "Lỗi nghiêm trọng", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Application.Exit();
+                    Environment.Exit(0);
                 }
                 _loadConfig.SaveToDatabase(newProject);
 
