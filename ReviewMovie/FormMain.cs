@@ -3060,17 +3060,29 @@ namespace ReviewMovie
 
                 VoicesEndpoint voiceServices = new VoicesEndpoint(txtAppID.Text);
                 var listVoice = await voiceServices.GetAllVoicesAsync();
-                _listVoice = listVoice?.ToList();
+                if(listVoice == null)
+                {
+                    MessageBox.Show("JsonData bị lỗi !");
 
-                ComboBoxFuncion.CbBlinding(cbLanguageSelect
-                            , _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null
-                            , _listVoice != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                ? Math.Max(GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
-                                : 0);
+                    cbLanguageSelect.SelectedIndexChanged -= cbLanguageSelect_SelectedIndexChanged;
+                    cbLanguageSelect.DataSource = null;
+                    cbLanguageSelect.SelectedIndex = -1;
+                    cbLanguageSelect.SelectedIndexChanged += cbLanguageSelect_SelectedIndexChanged;
+                }
+                else
+                {
+                    _listVoice = listVoice?.ToList();
 
-                //cbLanguageSelect.DataSource = _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null;
-                //cbLanguageSelect.DisplayMember = "Display";
-                //cbLanguageSelect.ValueMember = "Value";
+                    ComboBoxFuncion.CbBlinding(cbLanguageSelect
+                                , _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null
+                                , _listVoice != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
+                                    ? Math.Max(GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                                    : 0);
+
+                    //cbLanguageSelect.DataSource = _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null;
+                    //cbLanguageSelect.DisplayMember = "Display";
+                    //cbLanguageSelect.ValueMember = "Value";
+                }
             }
             else if (_manualSelected == ManualSelect.Google)
             {
