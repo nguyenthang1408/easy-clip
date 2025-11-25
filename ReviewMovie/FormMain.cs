@@ -143,6 +143,9 @@ namespace ReviewMovie
             _appcode = appcode;
             _apikey = apikey;
 
+            // Fix cứng màn hình
+            this.MaximizeBox = false;
+
             _sessionMerge = false;
             _clipPlayerService.ListenForClipPlayerMessages(HandleClipPlayerMessage);
 
