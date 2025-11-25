@@ -3062,7 +3062,7 @@ namespace ReviewMovie
                 var listVoice = await voiceServices.GetAllVoicesAsync();
                 if(listVoice == null)
                 {
-                    MessageBox.Show("JsonData bị lỗi !");
+                    MessageBox.Show("Elevenlab bị lỗi !");
 
                     cbLanguageSelect.SelectedIndexChanged -= cbLanguageSelect_SelectedIndexChanged;
                     cbLanguageSelect.DataSource = null;
