@@ -93,6 +93,7 @@ namespace Lib.VoiceServices.ElevenLabs.V1
 
         public static VoiceSettings GetVoiceSettingByVoiceId(IReadOnlyList<Voice> voices, string voiceId)
         {
+            if(voices == null || voiceId == null) return null;
             var voice = voices.FirstOrDefault(v => v.VoiceId == voiceId);
 
             if (voice != null && voice.Settings != null)
