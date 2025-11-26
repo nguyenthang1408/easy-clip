@@ -719,6 +719,18 @@ namespace ReviewMovie
 
         private void PrepareAudioConvertContext()
         {
+            // Đảm bảo các object nền không bị null
+            if (_allInfoRender == null)
+                _allInfoRender = new List<InfoRenderVd>();
+
+            if (_infoProject == null)
+                _infoProject = new InfoProject();
+
+            if (_infoProject.InfoRenders == null)
+                _infoProject.InfoRenders = new List<InfoRenderVd>();
+
+            // Nếu _voiceSetting chưa được khởi tạo thì tạo default để tránh NullReferenceException
+            var safeVoiceSetting = _voiceSetting ?? new VoiceSettings();
             _audioConvertContext = new AudioConvertContextModel
             {
                 ProjectName = _projectName,
@@ -728,9 +740,9 @@ namespace ReviewMovie
                 VoiceSetting = new VoiceSettings
                 {
                     Stability = (float)nbSpeechRatio.Value,
-                    SimilarityBoost = _voiceSetting.SimilarityBoost,
-                    Style = _voiceSetting.Style,
-                    SpeakerBoost = _voiceSetting.SpeakerBoost
+                    SimilarityBoost = safeVoiceSetting.SimilarityBoost,
+                    Style = safeVoiceSetting.Style,
+                    SpeakerBoost = safeVoiceSetting.SpeakerBoost
                 },
                 VoiceCode = _voiceCode,
                 SpeechRatio = nbSpeechRatio.Value,
@@ -781,10 +793,14 @@ namespace ReviewMovie
                 OnAfterRowConverted = (idx, audiolink, audiostatus, inputtext) =>
                 {
                     // Nếu cần có thể thêm kiểm tra điều kiện update ở đây
-                    _renderSyncService.UpdateProjectRenderList(_infoProject, _infoProject.InfoRenders, _allInfoRender);
+                    _renderSyncService.UpdateProjectRenderList(
+                        _infoProject,
+                        _infoProject.InfoRenders,
+                        _allInfoRender);
                 }
             };
         }
+
         private async void btnConvertAudio_Click(object sender, EventArgs e)
         {
             if (_indexRowSelect < 0 || string.IsNullOrEmpty(_projectName))
