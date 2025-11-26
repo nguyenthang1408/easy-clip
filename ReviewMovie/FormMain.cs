@@ -2688,6 +2688,7 @@ namespace ReviewMovie
 
         private void SelectProjectByName(ComboBox combo, string projectName)
         {
+            _previousText = projectName;
             // 1. Lấy config từ DB
             var config = _configService.GetItem(1);
 
