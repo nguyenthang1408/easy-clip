@@ -1501,7 +1501,7 @@ namespace ReviewMovie
                 }
 
                 var mtime = _allInfoRender?.Find(c => c.NoID == input.Index);
-                if ((mtime == null || mtime.Audiotime == null) && !ckNotUseAudio.Checked)
+                if ((mtime == null || mtime.Audiotime == null) && !input.Muted)
                 {
                     FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", "Audio Missing", Color.Red);
                     return;
