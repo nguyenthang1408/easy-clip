@@ -62,6 +62,7 @@ namespace ReviewMovie
         const string ERR_ROW_INDEX = "Chọn 1 Row để nạp thông tin !";
 
         const long MAX_SIZE_BYTES = 1 * 1024 * 1024; // 1 MB = 1,048,576 bytes
+        private const int MaxLength = 10;
 
         private ToolTip toolTipPL;
 
@@ -145,6 +146,9 @@ namespace ReviewMovie
 
             // Fix cứng màn hình
             this.MaximizeBox = false;
+
+            // Tắt tạm button Checkbox chọn tác vụ
+            btnSelectAll.Enabled = false;
 
             _sessionMerge = false;
             _clipPlayerService.ListenForClipPlayerMessages(HandleClipPlayerMessage);
@@ -1876,6 +1880,19 @@ namespace ReviewMovie
 
                     // Khôi phục vị trí con trỏ
                     txtTextInput.SelectionStart = cursorPosition;
+
+                    // Nếu > MaxLength thì cắt xuống
+                    if (processedText.Length > MaxLength)
+                    {
+                        processedText = processedText.Substring(0, MaxLength);
+                    }
+                    // Check số ký tự, nếu < 500, không cho nhập (hoặc hiển thị thông báo)
+                    if (txtTextInput.Text != processedText)
+                    {
+                        txtTextInput.Text = processedText;
+                        // Khôi phục con trỏ
+                        txtTextInput.SelectionStart = Math.Min(cursorPosition, processedText.Length);
+                    }
 
                     int lengt = processedText.Length;
                     string[] chars = processedText.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
