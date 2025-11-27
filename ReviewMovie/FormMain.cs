@@ -2828,6 +2828,9 @@ namespace ReviewMovie
 
                 _infoProject = _projectService.GetProjectDetail(newProject.ID, projectPath);
                 DefaultProjectData();
+
+                // Load Project Name
+                SelectProjectByName(cbProjectName, projectPath);
                 CkZoom.Checked = true;
                 _statusZoom = true; // Khai báo cờ check
                 SaveEffectSetting();
@@ -2838,6 +2841,61 @@ namespace ReviewMovie
                 MessageBox.Show("Lỗi khi tạo project:\r\n" + ex.Message);
             }
         }
+
+        private void SelectProjectByName(ComboBox combo, string projectName)
+        {
+            _previousText = projectName;
+            // 1. Lấy config từ DB
+            var config = _configService.GetItem(1);
+
+            // 2. Tạo danh sách project (có item trống đầu tiên)
+            var projectList = new List<ProjectName>
+            {
+                new ProjectName { ProjectPath = string.Empty } // Blank item
+            };
+
+            if (config?.ProjectNames != null)
+            {
+                // Sắp xếp theo date giảm dần và thêm vào danh sách
+                projectList.AddRange(config.ProjectNames
+                    .OrderByDescending(p => p.date)
+                    .Select(p => new ProjectName
+                    {
+                        ID = p.ID,
+                        ProjectPath = p.ProjectPath
+                    }));
+            }
+
+            // 3. Chuyển sang danh sách bind cho ComboBox
+            var comboItems = projectList
+                .Select(p => new ComboboxModel
+                {
+                    Display = p.ProjectPath,
+                    Value = p.ID.ToString()
+                })
+                .ToList();
+
+            // 4. Tìm index cần chọn theo projectName
+            int selectedIndex = 0; // default chọn item đầu tiên
+            if (!string.IsNullOrEmpty(projectName))
+            {
+                int idx = comboItems.FindIndex(c => c.Display.Equals(projectName, StringComparison.OrdinalIgnoreCase));
+                if (idx >= 0)
+                {
+                    selectedIndex = idx;
+                }
+            }
+
+            // Tạm tắt event
+            combo.SelectedIndexChanged -= cbProjectName_SelectedIndexChanged;
+
+            // 5. Bind ComboBox và chọn index
+            ComboBoxFuncion.CbBlinding(combo, comboItems, selectedIndex);
+
+            // Bật lại event
+            combo.SelectedIndexChanged += cbProjectName_SelectedIndexChanged;
+        }
+
         private void GenProjectData()
         {
             _projectPath = Path.Combine(_projectName, "Project\\");
