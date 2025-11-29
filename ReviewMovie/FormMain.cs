@@ -2833,6 +2833,7 @@ namespace ReviewMovie
                 SelectProjectByName(cbProjectName, projectPath);
                 CkZoom.Checked = true;
                 _statusZoom = true; // Khai báo cờ check
+                LoadOtherData(_infoProject, true);
                 SaveEffectSetting();
                 MessageBox.Show("Tạo Project Thành Công !");
             }
@@ -3768,7 +3769,6 @@ namespace ReviewMovie
             bool checkDefault;
             if(settingName == EffectConfigName.DEFAULT_Val)
             {
-                SaveEffectSetting();
                 checkDefault = true;
             }
             else
