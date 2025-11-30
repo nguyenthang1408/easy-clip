@@ -62,7 +62,7 @@ namespace ReviewMovie
         const string ERR_ROW_INDEX = "Chọn 1 Row để nạp thông tin !";
 
         const long MAX_SIZE_BYTES = 1 * 1024 * 1024; // 1 MB = 1,048,576 bytes
-        private const int MaxLength = 10;
+        private const int MaxLength = 500;
 
         private ToolTip toolTipPL;
 
