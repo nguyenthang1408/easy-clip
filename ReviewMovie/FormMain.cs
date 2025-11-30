@@ -2587,13 +2587,24 @@ namespace ReviewMovie
         }
         private void btnAddRow_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(_projectName) && _infoProject != null)
+            if (btnAddRow.Enabled == false) return; // Nếu đang disable thì bỏ qua click
+
+            btnAddRow.Enabled = false; // Chặn click liên tục
+
+            try
             {
-                addRow(_infoProject);
+                if (!string.IsNullOrEmpty(_projectName) && _infoProject != null)
+                {
+                    addRow(_infoProject);
+                }
+                else
+                {
+                    MessageBox.Show(ERR_PROJECT_EMPTY);
+                }
             }
-            else
+            finally
             {
-                MessageBox.Show(ERR_PROJECT_EMPTY);
+                btnAddRow.Enabled = true; // Chỉ bật lại khi xử lý xong
             }
         }
         private void addRow(InfoProject infoProject)
