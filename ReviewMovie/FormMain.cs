@@ -62,7 +62,6 @@ namespace ReviewMovie
         const string ERR_ROW_INDEX = "Chọn 1 Row để nạp thông tin !";
 
         const long MAX_SIZE_BYTES = 1 * 1024 * 1024; // 1 MB = 1,048,576 bytes
-        private const int MaxLength = 500;
 
         private ToolTip toolTipPL;
 
@@ -1882,9 +1881,13 @@ namespace ReviewMovie
                     txtTextInput.SelectionStart = cursorPosition;
 
                     // Nếu > MaxLength thì cắt xuống
-                    if (processedText.Length > MaxLength)
+                    if (processedText.Length > LibConst.MaxLengthText)
                     {
-                        processedText = processedText.Substring(0, MaxLength);
+                        MessageBox.Show($"Text quá dài! Chỉ cho phép tối đa {LibConst.MaxLengthText} ký tự.",
+                           "Thông báo",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Information);
+                        processedText = processedText.Substring(0, LibConst.MaxLengthText);
                     }
                     // Check số ký tự, nếu < 500, không cho nhập (hoặc hiển thị thông báo)
                     if (txtTextInput.Text != processedText)
