@@ -1,6 +1,7 @@
 ﻿using Common.Constant;
 using Common.Model;
 using Common.Services;
+using EasyClip.Base;
 using EasyClip.Infrastructure.Config;
 using EasyClip.Infrastructure.Project;
 using EasyClip.Services;
@@ -13,6 +14,7 @@ using Lib.VoiceServices.ElevenLabs.V1.Services;
 using Lib.VoiceServices.GoogleTTS;
 using LibCommon.Common;
 using Newtonsoft.Json.Linq;
+using ReviewMovie.Base;
 using ReviewMovie.Infrastructure.Config;
 using ReviewMovie.Infrastructure.Project;
 using ReviewMovie.Model;
@@ -104,6 +106,7 @@ namespace ReviewMovie
         public int _indexRowSelect = -1;
         private bool _videoShort = false;
         private bool _checkrecord = false;
+        private bool _isInternalTextChange = false;
 
         private bool _isAddingRow = false;
         private DateTime _lastAddRowClickTime = DateTime.MinValue;
@@ -149,6 +152,9 @@ namespace ReviewMovie
 
             // Fix cứng màn hình
             this.MaximizeBox = false;
+
+            // Tắt tạm button Checkbox chọn tác vụ
+            btnSelectAll.Enabled = false;
 
             _sessionMerge = false;
             _clipPlayerService.ListenForClipPlayerMessages(HandleClipPlayerMessage);
@@ -1863,41 +1869,56 @@ namespace ReviewMovie
                 MessageBox.Show($"Lỗi khi xóa dòng: {ex.Message}");
             }
         }
+
         private void txtTextInput_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(_projectName) && dgvMainView.RowCount > 0)
+            if (_isInternalTextChange)
+                return;
+
+            if (string.IsNullOrEmpty(_projectName) || dgvMainView.RowCount <= 0)
+                return;
+
+            if (_indexRowSelect < 0)
             {
-                if (_indexRowSelect >= 0)
+                MessageBox.Show(ERR_ROW_INDEX);
+                return;
+            }
+
+            int cursor = txtTextInput.SelectionStart;
+
+            // Gọi hàm chung
+            bool wasTrimmed;
+            string processed = TextProcessUtil.ProcessText(txtTextInput.Text, RwConstant.MaxLengthText, out wasTrimmed);
+
+            // Gán lại Text nếu có thay đổi
+            if (txtTextInput.Text != processed)
+            {
+                _isInternalTextChange = true;
+                txtTextInput.Text = processed;
+                txtTextInput.SelectionStart = Math.Min(cursor, processed.Length);
+                _isInternalTextChange = false;
+
+                // Chỉ báo message 1 lần
+                if (wasTrimmed)
                 {
-                    // Lưu vị trí con trỏ trước khi thay đổi
-                    int cursorPosition = txtTextInput.SelectionStart;
-
-                    // Gọi phương thức để loại bỏ ký tự xuống dòng và nối các dòng lại
-                    string processedText = RemoveNewLineChars(txtTextInput.Text);
-
-                    // Cập nhật nội dung của TextBox
-                    txtTextInput.Text = processedText;
-
-                    // Khôi phục vị trí con trỏ
-                    txtTextInput.SelectionStart = cursorPosition;
-
-                    int lengt = processedText.Length;
-                    string[] chars = processedText.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
-                    string textlength = string.Format("{0} 'Ký Tự' | {1} Chữ ", lengt.ToString(), chars.Length.ToString());
-
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_inputtext", txtTextInput.Text, Color.White);
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_textlength", textlength, Color.White);
-                }
-                else
-                {
-                    MessageBox.Show(ERR_ROW_INDEX);
+                    MessageBox.Show(
+                        $"Text quá dài! Chỉ cho phép tối đa {RwConstant.MaxLengthText} ký tự.",
+                        "Thông báo",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
                 }
             }
-            //else
-            //{
-            //    //MessageBox.Show(ERR_PROJECT_EMPTY);
-            //}
+
+            // Update UI
+            int len = processed.Length;
+            string[] words = processed.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
+            string textlength = $"{len} 'Ký Tự' | {words.Length} Chữ";
+
+            FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_inputtext", processed, Color.White);
+            FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_textlength", textlength, Color.White);
         }
+
         private async void txtTextInput_DragDrop(object sender, DragEventArgs e)
         {
             var data = e.Data.GetData(DataFormats.FileDrop);
