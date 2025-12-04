@@ -105,6 +105,10 @@ namespace ReviewMovie
         private bool _videoShort = false;
         private bool _checkrecord = false;
 
+        private bool _isAddingRow = false;
+        private DateTime _lastAddRowClickTime = DateTime.MinValue;
+        private readonly TimeSpan _addRowClickCooldown = TimeSpan.FromMilliseconds(350);
+
         private const decimal _speechRatioDefault = 0.5m;
 
         private decimal _speechratioElevenlab = 0.5m;
@@ -2585,14 +2589,26 @@ namespace ReviewMovie
                 nbSpeechRatio.Value = _speechratioElevenlab;
             }
         }
+
         private void btnAddRow_Click(object sender, EventArgs e)
         {
-            if (btnAddRow.Enabled == false) return; // Nếu đang disable thì bỏ qua click
+            var now = DateTime.UtcNow;
+            if (now - _lastAddRowClickTime < _addRowClickCooldown)
+            {
+                return;
+            }
 
-            btnAddRow.Enabled = false; // Chặn click liên tục
+            if (_isAddingRow)
+            {
+                return;
+            }
 
             try
             {
+                _lastAddRowClickTime = now;
+                _isAddingRow = true;
+                btnAddRow.Enabled = false;
+
                 if (!string.IsNullOrEmpty(_projectName) && _infoProject != null)
                 {
                     addRow(_infoProject);
@@ -2604,9 +2620,11 @@ namespace ReviewMovie
             }
             finally
             {
-                btnAddRow.Enabled = true; // Chỉ bật lại khi xử lý xong
+                btnAddRow.Enabled = true;
+                _isAddingRow = false;
             }
         }
+
         private void addRow(InfoProject infoProject)
         {
             txtTextInput.ReadOnly = false;
