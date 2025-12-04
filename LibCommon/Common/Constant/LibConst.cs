@@ -13,7 +13,6 @@ namespace Common.Constant
         public const string AppName = "EasyClip";
         public const string DBName = "config.db";
         public const string DBNameBackup = "config_backup.bak";
-        public const int MaxLengthText = 500;
     }
 
 }

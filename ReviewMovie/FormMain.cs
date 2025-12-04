@@ -13,6 +13,7 @@ using Lib.VoiceServices.ElevenLabs.V1.Services;
 using Lib.VoiceServices.GoogleTTS;
 using LibCommon.Common;
 using Newtonsoft.Json.Linq;
+using ReviewMovie.Base;
 using ReviewMovie.Infrastructure.Config;
 using ReviewMovie.Infrastructure.Project;
 using ReviewMovie.Model;
@@ -1881,13 +1882,13 @@ namespace ReviewMovie
                     txtTextInput.SelectionStart = cursorPosition;
 
                     // Nếu > MaxLength thì cắt xuống
-                    if (processedText.Length > LibConst.MaxLengthText)
+                    if (processedText.Length > RwConstant.MaxLengthText)
                     {
-                        MessageBox.Show($"Text quá dài! Chỉ cho phép tối đa {LibConst.MaxLengthText} ký tự.",
+                        MessageBox.Show($"Text quá dài! Chỉ cho phép tối đa {RwConstant.MaxLengthText} ký tự.",
                            "Thông báo",
                            MessageBoxButtons.OK,
                            MessageBoxIcon.Information);
-                        processedText = processedText.Substring(0, LibConst.MaxLengthText);
+                        processedText = processedText.Substring(0, RwConstant.MaxLengthText);
                     }
                     // Check số ký tự, nếu < 500, không cho nhập (hoặc hiển thị thông báo)
                     if (txtTextInput.Text != processedText)
