@@ -105,6 +105,7 @@ namespace ReviewMovie
         public int _indexRowSelect = -1;
         private bool _videoShort = false;
         private bool _checkrecord = false;
+        private bool _isInternalTextChange = false;
 
         private const decimal _speechRatioDefault = 0.5m;
 
@@ -1863,58 +1864,62 @@ namespace ReviewMovie
                 MessageBox.Show($"Lỗi khi xóa dòng: {ex.Message}");
             }
         }
+
         private void txtTextInput_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(_projectName) && dgvMainView.RowCount > 0)
+            // Nếu đang thay đổi text từ code thì bỏ qua để tránh loop / double message
+            if (_isInternalTextChange)
+                return;
+
+            if (string.IsNullOrEmpty(_projectName) || dgvMainView.RowCount <= 0)
+                return;
+
+            if (_indexRowSelect < 0)
             {
-                if (_indexRowSelect >= 0)
-                {
-                    // Lưu vị trí con trỏ trước khi thay đổi
-                    int cursorPosition = txtTextInput.SelectionStart;
-
-                    // Gọi phương thức để loại bỏ ký tự xuống dòng và nối các dòng lại
-                    string processedText = RemoveNewLineChars(txtTextInput.Text);
-
-                    // Cập nhật nội dung của TextBox
-                    txtTextInput.Text = processedText;
-
-                    // Khôi phục vị trí con trỏ
-                    txtTextInput.SelectionStart = cursorPosition;
-
-                    // Nếu > MaxLength thì cắt xuống
-                    if (processedText.Length > RwConstant.MaxLengthText)
-                    {
-                        MessageBox.Show($"Text quá dài! Chỉ cho phép tối đa {RwConstant.MaxLengthText} ký tự.",
-                           "Thông báo",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
-                        processedText = processedText.Substring(0, RwConstant.MaxLengthText);
-                    }
-                    // Check số ký tự, nếu < 500, không cho nhập (hoặc hiển thị thông báo)
-                    if (txtTextInput.Text != processedText)
-                    {
-                        txtTextInput.Text = processedText;
-                        // Khôi phục con trỏ
-                        txtTextInput.SelectionStart = Math.Min(cursorPosition, processedText.Length);
-                    }
-
-                    int lengt = processedText.Length;
-                    string[] chars = processedText.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
-                    string textlength = string.Format("{0} 'Ký Tự' | {1} Chữ ", lengt.ToString(), chars.Length.ToString());
-
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_inputtext", txtTextInput.Text, Color.White);
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_textlength", textlength, Color.White);
-                }
-                else
-                {
-                    MessageBox.Show(ERR_ROW_INDEX);
-                }
+                MessageBox.Show(ERR_ROW_INDEX);
+                return;
             }
-            //else
-            //{
-            //    //MessageBox.Show(ERR_PROJECT_EMPTY);
-            //}
+
+            // Lưu text gốc và vị trí con trỏ
+            string originalText = txtTextInput.Text;
+            int cursorPosition = txtTextInput.SelectionStart;
+
+            // Bỏ xuống dòng, nối lại
+            string processedText = RemoveNewLineChars(originalText);
+
+            // Nếu > MaxLength thì cắt xuống + báo 1 lần duy nhất
+            if (processedText.Length > RwConstant.MaxLengthText)
+            {
+                MessageBox.Show(
+                    $"Text quá dài! Chỉ cho phép tối đa {RwConstant.MaxLengthText} ký tự.",
+                    "Thông báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                processedText = processedText.Substring(0, RwConstant.MaxLengthText);
+            }
+
+            // Chỉ gán lại TextBox nếu có thay đổi so với ban đầu
+            if (processedText != originalText)
+            {
+                _isInternalTextChange = true; // đánh dấu: thay đổi nội bộ
+
+                txtTextInput.Text = processedText;
+                txtTextInput.SelectionStart = Math.Min(cursorPosition, processedText.Length);
+
+                _isInternalTextChange = false; // xong thì bỏ cờ
+            }
+
+            // Từ đây trở xuống dùng processedText để cập nhật length và DataGridView
+            int lengt = processedText.Length;
+            string[] chars = processedText.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
+            string textlength = string.Format("{0} 'Ký Tự' | {1} Chữ ", lengt.ToString(), chars.Length.ToString());
+
+            FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_inputtext", txtTextInput.Text, Color.White);
+            FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_textlength", textlength, Color.White);
         }
+
         private async void txtTextInput_DragDrop(object sender, DragEventArgs e)
         {
             var data = e.Data.GetData(DataFormats.FileDrop);
