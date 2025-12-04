@@ -105,6 +105,10 @@ namespace ReviewMovie
         private bool _videoShort = false;
         private bool _checkrecord = false;
 
+        private bool _isAddingRow = false;
+        private DateTime _lastAddRowClickTime = DateTime.MinValue;
+        private readonly TimeSpan _addRowClickCooldown = TimeSpan.FromMilliseconds(350);
+
         private const decimal _speechRatioDefault = 0.5m;
 
         private decimal _speechratioElevenlab = 0.5m;
@@ -2585,17 +2589,42 @@ namespace ReviewMovie
                 nbSpeechRatio.Value = _speechratioElevenlab;
             }
         }
+
         private void btnAddRow_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(_projectName) && _infoProject != null)
+            var now = DateTime.UtcNow;
+            if (now - _lastAddRowClickTime < _addRowClickCooldown)
             {
-                addRow(_infoProject);
+                return;
             }
-            else
+
+            if (_isAddingRow)
             {
-                MessageBox.Show(ERR_PROJECT_EMPTY);
+                return;
+            }
+
+            try
+            {
+                _lastAddRowClickTime = now;
+                _isAddingRow = true;
+                btnAddRow.Enabled = false;
+
+                if (!string.IsNullOrEmpty(_projectName) && _infoProject != null)
+                {
+                    addRow(_infoProject);
+                }
+                else
+                {
+                    MessageBox.Show(ERR_PROJECT_EMPTY);
+                }
+            }
+            finally
+            {
+                btnAddRow.Enabled = true;
+                _isAddingRow = false;
             }
         }
+
         private void addRow(InfoProject infoProject)
         {
             txtTextInput.ReadOnly = false;
