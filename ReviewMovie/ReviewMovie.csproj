@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Base\Enum.cs" />
     <Compile Include="Base\RVFuncion.cs" />
+    <Compile Include="Base\TextProcessUtil.cs" />
     <Compile Include="Base\UIThreadHelper.cs" />
     <Compile Include="Infrastructure\Config\ConfigDataService.cs" />
     <Compile Include="Infrastructure\Config\ConfigModel.cs" />

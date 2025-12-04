@@ -1,6 +1,7 @@
 ﻿using Common.Constant;
 using Common.Model;
 using Common.Services;
+using EasyClip.Base;
 using EasyClip.Infrastructure.Config;
 using EasyClip.Infrastructure.Project;
 using EasyClip.Services;
@@ -1867,7 +1868,6 @@ namespace ReviewMovie
 
         private void txtTextInput_TextChanged(object sender, EventArgs e)
         {
-            // Nếu đang thay đổi text từ code thì bỏ qua để tránh loop / double message
             if (_isInternalTextChange)
                 return;
 
@@ -1880,43 +1880,38 @@ namespace ReviewMovie
                 return;
             }
 
-            // Lưu text gốc và vị trí con trỏ
-            string originalText = txtTextInput.Text;
-            int cursorPosition = txtTextInput.SelectionStart;
+            int cursor = txtTextInput.SelectionStart;
 
-            // Bỏ xuống dòng, nối lại
-            string processedText = RemoveNewLineChars(originalText);
+            // Gọi hàm chung
+            bool wasTrimmed;
+            string processed = TextProcessUtil.ProcessText(txtTextInput.Text, RwConstant.MaxLengthText, out wasTrimmed);
 
-            // Nếu > MaxLength thì cắt xuống + báo 1 lần duy nhất
-            if (processedText.Length > RwConstant.MaxLengthText)
+            // Gán lại Text nếu có thay đổi
+            if (txtTextInput.Text != processed)
             {
-                MessageBox.Show(
-                    $"Text quá dài! Chỉ cho phép tối đa {RwConstant.MaxLengthText} ký tự.",
-                    "Thông báo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                _isInternalTextChange = true;
+                txtTextInput.Text = processed;
+                txtTextInput.SelectionStart = Math.Min(cursor, processed.Length);
+                _isInternalTextChange = false;
 
-                processedText = processedText.Substring(0, RwConstant.MaxLengthText);
+                // Chỉ báo message 1 lần
+                if (wasTrimmed)
+                {
+                    MessageBox.Show(
+                        $"Text quá dài! Chỉ cho phép tối đa {RwConstant.MaxLengthText} ký tự.",
+                        "Thông báo",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
+                }
             }
 
-            // Chỉ gán lại TextBox nếu có thay đổi so với ban đầu
-            if (processedText != originalText)
-            {
-                _isInternalTextChange = true; // đánh dấu: thay đổi nội bộ
+            // Update UI
+            int len = processed.Length;
+            string[] words = processed.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
+            string textlength = $"{len} 'Ký Tự' | {words.Length} Chữ";
 
-                txtTextInput.Text = processedText;
-                txtTextInput.SelectionStart = Math.Min(cursorPosition, processedText.Length);
-
-                _isInternalTextChange = false; // xong thì bỏ cờ
-            }
-
-            // Từ đây trở xuống dùng processedText để cập nhật length và DataGridView
-            int lengt = processedText.Length;
-            string[] chars = processedText.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
-            string textlength = string.Format("{0} 'Ký Tự' | {1} Chữ ", lengt.ToString(), chars.Length.ToString());
-
-            FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_inputtext", txtTextInput.Text, Color.White);
+            FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_inputtext", processed, Color.White);
             FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_textlength", textlength, Color.White);
         }
 
