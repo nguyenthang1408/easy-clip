@@ -2549,6 +2549,7 @@ namespace ReviewMovie
                     ClearTextInput();
                     ReloadProjectList();
                     ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, false);
+                    if (cbSettingTemplate.Items.Count > 0) cbSettingTemplate.SelectedIndex = 0;
                     return;
                 }
 
@@ -2642,6 +2643,7 @@ namespace ReviewMovie
                 // Chỉ cập nhật lại _previousText sau khi đã xác nhận mở project mới thành công
                 _previousText = cbProjectName.Text;
                 _isCheckingAndCancelingProjectChange = false;
+                UIThreadHelper.SetLabelText(lblstatus, "...", Color.Black);
             }
         }
 
@@ -2835,6 +2837,7 @@ namespace ReviewMovie
                 _statusZoom = true; // Khai báo cờ check
                 LoadOtherData(_infoProject, true);
                 SaveEffectSetting();
+                UIThreadHelper.SetLabelText(lblstatus, "...", Color.Black);
                 MessageBox.Show("Tạo Project Thành Công !");
             }
             catch (Exception ex)
