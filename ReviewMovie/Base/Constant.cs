@@ -8,5 +8,6 @@ namespace ReviewMovie.Base
 {
     public class RwConstant
     {
+        public const string STATUS_DEFAULT = "...";
     }
 }

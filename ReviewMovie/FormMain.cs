@@ -13,6 +13,7 @@ using Lib.VoiceServices.ElevenLabs.V1.Services;
 using Lib.VoiceServices.GoogleTTS;
 using LibCommon.Common;
 using Newtonsoft.Json.Linq;
+using ReviewMovie.Base;
 using ReviewMovie.Infrastructure.Config;
 using ReviewMovie.Infrastructure.Project;
 using ReviewMovie.Model;
@@ -774,18 +775,28 @@ namespace ReviewMovie
                            , EffectConfig.EffectConfigTemplate().ToList()
                            , EffectConfig.EffectConfigTemplate().ToList().FindIndex(x => x.Value.Equals(EffectConfigName.CUSTOM_Val)));
 
+            SetDefaultEffectControls();
+        }
+
+        // Thiết lập toàn bộ giá trị mặc định cho các Control liên quan đến cấu hình.
+        private void SetDefaultEffectControls()
+        {
+            // --- Numeric Defaults ---
             nFPS.Value = 30;
             nbThread.Value = 2;
             nbSpeechRatio.Value = _speechRatioDefault;
             nScaleAudioRangeStart.Value = (decimal)1.1;
             nScaleAudioRangeEnd.Value = (decimal)1.2;
 
+            // --- Checkbox Defaults ---
             CkZoom.Checked = true;
             ckRotate.Checked = false;
             ckHflip.Checked = false;
             ckHflipRandom.Checked = false;
             ckRandomMoveLeftRight.Checked = false;
             ckNotUseAudio.Checked = false;
+
+            // --- Setting Template Default ---
             cbSettingTemplate.SelectedValue = EffectConfigName.DEFAULT_Val;
         }
 
@@ -1639,7 +1650,7 @@ namespace ReviewMovie
             {
                 token.ThrowIfCancellationRequested();
 
-                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input?.Index ?? -1, "Column_renderstatus", "...", Color.Yellow);
+                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input?.Index ?? -1, "Column_renderstatus", RwConstant.STATUS_DEFAULT, Color.Yellow);
 
                 if (input == null)
                 {
@@ -2550,7 +2561,7 @@ namespace ReviewMovie
                     ReloadProjectList();
                     ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, false);
                     DisplayItemDefault();
-                    UIThreadHelper.SetLabelText(lblstatus, "...", Color.Black);
+                    UIThreadHelper.SetLabelText(lblstatus, RwConstant.STATUS_DEFAULT, Color.Black);
                     return;
                 }
 
@@ -2644,7 +2655,7 @@ namespace ReviewMovie
                 // Chỉ cập nhật lại _previousText sau khi đã xác nhận mở project mới thành công
                 _previousText = cbProjectName.Text;
                 _isCheckingAndCancelingProjectChange = false;
-                UIThreadHelper.SetLabelText(lblstatus, "...", Color.Black);
+                UIThreadHelper.SetLabelText(lblstatus, RwConstant.STATUS_DEFAULT, Color.Black);
             }
         }
 
@@ -2838,7 +2849,7 @@ namespace ReviewMovie
                 _statusZoom = true; // Khai báo cờ check
                 DisplayItemDefault();
                 SaveEffectSetting();
-                UIThreadHelper.SetLabelText(lblstatus, "...", Color.Black);
+                UIThreadHelper.SetLabelText(lblstatus, RwConstant.STATUS_DEFAULT, Color.Black);
                 MessageBox.Show("Tạo Project Thành Công !");
             }
             catch (Exception ex)
@@ -2916,7 +2927,7 @@ namespace ReviewMovie
         }
         private void btnAddAll_Click(object sender, EventArgs e)
         {
-            lblstatus.Text = "...";
+            lblstatus.Text = RwConstant.STATUS_DEFAULT;
             if (!string.IsNullOrEmpty(_projectName))
             {
                 GhepvideoTheoSTT();
@@ -3806,7 +3817,7 @@ namespace ReviewMovie
             {
                 for (int i = 0; i < fullText.Length; i++)
                 {
-                    string subString = "..." + fullText.Substring(i);
+                    string subString = RwConstant.STATUS_DEFAULT + fullText.Substring(i);
                     SizeF subStringSize = e.Graphics.MeasureString(subString, e.Font);
 
                     if (subStringSize.Width <= maxWidth)
