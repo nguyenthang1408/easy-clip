@@ -2544,14 +2544,14 @@ namespace ReviewMovie
                 if (dgvMainView.CurrentRow != null)
                     SaveCurrentRowData(dgvMainView.CurrentRow.Index);
 
-                 if (!string.IsNullOrEmpty(_projectName) && _infoProject != null)
+                if (!string.IsNullOrEmpty(_projectName) && _infoProject != null)
                 {
                     // Cập nhật vào project
                     _renderSyncService.UpdateProjectRenderList(_infoProject, _infoProject.InfoRenders, _allInfoRender);
                 }
 
                 // ==== 3. Lấy thông tin project mới được chọn từ combo ====
-                 var selectedItem = (ComboboxModel)cbProjectName.SelectedItem;
+                var selectedItem = (ComboboxModel)cbProjectName.SelectedItem;
                 string selectID = selectedItem.Value;
                 string selectPath = selectedItem.Display;
 
@@ -2593,7 +2593,7 @@ namespace ReviewMovie
                     DefaultProjectData();
                     _projectName = _infoProject.ProjectPath;
                     CkZoom.Checked = _infoProject.EffectSettup.SckZoom;
-                     ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, true);
+                    ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, true);
 
                     var voiceSite = _infoProject.VoiceSelect;
 
@@ -2602,7 +2602,7 @@ namespace ReviewMovie
                         _allInfoRender = _infoProject.InfoRenders.ToList();
                         PrepareData(_allInfoRender, ref _listdata);
 
-                         _indexRowMax = _allInfoRender.Max(r => r.NoID) + 1;
+                        _indexRowMax = _allInfoRender.Max(r => r.NoID) + 1;
 
                         if (dgvMainView.RowCount > 0)
                         {
