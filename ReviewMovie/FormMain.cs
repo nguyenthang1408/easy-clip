@@ -2643,7 +2643,42 @@ namespace ReviewMovie
                 return;
             }
 
-            // Bước 3: Tạo file danh sách video hợp lệ cho ffmpeg
+            // Bước 3: Nếu có video lỗi, hỏi user có muốn tiếp tục merge không
+            if (corruptedVideos.Count > 0)
+            {
+                bool shouldContinue = false;
+                Invoke(new MethodInvoker(delegate ()
+                {
+                    string confirmMessage = $"⚠️ Phát hiện {corruptedVideos.Count} video lỗi:\n\n";
+                    confirmMessage += string.Join(", ", corruptedVideos.Take(10)); // Hiển thị tối đa 10 video
+                    if (corruptedVideos.Count > 10)
+                    {
+                        confirmMessage += $"\n... và {corruptedVideos.Count - 10} video khác";
+                    }
+                    confirmMessage += $"\n\n✅ Video hợp lệ: {validVideos}/{totalVideos}";
+                    confirmMessage += "\n\n❓ Bạn có muốn tiếp tục ghép {validVideos} video hợp lệ không?";
+
+                    DialogResult result = MessageBox.Show(
+                        confirmMessage,
+                        "Xác nhận ghép video",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question
+                    );
+
+                    shouldContinue = (result == DialogResult.Yes);
+                }));
+
+                if (!shouldContinue)
+                {
+                    Invoke(new MethodInvoker(delegate ()
+                    {
+                        lblstatus.Text = "Đã hủy ghép video";
+                    }));
+                    return; // User chọn NO, kết thúc
+                }
+            }
+
+            // Bước 4: Tạo file danh sách video hợp lệ cho ffmpeg
             foreach (string str in validVideoList)
             {
                 using (StreamWriter w = File.AppendText(filetext))
@@ -2653,7 +2688,7 @@ namespace ReviewMovie
                 }
             }
 
-            // Bước 4: Ghép video bằng ffmpeg với progress tracking
+            // Bước 5: Ghép video bằng ffmpeg với progress tracking
             // Check cancellation trước khi start ffmpeg
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -2662,8 +2697,12 @@ namespace ReviewMovie
                 lblstatus.Text = $"Đang ghép {validVideos} video hợp lệ...";
             }));
 
+            // Tạo tên output file với datetime: output_20250611_143052.mp4
+            string dateTimeStr = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            string outputFileName = $"output_{dateTimeStr}.mp4";
+            string outputPath = Path.Combine(_outputPath, outputFileName);
+
             string ffmpegPath = Funcion.selectffmpegversion() + "\\ffmpeg.exe";
-            string outputPath = nameAllmerger("VideoAll");
             string arguments = $"-y -f concat -safe 0 -i \"{filetext}\" -c copy -vcodec libx264 -pix_fmt yuv420p -preset superfast \"{outputPath}\"";
 
             int exitCode = RunFFmpegMerge(ffmpegPath, arguments, validVideos, cancellationToken);
@@ -2672,7 +2711,40 @@ namespace ReviewMovie
             {
                 if (exitCode == 0)
                 {
-                    // Bước 5: Báo cáo kết quả
+                    // Bước 6: Ghi log file nếu có video lỗi
+                    if (corruptedVideos.Count > 0)
+                    {
+                        string logFileName = $"output_{dateTimeStr}_log.txt";
+                        string logFilePath = Path.Combine(_outputPath, logFileName);
+
+                        try
+                        {
+                            using (StreamWriter log = new StreamWriter(logFilePath, false, System.Text.Encoding.UTF8))
+                            {
+                                log.WriteLine("=== LOG GHÉP VIDEO ===");
+                                log.WriteLine($"Thời gian: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+                                log.WriteLine($"Output file: {outputFileName}");
+                                log.WriteLine($"Output path: {outputPath}");
+                                log.WriteLine();
+                                log.WriteLine($"=== THỐNG KÊ ===");
+                                log.WriteLine($"Tổng số video: {totalVideos}");
+                                log.WriteLine($"Video hợp lệ: {validVideos}");
+                                log.WriteLine($"Video lỗi: {corruptedVideos.Count}");
+                                log.WriteLine();
+                                log.WriteLine($"=== DANH SÁCH VIDEO LỖI ({corruptedVideos.Count}) ===");
+                                for (int i = 0; i < corruptedVideos.Count; i++)
+                                {
+                                    log.WriteLine($"{i + 1}. {corruptedVideos[i]}");
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Không thể ghi log file: {ex.Message}");
+                        }
+                    }
+
+                    // Bước 7: Báo cáo kết quả
                     Invoke(new MethodInvoker(delegate ()
                     {
                         lblstatus.Text = "Ghép Done";
@@ -2682,7 +2754,13 @@ namespace ReviewMovie
                         report += $"📊 Thống kê:\n";
                         report += $"- Tổng số video: {totalVideos}\n";
                         report += $"- Video hợp lệ: {validVideos}\n";
-                        report += $"- Video lỗi: {corruptedVideos.Count}";
+                        report += $"- Video lỗi: {corruptedVideos.Count}\n\n";
+                        report += $"📁 Output: {outputFileName}";
+
+                        if (corruptedVideos.Count > 0)
+                        {
+                            report += $"\n📝 Log: output_{dateTimeStr}_log.txt";
+                        }
 
                         MessageBoxIcon icon = corruptedVideos.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information;
                         MessageBox.Show(report, "Kết quả ghép video", MessageBoxButtons.OK, icon);
