@@ -2723,6 +2723,11 @@ namespace ReviewMovie
 
                 File.WriteAllText(filetext, "");
             }
+            catch (OperationCanceledException)
+            {
+                // Re-throw để theart_ghepvideoTheoSTT() catch và xử lý
+                throw;
+            }
             catch (Exception exception)
             {
                 Invoke(new MethodInvoker(delegate ()
