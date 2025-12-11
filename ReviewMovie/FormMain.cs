@@ -2694,7 +2694,12 @@ namespace ReviewMovie
                 else if (exitCode == -1)
                 {
                     // Cancelled hoặc error
-                    if (!cancellationToken.IsCancellationRequested)
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        // Đã cancel - throw exception để catch block xử lý
+                        cancellationToken.ThrowIfCancellationRequested();
+                    }
+                    else
                     {
                         // Error chứ không phải cancel
                         Invoke(new MethodInvoker(delegate ()
