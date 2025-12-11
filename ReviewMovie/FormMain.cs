@@ -2305,6 +2305,97 @@ namespace ReviewMovie
         }
 
         /// <summary>
+        /// Run FFmpeg với progress tracking cho merge video
+        /// Clone từ LibCommon.Common.CFuncion.RunFFmpeg() và customize cho merge
+        /// </summary>
+        /// <param name="ffmpegPath">Đường dẫn đến ffmpeg.exe</param>
+        /// <param name="arguments">Arguments cho ffmpeg</param>
+        /// <param name="validVideoCount">Số video hợp lệ để tính progress</param>
+        /// <param name="cancellationToken">Token để cancel</param>
+        /// <returns>Exit code của ffmpeg (0 = success)</returns>
+        private int RunFFmpegMerge(string ffmpegPath, string arguments, int validVideoCount, CancellationToken cancellationToken)
+        {
+            using (var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = ffmpegPath,
+                    Arguments = arguments,
+                    RedirectStandardError = true, // FFmpeg ghi progress vào stderr
+                    UseShellExecute = false,
+                    CreateNoWindow = true // Không hiển thị command line
+                }
+            })
+            {
+                // Regex để parse time từ output ffmpeg: time=00:00:06.93
+                var timeRegex = new System.Text.RegularExpressions.Regex(@"time=(\d+):(\d+):(\d+\.\d+)");
+
+                process.ErrorDataReceived += (sender, e) =>
+                {
+                    if (!string.IsNullOrEmpty(e.Data))
+                    {
+                        // Parse time từ output
+                        var match = timeRegex.Match(e.Data);
+                        if (match.Success)
+                        {
+                            string hours = match.Groups[1].Value;
+                            string minutes = match.Groups[2].Value;
+                            string seconds = match.Groups[3].Value;
+                            string timeStr = $"{hours}:{minutes}:{seconds.Split('.')[0]}"; // HH:MM:SS
+
+                            try
+                            {
+                                // Update UI (thread-safe)
+                                Invoke(new MethodInvoker(delegate ()
+                                {
+                                    lblstatus.Text = $"Đang ghép {validVideoCount} video - Time: {timeStr}";
+                                }));
+                            }
+                            catch { } // Ignore nếu form đã dispose
+                        }
+                    }
+                };
+
+                // Đăng ký callback cho token: nếu Cancel thì kill process
+                using (cancellationToken.Register(() =>
+                {
+                    try
+                    {
+                        if (!process.HasExited)
+                            process.Kill();
+                    }
+                    catch { }
+                }))
+                {
+                    try
+                    {
+                        process.Start();
+                        process.BeginErrorReadLine();
+
+                        // Lặp chờ process kết thúc hoặc bị cancel
+                        while (!process.WaitForExit(200))
+                        {
+                            if (cancellationToken.IsCancellationRequested)
+                            {
+                                // Đã cancel, process đã bị kill
+                                return -1; // Return -1 để biết là cancelled
+                            }
+                        }
+
+                        // Đợi thêm để đảm bảo ErrorDataReceived được flush
+                        process.WaitForExit();
+
+                        return process.ExitCode;
+                    }
+                    catch
+                    {
+                        return -1;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Validate video file using ffprobe to check if it's corrupted
         /// </summary>
         /// <param name="videoPath">Full path to video file</param>
@@ -2562,48 +2653,24 @@ namespace ReviewMovie
                 }
             }
 
-            // Bước 4: Ghép video bằng ffmpeg
+            // Bước 4: Ghép video bằng ffmpeg với progress tracking
             // Check cancellation trước khi start ffmpeg
             cancellationToken.ThrowIfCancellationRequested();
 
-            object[] args = new object[] { filetext, nameAllmerger("VideoAll") };
-            string str2 = string.Format(" -y -f concat -safe 0 -i \"{0}\" -c copy -vcodec libx264 -pix_fmt yuv420p -preset superfast \"{1}\" ", args);
-
-            Process process = new Process();
-            ProcessStartInfo info = new ProcessStartInfo
+            Invoke(new MethodInvoker(delegate ()
             {
-                WindowStyle = ProcessWindowStyle.Normal,
-                FileName = Funcion.selectffmpegversion() + "\\ffmpeg.exe",
-                Arguments = str2,
-                RedirectStandardError = true, // Capture stderr để log lỗi nếu cần
-                UseShellExecute = false
-            };
-            process.StartInfo = info;
+                lblstatus.Text = $"Đang ghép {validVideos} video hợp lệ...";
+            }));
+
+            string ffmpegPath = Funcion.selectffmpegversion() + "\\ffmpeg.exe";
+            string outputPath = nameAllmerger("VideoAll");
+            string arguments = $"-y -f concat -safe 0 -i \"{filetext}\" -c copy -vcodec libx264 -pix_fmt yuv420p -preset superfast \"{outputPath}\"";
+
+            int exitCode = RunFFmpegMerge(ffmpegPath, arguments, validVideos, cancellationToken);
 
             try
             {
-                Invoke(new MethodInvoker(delegate ()
-                {
-                    lblstatus.Text = $"Đang ghép {validVideos} video hợp lệ...";
-                }));
-
-                process.Start();
-
-                // Wait với cancellation support
-                while (!process.HasExited)
-                {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        process.Kill();
-                        cancellationToken.ThrowIfCancellationRequested();
-                    }
-                    Thread.Sleep(100);
-                }
-
-                // Đọc stderr sau khi process đã exit
-                string stderr = process.StandardError.ReadToEnd();
-
-                if (process.ExitCode == 0)
+                if (exitCode == 0)
                 {
                     // Bước 5: Báo cáo kết quả
                     Invoke(new MethodInvoker(delegate ()
@@ -2624,13 +2691,27 @@ namespace ReviewMovie
                         Funcion.OpenFolder(_outputPath);
                     }));
                 }
+                else if (exitCode == -1)
+                {
+                    // Cancelled hoặc error
+                    if (!cancellationToken.IsCancellationRequested)
+                    {
+                        // Error chứ không phải cancel
+                        Invoke(new MethodInvoker(delegate ()
+                        {
+                            lblstatus.Text = "Ghép video thất bại!";
+                            MessageBox.Show($"Lỗi khi ghép video!\n\nFFmpeg bị lỗi hoặc không thể chạy.",
+                                          "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }));
+                    }
+                }
                 else
                 {
-                    // FFmpeg failed
+                    // FFmpeg failed với exit code khác 0
                     Invoke(new MethodInvoker(delegate ()
                     {
                         lblstatus.Text = "Ghép video thất bại!";
-                        MessageBox.Show($"Lỗi khi ghép video!\n\nFFmpeg Exit Code: {process.ExitCode}\n\nError:\n{stderr}",
+                        MessageBox.Show($"Lỗi khi ghép video!\n\nFFmpeg Exit Code: {exitCode}",
                                       "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }));
                 }
