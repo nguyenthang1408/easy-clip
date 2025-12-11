@@ -2262,6 +2262,76 @@ namespace ReviewMovie
                 btnAddAll.Text = "Start";
             }));
         }
+
+        /// <summary>
+        /// Validate video file using ffprobe to check if it's corrupted
+        /// </summary>
+        /// <param name="videoPath">Full path to video file</param>
+        /// <param name="errorMessage">Error message if validation fails</param>
+        /// <returns>True if video is valid, False if corrupted</returns>
+        private bool ValidateVideo(string videoPath, out string errorMessage)
+        {
+            errorMessage = string.Empty;
+            try
+            {
+                string ffprobePath = Funcion.selectffmpegversion() + "\\ffprobe.exe";
+
+                // Use ffprobe to check video duration and format
+                string arguments = $"-v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 \"{videoPath}\"";
+
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = ffprobePath,
+                    Arguments = arguments,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (Process process = new Process { StartInfo = psi })
+                {
+                    process.Start();
+                    string output = process.StandardOutput.ReadToEnd();
+                    string error = process.StandardError.ReadToEnd();
+                    process.WaitForExit();
+
+                    // Check if ffprobe completed successfully
+                    if (process.ExitCode != 0)
+                    {
+                        errorMessage = $"FFprobe error (Exit code: {process.ExitCode})";
+                        if (!string.IsNullOrEmpty(error))
+                        {
+                            errorMessage += $" - {error.Trim()}";
+                        }
+                        return false;
+                    }
+
+                    // Check if we got valid duration output
+                    if (string.IsNullOrWhiteSpace(output))
+                    {
+                        errorMessage = "No duration found - video may be corrupted";
+                        return false;
+                    }
+
+                    // Try to parse duration
+                    if (!double.TryParse(output.Trim(), out double duration) || duration <= 0)
+                    {
+                        errorMessage = "Invalid duration - video may be corrupted";
+                        return false;
+                    }
+
+                    // Video is valid
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMessage = $"Exception: {ex.Message}";
+                return false;
+            }
+        }
+
         private void convertvideo()
         {
             string[] files = Directory.GetFiles(_videoRenderPath);
@@ -2307,11 +2377,15 @@ namespace ReviewMovie
             string[] files = Directory.GetFiles(_videoRenderPath);
             string filetext = Application.StartupPath + "\\data\\" + "datalink.txt";
             Dictionary<string, int> fileList = new Dictionary<string, int>();
+            List<string> invalidVideos = new List<string>(); // Danh sách video lỗi
+
             if (!File.Exists(filetext))
             {
                 File.Create(filetext).Dispose();
             }
             File.WriteAllText(filetext, "");
+
+            // Bước 1: Lọc và sắp xếp files theo số thứ tự
             foreach (var file in files)
             {
                 try
@@ -2322,15 +2396,67 @@ namespace ReviewMovie
                 catch
                 {
                     MessageBox.Show("Kiểm tra File đã đổi tên thành số chưa ?");
+                    return;
                 }
             }
+
             List<string> sortListfile = new List<string>();
             foreach (KeyValuePair<string, int> author in fileList.OrderBy(key => key.Value))
             {
                 sortListfile.Add(author.Key);
             }
 
-            foreach (string str in sortListfile)
+            // Bước 2: Validate từng video và chỉ thêm video hợp lệ vào danh sách merge
+            int totalVideos = sortListfile.Count;
+            int validVideos = 0;
+            int processedCount = 0;
+
+            Invoke(new MethodInvoker(delegate ()
+            {
+                lblstatus.Text = $"Đang kiểm tra video 0/{totalVideos}...";
+            }));
+
+            List<string> validVideoList = new List<string>();
+
+            foreach (string videoPath in sortListfile)
+            {
+                processedCount++;
+                string fileName = Path.GetFileName(videoPath);
+
+                Invoke(new MethodInvoker(delegate ()
+                {
+                    lblstatus.Text = $"Đang kiểm tra video {processedCount}/{totalVideos}: {fileName}";
+                }));
+
+                // Validate video
+                if (ValidateVideo(videoPath, out string errorMessage))
+                {
+                    validVideoList.Add(videoPath);
+                    validVideos++;
+                }
+                else
+                {
+                    // Video lỗi - lưu lại để báo cáo
+                    string errorInfo = $"{fileName}: {errorMessage}";
+                    invalidVideos.Add(errorInfo);
+                    Console.WriteLine($"[SKIP] Video lỗi: {errorInfo}");
+                }
+            }
+
+            // Kiểm tra có video hợp lệ nào không
+            if (validVideoList.Count == 0)
+            {
+                Invoke(new MethodInvoker(delegate ()
+                {
+                    lblstatus.Text = "Không có video hợp lệ để ghép!";
+                    string errorReport = "Tất cả video đều bị lỗi:\n\n" + string.Join("\n", invalidVideos);
+                    MessageBox.Show(errorReport, "Lỗi - Không thể ghép video", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
+                return;
+            }
+
+            // Bước 3: Tạo file danh sách video hợp lệ cho ffmpeg
+            foreach (string str in validVideoList)
             {
                 using (StreamWriter w = File.AppendText(filetext))
                 {
@@ -2338,6 +2464,8 @@ namespace ReviewMovie
                     w.Close();
                 }
             }
+
+            // Bước 4: Ghép video bằng ffmpeg
             object[] args = new object[] { filetext, nameAllmerger("VideoAll") };
             string str2 = string.Format(" -y -f concat -safe 0 -i \"{0}\" -c copy -vcodec libx264 -pix_fmt yuv420p -preset superfast \"{1}\" ", args);
 
@@ -2346,28 +2474,74 @@ namespace ReviewMovie
             {
                 WindowStyle = ProcessWindowStyle.Normal,
                 FileName = Funcion.selectffmpegversion() + "\\ffmpeg.exe",
-                Arguments = str2
+                Arguments = str2,
+                RedirectStandardError = true, // Capture stderr để log lỗi nếu cần
+                UseShellExecute = false
             };
             process.StartInfo = info;
+
             try
             {
                 Invoke(new MethodInvoker(delegate ()
                 {
-                    lblstatus.Text = "Đang ghép các đoạn video ...";
+                    lblstatus.Text = $"Đang ghép {validVideos} video hợp lệ...";
                 }));
+
                 process.Start();
+
+                // Đọc stderr để log lỗi (nếu có)
+                string stderr = process.StandardError.ReadToEnd();
                 process.WaitForExit();
-                Invoke(new MethodInvoker(delegate ()
+
+                if (process.ExitCode == 0)
                 {
-                    lblstatus.Text = "Ghép Done";
-                }));
+                    // Bước 5: Báo cáo kết quả
+                    Invoke(new MethodInvoker(delegate ()
+                    {
+                        lblstatus.Text = "Ghép Done";
+
+                        // Tạo báo cáo chi tiết
+                        string report = $"✅ Ghép video hoàn tất!\n\n";
+                        report += $"📊 Thống kê:\n";
+                        report += $"- Tổng số video: {totalVideos}\n";
+                        report += $"- Video hợp lệ: {validVideos}\n";
+                        report += $"- Video lỗi: {invalidVideos.Count}\n\n";
+
+                        if (invalidVideos.Count > 0)
+                        {
+                            report += $"⚠️ Danh sách video bị lỗi (đã skip):\n\n";
+                            report += string.Join("\n", invalidVideos);
+
+                            MessageBox.Show(report, "Kết quả ghép video", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            MessageBox.Show(report, "Kết quả ghép video", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }));
+                }
+                else
+                {
+                    // FFmpeg failed
+                    Invoke(new MethodInvoker(delegate ()
+                    {
+                        lblstatus.Text = "Ghép video thất bại!";
+                        MessageBox.Show($"Lỗi khi ghép video!\n\nFFmpeg Exit Code: {process.ExitCode}\n\nError:\n{stderr}",
+                                      "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }));
+                }
+
                 File.WriteAllText(filetext, "");
             }
             catch (Exception exception)
             {
+                Invoke(new MethodInvoker(delegate ()
+                {
+                    lblstatus.Text = "Lỗi!";
+                    MessageBox.Show($"Exception: {exception.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
                 Console.WriteLine(exception.Message);
             }
-
         }
         private string nameAllmerger(string string_0)
         {
