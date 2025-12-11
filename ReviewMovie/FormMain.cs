@@ -2697,13 +2697,23 @@ namespace ReviewMovie
                 lblstatus.Text = $"Đang ghép {validVideos} video hợp lệ...";
             }));
 
-            // Tạo tên output file với datetime: output_20250611_143052.mp4
+            // Tạo subfolder với tên datetime: output_20250611_143052/
             string dateTimeStr = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            string outputFolderName = $"output_{dateTimeStr}";
+            string outputFolder = Path.Combine(_outputPath, outputFolderName);
+
+            // Tạo thư mục nếu chưa tồn tại
+            if (!Directory.Exists(outputFolder))
+            {
+                Directory.CreateDirectory(outputFolder);
+            }
+
+            // Tạo đường dẫn video trong subfolder
             string outputFileName = $"output_{dateTimeStr}.mp4";
-            string outputPath = Path.Combine(_outputPath, outputFileName);
+            string outputVideoPath = Path.Combine(outputFolder, outputFileName);
 
             string ffmpegPath = Funcion.selectffmpegversion() + "\\ffmpeg.exe";
-            string arguments = $"-y -f concat -safe 0 -i \"{filetext}\" -c copy -vcodec libx264 -pix_fmt yuv420p -preset superfast \"{outputPath}\"";
+            string arguments = $"-y -f concat -safe 0 -i \"{filetext}\" -c copy -vcodec libx264 -pix_fmt yuv420p -preset superfast \"{outputVideoPath}\"";
 
             int exitCode = RunFFmpegMerge(ffmpegPath, arguments, validVideos, cancellationToken);
 
@@ -2711,11 +2721,11 @@ namespace ReviewMovie
             {
                 if (exitCode == 0)
                 {
-                    // Bước 6: Ghi log file nếu có video lỗi
+                    // Bước 6: Ghi log file nếu có video lỗi (trong cùng subfolder)
                     if (corruptedVideos.Count > 0)
                     {
                         string logFileName = $"output_{dateTimeStr}_log.txt";
-                        string logFilePath = Path.Combine(_outputPath, logFileName);
+                        string logFilePath = Path.Combine(outputFolder, logFileName);
 
                         try
                         {
@@ -2723,8 +2733,9 @@ namespace ReviewMovie
                             {
                                 log.WriteLine("=== LOG GHÉP VIDEO ===");
                                 log.WriteLine($"Thời gian: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+                                log.WriteLine($"Output folder: {outputFolderName}");
                                 log.WriteLine($"Output file: {outputFileName}");
-                                log.WriteLine($"Output path: {outputPath}");
+                                log.WriteLine($"Output path: {outputVideoPath}");
                                 log.WriteLine();
                                 log.WriteLine($"=== THỐNG KÊ ===");
                                 log.WriteLine($"Tổng số video: {totalVideos}");
@@ -2755,7 +2766,8 @@ namespace ReviewMovie
                         report += $"- Tổng số video: {totalVideos}\n";
                         report += $"- Video hợp lệ: {validVideos}\n";
                         report += $"- Video lỗi: {corruptedVideos.Count}\n\n";
-                        report += $"📁 Output: {outputFileName}";
+                        report += $"📁 Thư mục: {outputFolderName}\n";
+                        report += $"📹 Video: {outputFileName}";
 
                         if (corruptedVideos.Count > 0)
                         {
@@ -2765,8 +2777,8 @@ namespace ReviewMovie
                         MessageBoxIcon icon = corruptedVideos.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information;
                         MessageBox.Show(report, "Kết quả ghép video", MessageBoxButtons.OK, icon);
 
-                        // Mở folder output sau khi thành công
-                        Funcion.OpenFolder(_outputPath);
+                        // Mở subfolder output sau khi thành công
+                        Funcion.OpenFolder(outputFolder);
                     }));
                 }
                 else if (exitCode == -1)
