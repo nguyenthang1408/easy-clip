@@ -2557,17 +2557,10 @@ namespace ReviewMovie
                         report += $"📊 Thống kê:\n";
                         report += $"- Tổng số video: {totalVideos}\n";
                         report += $"- Video hợp lệ: {validVideos}\n";
-                        report += $"- Video lỗi: {corruptedVideos.Count}\n";
+                        report += $"- Video lỗi: {corruptedVideos.Count}";
 
-                        if (corruptedVideos.Count > 0)
-                        {
-                            report += $"\n⚠️ Video lỗi (đã skip): {string.Join(", ", corruptedVideos)}";
-                            MessageBox.Show(report, "Kết quả ghép video", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                        else
-                        {
-                            MessageBox.Show(report, "Kết quả ghép video", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
+                        MessageBoxIcon icon = corruptedVideos.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information;
+                        MessageBox.Show(report, "Kết quả ghép video", MessageBoxButtons.OK, icon);
                     }));
                 }
                 else
