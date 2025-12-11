@@ -133,11 +133,12 @@ namespace ReviewMovie
         private string _tempPath;
         private string _outputPath;
 
-        // Video merge configuration
-        private const int MAX_PARALLEL_VALIDATION_THREADS = 20; // Số luồng validate song song
+        // Video merge configuration and services
         private bool _skipCorruptedVideos = true; // Mặc định skip video lỗi và ghép tiếp
         private CancellationTokenSource _mergeCancellationTokenSource; // CancellationToken cho merge
         private bool _isMerging = false; // Flag đang merge
+        private readonly VideoValidationService _videoValidationService;
+        private readonly VideoMergeService _videoMergeService;
 
         private string _appcode;
         private string _apikey;
@@ -155,6 +156,10 @@ namespace ReviewMovie
 
             _appcode = appcode;
             _apikey = apikey;
+
+            // Initialize video services
+            _videoValidationService = new VideoValidationService(VideoMergeConfig.MAX_PARALLEL_VALIDATION_THREADS);
+            _videoMergeService = new VideoMergeService();
 
             // Fix cứng màn hình
             this.MaximizeBox = false;
@@ -2303,237 +2308,6 @@ namespace ReviewMovie
             btnAddAll.Text = "Ghép Video";
             btnAddAll.Enabled = true;
         }
-
-        /// <summary>
-        /// Run FFmpeg với progress tracking cho merge video
-        /// Clone từ LibCommon.Common.CFuncion.RunFFmpeg() và customize cho merge
-        /// </summary>
-        /// <param name="ffmpegPath">Đường dẫn đến ffmpeg.exe</param>
-        /// <param name="arguments">Arguments cho ffmpeg</param>
-        /// <param name="validVideoCount">Số video hợp lệ để tính progress</param>
-        /// <param name="cancellationToken">Token để cancel</param>
-        /// <returns>Exit code của ffmpeg (0 = success)</returns>
-        private int RunFFmpegMerge(string ffmpegPath, string arguments, int validVideoCount, CancellationToken cancellationToken)
-        {
-            using (var process = new Process
-            {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = ffmpegPath,
-                    Arguments = arguments,
-                    RedirectStandardError = true, // FFmpeg ghi progress vào stderr
-                    UseShellExecute = false,
-                    CreateNoWindow = true // Không hiển thị command line
-                }
-            })
-            {
-                // Regex để parse time từ output ffmpeg: time=00:00:06.93
-                var timeRegex = new System.Text.RegularExpressions.Regex(@"time=(\d+):(\d+):(\d+\.\d+)");
-
-                process.ErrorDataReceived += (sender, e) =>
-                {
-                    if (!string.IsNullOrEmpty(e.Data))
-                    {
-                        // Parse time từ output
-                        var match = timeRegex.Match(e.Data);
-                        if (match.Success)
-                        {
-                            string hours = match.Groups[1].Value;
-                            string minutes = match.Groups[2].Value;
-                            string seconds = match.Groups[3].Value;
-                            string timeStr = $"{hours}:{minutes}:{seconds.Split('.')[0]}"; // HH:MM:SS
-
-                            try
-                            {
-                                // Update UI (thread-safe)
-                                Invoke(new MethodInvoker(delegate ()
-                                {
-                                    lblstatus.Text = $"Đang ghép {validVideoCount} video - Time: {timeStr}";
-                                }));
-                            }
-                            catch { } // Ignore nếu form đã dispose
-                        }
-                    }
-                };
-
-                // Đăng ký callback cho token: nếu Cancel thì kill process
-                using (cancellationToken.Register(() =>
-                {
-                    try
-                    {
-                        if (!process.HasExited)
-                            process.Kill();
-                    }
-                    catch { }
-                }))
-                {
-                    try
-                    {
-                        process.Start();
-                        process.BeginErrorReadLine();
-
-                        // Lặp chờ process kết thúc hoặc bị cancel
-                        while (!process.WaitForExit(200))
-                        {
-                            if (cancellationToken.IsCancellationRequested)
-                            {
-                                // Đã cancel, process đã bị kill
-                                return -1; // Return -1 để biết là cancelled
-                            }
-                        }
-
-                        // Đợi thêm để đảm bảo ErrorDataReceived được flush
-                        process.WaitForExit();
-
-                        return process.ExitCode;
-                    }
-                    catch
-                    {
-                        return -1;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Validate video file using ffprobe to check if it's corrupted
-        /// </summary>
-        /// <param name="videoPath">Full path to video file</param>
-        /// <param name="errorMessage">Error message if validation fails</param>
-        /// <returns>True if video is valid, False if corrupted</returns>
-        private bool ValidateVideo(string videoPath, out string errorMessage)
-        {
-            errorMessage = string.Empty;
-            try
-            {
-                string ffprobePath = Funcion.selectffmpegversion() + "\\ffprobe.exe";
-
-                // Use ffprobe to check video duration and format
-                string arguments = $"-v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 \"{videoPath}\"";
-
-                ProcessStartInfo psi = new ProcessStartInfo
-                {
-                    FileName = ffprobePath,
-                    Arguments = arguments,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
-
-                using (Process process = new Process { StartInfo = psi })
-                {
-                    process.Start();
-                    string output = process.StandardOutput.ReadToEnd();
-                    string error = process.StandardError.ReadToEnd();
-                    process.WaitForExit();
-
-                    // Check if ffprobe completed successfully
-                    if (process.ExitCode != 0)
-                    {
-                        errorMessage = $"FFprobe error (Exit code: {process.ExitCode})";
-                        if (!string.IsNullOrEmpty(error))
-                        {
-                            errorMessage += $" - {error.Trim()}";
-                        }
-                        return false;
-                    }
-
-                    // Check if we got valid duration output
-                    if (string.IsNullOrWhiteSpace(output))
-                    {
-                        errorMessage = "No duration found - video may be corrupted";
-                        return false;
-                    }
-
-                    // Try to parse duration
-                    if (!double.TryParse(output.Trim(), out double duration) || duration <= 0)
-                    {
-                        errorMessage = "Invalid duration - video may be corrupted";
-                        return false;
-                    }
-
-                    // Video is valid
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                errorMessage = $"Exception: {ex.Message}";
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Validate nhiều video song song bằng parallel processing
-        /// </summary>
-        /// <param name="videoFiles">Danh sách video cần validate (đã sort theo STT)</param>
-        /// <param name="validVideos">Output: Danh sách video hợp lệ</param>
-        /// <param name="corruptedVideos">Output: Danh sách video lỗi (chỉ tên file)</param>
-        /// <param name="cancellationToken">CancellationToken để hủy quá trình</param>
-        private void ValidateVideosParallel(List<string> videoFiles, out List<string> validVideos, out List<string> corruptedVideos, CancellationToken cancellationToken)
-        {
-            int totalVideos = videoFiles.Count;
-            int processedCount = 0;
-            object lockObj = new object();
-
-            Invoke(new MethodInvoker(delegate ()
-            {
-                lblstatus.Text = $"Đang kiểm tra video 0/{totalVideos}...";
-            }));
-
-            // Sử dụng ConcurrentBag để thread-safe
-            var validVideoList = new System.Collections.Concurrent.ConcurrentBag<(string path, int index)>();
-            var corruptedVideoList = new System.Collections.Concurrent.ConcurrentBag<string>();
-
-            // Parallel validation với MaxDegreeOfParallelism và CancellationToken
-            var options = new ParallelOptions
-            {
-                MaxDegreeOfParallelism = MAX_PARALLEL_VALIDATION_THREADS,
-                CancellationToken = cancellationToken
-            };
-
-            Parallel.For(0, videoFiles.Count, options, i =>
-            {
-                string videoPath = videoFiles[i];
-                string fileName = Path.GetFileName(videoPath);
-
-                // Validate video
-                if (ValidateVideo(videoPath, out string errorMessage))
-                {
-                    validVideoList.Add((videoPath, i)); // Lưu cả index để sort lại
-                }
-                else
-                {
-                    // Video lỗi - chỉ lưu tên file, không lưu chi tiết lỗi
-                    corruptedVideoList.Add(fileName);
-                    Console.WriteLine($"[SKIP] Video lỗi: {fileName}");
-                }
-
-                // Update progress (thread-safe)
-                lock (lockObj)
-                {
-                    processedCount++;
-                    if (processedCount % 10 == 0 || processedCount == totalVideos) // Update mỗi 10 videos
-                    {
-                        int currentCount = processedCount;
-                        try
-                        {
-                            Invoke(new MethodInvoker(delegate ()
-                            {
-                                lblstatus.Text = $"Đang kiểm tra video {currentCount}/{totalVideos}...";
-                            }));
-                        }
-                        catch { } // Ignore nếu form đã dispose
-                    }
-                }
-            });
-
-            // Sort lại validVideoList theo index để giữ đúng thứ tự ban đầu
-            validVideos = validVideoList.OrderBy(x => x.index).Select(x => x.path).ToList();
-            corruptedVideos = corruptedVideoList.OrderBy(x => x).ToList();
-        }
-
         private void convertvideo()
         {
             string[] files = Directory.GetFiles(_videoRenderPath);
@@ -2617,7 +2391,22 @@ namespace ReviewMovie
             // Bước 2: Validate video (nếu bật chế độ skip video lỗi)
             if (_skipCorruptedVideos)
             {
-                ValidateVideosParallel(sortListfile, out validVideoList, out corruptedVideos, cancellationToken);
+                _videoValidationService.ValidateVideosParallel(
+                    sortListfile,
+                    out validVideoList,
+                    out corruptedVideos,
+                    cancellationToken,
+                    (current, total) =>
+                    {
+                        try
+                        {
+                            Invoke(new MethodInvoker(delegate ()
+                            {
+                                lblstatus.Text = $"Đang kiểm tra video {current}/{total}...";
+                            }));
+                        }
+                        catch { }
+                    });
             }
             else
             {
@@ -2679,14 +2468,7 @@ namespace ReviewMovie
             }
 
             // Bước 4: Tạo file danh sách video hợp lệ cho ffmpeg
-            foreach (string str in validVideoList)
-            {
-                using (StreamWriter w = File.AppendText(filetext))
-                {
-                    w.WriteLine("file '" + str + "'");
-                    w.Close();
-                }
-            }
+            _videoMergeService.CreateConcatFile(filetext, validVideoList);
 
             // Bước 5: Ghép video bằng ffmpeg với progress tracking
             // Check cancellation trước khi start ffmpeg
@@ -2715,7 +2497,22 @@ namespace ReviewMovie
             string ffmpegPath = Funcion.selectffmpegversion() + "\\ffmpeg.exe";
             string arguments = $"-y -f concat -safe 0 -i \"{filetext}\" -c copy -vcodec libx264 -pix_fmt yuv420p -preset superfast \"{outputVideoPath}\"";
 
-            int exitCode = RunFFmpegMerge(ffmpegPath, arguments, validVideos, cancellationToken);
+            int exitCode = _videoMergeService.RunFFmpegMerge(
+                ffmpegPath,
+                arguments,
+                validVideos,
+                cancellationToken,
+                (status) =>
+                {
+                    try
+                    {
+                        Invoke(new MethodInvoker(delegate ()
+                        {
+                            lblstatus.Text = status;
+                        }));
+                    }
+                    catch { }
+                });
 
             try
             {
@@ -2727,32 +2524,14 @@ namespace ReviewMovie
                         string logFileName = $"output_{dateTimeStr}_log.txt";
                         string logFilePath = Path.Combine(outputFolder, logFileName);
 
-                        try
-                        {
-                            using (StreamWriter log = new StreamWriter(logFilePath, false, System.Text.Encoding.UTF8))
-                            {
-                                log.WriteLine("=== LOG GHÉP VIDEO ===");
-                                log.WriteLine($"Thời gian: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-                                log.WriteLine($"Output folder: {outputFolderName}");
-                                log.WriteLine($"Output file: {outputFileName}");
-                                log.WriteLine($"Output path: {outputVideoPath}");
-                                log.WriteLine();
-                                log.WriteLine($"=== THỐNG KÊ ===");
-                                log.WriteLine($"Tổng số video: {totalVideos}");
-                                log.WriteLine($"Video hợp lệ: {validVideos}");
-                                log.WriteLine($"Video lỗi: {corruptedVideos.Count}");
-                                log.WriteLine();
-                                log.WriteLine($"=== DANH SÁCH VIDEO LỖI ({corruptedVideos.Count}) ===");
-                                for (int i = 0; i < corruptedVideos.Count; i++)
-                                {
-                                    log.WriteLine($"{i + 1}. {corruptedVideos[i]}");
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Không thể ghi log file: {ex.Message}");
-                        }
+                        _videoMergeService.WriteErrorLog(
+                            logFilePath,
+                            outputFolderName,
+                            outputFileName,
+                            outputVideoPath,
+                            totalVideos,
+                            validVideos,
+                            corruptedVideos);
                     }
 
                     // Bước 7: Báo cáo kết quả
