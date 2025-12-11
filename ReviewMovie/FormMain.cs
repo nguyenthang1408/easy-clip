@@ -133,6 +133,10 @@ namespace ReviewMovie
         private string _tempPath;
         private string _outputPath;
 
+        // Video merge configuration
+        private const int MAX_PARALLEL_VALIDATION_THREADS = 20; // Số luồng validate song song
+        private bool _skipCorruptedVideos = true; // Mặc định skip video lỗi và ghép tiếp
+
         private string _appcode;
         private string _apikey;
 
@@ -2332,6 +2336,74 @@ namespace ReviewMovie
             }
         }
 
+        /// <summary>
+        /// Validate nhiều video song song bằng parallel processing
+        /// </summary>
+        /// <param name="videoFiles">Danh sách video cần validate (đã sort theo STT)</param>
+        /// <param name="validVideos">Output: Danh sách video hợp lệ</param>
+        /// <param name="corruptedVideos">Output: Danh sách video lỗi (chỉ tên file)</param>
+        private void ValidateVideosParallel(List<string> videoFiles, out List<string> validVideos, out List<string> corruptedVideos)
+        {
+            int totalVideos = videoFiles.Count;
+            int processedCount = 0;
+            object lockObj = new object();
+
+            Invoke(new MethodInvoker(delegate ()
+            {
+                lblstatus.Text = $"Đang kiểm tra video 0/{totalVideos}...";
+            }));
+
+            // Sử dụng ConcurrentBag để thread-safe
+            var validVideoList = new System.Collections.Concurrent.ConcurrentBag<(string path, int index)>();
+            var corruptedVideoList = new System.Collections.Concurrent.ConcurrentBag<string>();
+
+            // Parallel validation với MaxDegreeOfParallelism
+            var options = new ParallelOptions
+            {
+                MaxDegreeOfParallelism = MAX_PARALLEL_VALIDATION_THREADS
+            };
+
+            Parallel.For(0, videoFiles.Count, options, i =>
+            {
+                string videoPath = videoFiles[i];
+                string fileName = Path.GetFileName(videoPath);
+
+                // Validate video
+                if (ValidateVideo(videoPath, out string errorMessage))
+                {
+                    validVideoList.Add((videoPath, i)); // Lưu cả index để sort lại
+                }
+                else
+                {
+                    // Video lỗi - chỉ lưu tên file, không lưu chi tiết lỗi
+                    corruptedVideoList.Add(fileName);
+                    Console.WriteLine($"[SKIP] Video lỗi: {fileName}");
+                }
+
+                // Update progress (thread-safe)
+                lock (lockObj)
+                {
+                    processedCount++;
+                    if (processedCount % 10 == 0 || processedCount == totalVideos) // Update mỗi 10 videos
+                    {
+                        int currentCount = processedCount;
+                        try
+                        {
+                            Invoke(new MethodInvoker(delegate ()
+                            {
+                                lblstatus.Text = $"Đang kiểm tra video {currentCount}/{totalVideos}...";
+                            }));
+                        }
+                        catch { } // Ignore nếu form đã dispose
+                    }
+                }
+            });
+
+            // Sort lại validVideoList theo index để giữ đúng thứ tự ban đầu
+            validVideos = validVideoList.OrderBy(x => x.index).Select(x => x.path).ToList();
+            corruptedVideos = corruptedVideoList.OrderBy(x => x).ToList();
+        }
+
         private void convertvideo()
         {
             string[] files = Directory.GetFiles(_videoRenderPath);
@@ -2377,7 +2449,6 @@ namespace ReviewMovie
             string[] files = Directory.GetFiles(_videoRenderPath);
             string filetext = Application.StartupPath + "\\data\\" + "datalink.txt";
             Dictionary<string, int> fileList = new Dictionary<string, int>();
-            List<string> invalidVideos = new List<string>(); // Danh sách video lỗi
 
             if (!File.Exists(filetext))
             {
@@ -2406,69 +2477,23 @@ namespace ReviewMovie
                 sortListfile.Add(author.Key);
             }
 
-            // Bước 2: Validate song song nhiều video cùng lúc (Parallel Processing)
             int totalVideos = sortListfile.Count;
-            int processedCount = 0;
-            object lockObj = new object();
+            List<string> validVideoList;
+            List<string> corruptedVideos;
 
-            Invoke(new MethodInvoker(delegate ()
+            // Bước 2: Validate video (nếu bật chế độ skip video lỗi)
+            if (_skipCorruptedVideos)
             {
-                lblstatus.Text = $"Đang kiểm tra video 0/{totalVideos}... (song song)";
-            }));
-
-            // Sử dụng ConcurrentBag để thread-safe
-            var validVideoList = new System.Collections.Concurrent.ConcurrentBag<(string path, int index)>();
-            var invalidVideoList = new System.Collections.Concurrent.ConcurrentBag<string>();
-
-            // Parallel validation với MaxDegreeOfParallelism để giới hạn số threads
-            var options = new ParallelOptions
+                ValidateVideosParallel(sortListfile, out validVideoList, out corruptedVideos);
+            }
+            else
             {
-                MaxDegreeOfParallelism = 20 // Validate 20 video cùng lúc
-            };
+                // Không validate, sử dụng tất cả video
+                validVideoList = sortListfile;
+                corruptedVideos = new List<string>();
+            }
 
-            Parallel.For(0, sortListfile.Count, options, i =>
-            {
-                string videoPath = sortListfile[i];
-                string fileName = Path.GetFileName(videoPath);
-
-                // Validate video
-                if (ValidateVideo(videoPath, out string errorMessage))
-                {
-                    validVideoList.Add((videoPath, i)); // Lưu cả index để sort lại
-                }
-                else
-                {
-                    // Video lỗi - lưu lại để báo cáo
-                    string errorInfo = $"{fileName}: {errorMessage}";
-                    invalidVideoList.Add(errorInfo);
-                    Console.WriteLine($"[SKIP] Video lỗi: {errorInfo}");
-                }
-
-                // Update progress (thread-safe)
-                lock (lockObj)
-                {
-                    processedCount++;
-                    if (processedCount % 10 == 0 || processedCount == totalVideos) // Update mỗi 10 videos
-                    {
-                        int currentCount = processedCount;
-                        try
-                        {
-                            Invoke(new MethodInvoker(delegate ()
-                            {
-                                lblstatus.Text = $"Đang kiểm tra video {currentCount}/{totalVideos}...";
-                            }));
-                        }
-                        catch { } // Ignore nếu form đã dispose
-                    }
-                }
-            });
-
-            // Chuyển invalidVideoList sang List thông thường
-            invalidVideos.AddRange(invalidVideoList.OrderBy(x => x));
-
-            // Sort lại validVideoList theo index để giữ đúng thứ tự ban đầu
-            var sortedValidVideos = validVideoList.OrderBy(x => x.index).Select(x => x.path).ToList();
-            int validVideos = sortedValidVideos.Count;
+            int validVideos = validVideoList.Count;
 
             // Kiểm tra có video hợp lệ nào không
             if (validVideos == 0)
@@ -2476,14 +2501,14 @@ namespace ReviewMovie
                 Invoke(new MethodInvoker(delegate ()
                 {
                     lblstatus.Text = "Không có video hợp lệ để ghép!";
-                    string errorReport = "Tất cả video đều bị lỗi:\n\n" + string.Join("\n", invalidVideos);
+                    string errorReport = "Tất cả video đều bị lỗi:\n\n" + string.Join(", ", corruptedVideos);
                     MessageBox.Show(errorReport, "Lỗi - Không thể ghép video", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }));
                 return;
             }
 
             // Bước 3: Tạo file danh sách video hợp lệ cho ffmpeg
-            foreach (string str in sortedValidVideos)
+            foreach (string str in validVideoList)
             {
                 using (StreamWriter w = File.AppendText(filetext))
                 {
@@ -2527,18 +2552,16 @@ namespace ReviewMovie
                     {
                         lblstatus.Text = "Ghép Done";
 
-                        // Tạo báo cáo chi tiết
+                        // Tạo báo cáo
                         string report = $"✅ Ghép video hoàn tất!\n\n";
                         report += $"📊 Thống kê:\n";
                         report += $"- Tổng số video: {totalVideos}\n";
                         report += $"- Video hợp lệ: {validVideos}\n";
-                        report += $"- Video lỗi: {invalidVideos.Count}\n\n";
+                        report += $"- Video lỗi: {corruptedVideos.Count}\n";
 
-                        if (invalidVideos.Count > 0)
+                        if (corruptedVideos.Count > 0)
                         {
-                            report += $"⚠️ Danh sách video bị lỗi (đã skip):\n\n";
-                            report += string.Join("\n", invalidVideos);
-
+                            report += $"\n⚠️ Video lỗi (đã skip): {string.Join(", ", corruptedVideos)}";
                             MessageBox.Show(report, "Kết quả ghép video", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         else
