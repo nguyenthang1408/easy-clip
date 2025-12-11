@@ -2406,45 +2406,72 @@ namespace ReviewMovie
                 sortListfile.Add(author.Key);
             }
 
-            // Bước 2: Validate từng video và chỉ thêm video hợp lệ vào danh sách merge
+            // Bước 2: Validate song song nhiều video cùng lúc (Parallel Processing)
             int totalVideos = sortListfile.Count;
-            int validVideos = 0;
             int processedCount = 0;
+            object lockObj = new object();
 
             Invoke(new MethodInvoker(delegate ()
             {
-                lblstatus.Text = $"Đang kiểm tra video 0/{totalVideos}...";
+                lblstatus.Text = $"Đang kiểm tra video 0/{totalVideos}... (song song)";
             }));
 
-            List<string> validVideoList = new List<string>();
+            // Sử dụng ConcurrentBag để thread-safe
+            var validVideoList = new System.Collections.Concurrent.ConcurrentBag<(string path, int index)>();
+            var invalidVideoList = new System.Collections.Concurrent.ConcurrentBag<string>();
 
-            foreach (string videoPath in sortListfile)
+            // Parallel validation với MaxDegreeOfParallelism để giới hạn số threads
+            var options = new ParallelOptions
             {
-                processedCount++;
-                string fileName = Path.GetFileName(videoPath);
+                MaxDegreeOfParallelism = 20 // Validate 20 video cùng lúc
+            };
 
-                Invoke(new MethodInvoker(delegate ()
-                {
-                    lblstatus.Text = $"Đang kiểm tra video {processedCount}/{totalVideos}: {fileName}";
-                }));
+            Parallel.For(0, sortListfile.Count, options, i =>
+            {
+                string videoPath = sortListfile[i];
+                string fileName = Path.GetFileName(videoPath);
 
                 // Validate video
                 if (ValidateVideo(videoPath, out string errorMessage))
                 {
-                    validVideoList.Add(videoPath);
-                    validVideos++;
+                    validVideoList.Add((videoPath, i)); // Lưu cả index để sort lại
                 }
                 else
                 {
                     // Video lỗi - lưu lại để báo cáo
                     string errorInfo = $"{fileName}: {errorMessage}";
-                    invalidVideos.Add(errorInfo);
+                    invalidVideoList.Add(errorInfo);
                     Console.WriteLine($"[SKIP] Video lỗi: {errorInfo}");
                 }
-            }
+
+                // Update progress (thread-safe)
+                lock (lockObj)
+                {
+                    processedCount++;
+                    if (processedCount % 10 == 0 || processedCount == totalVideos) // Update mỗi 10 videos
+                    {
+                        int currentCount = processedCount;
+                        try
+                        {
+                            Invoke(new MethodInvoker(delegate ()
+                            {
+                                lblstatus.Text = $"Đang kiểm tra video {currentCount}/{totalVideos}...";
+                            }));
+                        }
+                        catch { } // Ignore nếu form đã dispose
+                    }
+                }
+            });
+
+            // Chuyển invalidVideoList sang List thông thường
+            invalidVideos.AddRange(invalidVideoList.OrderBy(x => x));
+
+            // Sort lại validVideoList theo index để giữ đúng thứ tự ban đầu
+            var sortedValidVideos = validVideoList.OrderBy(x => x.index).Select(x => x.path).ToList();
+            int validVideos = sortedValidVideos.Count;
 
             // Kiểm tra có video hợp lệ nào không
-            if (validVideoList.Count == 0)
+            if (validVideos == 0)
             {
                 Invoke(new MethodInvoker(delegate ()
                 {
@@ -2456,7 +2483,7 @@ namespace ReviewMovie
             }
 
             // Bước 3: Tạo file danh sách video hợp lệ cho ffmpeg
-            foreach (string str in validVideoList)
+            foreach (string str in sortedValidVideos)
             {
                 using (StreamWriter w = File.AppendText(filetext))
                 {
