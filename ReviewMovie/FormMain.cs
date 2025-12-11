@@ -136,6 +136,8 @@ namespace ReviewMovie
         // Video merge configuration
         private const int MAX_PARALLEL_VALIDATION_THREADS = 20; // Số luồng validate song song
         private bool _skipCorruptedVideos = true; // Mặc định skip video lỗi và ghép tiếp
+        private CancellationTokenSource _mergeCancellationTokenSource; // CancellationToken cho merge
+        private bool _isMerging = false; // Flag đang merge
 
         private string _appcode;
         private string _apikey;
@@ -2237,34 +2239,69 @@ namespace ReviewMovie
             {
                 Directory.CreateDirectory(Application.StartupPath + "\\data");
             }
+
             try
             {
-                btnAddAll.Text = "Start";
-                if (btnAddAll.Text == "Start")
+                // Nếu đang merge → Cancel
+                if (_isMerging)
                 {
-                    btnAddAll.Text = "Stop";
-                    this._theart_videotheostt = new Thread(new ThreadStart(this.theart_ghepvideoTheoSTT));
-                    this._theart_videotheostt.Start();
+                    _mergeCancellationTokenSource?.Cancel();
+                    btnAddAll.Text = "Đang hủy...";
+                    btnAddAll.Enabled = false;
+                    return;
                 }
-                else
-                {
-                    btnAddAll.Text = "Start";
-                    _theart_videotheostt.Abort();
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Progam is stop", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
 
+                // Bắt đầu merge mới
+                _isMerging = true;
+                btnAddAll.Text = "Hủy ghép";
+                _mergeCancellationTokenSource = new CancellationTokenSource();
+
+                this._theart_videotheostt = new Thread(new ThreadStart(this.theart_ghepvideoTheoSTT));
+                this._theart_videotheostt.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                ResetMergeButton();
+            }
         }
+
         private void theart_ghepvideoTheoSTT()
         {
-            ghepvdTheoStt();
-            Invoke(new MethodInvoker(delegate ()
+            try
             {
-                btnAddAll.Text = "Start";
-            }));
+                ghepvdTheoStt(_mergeCancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                Invoke(new MethodInvoker(delegate ()
+                {
+                    lblstatus.Text = "Đã hủy ghép video";
+                    MessageBox.Show("Đã hủy quá trình ghép video.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }));
+            }
+            catch (Exception ex)
+            {
+                Invoke(new MethodInvoker(delegate ()
+                {
+                    lblstatus.Text = "Lỗi!";
+                    MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
+            }
+            finally
+            {
+                Invoke(new MethodInvoker(delegate ()
+                {
+                    ResetMergeButton();
+                }));
+            }
+        }
+
+        private void ResetMergeButton()
+        {
+            _isMerging = false;
+            btnAddAll.Text = "Ghép Video";
+            btnAddAll.Enabled = true;
         }
 
         /// <summary>
@@ -2342,7 +2379,8 @@ namespace ReviewMovie
         /// <param name="videoFiles">Danh sách video cần validate (đã sort theo STT)</param>
         /// <param name="validVideos">Output: Danh sách video hợp lệ</param>
         /// <param name="corruptedVideos">Output: Danh sách video lỗi (chỉ tên file)</param>
-        private void ValidateVideosParallel(List<string> videoFiles, out List<string> validVideos, out List<string> corruptedVideos)
+        /// <param name="cancellationToken">CancellationToken để hủy quá trình</param>
+        private void ValidateVideosParallel(List<string> videoFiles, out List<string> validVideos, out List<string> corruptedVideos, CancellationToken cancellationToken)
         {
             int totalVideos = videoFiles.Count;
             int processedCount = 0;
@@ -2357,10 +2395,11 @@ namespace ReviewMovie
             var validVideoList = new System.Collections.Concurrent.ConcurrentBag<(string path, int index)>();
             var corruptedVideoList = new System.Collections.Concurrent.ConcurrentBag<string>();
 
-            // Parallel validation với MaxDegreeOfParallelism
+            // Parallel validation với MaxDegreeOfParallelism và CancellationToken
             var options = new ParallelOptions
             {
-                MaxDegreeOfParallelism = MAX_PARALLEL_VALIDATION_THREADS
+                MaxDegreeOfParallelism = MAX_PARALLEL_VALIDATION_THREADS,
+                CancellationToken = cancellationToken
             };
 
             Parallel.For(0, videoFiles.Count, options, i =>
@@ -2444,7 +2483,7 @@ namespace ReviewMovie
                 lblstatus.Text = "Convert Done";
             }));
         }
-        private void ghepvdTheoStt()
+        private void ghepvdTheoStt(CancellationToken cancellationToken)
         {
             string[] files = Directory.GetFiles(_videoRenderPath);
             string filetext = Application.StartupPath + "\\data\\" + "datalink.txt";
@@ -2466,7 +2505,10 @@ namespace ReviewMovie
                 }
                 catch
                 {
-                    MessageBox.Show("Kiểm tra File đã đổi tên thành số chưa ?");
+                    Invoke(new MethodInvoker(delegate ()
+                    {
+                        MessageBox.Show("Kiểm tra File đã đổi tên thành số chưa ?");
+                    }));
                     return;
                 }
             }
@@ -2484,7 +2526,7 @@ namespace ReviewMovie
             // Bước 2: Validate video (nếu bật chế độ skip video lỗi)
             if (_skipCorruptedVideos)
             {
-                ValidateVideosParallel(sortListfile, out validVideoList, out corruptedVideos);
+                ValidateVideosParallel(sortListfile, out validVideoList, out corruptedVideos, cancellationToken);
             }
             else
             {
@@ -2492,6 +2534,9 @@ namespace ReviewMovie
                 validVideoList = sortListfile;
                 corruptedVideos = new List<string>();
             }
+
+            // Check cancellation sau validation
+            cancellationToken.ThrowIfCancellationRequested();
 
             int validVideos = validVideoList.Count;
 
@@ -2518,6 +2563,9 @@ namespace ReviewMovie
             }
 
             // Bước 4: Ghép video bằng ffmpeg
+            // Check cancellation trước khi start ffmpeg
+            cancellationToken.ThrowIfCancellationRequested();
+
             object[] args = new object[] { filetext, nameAllmerger("VideoAll") };
             string str2 = string.Format(" -y -f concat -safe 0 -i \"{0}\" -c copy -vcodec libx264 -pix_fmt yuv420p -preset superfast \"{1}\" ", args);
 
@@ -2541,9 +2589,19 @@ namespace ReviewMovie
 
                 process.Start();
 
-                // Đọc stderr để log lỗi (nếu có)
+                // Wait với cancellation support
+                while (!process.HasExited)
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        process.Kill();
+                        cancellationToken.ThrowIfCancellationRequested();
+                    }
+                    Thread.Sleep(100);
+                }
+
+                // Đọc stderr sau khi process đã exit
                 string stderr = process.StandardError.ReadToEnd();
-                process.WaitForExit();
 
                 if (process.ExitCode == 0)
                 {
@@ -2561,6 +2619,9 @@ namespace ReviewMovie
 
                         MessageBoxIcon icon = corruptedVideos.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information;
                         MessageBox.Show(report, "Kết quả ghép video", MessageBoxButtons.OK, icon);
+
+                        // Mở folder output sau khi thành công
+                        Funcion.OpenFolder(_outputPath);
                     }));
                 }
                 else
@@ -3041,11 +3102,9 @@ namespace ReviewMovie
         }
         private void btnAddAll_Click(object sender, EventArgs e)
         {
-            lblstatus.Text = "...";
             if (!string.IsNullOrEmpty(_projectName))
             {
                 GhepvideoTheoSTT();
-                Funcion.OpenFolder(_outputPath);
             }
             else
             {
