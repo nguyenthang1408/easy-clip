@@ -1232,10 +1232,9 @@ namespace ReviewMovie
         #endregion
 
         #region RenderVideo
-        private CancellationTokenSource _renderVideoCTS;
+        private Dictionary<int, CancellationTokenSource> _renderingRows = new Dictionary<int, CancellationTokenSource>();
         private CancellationTokenSource _renderAllCTS;
         private CancellationTokenSource _renderSelectCTS;
-        private bool _isRenderingSingle = false;
         private bool _isRenderingAll = false;
         private bool _isRenderingSelected = false;
 
@@ -1247,41 +1246,46 @@ namespace ReviewMovie
                 return;
             }
 
-            if (!_isRenderingSingle)
+            // Kiểm tra nếu row này đang render thì stop, nếu không thì start
+            if (_renderingRows.ContainsKey(_indexRowSelect))
             {
-                _renderVideoCTS = new CancellationTokenSource();
-                _isRenderingSingle = true;
-
-                SaveEffectSetting();
-                UIThreadHelper.SetButtonText(btnRenderVideoPart, "Stop", Color.Black);
-                UIThreadHelper.SetLabelText(lblstatus, $"Render part thứ {_indexRowSelect + 1}/{dgvMainView.RowCount}", Color.Black);
-
-                try
-                {
-                    await Task.Run(() =>
-                    {
-                        ThreadRenderVideoPart(_indexRowSelect, _renderVideoCTS.Token);
-                    }, _renderVideoCTS.Token);
-                }
-                catch (OperationCanceledException)
-                {
-                    UIThreadHelper.SetLabelText(lblstatus, $"Đã huỷ render video part {_indexRowSelect}.", Color.OrangeRed);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Lỗi khi render: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    _isRenderingSingle = false;
-                    _renderVideoCTS?.Dispose();
-                    _renderVideoCTS = null;
-                    UIThreadHelper.SetButtonText(btnRenderVideoPart, "Render Part", Color.Black);
-                }
+                // Row đang render -> cancel nó
+                _renderingRows[_indexRowSelect]?.Cancel();
+                return;
             }
-            else
+
+            // Bắt đầu render row này
+            var cts = new CancellationTokenSource();
+            _renderingRows[_indexRowSelect] = cts;
+
+            SaveEffectSetting();
+            UIThreadHelper.SetButtonText(btnRenderVideoPart, "Stop", Color.Black);
+            UIThreadHelper.SetLabelText(lblstatus, $"Render part thứ {_indexRowSelect + 1}/{dgvMainView.RowCount}", Color.Black);
+
+            try
             {
-                _renderVideoCTS?.Cancel();
+                await Task.Run(() =>
+                {
+                    ThreadRenderVideoPart(_indexRowSelect, cts.Token);
+                }, cts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                UIThreadHelper.SetLabelText(lblstatus, $"Đã huỷ render video part {_indexRowSelect}.", Color.OrangeRed);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi render: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Xóa row khỏi dictionary khi hoàn thành
+                if (_renderingRows.ContainsKey(_indexRowSelect))
+                {
+                    _renderingRows[_indexRowSelect]?.Dispose();
+                    _renderingRows.Remove(_indexRowSelect);
+                }
+                UIThreadHelper.SetButtonText(btnRenderVideoPart, "Render Part", Color.Black);
             }
         }
 
