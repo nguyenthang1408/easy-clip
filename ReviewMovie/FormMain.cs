@@ -226,8 +226,12 @@ namespace ReviewMovie
             // Không cần validate gì khi chọn CPU
         }
 
+        // Lưu lỗi GPU gần nhất để hiển thị cho user
+        private string _lastGPUError = string.Empty;
+
         /// <summary>
         /// Kiểm tra GPU có khả dụng không bằng FFmpeg
+        /// Test thực tế bằng cách tạo video ngắn để phát hiện lỗi driver/API version
         /// </summary>
         private bool CheckGPUAvailability()
         {
@@ -235,8 +239,35 @@ namespace ReviewMovie
             {
                 string ffmpegPath = Funcion.selectffmpegversion() + "\\ffmpeg.exe";
                 if (!File.Exists(ffmpegPath))
+                {
+                    _lastGPUError = "Không tìm thấy FFmpeg.exe";
                     return false;
+                }
 
+                // Bước 1: Kiểm tra h264_nvenc có trong danh sách encoders không
+                if (!CheckEncoderExists(ffmpegPath))
+                {
+                    _lastGPUError = "h264_nvenc không có trong danh sách encoders";
+                    return false;
+                }
+
+                // Bước 2: Test thực tế encode để phát hiện lỗi driver/API version
+                return TestGPUEncode(ffmpegPath);
+            }
+            catch (Exception ex)
+            {
+                _lastGPUError = $"Lỗi không xác định: {ex.Message}";
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Kiểm tra h264_nvenc có trong danh sách encoders không
+        /// </summary>
+        private bool CheckEncoderExists(string ffmpegPath)
+        {
+            try
+            {
                 var process = new Process();
                 process.StartInfo = new ProcessStartInfo
                 {
@@ -253,11 +284,97 @@ namespace ReviewMovie
                 string output = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
 
-                // Kiểm tra xem h264_nvenc có trong danh sách encoders không
                 return output.Contains("h264_nvenc");
             }
             catch
             {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Test thực tế GPU encode để phát hiện lỗi driver, API version
+        /// </summary>
+        private bool TestGPUEncode(string ffmpegPath)
+        {
+            try
+            {
+                // Tạo test với testsrc (không cần file input) - encode 1 frame duy nhất
+                string arguments = "-f lavfi -i testsrc=duration=0.1:size=320x240:rate=1 -vcodec h264_nvenc -frames:v 1 -f null -";
+
+                var process = new Process();
+                process.StartInfo = new ProcessStartInfo
+                {
+                    FileName = ffmpegPath,
+                    Arguments = arguments,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden
+                };
+
+                process.Start();
+                string stderr = process.StandardError.ReadToEnd();
+                string stdout = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+
+                // Kiểm tra các pattern lỗi phổ biến và lưu thông tin chi tiết
+                var errorPatterns = new Dictionary<string, string>
+                {
+                    { "Driver does not support", "Driver NVIDIA không hỗ trợ phiên bản NVENC API yêu cầu" },
+                    { "nvenc API version", "Phiên bản NVENC API không tương thích" },
+                    { "minimum required Nvidia driver", "Driver NVIDIA quá cũ, cần cập nhật driver" },
+                    { "Error while opening encoder", "Không thể khởi tạo encoder NVENC" },
+                    { "Could not open encoder", "Không thể mở encoder NVENC" },
+                    { "Conversion failed", "GPU encoding thất bại" },
+                    { "No NVENC capable devices found", "Không tìm thấy GPU hỗ trợ NVENC" },
+                    { "Cannot load nvcuda.dll", "Không load được nvcuda.dll" },
+                    { "Cannot load nvEncodeAPI", "Không load được nvEncodeAPI" },
+                    { "Function not implemented", "Chức năng không được hỗ trợ" },
+                    { "Invalid argument", "Tham số không hợp lệ" },
+                    { "Error initializing output stream", "Lỗi khởi tạo output stream" },
+                };
+
+                foreach (var errorPattern in errorPatterns)
+                {
+                    if (stderr.Contains(errorPattern.Key))
+                    {
+                        // Lưu lỗi chi tiết
+                        _lastGPUError = errorPattern.Value;
+
+                        // Tìm dòng chứa thông tin driver version nếu có
+                        if (stderr.Contains("Required:") && stderr.Contains("Found:"))
+                        {
+                            try
+                            {
+                                var lines = stderr.Split('\n');
+                                var driverLine = lines.FirstOrDefault(l => l.Contains("minimum required Nvidia driver"));
+                                if (!string.IsNullOrEmpty(driverLine))
+                                {
+                                    _lastGPUError += $"\n\n{driverLine.Trim()}";
+                                }
+                            }
+                            catch { }
+                        }
+
+                        return false;
+                    }
+                }
+
+                // Kiểm tra exit code
+                if (process.ExitCode != 0)
+                {
+                    _lastGPUError = "GPU encoding test thất bại (exit code: " + process.ExitCode + ")";
+                    return false;
+                }
+
+                _lastGPUError = string.Empty;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _lastGPUError = $"Lỗi test GPU: {ex.Message}";
                 return false;
             }
         }
@@ -301,13 +418,22 @@ namespace ReviewMovie
             {
                 if (!CheckGPUAvailability())
                 {
-                    MessageBox.Show(
-                        "GPU NVIDIA không khả dụng hoặc không hỗ trợ h264_nvenc!\n\n" +
-                        "Vui lòng kiểm tra:\n" +
+                    // Tạo thông báo lỗi chi tiết
+                    string errorMessage = "GPU NVIDIA không khả dụng!\n\n";
+
+                    if (!string.IsNullOrEmpty(_lastGPUError))
+                    {
+                        errorMessage += $"Lỗi: {_lastGPUError}\n\n";
+                    }
+
+                    errorMessage += "Vui lòng kiểm tra:\n" +
                         "- Card đồ họa NVIDIA có hỗ trợ NVENC (GTX 600 series trở lên)\n" +
-                        "- Driver NVIDIA đã được cài đặt\n" +
+                        "- Driver NVIDIA đã được cài đặt và cập nhật\n" +
                         "- FFmpeg được build với hỗ trợ NVENC\n\n" +
-                        "Hệ thống sẽ chuyển về sử dụng CPU.",
+                        "Hệ thống sẽ chuyển về sử dụng CPU.";
+
+                    MessageBox.Show(
+                        errorMessage,
                         "GPU không hoạt động",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
