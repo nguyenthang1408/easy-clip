@@ -3264,12 +3264,12 @@ namespace ReviewMovie
                         FolderSubtileMediaFile = subtitleMediaPath
                     };
 
-                    await LoadSubtitleAsync(_subtitleLoadCTS.Token);
-                    LoadDataGridInit();
-
-                    // Xóa tất cả video files trong thư mục MediaImport và VideoRender sau khi import thành công
+                    // Xóa tất cả video files cũ trong thư mục MediaImport và VideoRender trước khi import subtitle mới
                     ClearVideoFilesInFolder(_mediaPath);
                     ClearVideoFilesInFolder(_videoRenderPath);
+
+                    await LoadSubtitleAsync(_subtitleLoadCTS.Token);
+                    LoadDataGridInit();
                 }
             }
             catch (OperationCanceledException)
