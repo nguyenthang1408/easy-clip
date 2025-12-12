@@ -194,6 +194,130 @@ namespace ReviewMovie
             dgvMainView.AutoGenerateColumns = false;    // tạo các cột tùy chỉnh cho DataGridView  => ko có là lỗi
             _statusZoom = true; // Khai báo cờ check
             _statusOpenPlayer = true;
+
+            // Mặc định chọn CPU
+            rbCPUused.Checked = true;
+
+            // Đăng ký event handlers cho radio buttons
+            rbGPUused.CheckedChanged += rbGPUused_CheckedChanged;
+            rbCPUused.CheckedChanged += rbCPUused_CheckedChanged;
+
+            // Auto-detect GPU và đề xuất nếu có
+            InitializeGPUDetection();
+        }
+
+        /// <summary>
+        /// Event handler khi user chọn GPU
+        /// </summary>
+        private void rbGPUused_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbGPUused.Checked)
+            {
+                // Validate GPU khi user chọn
+                ValidateGPUSelection();
+            }
+        }
+
+        /// <summary>
+        /// Event handler khi user chọn CPU
+        /// </summary>
+        private void rbCPUused_CheckedChanged(object sender, EventArgs e)
+        {
+            // Không cần validate gì khi chọn CPU
+        }
+
+        /// <summary>
+        /// Kiểm tra GPU có khả dụng không bằng FFmpeg
+        /// </summary>
+        private bool CheckGPUAvailability()
+        {
+            try
+            {
+                string ffmpegPath = Funcion.selectffmpegversion() + "\\ffmpeg.exe";
+                if (!File.Exists(ffmpegPath))
+                    return false;
+
+                var process = new Process();
+                process.StartInfo = new ProcessStartInfo
+                {
+                    FileName = ffmpegPath,
+                    Arguments = "-encoders",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden
+                };
+
+                process.Start();
+                string output = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+
+                // Kiểm tra xem h264_nvenc có trong danh sách encoders không
+                return output.Contains("h264_nvenc");
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Khởi tạo và auto-detect GPU
+        /// </summary>
+        private void InitializeGPUDetection()
+        {
+            try
+            {
+                if (CheckGPUAvailability())
+                {
+                    // GPU khả dụng - đề xuất sử dụng
+                    var result = MessageBox.Show(
+                        "Phát hiện GPU NVIDIA hỗ trợ h264_nvenc!\n\n" +
+                        "GPU rendering nhanh hơn CPU khoảng 5-10 lần.\n\n" +
+                        "Bạn có muốn sử dụng GPU để render không?",
+                        "Đề xuất sử dụng GPU",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        rbGPUused.Checked = true;
+                    }
+                }
+            }
+            catch
+            {
+                // Nếu có lỗi, giữ nguyên CPU (default)
+            }
+        }
+
+        /// <summary>
+        /// Validate GPU khi user chọn
+        /// </summary>
+        private bool ValidateGPUSelection()
+        {
+            if (rbGPUused.Checked)
+            {
+                if (!CheckGPUAvailability())
+                {
+                    MessageBox.Show(
+                        "GPU NVIDIA không khả dụng hoặc không hỗ trợ h264_nvenc!\n\n" +
+                        "Vui lòng kiểm tra:\n" +
+                        "- Card đồ họa NVIDIA có hỗ trợ NVENC (GTX 600 series trở lên)\n" +
+                        "- Driver NVIDIA đã được cài đặt\n" +
+                        "- FFmpeg được build với hỗ trợ NVENC\n\n" +
+                        "Hệ thống sẽ chuyển về sử dụng CPU.",
+                        "GPU không hoạt động",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    // Chuyển về CPU
+                    rbCPUused.Checked = true;
+                    return false;
+                }
+            }
+            return true;
         }
         private void Init()
         {
@@ -1246,6 +1370,12 @@ namespace ReviewMovie
                 return;
             }
 
+            // Validate GPU trước khi render
+            if (!ValidateGPUSelection())
+            {
+                return;
+            }
+
             // QUAN TRỌNG: Capture row index vào local variable để tránh bị thay đổi khi user click vào row khác
             int rowIndex = _indexRowSelect;
 
@@ -1317,6 +1447,12 @@ namespace ReviewMovie
 
             if (dgvMainView.RowCount <= 0) return;
 
+            // Validate GPU trước khi render
+            if (!ValidateGPUSelection())
+            {
+                return;
+            }
+
             _isRenderingAll = true;
             _renderAllCTS = new CancellationTokenSource();
             UIThreadHelper.SetMenuItemText(menuItem, "Hủy Chọn Hết", Color.Red);
@@ -1363,6 +1499,12 @@ namespace ReviewMovie
             if (listNumber.Count == 0)
             {
                 MessageBox.Show("Không có dòng nào được chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validate GPU trước khi render
+            if (!ValidateGPUSelection())
+            {
                 return;
             }
 
@@ -3144,6 +3286,12 @@ namespace ReviewMovie
         {
             if (!string.IsNullOrEmpty(_projectName))
             {
+                // Validate GPU trước khi merge video
+                if (!ValidateGPUSelection())
+                {
+                    return;
+                }
+
                 GhepvideoTheoSTT();
             }
             else
