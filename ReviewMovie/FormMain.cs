@@ -2360,6 +2360,22 @@ namespace ReviewMovie
             }
             File.WriteAllText(filetext, "");
 
+            if (files == null || files.Length == 0)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show(
+                        this,
+                        "Không có file nào trong thư mục Video Render!",
+                        "Thông báo",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                    UIThreadHelper.SetLabelText(lblstatus, RwConstant.STATUS_DEFAULT, Color.Black);
+                }));
+                return; // dừng ghép
+            }
+
             // Bước 1: Lọc và sắp xếp files theo số thứ tự
             foreach (var file in files)
             {
