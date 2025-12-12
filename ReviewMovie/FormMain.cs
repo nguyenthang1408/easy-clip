@@ -1709,13 +1709,43 @@ namespace ReviewMovie
                 token.ThrowIfCancellationRequested();
 
                 builder.Append(input.Muted ? mutedParam : string.Format("; [ov][0:a]concat=n=1:v=1:a=1[vout]", input.AudioFile));
-                builder.Append(string.Format(" \" {0} {1} -vcodec libx264 -pix_fmt yuv420p -r {2} -acodec libmp3lame -b:a 128k -ar 44100 -preset veryfast -s \"{3}\" -t {4} \"{5}\" "
+
+                // Chọn codec dựa trên radio button
+                string videoCodec = VideoMergeConfig.VIDEO_CODEC_CPU;
+                string preset = "veryfast";
+                try
+                {
+                    if (InvokeRequired)
+                    {
+                        Invoke(new MethodInvoker(() =>
+                        {
+                            if (rbGPUused.Checked)
+                            {
+                                videoCodec = VideoMergeConfig.VIDEO_CODEC_GPU;
+                                preset = VideoMergeConfig.FFMPEG_PRESET_GPU;
+                            }
+                        }));
+                    }
+                    else
+                    {
+                        if (rbGPUused.Checked)
+                        {
+                            videoCodec = VideoMergeConfig.VIDEO_CODEC_GPU;
+                            preset = VideoMergeConfig.FFMPEG_PRESET_GPU;
+                        }
+                    }
+                }
+                catch { }
+
+                builder.Append(string.Format(" \" {0} {1} -vcodec {6} -pix_fmt yuv420p -r {2} -acodec libmp3lame -b:a 128k -ar 44100 -preset {7} -s \"{3}\" -t {4} \"{5}\" "
                                                            , input.Muted ? (checkMedia == MediaType.Picture ? mutedParam : "-map \"[aCopy]\"") : "-map \"[aOut]\""
                                                            , input.Muted ? "-map \"[ov]\"" : "-map \"[vout]\""
                                                            , input.Fps
                                                            , input.VdSizeOutput
                                                            , input.TimeOfPart
-                                                           , input.SaveFile));
+                                                           , input.SaveFile
+                                                           , videoCodec
+                                                           , preset));
 
                 string argRender = builder.ToString();
 
@@ -2331,12 +2361,16 @@ namespace ReviewMovie
         }
         private void convertvideo()
         {
+            // Chọn codec dựa trên radio button
+            string videoCodec = rbGPUused.Checked ? VideoMergeConfig.VIDEO_CODEC_GPU : VideoMergeConfig.VIDEO_CODEC_CPU;
+            string preset = rbGPUused.Checked ? VideoMergeConfig.FFMPEG_PRESET_GPU : "veryfast";
+
             string[] files = Directory.GetFiles(_videoRenderPath);
             int num = 0;
             foreach (string str in files)
             {
-                object[] args = new object[] { str, _vdquality, this.nameConvertPath(str) };
-                string str2 = string.Format(" -y -i \"{0}\" -vcodec libx264 -pix_fmt yuv420p -r 25 -acodec libmp3lame -b:a 128k -ar 44100 -preset veryfast -s \"{1}\" -y \"{2}\"", args);
+                string str2 = string.Format(" -y -i \"{0}\" -vcodec {3} -pix_fmt yuv420p -r 25 -acodec libmp3lame -b:a 128k -ar 44100 -preset {4} -s \"{1}\" -y \"{2}\"",
+                    str, _vdquality, this.nameConvertPath(str), videoCodec, preset);
 
                 Process process = new Process();
                 ProcessStartInfo info = new ProcessStartInfo
@@ -2536,8 +2570,12 @@ namespace ReviewMovie
             string outputFileName = $"output_{dateTimeStr}.mp4";
             string outputVideoPath = Path.Combine(outputFolder, outputFileName);
 
+            // Chọn codec dựa trên radio button
+            string videoCodec = rbGPUused.Checked ? VideoMergeConfig.VIDEO_CODEC_GPU : VideoMergeConfig.VIDEO_CODEC_CPU;
+            string preset = rbGPUused.Checked ? VideoMergeConfig.FFMPEG_PRESET_GPU : VideoMergeConfig.FFMPEG_PRESET_CPU;
+
             string ffmpegPath = Funcion.selectffmpegversion() + "\\ffmpeg.exe";
-            string arguments = $"-y -f concat -safe 0 -i \"{filetext}\" -c copy -vcodec libx264 -pix_fmt yuv420p -preset superfast \"{outputVideoPath}\"";
+            string arguments = $"-y -f concat -safe 0 -i \"{filetext}\" -c copy -vcodec {videoCodec} -pix_fmt yuv420p -preset {preset} \"{outputVideoPath}\"";
 
             int exitCode = _videoMergeService.RunFFmpegMerge(
                 ffmpegPath,

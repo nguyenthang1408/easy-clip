@@ -11,14 +11,24 @@ namespace ReviewMovie.Base
         public const int MAX_PARALLEL_VALIDATION_THREADS = 20;
 
         /// <summary>
-        /// FFmpeg preset cho merge
+        /// FFmpeg preset cho merge (CPU)
         /// </summary>
-        public const string FFMPEG_PRESET = "superfast";
+        public const string FFMPEG_PRESET_CPU = "superfast";
 
         /// <summary>
-        /// Video codec
+        /// FFmpeg preset cho merge (GPU)
         /// </summary>
-        public const string VIDEO_CODEC = "libx264";
+        public const string FFMPEG_PRESET_GPU = "fast";
+
+        /// <summary>
+        /// Video codec (CPU - libx264)
+        /// </summary>
+        public const string VIDEO_CODEC_CPU = "libx264";
+
+        /// <summary>
+        /// Video codec (GPU - NVIDIA h264_nvenc)
+        /// </summary>
+        public const string VIDEO_CODEC_GPU = "h264_nvenc";
 
         /// <summary>
         /// Pixel format
