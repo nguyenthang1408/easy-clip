@@ -1423,47 +1423,11 @@ namespace ReviewMovie
                     {
                         token.ThrowIfCancellationRequested();
 
-                        // Thêm row vào _renderingRows trước khi render
-                        // Nếu row đang được render rồi, skip row này
-                        CancellationTokenSource rowCts = null;
-                        bool shouldRender = false;
-
-                        lock (_renderingRows)
-                        {
-                            if (!_renderingRows.ContainsKey(index))
-                            {
-                                rowCts = CancellationTokenSource.CreateLinkedTokenSource(token);
-                                _renderingRows[index] = rowCts;
-                                shouldRender = true;
-                            }
-                        }
-
-                        // Nếu row đang được render từ nơi khác, bỏ qua
-                        if (!shouldRender)
-                        {
-                            return;
-                        }
-
-                        try
-                        {
-                            //if (token.IsCancellationRequested) return;
-                            UIThreadHelper.SetLabelText(lblstatus, $"Đang Render Part {renderedVideoCount}/{totalIdx} videos.", Color.Red);
-                            ThreadRenderVideoPart(index, token);
-                            // Tăng giá trị của biến đếm video đã được render
-                            Interlocked.Increment(ref renderedVideoCount);
-                        }
-                        finally
-                        {
-                            // Cleanup: xóa row khỏi _renderingRows khi hoàn thành
-                            lock (_renderingRows)
-                            {
-                                if (_renderingRows.ContainsKey(index))
-                                {
-                                    _renderingRows[index]?.Dispose();
-                                    _renderingRows.Remove(index);
-                                }
-                            }
-                        }
+                        //if (token.IsCancellationRequested) return;
+                        UIThreadHelper.SetLabelText(lblstatus, $"Đang Render Part {renderedVideoCount}/{totalIdx} videos.", Color.Red);
+                        ThreadRenderVideoPart(index, token);
+                        // Tăng giá trị của biến đếm video đã được render
+                        Interlocked.Increment(ref renderedVideoCount);
                     }, token));
                 }
 
