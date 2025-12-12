@@ -1246,23 +1246,26 @@ namespace ReviewMovie
                 return;
             }
 
+            // QUAN TRỌNG: Capture row index vào local variable để tránh bị thay đổi khi user click vào row khác
+            int rowIndex = _indexRowSelect;
+
             CancellationTokenSource cts = null;
             bool isAlreadyRendering = false;
 
             // Kiểm tra nếu row này đang render thì stop, nếu không thì start
             lock (_renderingRows)
             {
-                if (_renderingRows.ContainsKey(_indexRowSelect))
+                if (_renderingRows.ContainsKey(rowIndex))
                 {
                     // Row đang render -> cancel nó
-                    _renderingRows[_indexRowSelect]?.Cancel();
+                    _renderingRows[rowIndex]?.Cancel();
                     isAlreadyRendering = true;
                 }
                 else
                 {
                     // Bắt đầu render row này
                     cts = new CancellationTokenSource();
-                    _renderingRows[_indexRowSelect] = cts;
+                    _renderingRows[rowIndex] = cts;
                 }
             }
 
@@ -1271,18 +1274,18 @@ namespace ReviewMovie
 
             SaveEffectSetting();
             UIThreadHelper.SetButtonText(btnRenderVideoPart, "Stop", Color.Black);
-            UIThreadHelper.SetLabelText(lblstatus, $"Render part thứ {_indexRowSelect + 1}/{dgvMainView.RowCount}", Color.Black);
+            UIThreadHelper.SetLabelText(lblstatus, $"Render part thứ {rowIndex + 1}/{dgvMainView.RowCount}", Color.Black);
 
             try
             {
                 await Task.Run(() =>
                 {
-                    ThreadRenderVideoPart(_indexRowSelect, cts.Token);
+                    ThreadRenderVideoPart(rowIndex, cts.Token);
                 }, cts.Token);
             }
             catch (OperationCanceledException)
             {
-                UIThreadHelper.SetLabelText(lblstatus, $"Đã huỷ render video part {_indexRowSelect}.", Color.OrangeRed);
+                UIThreadHelper.SetLabelText(lblstatus, $"Đã huỷ render video part {rowIndex}.", Color.OrangeRed);
             }
             catch (Exception ex)
             {
@@ -1290,13 +1293,13 @@ namespace ReviewMovie
             }
             finally
             {
-                // Xóa row khỏi dictionary khi hoàn thành
+                // Xóa row khỏi dictionary khi hoàn thành (dùng rowIndex local, không dùng _indexRowSelect)
                 lock (_renderingRows)
                 {
-                    if (_renderingRows.ContainsKey(_indexRowSelect))
+                    if (_renderingRows.ContainsKey(rowIndex))
                     {
-                        _renderingRows[_indexRowSelect]?.Dispose();
-                        _renderingRows.Remove(_indexRowSelect);
+                        _renderingRows[rowIndex]?.Dispose();
+                        _renderingRows.Remove(rowIndex);
                     }
                 }
                 UIThreadHelper.SetButtonText(btnRenderVideoPart, "Render Part", Color.Black);
@@ -1420,11 +1423,47 @@ namespace ReviewMovie
                     {
                         token.ThrowIfCancellationRequested();
 
-                        //if (token.IsCancellationRequested) return;
-                        UIThreadHelper.SetLabelText(lblstatus, $"Đang Render Part {renderedVideoCount}/{totalIdx} videos.", Color.Red);
-                        ThreadRenderVideoPart(index, token);
-                        // Tăng giá trị của biến đếm video đã được render
-                        Interlocked.Increment(ref renderedVideoCount);
+                        // Thêm row vào _renderingRows trước khi render
+                        // Nếu row đang được render rồi, skip row này
+                        CancellationTokenSource rowCts = null;
+                        bool shouldRender = false;
+
+                        lock (_renderingRows)
+                        {
+                            if (!_renderingRows.ContainsKey(index))
+                            {
+                                rowCts = CancellationTokenSource.CreateLinkedTokenSource(token);
+                                _renderingRows[index] = rowCts;
+                                shouldRender = true;
+                            }
+                        }
+
+                        // Nếu row đang được render từ nơi khác, bỏ qua
+                        if (!shouldRender)
+                        {
+                            return;
+                        }
+
+                        try
+                        {
+                            //if (token.IsCancellationRequested) return;
+                            UIThreadHelper.SetLabelText(lblstatus, $"Đang Render Part {renderedVideoCount}/{totalIdx} videos.", Color.Red);
+                            ThreadRenderVideoPart(index, token);
+                            // Tăng giá trị của biến đếm video đã được render
+                            Interlocked.Increment(ref renderedVideoCount);
+                        }
+                        finally
+                        {
+                            // Cleanup: xóa row khỏi _renderingRows khi hoàn thành
+                            lock (_renderingRows)
+                            {
+                                if (_renderingRows.ContainsKey(index))
+                                {
+                                    _renderingRows[index]?.Dispose();
+                                    _renderingRows.Remove(index);
+                                }
+                            }
+                        }
                     }, token));
                 }
 
