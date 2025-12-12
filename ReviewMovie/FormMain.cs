@@ -3266,6 +3266,10 @@ namespace ReviewMovie
 
                     await LoadSubtitleAsync(_subtitleLoadCTS.Token);
                     LoadDataGridInit();
+
+                    // Xóa tất cả video files trong thư mục MediaImport và VideoRender sau khi import thành công
+                    ClearVideoFilesInFolder(_mediaPath);
+                    ClearVideoFilesInFolder(_videoRenderPath);
                 }
             }
             catch (OperationCanceledException)
@@ -3291,6 +3295,40 @@ namespace ReviewMovie
             }
 
         }
+
+        /// <summary>
+        /// Xóa tất cả video files trong thư mục được chỉ định
+        /// </summary>
+        private void ClearVideoFilesInFolder(string folderPath)
+        {
+            try
+            {
+                if (!Directory.Exists(folderPath))
+                    return;
+
+                var files = Directory.GetFiles(folderPath);
+                foreach (var file in files)
+                {
+                    if (CheckMedia.IsVideoExtension(file))
+                    {
+                        try
+                        {
+                            File.Delete(file);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Log lỗi nhưng tiếp tục xóa các file khác
+                            Console.WriteLine($"Không thể xóa file {file}: {ex.Message}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi khi xóa video files trong {folderPath}: {ex.Message}");
+            }
+        }
+
         private async Task<bool> CheckAndCancelAllRunningTasksAsync(bool msgNoneTaskRun = true)
         {
             var runningTasks = new List<(string name, Func<bool> isRunning, CancellationTokenSource cts)>
