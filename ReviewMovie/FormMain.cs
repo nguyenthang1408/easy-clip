@@ -1246,17 +1246,28 @@ namespace ReviewMovie
                 return;
             }
 
+            CancellationTokenSource cts = null;
+            bool isAlreadyRendering = false;
+
             // Kiểm tra nếu row này đang render thì stop, nếu không thì start
-            if (_renderingRows.ContainsKey(_indexRowSelect))
+            lock (_renderingRows)
             {
-                // Row đang render -> cancel nó
-                _renderingRows[_indexRowSelect]?.Cancel();
-                return;
+                if (_renderingRows.ContainsKey(_indexRowSelect))
+                {
+                    // Row đang render -> cancel nó
+                    _renderingRows[_indexRowSelect]?.Cancel();
+                    isAlreadyRendering = true;
+                }
+                else
+                {
+                    // Bắt đầu render row này
+                    cts = new CancellationTokenSource();
+                    _renderingRows[_indexRowSelect] = cts;
+                }
             }
 
-            // Bắt đầu render row này
-            var cts = new CancellationTokenSource();
-            _renderingRows[_indexRowSelect] = cts;
+            if (isAlreadyRendering)
+                return;
 
             SaveEffectSetting();
             UIThreadHelper.SetButtonText(btnRenderVideoPart, "Stop", Color.Black);
@@ -1280,10 +1291,13 @@ namespace ReviewMovie
             finally
             {
                 // Xóa row khỏi dictionary khi hoàn thành
-                if (_renderingRows.ContainsKey(_indexRowSelect))
+                lock (_renderingRows)
                 {
-                    _renderingRows[_indexRowSelect]?.Dispose();
-                    _renderingRows.Remove(_indexRowSelect);
+                    if (_renderingRows.ContainsKey(_indexRowSelect))
+                    {
+                        _renderingRows[_indexRowSelect]?.Dispose();
+                        _renderingRows.Remove(_indexRowSelect);
+                    }
                 }
                 UIThreadHelper.SetButtonText(btnRenderVideoPart, "Render Part", Color.Black);
             }
@@ -3288,8 +3302,18 @@ namespace ReviewMovie
 
                 ("Render Part Video: Toàn bộ Danh sách.", () => _isRenderingAll, _renderAllCTS),
                 ("Render Part Video: Dòng Được chọn.", () => _isRenderingSelected, _renderSelectCTS),
-                ("Render Part Video: (Only) Dòng Được chọn.", () => _isRenderingSingle, _renderVideoCTS),
             };
+
+            // Thêm các row đang render riêng lẻ vào danh sách
+            lock (_renderingRows)
+            {
+                foreach (var kvp in _renderingRows.ToList())
+                {
+                    int rowIndex = kvp.Key;
+                    var cts = kvp.Value;
+                    runningTasks.Add(($"Render Part Video: Dòng {rowIndex + 1}.", () => _renderingRows.ContainsKey(rowIndex), cts));
+                }
+            }
 
             var initialActive = runningTasks.Where(t => t.isRunning()).ToList();
             if (initialActive.Count == 0)
