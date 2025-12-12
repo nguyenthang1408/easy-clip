@@ -3318,14 +3318,14 @@ namespace ReviewMovie
                         catch (Exception ex)
                         {
                             // Log lỗi nhưng tiếp tục xóa các file khác
-                            Console.WriteLine($"Không thể xóa file {file}: {ex.Message}");
+                            Debug.WriteLine($"Không thể xóa file {file}: {ex.Message}");
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi khi xóa video files trong {folderPath}: {ex.Message}");
+                Debug.WriteLine($"Lỗi khi xóa video files trong {folderPath}: {ex.Message}");
             }
         }
 
