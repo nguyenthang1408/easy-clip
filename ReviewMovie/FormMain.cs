@@ -3301,31 +3301,16 @@ namespace ReviewMovie
         /// </summary>
         private void ClearVideoFilesInFolder(string folderPath)
         {
-            try
-            {
-                if (!Directory.Exists(folderPath))
-                    return;
+            if (!Directory.Exists(folderPath))
+                return;
 
-                var files = Directory.GetFiles(folderPath);
-                foreach (var file in files)
-                {
-                    if (CheckMedia.IsVideoExtension(file))
-                    {
-                        try
-                        {
-                            File.Delete(file);
-                        }
-                        catch (Exception ex)
-                        {
-                            // Log lỗi nhưng tiếp tục xóa các file khác
-                            Debug.WriteLine($"Không thể xóa file {file}: {ex.Message}");
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
+            var files = Directory.GetFiles(folderPath);
+            foreach (var file in files)
             {
-                Debug.WriteLine($"Lỗi khi xóa video files trong {folderPath}: {ex.Message}");
+                if (CheckMedia.IsVideoExtension(file))
+                {
+                    File.Delete(file);
+                }
             }
         }
 
