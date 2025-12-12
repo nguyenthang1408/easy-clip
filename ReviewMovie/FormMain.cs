@@ -2463,7 +2463,12 @@ namespace ReviewMovie
                 Invoke(new MethodInvoker(delegate ()
                 {
                     lblstatus.Text = "Không có video hợp lệ để ghép!";
-                    string errorReport = "Tất cả video đều bị lỗi:\n\n" + string.Join(", ", corruptedVideos);
+                    string errorReport = "Tất cả video đều bị lỗi:\n\n";
+                    errorReport += string.Join(", ", corruptedVideos.Take(5));
+                    if (corruptedVideos.Count > 5)
+                    {
+                        errorReport += "...";
+                    }
                     MessageBox.Show(errorReport, "Lỗi - Không thể ghép video", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }));
                 return;

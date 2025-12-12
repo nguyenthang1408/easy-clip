@@ -133,7 +133,17 @@ namespace EasyClip.Services
             });
 
             validVideos = validVideoList.OrderBy(x => x.index).Select(x => x.path).ToList();
-            corruptedVideos = corruptedVideoList.OrderBy(x => x).ToList();
+
+            // Sort corrupted videos by numeric order (extract number from filename)
+            corruptedVideos = corruptedVideoList
+                .OrderBy(fileName =>
+                {
+                    string nameWithoutExt = System.IO.Path.GetFileNameWithoutExtension(fileName);
+                    if (int.TryParse(nameWithoutExt, out int number))
+                        return number;
+                    return int.MaxValue; // Put non-numeric files at the end
+                })
+                .ToList();
         }
     }
 }
