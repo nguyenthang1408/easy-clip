@@ -3264,6 +3264,10 @@ namespace ReviewMovie
                         FolderSubtileMediaFile = subtitleMediaPath
                     };
 
+                    // Xóa tất cả video files cũ trong thư mục MediaImport và VideoRender trước khi import subtitle mới
+                    ClearVideoFilesInFolder(_mediaPath);
+                    ClearVideoFilesInFolder(_videoRenderPath);
+
                     await LoadSubtitleAsync(_subtitleLoadCTS.Token);
                     LoadDataGridInit();
                 }
@@ -3291,6 +3295,25 @@ namespace ReviewMovie
             }
 
         }
+
+        /// <summary>
+        /// Xóa tất cả video files trong thư mục được chỉ định
+        /// </summary>
+        private void ClearVideoFilesInFolder(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+                return;
+
+            var files = Directory.GetFiles(folderPath);
+            foreach (var file in files)
+            {
+                if (CheckMedia.IsVideoExtension(file))
+                {
+                    File.Delete(file);
+                }
+            }
+        }
+
         private async Task<bool> CheckAndCancelAllRunningTasksAsync(bool msgNoneTaskRun = true)
         {
             var runningTasks = new List<(string name, Func<bool> isRunning, CancellationTokenSource cts)>
