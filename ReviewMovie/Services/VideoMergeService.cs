@@ -36,22 +36,31 @@ namespace EasyClip.Services
             })
             {
                 var timeRegex = new Regex(@"time=(\d+):(\d+):(\d+\.\d+)");
+                var speedRegex = new Regex(@"speed=(\d+\.?\d*x)");
 
                 process.ErrorDataReceived += (sender, e) =>
                 {
                     if (!string.IsNullOrEmpty(e.Data))
                     {
-                        var match = timeRegex.Match(e.Data);
-                        if (match.Success)
+                        var timeMatch = timeRegex.Match(e.Data);
+                        if (timeMatch.Success)
                         {
-                            string hours = match.Groups[1].Value;
-                            string minutes = match.Groups[2].Value;
-                            string seconds = match.Groups[3].Value;
+                            string hours = timeMatch.Groups[1].Value;
+                            string minutes = timeMatch.Groups[2].Value;
+                            string seconds = timeMatch.Groups[3].Value;
                             string timeStr = $"{hours}:{minutes}:{seconds.Split('.')[0]}";
+
+                            // Parse speed nếu có
+                            string speedStr = "";
+                            var speedMatch = speedRegex.Match(e.Data);
+                            if (speedMatch.Success)
+                            {
+                                speedStr = $" - Speed: {speedMatch.Groups[1].Value}";
+                            }
 
                             try
                             {
-                                progressCallback?.Invoke($"Đang ghép {validVideoCount} video - Time: {timeStr}");
+                                progressCallback?.Invoke($"Đang ghép {validVideoCount} video - Time: {timeStr}{speedStr}");
                             }
                             catch { }
                         }
