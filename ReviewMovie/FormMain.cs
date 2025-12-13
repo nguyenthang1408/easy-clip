@@ -1,6 +1,7 @@
 ﻿using Common.Constant;
 using Common.Model;
 using Common.Services;
+using EasyClip.Base;
 using EasyClip.Infrastructure.Config;
 using EasyClip.Infrastructure.Project;
 using EasyClip.Services;
@@ -53,6 +54,8 @@ namespace ReviewMovie
         // Khởi tạo (chỉ 1 lần)
         private readonly LoadingService _loadingService = new LoadingService(() => new FormLoadingCancel());
 
+        // GPU Detection Service
+        private readonly GpuDetectionService _gpuDetectionService;
 
         private readonly IAudioRecordService _audioRecordService;
         private readonly IAudioDownloadService _audioDownloadService;
@@ -105,6 +108,11 @@ namespace ReviewMovie
         public int _indexRowSelect = -1;
         private bool _videoShort = false;
         private bool _checkrecord = false;
+        private bool _isInternalTextChange = false;
+
+        private bool _isAddingRow = false;
+        private DateTime _lastAddRowClickTime = DateTime.MinValue;
+        private readonly TimeSpan _addRowClickCooldown = TimeSpan.FromMilliseconds(350);
 
         private const decimal _speechRatioDefault = 0.5m;
 
@@ -127,6 +135,13 @@ namespace ReviewMovie
         private string _tempPath;
         private string _outputPath;
 
+        // Video merge configuration and services
+        private bool _skipCorruptedVideos = true; // Mặc định skip video lỗi và ghép tiếp
+        private CancellationTokenSource _mergeCancellationTokenSource; // CancellationToken cho merge
+        private bool _isMerging = false; // Flag đang merge
+        private readonly VideoValidationService _videoValidationService;
+        private readonly VideoMergeService _videoMergeService;
+
         private string _appcode;
         private string _apikey;
 
@@ -144,8 +159,16 @@ namespace ReviewMovie
             _appcode = appcode;
             _apikey = apikey;
 
+            // Initialize video services
+            _videoValidationService = new VideoValidationService(VideoMergeConfig.MAX_PARALLEL_VALIDATION_THREADS);
+            _videoMergeService = new VideoMergeService();
+            _gpuDetectionService = new GpuDetectionService();
+
             // Fix cứng màn hình
             this.MaximizeBox = false;
+
+            // Tắt tạm button Checkbox chọn tác vụ
+            btnSelectAll.Enabled = false;
 
             _sessionMerge = false;
             _clipPlayerService.ListenForClipPlayerMessages(HandleClipPlayerMessage);
@@ -174,6 +197,90 @@ namespace ReviewMovie
             dgvMainView.AutoGenerateColumns = false;    // tạo các cột tùy chỉnh cho DataGridView  => ko có là lỗi
             _statusZoom = true; // Khai báo cờ check
             _statusOpenPlayer = true;
+
+            // Mặc định chọn CPU
+            rbCPUused.Checked = true;
+
+            // Đăng ký event handlers cho radio buttons
+            rbGPUused.CheckedChanged += rbGPUused_CheckedChanged;
+            rbCPUused.CheckedChanged += rbCPUused_CheckedChanged;
+
+            // Auto-detect GPU và đề xuất nếu có
+            InitializeGPUDetection();
+        }
+
+        /// <summary>
+        /// Event handler khi user chọn GPU
+        /// </summary>
+        private void rbGPUused_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbGPUused.Checked)
+            {
+                // Validate GPU khi user chọn
+                ValidateGPUSelection();
+            }
+        }
+
+        /// <summary>
+        /// Event handler khi user chọn CPU
+        /// </summary>
+        private void rbCPUused_CheckedChanged(object sender, EventArgs e)
+        {
+            // Không cần validate gì khi chọn CPU
+        }
+
+        /// <summary>
+        /// Khởi tạo và auto-detect GPU
+        /// </summary>
+        private void InitializeGPUDetection()
+        {
+            try
+            {
+                if (_gpuDetectionService.CheckGpuAvailability())
+                {
+                    // GPU khả dụng - đề xuất sử dụng
+                    var result = MessageBox.Show(
+                        GpuDetectionMessages.DETECT_GPU_AVAILABLE_MESSAGE,
+                        GpuDetectionMessages.DETECT_GPU_AVAILABLE_TITLE,
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        rbGPUused.Checked = true;
+                    }
+                }
+            }
+            catch
+            {
+                // Nếu có lỗi, giữ nguyên CPU (default)
+            }
+        }
+
+        /// <summary>
+        /// Validate GPU khi user chọn
+        /// </summary>
+        private bool ValidateGPUSelection()
+        {
+            if (rbGPUused.Checked)
+            {
+                if (!_gpuDetectionService.CheckGpuAvailability())
+                {
+                    // Lấy thông báo lỗi chi tiết từ service
+                    string errorMessage = _gpuDetectionService.GetUserFriendlyErrorMessage();
+
+                    MessageBox.Show(
+                        errorMessage,
+                        GpuDetectionMessages.VALIDATE_GPU_FAILED_TITLE,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    // Chuyển về CPU
+                    rbCPUused.Checked = true;
+                    return false;
+                }
+            }
+            return true;
         }
         private void Init()
         {
@@ -1356,10 +1463,9 @@ namespace ReviewMovie
         #endregion
 
         #region RenderVideo
-        private CancellationTokenSource _renderVideoCTS;
+        private Dictionary<int, CancellationTokenSource> _renderingRows = new Dictionary<int, CancellationTokenSource>();
         private CancellationTokenSource _renderAllCTS;
         private CancellationTokenSource _renderSelectCTS;
-        private bool _isRenderingSingle = false;
         private bool _isRenderingAll = false;
         private bool _isRenderingSelected = false;
 
@@ -1371,41 +1477,69 @@ namespace ReviewMovie
                 return;
             }
 
-            if (!_isRenderingSingle)
+            // Validate GPU trước khi render
+            if (!ValidateGPUSelection())
             {
-                _renderVideoCTS = new CancellationTokenSource();
-                _isRenderingSingle = true;
+                return;
+            }
 
-                SaveEffectSetting();
-                UIThreadHelper.SetButtonText(btnRenderVideoPart, "Stop", Color.Black);
-                UIThreadHelper.SetLabelText(lblstatus, $"Render part thứ {_indexRowSelect + 1}/{dgvMainView.RowCount}", Color.Black);
+            // QUAN TRỌNG: Capture row index vào local variable để tránh bị thay đổi khi user click vào row khác
+            int rowIndex = _indexRowSelect;
 
-                try
+            CancellationTokenSource cts = null;
+            bool isAlreadyRendering = false;
+
+            // Kiểm tra nếu row này đang render thì stop, nếu không thì start
+            lock (_renderingRows)
+            {
+                if (_renderingRows.ContainsKey(rowIndex))
                 {
-                    await Task.Run(() =>
-                    {
-                        ThreadRenderVideoPart(_indexRowSelect, _renderVideoCTS.Token);
-                    }, _renderVideoCTS.Token);
+                    // Row đang render -> cancel nó
+                    _renderingRows[rowIndex]?.Cancel();
+                    isAlreadyRendering = true;
                 }
-                catch (OperationCanceledException)
+                else
                 {
-                    UIThreadHelper.SetLabelText(lblstatus, $"Đã huỷ render video part {_indexRowSelect}.", Color.OrangeRed);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Lỗi khi render: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    _isRenderingSingle = false;
-                    _renderVideoCTS?.Dispose();
-                    _renderVideoCTS = null;
-                    UIThreadHelper.SetButtonText(btnRenderVideoPart, "Render Part", Color.Black);
+                    // Bắt đầu render row này
+                    cts = new CancellationTokenSource();
+                    _renderingRows[rowIndex] = cts;
                 }
             }
-            else
+
+            if (isAlreadyRendering)
+                return;
+
+            SaveEffectSetting();
+            UIThreadHelper.SetButtonText(btnRenderVideoPart, "Stop", Color.Black);
+            UIThreadHelper.SetLabelText(lblstatus, $"Render part thứ {rowIndex + 1}/{dgvMainView.RowCount}", Color.Black);
+
+            try
             {
-                _renderVideoCTS?.Cancel();
+                await Task.Run(() =>
+                {
+                    ThreadRenderVideoPart(rowIndex, cts.Token);
+                }, cts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                UIThreadHelper.SetLabelText(lblstatus, $"Đã huỷ render video part {rowIndex}.", Color.OrangeRed);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi render: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Xóa row khỏi dictionary khi hoàn thành (dùng rowIndex local, không dùng _indexRowSelect)
+                lock (_renderingRows)
+                {
+                    if (_renderingRows.ContainsKey(rowIndex))
+                    {
+                        _renderingRows[rowIndex]?.Dispose();
+                        _renderingRows.Remove(rowIndex);
+                    }
+                }
+                UIThreadHelper.SetButtonText(btnRenderVideoPart, "Render Part", Color.Black);
             }
         }
 
@@ -1419,6 +1553,12 @@ namespace ReviewMovie
             }
 
             if (dgvMainView.RowCount <= 0) return;
+
+            // Validate GPU trước khi render
+            if (!ValidateGPUSelection())
+            {
+                return;
+            }
 
             _isRenderingAll = true;
             _renderAllCTS = new CancellationTokenSource();
@@ -1466,6 +1606,12 @@ namespace ReviewMovie
             if (listNumber.Count == 0)
             {
                 MessageBox.Show("Không có dòng nào được chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validate GPU trước khi render
+            if (!ValidateGPUSelection())
+            {
                 return;
             }
 
@@ -1812,17 +1958,57 @@ namespace ReviewMovie
                 token.ThrowIfCancellationRequested();
 
                 builder.Append(input.Muted ? mutedParam : string.Format("; [ov][0:a]concat=n=1:v=1:a=1[vout]", input.AudioFile));
-                builder.Append(string.Format(" \" {0} {1} -vcodec libx264 -pix_fmt yuv420p -r {2} -acodec libmp3lame -b:a 128k -ar 44100 -preset veryfast -s \"{3}\" -t {4} \"{5}\" "
+
+                // Chọn codec dựa trên radio button
+                string videoCodec = VideoMergeConfig.VIDEO_CODEC_CPU;
+                string preset = "veryfast";
+                try
+                {
+                    if (InvokeRequired)
+                    {
+                        Invoke(new MethodInvoker(() =>
+                        {
+                            if (rbGPUused.Checked)
+                            {
+                                videoCodec = VideoMergeConfig.VIDEO_CODEC_GPU;
+                                preset = VideoMergeConfig.FFMPEG_PRESET_GPU;
+                            }
+                        }));
+                    }
+                    else
+                    {
+                        if (rbGPUused.Checked)
+                        {
+                            videoCodec = VideoMergeConfig.VIDEO_CODEC_GPU;
+                            preset = VideoMergeConfig.FFMPEG_PRESET_GPU;
+                        }
+                    }
+                }
+                catch { }
+
+                builder.Append(string.Format(" \" {0} {1} -vcodec {6} -pix_fmt yuv420p -r {2} -acodec libmp3lame -b:a 128k -ar 44100 -preset {7} -s \"{3}\" -t {4} \"{5}\" "
                                                            , input.Muted ? (checkMedia == MediaType.Picture ? mutedParam : "-map \"[aCopy]\"") : "-map \"[aOut]\""
                                                            , input.Muted ? "-map \"[ov]\"" : "-map \"[vout]\""
                                                            , input.Fps
                                                            , input.VdSizeOutput
                                                            , input.TimeOfPart
-                                                           , input.SaveFile));
+                                                           , input.SaveFile
+                                                           , videoCodec
+                                                           , preset));
 
                 string argRender = builder.ToString();
 
-                bool result = CFuncion.RunFFmpeg(Funcion.selectffmpegversion() + "\\ffmpeg.exe", argRender, token);
+                // Callback để hiển thị tốc độ render
+                Action<string> progressCallback = (speed) =>
+                {
+                    try
+                    {
+                        UIThreadHelper.SetLabelText(lblstatus, $"Render part {input.Index + 1} - Speed: {speed}", Color.Blue);
+                    }
+                    catch { }
+                };
+
+                bool result = CFuncion.RunFFmpeg(Funcion.selectffmpegversion() + "\\ffmpeg.exe", argRender, token, progressCallback);
                 message = result ? "Done" : "Fail";
                 Color color = result ? Color.GreenYellow : Color.Red;
 
@@ -2004,41 +2190,56 @@ namespace ReviewMovie
                 MessageBox.Show($"Lỗi khi xóa dòng: {ex.Message}");
             }
         }
+
         private void txtTextInput_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(_projectName) && dgvMainView.RowCount > 0)
+            if (_isInternalTextChange)
+                return;
+
+            if (string.IsNullOrEmpty(_projectName) || dgvMainView.RowCount <= 0)
+                return;
+
+            if (_indexRowSelect < 0)
             {
-                if (_indexRowSelect >= 0)
+                MessageBox.Show(ERR_ROW_INDEX);
+                return;
+            }
+
+            int cursor = txtTextInput.SelectionStart;
+
+            // Gọi hàm chung
+            bool wasTrimmed;
+            string processed = TextProcessUtil.ProcessText(txtTextInput.Text, RwConstant.MaxLengthText, out wasTrimmed);
+
+            // Gán lại Text nếu có thay đổi
+            if (txtTextInput.Text != processed)
+            {
+                _isInternalTextChange = true;
+                txtTextInput.Text = processed;
+                txtTextInput.SelectionStart = Math.Min(cursor, processed.Length);
+                _isInternalTextChange = false;
+
+                // Chỉ báo message 1 lần
+                if (wasTrimmed)
                 {
-                    // Lưu vị trí con trỏ trước khi thay đổi
-                    int cursorPosition = txtTextInput.SelectionStart;
-
-                    // Gọi phương thức để loại bỏ ký tự xuống dòng và nối các dòng lại
-                    string processedText = RemoveNewLineChars(txtTextInput.Text);
-
-                    // Cập nhật nội dung của TextBox
-                    txtTextInput.Text = processedText;
-
-                    // Khôi phục vị trí con trỏ
-                    txtTextInput.SelectionStart = cursorPosition;
-
-                    int lengt = processedText.Length;
-                    string[] chars = processedText.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
-                    string textlength = string.Format("{0} 'Ký Tự' | {1} Chữ ", lengt.ToString(), chars.Length.ToString());
-
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_inputtext", txtTextInput.Text, Color.White);
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_textlength", textlength, Color.White);
-                }
-                else
-                {
-                    MessageBox.Show(ERR_ROW_INDEX);
+                    MessageBox.Show(
+                        $"Text quá dài! Chỉ cho phép tối đa {RwConstant.MaxLengthText} ký tự.",
+                        "Thông báo",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
                 }
             }
-            //else
-            //{
-            //    //MessageBox.Show(ERR_PROJECT_EMPTY);
-            //}
+
+            // Update UI
+            int len = processed.Length;
+            string[] words = processed.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
+            string textlength = $"{len} 'Ký Tự' | {words.Length} Chữ";
+
+            FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_inputtext", processed, Color.White);
+            FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_textlength", textlength, Color.White);
         }
+
         private async void txtTextInput_DragDrop(object sender, DragEventArgs e)
         {
             var data = e.Data.GetData(DataFormats.FileDrop);
@@ -2353,43 +2554,82 @@ namespace ReviewMovie
             {
                 Directory.CreateDirectory(Application.StartupPath + "\\data");
             }
+
             try
             {
-                btnAddAll.Text = "Start";
-                if (btnAddAll.Text == "Start")
+                // Nếu đang merge → Cancel
+                if (_isMerging)
                 {
-                    btnAddAll.Text = "Stop";
-                    this._theart_videotheostt = new Thread(new ThreadStart(this.theart_ghepvideoTheoSTT));
-                    this._theart_videotheostt.Start();
+                    _mergeCancellationTokenSource?.Cancel();
+                    btnAddAll.Text = "Đang hủy...";
+                    btnAddAll.Enabled = false;
+                    return;
                 }
-                else
-                {
-                    btnAddAll.Text = "Start";
-                    _theart_videotheostt.Abort();
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Progam is stop", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
 
+                // Bắt đầu merge mới
+                _isMerging = true;
+                btnAddAll.Text = "Hủy ghép";
+                _mergeCancellationTokenSource = new CancellationTokenSource();
+
+                this._theart_videotheostt = new Thread(new ThreadStart(this.theart_ghepvideoTheoSTT));
+                this._theart_videotheostt.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                ResetMergeButton();
+            }
         }
+
         private void theart_ghepvideoTheoSTT()
         {
-            ghepvdTheoStt();
-            Invoke(new MethodInvoker(delegate ()
+            try
             {
-                btnAddAll.Text = "Start";
-            }));
+                ghepvdTheoStt(_mergeCancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                Invoke(new MethodInvoker(delegate ()
+                {
+                    lblstatus.Text = "Đã hủy ghép video";
+                    MessageBox.Show("Đã hủy quá trình ghép video.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }));
+            }
+            catch (Exception ex)
+            {
+                Invoke(new MethodInvoker(delegate ()
+                {
+                    lblstatus.Text = "Lỗi!";
+                    MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
+            }
+            finally
+            {
+                Invoke(new MethodInvoker(delegate ()
+                {
+                    ResetMergeButton();
+                }));
+            }
+        }
+
+        private void ResetMergeButton()
+        {
+            _isMerging = false;
+            btnAddAll.Text = "Ghép Video";
+            btnAddAll.Enabled = true;
         }
         private void convertvideo()
         {
+            // Chọn codec dựa trên radio button
+            string videoCodec = rbGPUused.Checked ? VideoMergeConfig.VIDEO_CODEC_GPU : VideoMergeConfig.VIDEO_CODEC_CPU;
+            string preset = rbGPUused.Checked ? VideoMergeConfig.FFMPEG_PRESET_GPU : "veryfast";
+
             string[] files = Directory.GetFiles(_videoRenderPath);
             int num = 0;
             foreach (string str in files)
             {
-                object[] args = new object[] { str, _vdquality, this.nameConvertPath(str) };
-                string str2 = string.Format(" -y -i \"{0}\" -vcodec libx264 -pix_fmt yuv420p -r 25 -acodec libmp3lame -b:a 128k -ar 44100 -preset veryfast -s \"{1}\" -y \"{2}\"", args);
+                string str2 = string.Format(" -y -i \"{0}\" -vcodec {3} -pix_fmt yuv420p -r 25 -acodec libmp3lame -b:a 128k -ar 44100 -preset {4} -s \"{1}\" -y \"{2}\"",
+                    str, _vdquality, this.nameConvertPath(str), videoCodec, preset);
 
                 Process process = new Process();
                 ProcessStartInfo info = new ProcessStartInfo
@@ -2422,16 +2662,35 @@ namespace ReviewMovie
                 lblstatus.Text = "Convert Done";
             }));
         }
-        private void ghepvdTheoStt()
+        private void ghepvdTheoStt(CancellationToken cancellationToken)
         {
             string[] files = Directory.GetFiles(_videoRenderPath);
             string filetext = Application.StartupPath + "\\data\\" + "datalink.txt";
             Dictionary<string, int> fileList = new Dictionary<string, int>();
+
             if (!File.Exists(filetext))
             {
                 File.Create(filetext).Dispose();
             }
             File.WriteAllText(filetext, "");
+
+            if (files == null || files.Length == 0)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show(
+                        this,
+                        "Không có file nào trong thư mục Video Render!",
+                        "Thông báo",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                    UIThreadHelper.SetLabelText(lblstatus, RwConstant.STATUS_DEFAULT, Color.Black);
+                }));
+                return; // dừng ghép
+            }
+
+            // Bước 1: Lọc và sắp xếp files theo số thứ tự
             foreach (var file in files)
             {
                 try
@@ -2441,53 +2700,251 @@ namespace ReviewMovie
                 }
                 catch
                 {
-                    MessageBox.Show("Kiểm tra File đã đổi tên thành số chưa ?");
+                    Invoke(new MethodInvoker(delegate ()
+                    {
+                        MessageBox.Show("Kiểm tra File đã đổi tên thành số chưa ?");
+                    }));
+                    return;
                 }
             }
+
             List<string> sortListfile = new List<string>();
             foreach (KeyValuePair<string, int> author in fileList.OrderBy(key => key.Value))
             {
                 sortListfile.Add(author.Key);
             }
 
-            foreach (string str in sortListfile)
+            int totalVideos = sortListfile.Count;
+            List<string> validVideoList;
+            List<string> corruptedVideos;
+
+            // Bước 2: Validate video (nếu bật chế độ skip video lỗi)
+            if (_skipCorruptedVideos)
             {
-                using (StreamWriter w = File.AppendText(filetext))
+                _videoValidationService.ValidateVideosParallel(
+                    sortListfile,
+                    out validVideoList,
+                    out corruptedVideos,
+                    cancellationToken,
+                    (current, total) =>
+                    {
+                        try
+                        {
+                            Invoke(new MethodInvoker(delegate ()
+                            {
+                                lblstatus.Text = $"Đang kiểm tra video {current}/{total}...";
+                            }));
+                        }
+                        catch { }
+                    });
+            }
+            else
+            {
+                // Không validate, sử dụng tất cả video
+                validVideoList = sortListfile;
+                corruptedVideos = new List<string>();
+            }
+
+            // Check cancellation sau validation
+            cancellationToken.ThrowIfCancellationRequested();
+
+            int validVideos = validVideoList.Count;
+
+            // Kiểm tra có video hợp lệ nào không
+            if (validVideos == 0)
+            {
+                Invoke(new MethodInvoker(delegate ()
                 {
-                    w.WriteLine("file '" + str + "'");
-                    w.Close();
+                    lblstatus.Text = "Không có video hợp lệ để ghép!";
+                    string errorReport = "Tất cả video đều bị lỗi:\n\n";
+                    errorReport += string.Join(", ", corruptedVideos.Take(5));
+                    if (corruptedVideos.Count > 5)
+                    {
+                        errorReport += "...";
+                    }
+                    MessageBox.Show(errorReport, "Lỗi - Không thể ghép video", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
+                return;
+            }
+
+            // Bước 3: Nếu có video lỗi, hỏi user có muốn tiếp tục merge không
+            if (corruptedVideos.Count > 0)
+            {
+                bool shouldContinue = false;
+                Invoke(new MethodInvoker(delegate ()
+                {
+                    string confirmMessage = $"⚠️ Phát hiện {corruptedVideos.Count} video lỗi:\n\n";
+                    confirmMessage += string.Join(", ", corruptedVideos.Take(10)); // Hiển thị tối đa 10 video
+                    if (corruptedVideos.Count > 10)
+                    {
+                        confirmMessage += $"\n... và {corruptedVideos.Count - 10} video khác";
+                    }
+                    confirmMessage += $"\n\n✅ Video hợp lệ: {validVideos}/{totalVideos}";
+                    confirmMessage += "\n\n❓ Bạn có muốn tiếp tục ghép {validVideos} video hợp lệ không?";
+
+                    DialogResult result = MessageBox.Show(
+                        confirmMessage,
+                        "Xác nhận ghép video",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question
+                    );
+
+                    shouldContinue = (result == DialogResult.Yes);
+                }));
+
+                if (!shouldContinue)
+                {
+                    Invoke(new MethodInvoker(delegate ()
+                    {
+                        lblstatus.Text = "Đã hủy ghép video";
+                    }));
+                    return; // User chọn NO, kết thúc
                 }
             }
-            object[] args = new object[] { filetext, nameAllmerger("VideoAll") };
-            string str2 = string.Format(" -y -f concat -safe 0 -i \"{0}\" -c copy -vcodec libx264 -pix_fmt yuv420p -preset superfast \"{1}\" ", args);
 
-            Process process = new Process();
-            ProcessStartInfo info = new ProcessStartInfo
+            // Bước 4: Tạo file danh sách video hợp lệ cho ffmpeg
+            _videoMergeService.CreateConcatFile(filetext, validVideoList);
+
+            // Bước 5: Ghép video bằng ffmpeg với progress tracking
+            // Check cancellation trước khi start ffmpeg
+            cancellationToken.ThrowIfCancellationRequested();
+
+            Invoke(new MethodInvoker(delegate ()
             {
-                WindowStyle = ProcessWindowStyle.Normal,
-                FileName = Funcion.selectffmpegversion() + "\\ffmpeg.exe",
-                Arguments = str2
-            };
-            process.StartInfo = info;
+                lblstatus.Text = $"Đang ghép {validVideos} video hợp lệ...";
+            }));
+
+            // Tạo subfolder với tên datetime: output_20250611_143052/
+            string dateTimeStr = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            string outputFolderName = $"output_{dateTimeStr}";
+            string outputFolder = Path.Combine(_outputPath, outputFolderName);
+
+            // Tạo thư mục nếu chưa tồn tại
+            if (!Directory.Exists(outputFolder))
+            {
+                Directory.CreateDirectory(outputFolder);
+            }
+
+            // Tạo đường dẫn video trong subfolder
+            string outputFileName = $"output_{dateTimeStr}.mp4";
+            string outputVideoPath = Path.Combine(outputFolder, outputFileName);
+
+            // Chọn codec dựa trên radio button
+            string videoCodec = rbGPUused.Checked ? VideoMergeConfig.VIDEO_CODEC_GPU : VideoMergeConfig.VIDEO_CODEC_CPU;
+            string preset = rbGPUused.Checked ? VideoMergeConfig.FFMPEG_PRESET_GPU : VideoMergeConfig.FFMPEG_PRESET_CPU;
+
+            string ffmpegPath = Funcion.selectffmpegversion() + "\\ffmpeg.exe";
+            string arguments = $"-y -f concat -safe 0 -i \"{filetext}\" -c copy -vcodec {videoCodec} -pix_fmt yuv420p -preset {preset} \"{outputVideoPath}\"";
+
+            int exitCode = _videoMergeService.RunFFmpegMerge(
+                ffmpegPath,
+                arguments,
+                validVideos,
+                cancellationToken,
+                (status) =>
+                {
+                    try
+                    {
+                        Invoke(new MethodInvoker(delegate ()
+                        {
+                            lblstatus.Text = status;
+                        }));
+                    }
+                    catch { }
+                });
+
             try
             {
-                Invoke(new MethodInvoker(delegate ()
+                if (exitCode == 0)
                 {
-                    lblstatus.Text = "Đang ghép các đoạn video ...";
-                }));
-                process.Start();
-                process.WaitForExit();
-                Invoke(new MethodInvoker(delegate ()
+                    // Bước 6: Ghi log file nếu có video lỗi (trong cùng subfolder)
+                    if (corruptedVideos.Count > 0)
+                    {
+                        string logFileName = $"output_{dateTimeStr}_log.txt";
+                        string logFilePath = Path.Combine(outputFolder, logFileName);
+
+                        _videoMergeService.WriteErrorLog(
+                            logFilePath,
+                            outputFolderName,
+                            outputFileName,
+                            outputVideoPath,
+                            totalVideos,
+                            validVideos,
+                            corruptedVideos);
+                    }
+
+                    // Bước 7: Báo cáo kết quả
+                    Invoke(new MethodInvoker(delegate ()
+                    {
+                        lblstatus.Text = "Ghép Done";
+
+                        // Tạo báo cáo
+                        string report = $"✅ Ghép video hoàn tất!\n\n";
+                        report += $"📊 Thống kê:\n";
+                        report += $"- Tổng số video: {totalVideos}\n";
+                        report += $"- Video hợp lệ: {validVideos}\n";
+                        report += $"- Video lỗi: {corruptedVideos.Count}\n\n";
+                        report += $"📁 Thư mục: {outputFolderName}\n";
+                        report += $"📹 Video: {outputFileName}";
+
+                        if (corruptedVideos.Count > 0)
+                        {
+                            report += $"\n📝 Log: output_{dateTimeStr}_log.txt";
+                        }
+
+                        MessageBoxIcon icon = corruptedVideos.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information;
+                        MessageBox.Show(report, "Kết quả ghép video", MessageBoxButtons.OK, icon);
+
+                        // Mở subfolder output sau khi thành công
+                        Funcion.OpenFolder(outputFolder);
+                    }));
+                }
+                else if (exitCode == -1)
                 {
-                    lblstatus.Text = "Ghép Done";
-                }));
+                    // Cancelled hoặc error
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        // Đã cancel - throw exception để catch block xử lý
+                        cancellationToken.ThrowIfCancellationRequested();
+                    }
+                    else
+                    {
+                        // Error chứ không phải cancel
+                        Invoke(new MethodInvoker(delegate ()
+                        {
+                            lblstatus.Text = "Ghép video thất bại!";
+                            MessageBox.Show($"Lỗi khi ghép video!\n\nFFmpeg bị lỗi hoặc không thể chạy.",
+                                          "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }));
+                    }
+                }
+                else
+                {
+                    // FFmpeg failed với exit code khác 0
+                    Invoke(new MethodInvoker(delegate ()
+                    {
+                        lblstatus.Text = "Ghép video thất bại!";
+                        MessageBox.Show($"Lỗi khi ghép video!\n\nFFmpeg Exit Code: {exitCode}",
+                                      "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }));
+                }
+
                 File.WriteAllText(filetext, "");
+            }
+            catch (OperationCanceledException)
+            {
+                // Re-throw để theart_ghepvideoTheoSTT() catch và xử lý
+                throw;
             }
             catch (Exception exception)
             {
+                Invoke(new MethodInvoker(delegate ()
+                {
+                    lblstatus.Text = "Lỗi!";
+                    MessageBox.Show($"Exception: {exception.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
                 Console.WriteLine(exception.Message);
             }
-
         }
         private string nameAllmerger(string string_0)
         {
@@ -2733,17 +3190,42 @@ namespace ReviewMovie
                 nbSpeechRatio.Value = _speechratioElevenlab;
             }
         }
+
         private void btnAddRow_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(_projectName) && _infoProject != null)
+            var now = DateTime.UtcNow;
+            if (now - _lastAddRowClickTime < _addRowClickCooldown)
             {
-                addRow(_infoProject);
+                return;
             }
-            else
+
+            if (_isAddingRow)
             {
-                MessageBox.Show(ERR_PROJECT_EMPTY);
+                return;
+            }
+
+            try
+            {
+                _lastAddRowClickTime = now;
+                _isAddingRow = true;
+                btnAddRow.Enabled = false;
+
+                if (!string.IsNullOrEmpty(_projectName) && _infoProject != null)
+                {
+                    addRow(_infoProject);
+                }
+                else
+                {
+                    MessageBox.Show(ERR_PROJECT_EMPTY);
+                }
+            }
+            finally
+            {
+                btnAddRow.Enabled = true;
+                _isAddingRow = false;
             }
         }
+
         private void addRow(InfoProject infoProject)
         {
             txtTextInput.ReadOnly = false;
@@ -2930,8 +3412,13 @@ namespace ReviewMovie
             lblstatus.Text = RwConstant.STATUS_DEFAULT;
             if (!string.IsNullOrEmpty(_projectName))
             {
+                // Validate GPU trước khi merge video
+                if (!ValidateGPUSelection())
+                {
+                    return;
+                }
+
                 GhepvideoTheoSTT();
-                Funcion.OpenFolder(_outputPath);
             }
             else
             {
@@ -3089,6 +3576,10 @@ namespace ReviewMovie
                         FolderSubtileMediaFile = subtitleMediaPath
                     };
 
+                    // Xóa tất cả video files cũ trong thư mục MediaImport và VideoRender trước khi import subtitle mới
+                    ClearVideoFilesInFolder(_mediaPath);
+                    ClearVideoFilesInFolder(_videoRenderPath);
+
                     await LoadSubtitleAsync(_subtitleLoadCTS.Token);
                     LoadDataGridInit();
                 }
@@ -3116,6 +3607,25 @@ namespace ReviewMovie
             }
 
         }
+
+        /// <summary>
+        /// Xóa tất cả video files trong thư mục được chỉ định
+        /// </summary>
+        private void ClearVideoFilesInFolder(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+                return;
+
+            var files = Directory.GetFiles(folderPath);
+            foreach (var file in files)
+            {
+                if (CheckMedia.IsVideoExtension(file))
+                {
+                    File.Delete(file);
+                }
+            }
+        }
+
         private async Task<bool> CheckAndCancelAllRunningTasksAsync(bool msgNoneTaskRun = true)
         {
             var runningTasks = new List<(string name, Func<bool> isRunning, CancellationTokenSource cts)>
@@ -3135,8 +3645,18 @@ namespace ReviewMovie
 
                 ("Render Part Video: Toàn bộ Danh sách.", () => _isRenderingAll, _renderAllCTS),
                 ("Render Part Video: Dòng Được chọn.", () => _isRenderingSelected, _renderSelectCTS),
-                ("Render Part Video: (Only) Dòng Được chọn.", () => _isRenderingSingle, _renderVideoCTS),
             };
+
+            // Thêm các row đang render riêng lẻ vào danh sách
+            lock (_renderingRows)
+            {
+                foreach (var kvp in _renderingRows.ToList())
+                {
+                    int rowIndex = kvp.Key;
+                    var cts = kvp.Value;
+                    runningTasks.Add(($"Render Part Video: Dòng {rowIndex + 1}.", () => _renderingRows.ContainsKey(rowIndex), cts));
+                }
+            }
 
             var initialActive = runningTasks.Where(t => t.isRunning()).ToList();
             if (initialActive.Count == 0)

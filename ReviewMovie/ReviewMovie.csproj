@@ -103,8 +103,12 @@
       <DependentUpon>CustomTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Base\Enum.cs" />
+    <Compile Include="Base\GpuDetectionMessages.cs" />
+    <Compile Include="Base\GpuDetectionResult.cs" />
     <Compile Include="Base\RVFuncion.cs" />
+    <Compile Include="Base\TextProcessUtil.cs" />
     <Compile Include="Base\UIThreadHelper.cs" />
+    <Compile Include="Base\VideoMergeConfig.cs" />
     <Compile Include="Infrastructure\Config\ConfigDataService.cs" />
     <Compile Include="Infrastructure\Config\ConfigModel.cs" />
     <Compile Include="Infrastructure\Config\ConfigCtrl.cs" />
@@ -134,11 +138,14 @@
     <Compile Include="Services\AudioRecordService.cs" />
     <Compile Include="Services\Base\SingletonBase.cs" />
     <Compile Include="Services\ClipPlayerService.cs" />
+    <Compile Include="Services\GpuDetectionService.cs" />
     <Compile Include="Services\LoadConfigDataServices.cs" />
     <Compile Include="Services\Popup\LoadingService.cs" />
     <Compile Include="Services\NormalAction.cs" />
     <Compile Include="Services\Popup\ILoadingDialog.cs" />
     <Compile Include="Services\RenderDataSyncService.cs" />
+    <Compile Include="Services\VideoMergeService.cs" />
+    <Compile Include="Services\VideoValidationService.cs" />
     <Compile Include="View\DialogMessage\FormLoadingCancel.cs">
       <SubType>Form</SubType>
     </Compile>
