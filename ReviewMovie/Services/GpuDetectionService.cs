@@ -41,7 +41,7 @@ namespace EasyClip.Services
                 string ffmpegPath = Funcion.selectffmpegversion() + "\\ffmpeg.exe";
                 if (!File.Exists(ffmpegPath))
                 {
-                    _lastResult.ErrorMessage = "Không tìm thấy FFmpeg.exe";
+                    _lastResult.ErrorMessage = GpuDetectionMessages.ERROR_FFMPEG_NOT_FOUND;
                     _lastResult.ErrorType = GpuErrorType.FfmpegNotFound;
                     return false;
                 }
@@ -49,7 +49,7 @@ namespace EasyClip.Services
                 // Bước 1: Kiểm tra h264_nvenc có trong danh sách encoders không
                 if (!CheckEncoderExists(ffmpegPath))
                 {
-                    _lastResult.ErrorMessage = "h264_nvenc không có trong danh sách encoders";
+                    _lastResult.ErrorMessage = GpuDetectionMessages.ERROR_ENCODER_NOT_FOUND;
                     _lastResult.ErrorType = GpuErrorType.EncoderNotFound;
                     return false;
                 }
@@ -68,7 +68,7 @@ namespace EasyClip.Services
             }
             catch (Exception ex)
             {
-                _lastResult.ErrorMessage = $"Lỗi không xác định: {ex.Message}";
+                _lastResult.ErrorMessage = GpuDetectionMessages.GetUnknownErrorMessage(ex.Message);
                 _lastResult.ErrorType = GpuErrorType.UnknownError;
                 return false;
             }
@@ -135,18 +135,18 @@ namespace EasyClip.Services
                 // Kiểm tra các pattern lỗi phổ biến và lưu thông tin chi tiết
                 var errorPatterns = new Dictionary<string, (string message, GpuErrorType type)>
                 {
-                    { "Driver does not support", ("Driver NVIDIA không hỗ trợ phiên bản NVENC API yêu cầu", GpuErrorType.DriverTooOld) },
-                    { "nvenc API version", ("Phiên bản NVENC API không tương thích", GpuErrorType.ApiVersionMismatch) },
-                    { "minimum required Nvidia driver", ("Driver NVIDIA quá cũ, cần cập nhật driver", GpuErrorType.DriverTooOld) },
-                    { "Error while opening encoder", ("Không thể khởi tạo encoder NVENC", GpuErrorType.EncoderInitFailed) },
-                    { "Could not open encoder", ("Không thể mở encoder NVENC", GpuErrorType.EncoderInitFailed) },
-                    { "Conversion failed", ("GPU encoding thất bại", GpuErrorType.EncoderInitFailed) },
-                    { "No NVENC capable devices found", ("Không tìm thấy GPU hỗ trợ NVENC", GpuErrorType.NoDeviceFound) },
-                    { "Cannot load nvcuda.dll", ("Không load được nvcuda.dll", GpuErrorType.LibraryLoadFailed) },
-                    { "Cannot load nvEncodeAPI", ("Không load được nvEncodeAPI", GpuErrorType.LibraryLoadFailed) },
-                    { "Function not implemented", ("Chức năng không được hỗ trợ", GpuErrorType.EncoderInitFailed) },
-                    { "Invalid argument", ("Tham số không hợp lệ", GpuErrorType.EncoderInitFailed) },
-                    { "Error initializing output stream", ("Lỗi khởi tạo output stream", GpuErrorType.EncoderInitFailed) },
+                    { GpuDetectionMessages.PATTERN_DRIVER_NOT_SUPPORT, (GpuDetectionMessages.ERROR_DRIVER_NOT_SUPPORT, GpuErrorType.DriverTooOld) },
+                    { GpuDetectionMessages.PATTERN_NVENC_API_VERSION, (GpuDetectionMessages.ERROR_API_VERSION_MISMATCH, GpuErrorType.ApiVersionMismatch) },
+                    { GpuDetectionMessages.PATTERN_MIN_REQUIRED_DRIVER, (GpuDetectionMessages.ERROR_DRIVER_TOO_OLD, GpuErrorType.DriverTooOld) },
+                    { GpuDetectionMessages.PATTERN_ERROR_OPENING_ENCODER, (GpuDetectionMessages.ERROR_ENCODER_INIT_FAILED, GpuErrorType.EncoderInitFailed) },
+                    { GpuDetectionMessages.PATTERN_COULD_NOT_OPEN_ENCODER, (GpuDetectionMessages.ERROR_ENCODER_OPEN_FAILED, GpuErrorType.EncoderInitFailed) },
+                    { GpuDetectionMessages.PATTERN_CONVERSION_FAILED, (GpuDetectionMessages.ERROR_ENCODING_FAILED, GpuErrorType.EncoderInitFailed) },
+                    { GpuDetectionMessages.PATTERN_NO_NVENC_DEVICES, (GpuDetectionMessages.ERROR_NO_DEVICE_FOUND, GpuErrorType.NoDeviceFound) },
+                    { GpuDetectionMessages.PATTERN_CANNOT_LOAD_NVCUDA, (GpuDetectionMessages.ERROR_CANNOT_LOAD_NVCUDA, GpuErrorType.LibraryLoadFailed) },
+                    { GpuDetectionMessages.PATTERN_CANNOT_LOAD_NVENC_API, (GpuDetectionMessages.ERROR_CANNOT_LOAD_NVENC_API, GpuErrorType.LibraryLoadFailed) },
+                    { GpuDetectionMessages.PATTERN_FUNCTION_NOT_IMPLEMENTED, (GpuDetectionMessages.ERROR_FUNCTION_NOT_IMPLEMENTED, GpuErrorType.EncoderInitFailed) },
+                    { GpuDetectionMessages.PATTERN_INVALID_ARGUMENT, (GpuDetectionMessages.ERROR_INVALID_ARGUMENT, GpuErrorType.EncoderInitFailed) },
+                    { GpuDetectionMessages.PATTERN_ERROR_INIT_OUTPUT, (GpuDetectionMessages.ERROR_OUTPUT_STREAM_INIT, GpuErrorType.EncoderInitFailed) },
                 };
 
                 foreach (var errorPattern in errorPatterns)
@@ -163,7 +163,7 @@ namespace EasyClip.Services
                             try
                             {
                                 var lines = stderr.Split('\n');
-                                var driverLine = lines.FirstOrDefault(l => l.Contains("minimum required Nvidia driver"));
+                                var driverLine = lines.FirstOrDefault(l => l.Contains(GpuDetectionMessages.PATTERN_MIN_REQUIRED_DRIVER));
                                 if (!string.IsNullOrEmpty(driverLine))
                                 {
                                     _lastResult.ErrorMessage += $"\n\n{driverLine.Trim()}";
@@ -179,7 +179,7 @@ namespace EasyClip.Services
                 // Kiểm tra exit code
                 if (process.ExitCode != 0)
                 {
-                    _lastResult.ErrorMessage = "GPU encoding test thất bại (exit code: " + process.ExitCode + ")";
+                    _lastResult.ErrorMessage = GpuDetectionMessages.GetEncodingFailedMessage(process.ExitCode);
                     _lastResult.ErrorType = GpuErrorType.UnknownError;
                     return false;
                 }
@@ -188,7 +188,7 @@ namespace EasyClip.Services
             }
             catch (Exception ex)
             {
-                _lastResult.ErrorMessage = $"Lỗi test GPU: {ex.Message}";
+                _lastResult.ErrorMessage = GpuDetectionMessages.GetTestGpuErrorMessage(ex.Message);
                 _lastResult.ErrorType = GpuErrorType.UnknownError;
                 return false;
             }
@@ -202,40 +202,35 @@ namespace EasyClip.Services
             if (_lastResult.IsAvailable)
                 return string.Empty;
 
-            string message = "GPU NVIDIA không khả dụng!\n\n";
+            string message = GpuDetectionMessages.MSG_GPU_NOT_AVAILABLE + "\n\n";
 
             if (!string.IsNullOrEmpty(_lastResult.ErrorMessage))
             {
-                message += $"Lỗi: {_lastResult.ErrorMessage}\n\n";
+                message += GpuDetectionMessages.MSG_ERROR_PREFIX + _lastResult.ErrorMessage + "\n\n";
             }
 
             // Thêm hướng dẫn dựa trên loại lỗi
             switch (_lastResult.ErrorType)
             {
                 case GpuErrorType.FfmpegNotFound:
-                    message += "FFmpeg chưa được cài đặt hoặc không tìm thấy.\n" +
-                              "Vui lòng tải và cài đặt FFmpeg.";
+                    message += GpuDetectionMessages.GUIDE_FFMPEG_NOT_FOUND;
                     break;
 
                 case GpuErrorType.DriverTooOld:
                 case GpuErrorType.ApiVersionMismatch:
-                    message += "Vui lòng cập nhật driver NVIDIA lên phiên bản mới nhất.";
+                    message += GpuDetectionMessages.GUIDE_DRIVER_TOO_OLD;
                     break;
 
                 case GpuErrorType.NoDeviceFound:
-                    message += "Không tìm thấy GPU NVIDIA hỗ trợ NVENC.\n" +
-                              "Cần card đồ họa NVIDIA GTX 600 series trở lên.";
+                    message += GpuDetectionMessages.GUIDE_NO_DEVICE_FOUND;
                     break;
 
                 default:
-                    message += "Vui lòng kiểm tra:\n" +
-                              "- Card đồ họa NVIDIA có hỗ trợ NVENC (GTX 600 series trở lên)\n" +
-                              "- Driver NVIDIA đã được cài đặt và cập nhật\n" +
-                              "- FFmpeg được build với hỗ trợ NVENC";
+                    message += GpuDetectionMessages.GUIDE_GENERAL;
                     break;
             }
 
-            message += "\n\nHệ thống sẽ chuyển về sử dụng CPU.";
+            message += GpuDetectionMessages.MSG_SWITCH_TO_CPU;
 
             return message;
         }

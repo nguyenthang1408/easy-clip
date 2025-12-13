@@ -240,10 +240,8 @@ namespace ReviewMovie
                 {
                     // GPU khả dụng - đề xuất sử dụng
                     var result = MessageBox.Show(
-                        "Phát hiện GPU NVIDIA hỗ trợ h264_nvenc!\n\n" +
-                        "GPU rendering nhanh hơn CPU khoảng 5-10 lần.\n\n" +
-                        "Bạn có muốn sử dụng GPU để render không?",
-                        "Đề xuất sử dụng GPU",
+                        GpuDetectionMessages.DETECT_GPU_AVAILABLE_MESSAGE,
+                        GpuDetectionMessages.DETECT_GPU_AVAILABLE_TITLE,
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Question);
 
@@ -273,7 +271,7 @@ namespace ReviewMovie
 
                     MessageBox.Show(
                         errorMessage,
-                        "GPU không hoạt động",
+                        GpuDetectionMessages.VALIDATE_GPU_FAILED_TITLE,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
 
