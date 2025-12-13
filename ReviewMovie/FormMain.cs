@@ -1854,7 +1854,17 @@ namespace ReviewMovie
 
                 string argRender = builder.ToString();
 
-                bool result = CFuncion.RunFFmpeg(Funcion.selectffmpegversion() + "\\ffmpeg.exe", argRender, token);
+                // Callback để hiển thị tốc độ render
+                Action<string> progressCallback = (speed) =>
+                {
+                    try
+                    {
+                        UIThreadHelper.SetLabelText(lblstatus, $"Render part {input.Index + 1} - Speed: {speed}", Color.Blue);
+                    }
+                    catch { }
+                };
+
+                bool result = CFuncion.RunFFmpeg(Funcion.selectffmpegversion() + "\\ffmpeg.exe", argRender, token, progressCallback);
                 message = result ? "Done" : "Fail";
                 Color color = result ? Color.GreenYellow : Color.Red;
 
