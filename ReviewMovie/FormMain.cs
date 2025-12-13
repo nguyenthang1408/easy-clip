@@ -725,20 +725,42 @@ namespace ReviewMovie
 
         private void OnAnySettingChanged(object sender, EventArgs e)
         {
-            if(IsSettingChanged() && cbSettingTemplate.SelectedIndex == 0)
+            // Cache kết quả để tránh gọi IsSettingChanged() nhiều lần
+            bool isChanged = IsSettingChanged();
+            int newIndex = isChanged ? 1 : 0;
+
+            // Chỉ update nếu index thay đổi, và luôn detach event để tránh trigger cascade
+            if (cbSettingTemplate.SelectedIndex != newIndex)
             {
                 cbSettingTemplate.SelectedIndexChanged -= cbSettingTemplate_SelectedIndexChanged;
-                cbSettingTemplate.SelectedIndex = IsSettingChanged() ? 1 : 0;
+                cbSettingTemplate.SelectedIndex = newIndex;
                 cbSettingTemplate.SelectedIndexChanged += cbSettingTemplate_SelectedIndexChanged;
-            }    
-            else
-            {
-                cbSettingTemplate.SelectedIndex = IsSettingChanged() ? 1 : 0;
-            }    
+            }
         }
 
         private void BindSettingEvents()
         {
+            // Unsubscribe trước để tránh event leak khi gọi nhiều lần
+            cbZoomRatio.SelectedIndexChanged -= OnAnySettingChanged;
+            cbZoomQuality.SelectedIndexChanged -= OnAnySettingChanged;
+            cbxVideoQuality.SelectedIndexChanged -= OnAnySettingChanged;
+            cbMode.SelectedIndexChanged -= OnAnySettingChanged;
+            cbEffectType.SelectedIndexChanged -= OnAnySettingChanged;
+
+            nFPS.ValueChanged -= OnAnySettingChanged;
+            nbThread.ValueChanged -= OnAnySettingChanged;
+            nbVolumnOrigin.ValueChanged -= OnAnySettingChanged;
+            nScaleAudioRangeStart.ValueChanged -= OnAnySettingChanged;
+            nScaleAudioRangeEnd.ValueChanged -= OnAnySettingChanged;
+
+            CkZoom.CheckedChanged -= OnAnySettingChanged;
+            ckRotate.CheckedChanged -= OnAnySettingChanged;
+            ckHflip.CheckedChanged -= OnAnySettingChanged;
+            ckHflipRandom.CheckedChanged -= OnAnySettingChanged;
+            ckRandomMoveLeftRight.CheckedChanged -= OnAnySettingChanged;
+            ckNotUseAudio.CheckedChanged -= OnAnySettingChanged;
+
+            // Subscribe lại
             cbZoomRatio.SelectedIndexChanged += OnAnySettingChanged;
             cbZoomQuality.SelectedIndexChanged += OnAnySettingChanged;
             cbxVideoQuality.SelectedIndexChanged += OnAnySettingChanged;
@@ -4292,9 +4314,16 @@ namespace ReviewMovie
                 // Nếu người dùng chọn Không → thoát, không save
                 if (dialog == DialogResult.No)
                     return;
-            }    
+            }
             var check = SaveEffectSetting();
-            if (check) MessageBox.Show("Lưu Cấu Hình Hiệu Ứng Thành Công! ");
+            if (check)
+            {
+                MessageBox.Show("Lưu Cấu Hình Hiệu Ứng Thành Công!", "Thành Công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Lỗi khi lưu cấu hình! Vui lòng thử lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void cbSettingTemplate_SelectedIndexChanged(object sender, EventArgs e)
         {
