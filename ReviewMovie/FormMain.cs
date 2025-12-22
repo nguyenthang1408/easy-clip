@@ -156,6 +156,7 @@ namespace ReviewMovie
         private GetVersionResponse _packageInfo;
         private GetVoiceSourceResponse _voiceSourceInfo;
         private PackageType _currentPackageType = PackageType.Trial;
+        private bool _isInitializing = false; // Flag để track quá trình initialization
         #endregion
 
         #region Main_Init
@@ -296,6 +297,9 @@ namespace ReviewMovie
         }
         private async void Init()
         {
+            // Set flag để prevent event handlers chạy trước khi init xong
+            _isInitializing = true;
+
             //Load data vào Object cục bộ
             LoadProjectListData();
 
@@ -307,6 +311,9 @@ namespace ReviewMovie
 
             DisplayItemDefault();
             loadApiKey();
+
+            // Clear flag sau khi init xong
+            _isInitializing = false;
         }
 
         /// <summary>
@@ -4198,8 +4205,36 @@ namespace ReviewMovie
         }
         private async void cboSiteNguon_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Skip nếu đang trong quá trình initialization
+            if (_isInitializing)
+                return;
+
             var checkSaveST = _infoProject?.EffectSettup;
             ComboboxModel selectedItem = (ComboboxModel)cboSiteNguon.SelectedItem;
+
+            // Check null hoặc không có value -> chọn T2Psoft mặc định
+            if (selectedItem == null || string.IsNullOrEmpty(selectedItem.Value))
+            {
+                // Tìm index của T2Psoft trong combobox
+                var voiceSources = GetVoiceSourcesByPackageType();
+                int t2psoftIndex = voiceSources.FindIndex(x => x.Value == "T2Psoft");
+
+                if (t2psoftIndex >= 0 && cboSiteNguon.SelectedIndex != t2psoftIndex)
+                {
+                    // Set flag tạm để tránh trigger event lại
+                    _isInitializing = true;
+                    cboSiteNguon.SelectedIndex = t2psoftIndex;
+                    _isInitializing = false;
+
+                    // Gọi trực tiếp handler cho T2Psoft
+                    selectedItem = voiceSources[t2psoftIndex];
+                }
+                else
+                {
+                    return; // Không có T2Psoft hoặc đã được chọn rồi
+                }
+            }
+
             switch (selectedItem.Value)
             {
                 case "T2Psoft":
