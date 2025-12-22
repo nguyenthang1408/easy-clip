@@ -473,13 +473,30 @@ namespace ReviewMovie
         {
             try
             {
-                // Disable txtAppID và txtToken
-                txtAppID.Enabled = false;
-                txtToken.Enabled = false;
-                lblapi.Text = "T2Psoft Key";
-                txtAppID.Size = new Size(247, 90);
-                lblToken.Visible = false;
-                txtToken.Visible = false;
+                // Check số lượng voice sources
+                var voiceSources = GetVoiceSourcesByPackageType();
+                bool onlyT2Psoft = voiceSources.Count == 1 && voiceSources[0].Value == "T2Psoft";
+
+                if (onlyT2Psoft)
+                {
+                    // Nếu chỉ có T2Psoft thì ẩn hoàn toàn UI Key
+                    lblapi.Visible = false;
+                    txtAppID.Visible = false;
+                    lblToken.Visible = false;
+                    txtToken.Visible = false;
+                }
+                else
+                {
+                    // Nếu có nhiều options thì hiện UI Key nhưng disable
+                    lblapi.Visible = true;
+                    txtAppID.Visible = true;
+                    txtAppID.Enabled = false;
+                    txtToken.Enabled = false;
+                    lblapi.Text = "T2Psoft Key";
+                    txtAppID.Size = new Size(247, 90);
+                    lblToken.Visible = false;
+                    txtToken.Visible = false;
+                }
 
                 cbxSpeechType.DataSource = null;
                 cbxSpeechType.DisplayMember = string.Empty;
