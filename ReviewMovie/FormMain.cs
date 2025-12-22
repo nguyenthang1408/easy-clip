@@ -461,7 +461,7 @@ namespace ReviewMovie
         /// <summary>
         /// Xử lý khi chọn T2Psoft voice source
         /// </summary>
-        private async Task HandleT2PsoftVoiceSource(EffectSettupDto checkSaveST)
+        private async Task HandleT2PsoftVoiceSource(EffectSetting checkSaveST)
         {
             try
             {
@@ -520,7 +520,7 @@ namespace ReviewMovie
         /// <summary>
         /// Xử lý T2Psoft với Google TTS
         /// </summary>
-        private async Task HandleT2PsoftGoogleTTS(EffectSettupDto checkSaveST)
+        private async Task HandleT2PsoftGoogleTTS(EffectSetting checkSaveST)
         {
             nbSpeechRatio.Value = _speechratioGoogleTTS;
 
@@ -551,7 +551,7 @@ namespace ReviewMovie
         /// <summary>
         /// Xử lý T2Psoft với FPT AI
         /// </summary>
-        private void HandleT2PsoftFptAI(EffectSettupDto checkSaveST)
+        private void HandleT2PsoftFptAI(EffectSetting checkSaveST)
         {
             nbSpeechRatio.Value = _speechratioFptAI;
 
@@ -570,7 +570,7 @@ namespace ReviewMovie
         /// <summary>
         /// Xử lý T2Psoft với ElevenLab
         /// </summary>
-        private async Task HandleT2PsoftElevenLab(EffectSettupDto checkSaveST)
+        private async Task HandleT2PsoftElevenLab(EffectSetting checkSaveST)
         {
             nbSpeechRatio.Value = _speechratioElevenlab;
 
