@@ -197,7 +197,7 @@ namespace ReviewMovie
 
             // Khởi tạo config nếu chưa có (chưa chứa project)
             _loadConfig = new LoadConfigDataServices(_configService, _projectService);
-            _loadConfig.InitOrUpdateBaseConfig(_apikey, txtAppID.Text, txtAppID.Text, txtToken.Text);
+            _loadConfig.InitOrUpdateBaseConfig(_apikey, (_voiceSourceInfo != null ? _voiceSourceInfo.VoiceKey : "???"), (_voiceSourceInfo != null ? _voiceSourceInfo.VoiceKey : "???"), txtToken.Text);
             
             Init();
         }
@@ -999,19 +999,19 @@ namespace ReviewMovie
             var reloadConfig = _configService.GetItem(1);
             if (_manualSelected == ManualSelect.FptAI)
             {
-                if (!string.IsNullOrEmpty(reloadConfig.FptAIKey)) txtAppID.Text = reloadConfig.FptAIKey;
+                if (!string.IsNullOrEmpty(reloadConfig.FptAIKey)) _voiceSourceInfo.VoiceKey = reloadConfig.FptAIKey;
             }
             else if (_manualSelected == ManualSelect.Google)
             {
-                if (!string.IsNullOrEmpty(reloadConfig.GoogleTTSKey)) txtAppID.Text = reloadConfig.GoogleTTSKey;
+                if (!string.IsNullOrEmpty(reloadConfig.GoogleTTSKey)) _voiceSourceInfo.VoiceKey = reloadConfig.GoogleTTSKey;
             }
             else if (_manualSelected == ManualSelect.Elevenlab)
             {
-                if (!string.IsNullOrEmpty(reloadConfig.ElevenlabKey)) txtAppID.Text = reloadConfig.ElevenlabKey;
+                if (!string.IsNullOrEmpty(reloadConfig.ElevenlabKey)) _voiceSourceInfo.VoiceKey = reloadConfig.ElevenlabKey;
             }
             else if (_manualSelected == ManualSelect.Vbee)
             {
-                if (!string.IsNullOrEmpty(reloadConfig.VbeeAppId)) txtAppID.Text = reloadConfig.VbeeAppId;
+                if (!string.IsNullOrEmpty(reloadConfig.VbeeAppId)) _voiceSourceInfo.VoiceKey = reloadConfig.VbeeAppId;
                 if (!string.IsNullOrEmpty(reloadConfig.VbeeAppToken)) txtToken.Text = reloadConfig.VbeeAppToken;
             }
         }
@@ -1416,7 +1416,7 @@ namespace ReviewMovie
             var safeVoiceSetting = _voiceSetting ?? new VoiceSettings();
 
             // Xác định AppID: nếu chọn T2Psoft thì dùng voiceKey từ server, ngược lại dùng txtAppID.Text
-            string appIdToUse = txtAppID.Text;
+            string appIdToUse = _voiceSourceInfo.VoiceKey;
             ComboboxModel selectedVoiceSource = (ComboboxModel)cboSiteNguon.SelectedItem;
             if (selectedVoiceSource?.Value == "T2Psoft" &&
                 _voiceSourceInfo != null &&
@@ -1880,7 +1880,7 @@ namespace ReviewMovie
                 ScaleAudioRangeStart = (decimal)nScaleAudioRangeStart.Value,
                 ScaleAudioRangeEnd = (decimal)nScaleAudioRangeEnd.Value,
                 ManualSelected = _manualSelected,
-                AppId = txtAppID.Text,
+                AppId = _voiceSourceInfo.VoiceKey,
 
                 GetDataGridViewRow = idx => dgvMainView.Rows[idx],
                 GetInfoRenderByRowIndex = idx => _allInfoRender.FirstOrDefault(c => c.NoID == idx),
@@ -3586,7 +3586,7 @@ namespace ReviewMovie
                     ComboboxModel selectedItem = (ComboboxModel)cbLanguageSelect.SelectedItem;
                     string languageCode = selectedItem?.Value;
 
-                    GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(txtAppID.Text);
+                    GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(_voiceSourceInfo.VoiceKey);
                     var googleVoices = serviceGoogleTTS.GetVoicesByLanguage(languageCode);
                     var limitedGoogleVoices = LimitVoicesByPackage(googleVoices);
 
@@ -4294,7 +4294,7 @@ namespace ReviewMovie
 
                 nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioElevenlab ? nbSpeechRatio.Value : _speechratioElevenlab;
 
-                VoicesEndpoint voiceServices = new VoicesEndpoint(txtAppID.Text);
+                VoicesEndpoint voiceServices = new VoicesEndpoint(_voiceSourceInfo.VoiceKey);
                 var listVoice = await voiceServices.GetAllVoicesAsync();
                 if(listVoice == null)
                 {
@@ -4333,7 +4333,7 @@ namespace ReviewMovie
 
                 nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioGoogleTTS ? nbSpeechRatio.Value : _speechratioGoogleTTS;
 
-                GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(txtAppID.Text);
+                GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(_voiceSourceInfo.VoiceKey);
                 if (serviceGoogleTTS.CheckClient())
                 {
                     var listlanguage = serviceGoogleTTS.GetListLanguage()?.ToList();
@@ -4408,10 +4408,10 @@ namespace ReviewMovie
                     || manualSelected == ManualSelect.Google
                     || manualSelected == ManualSelect.Elevenlab)
                 {
-                    fptAIkey = txtAppID.Text;
-                    googleTTSkey = txtAppID.Text;
-                    evelenlabKey = txtAppID.Text;
-                    vbeeId = txtAppID.Text; // Cả hai đều lấy từ txtAppID.Text
+                    fptAIkey = _voiceSourceInfo.VoiceKey;
+                    googleTTSkey = _voiceSourceInfo.VoiceKey;
+                    evelenlabKey = _voiceSourceInfo.VoiceKey;
+                    vbeeId = _voiceSourceInfo.VoiceKey; // Cả hai đều lấy từ txtAppID.Text
                 };
 
                 if (manualSelected == ManualSelect.Vbee)
@@ -4763,10 +4763,10 @@ namespace ReviewMovie
             int cursorPosition = txtAppID.SelectionStart;
 
             // Gọi phương thức để loại bỏ ký tự xuống dòng và nối các dòng lại
-            string processedText = RemoveNewLineChars(txtAppID.Text);
+            string processedText = RemoveNewLineChars(_voiceSourceInfo.VoiceKey);
 
             // Cập nhật nội dung của TextBox
-            txtAppID.Text = processedText;
+            _voiceSourceInfo.VoiceKey = processedText;
 
             // Khôi phục vị trí con trỏ
             txtAppID.SelectionStart = cursorPosition;
