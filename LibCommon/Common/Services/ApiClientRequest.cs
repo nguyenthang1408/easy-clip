@@ -28,10 +28,15 @@ namespace Common.Services
             };
         }
 
-        public async Task<VersionResponse> ReviewMovieVersionAsync()
+        public async Task<VersionResponse> ReviewMovieVersionAsync(string appCode, string appName)
         {
             string requestUrl = _baseUrl + "/api/v1/GetVersion/ReviewMovie";
-            var response = await SendPostRequestAsync<VersionResponse>(_apiKey, requestUrl, null);
+            var requestBody = new
+            {
+                appCode = appCode,
+                appName = appName
+            };
+            var response = await SendPostRequestAsync<VersionResponse>(_apiKey, requestUrl, requestBody);
             return response;
         }
 
@@ -58,7 +63,7 @@ namespace Common.Services
                 _httpClient.DefaultRequestHeaders.Add("X-Version", "1.0");
                 _httpClient.DefaultRequestHeaders.Add("X-API-KEY", apikey);
 
-                string jsonBody = requestBody != null ? JsonConvert.SerializeObject(new { requestBody }) : string.Empty;
+                string jsonBody = requestBody != null ? JsonConvert.SerializeObject(requestBody) : string.Empty;
                 HttpContent content = string.IsNullOrEmpty(jsonBody) ? null : new StringContent(jsonBody, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await _httpClient.PostAsync(requestUrl, content);
 

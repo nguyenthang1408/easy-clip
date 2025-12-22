@@ -73,8 +73,12 @@ namespace ReviewMovie
 
             try
             {
+                // Lấy appCode từ service
+                string appCode = appCodeService.GetAppCode();
+                string appName = "EasyClip";
+
                 var request = new ApiClientRequest(LibConst.UrlServer, apiKey);
-                var response = await request.ReviewMovieVersionAsync();
+                var response = await request.ReviewMovieVersionAsync(appCode, appName);
                 if (response.IsSuccess)
                 {
                     string currentVersion = AppVersion;
