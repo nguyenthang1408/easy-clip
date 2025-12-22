@@ -155,6 +155,7 @@ namespace ReviewMovie
         private GetVersionResponse _packageInfo;
         private GetVoiceSourceResponse _voiceSourceInfo;
         private PackageType _currentPackageType = PackageType.Trial;
+        private bool _isInitializing = false; // Flag để track quá trình initialization
         #endregion
 
         #region Main_Init
@@ -295,6 +296,9 @@ namespace ReviewMovie
         }
         private async void Init()
         {
+            // Set flag để prevent event handlers chạy trước khi init xong
+            _isInitializing = true;
+
             //Load data vào Object cục bộ
             LoadProjectListData();
 
@@ -306,6 +310,9 @@ namespace ReviewMovie
 
             DisplayItemDefault();
             loadApiKey();
+
+            // Clear flag sau khi init xong
+            _isInitializing = false;
         }
 
         /// <summary>
@@ -4195,8 +4202,17 @@ namespace ReviewMovie
         }
         private async void cboSiteNguon_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Skip nếu đang trong quá trình initialization
+            if (_isInitializing)
+                return;
+
             var checkSaveST = _infoProject?.EffectSettup;
             ComboboxModel selectedItem = (ComboboxModel)cboSiteNguon.SelectedItem;
+
+            // Check null để tránh lỗi
+            if (selectedItem == null)
+                return;
+
             switch (selectedItem.Value)
             {
                 case "T2Psoft":
