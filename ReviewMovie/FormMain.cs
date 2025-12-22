@@ -395,25 +395,33 @@ namespace ReviewMovie
             {
                 string title = "EasyClip || TPMEDIA";
 
-                // Thêm email
+                // Thêm email từ server
                 if (!string.IsNullOrEmpty(_packageInfo.Email))
                 {
                     title += $" - {_packageInfo.Email}";
                 }
 
-                // Thêm package type
+                // Thêm package type (gói đang sử dụng)
                 if (!string.IsNullOrEmpty(_packageInfo.PackageType))
                 {
                     title += $" ({_packageInfo.PackageType})";
                 }
 
-                // Thêm số ngày còn lại nếu là Basic hoặc Premium
-                if (_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Premium)
+                // Thêm số ngày còn lại (tính từ expiryDate - ngày hiện tại)
+                if (_packageInfo.ExpiryDate.HasValue)
                 {
                     int daysRemaining = _packageInfo.GetDaysRemaining();
                     if (daysRemaining > 0)
                     {
                         title += $" - {daysRemaining} ngày còn lại";
+                    }
+                    else if (daysRemaining == 0)
+                    {
+                        title += " - Hết hạn hôm nay";
+                    }
+                    else
+                    {
+                        title += " - Đã hết hạn";
                     }
                 }
 

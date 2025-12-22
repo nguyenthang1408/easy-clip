@@ -28,14 +28,15 @@ namespace LibCommon.Lib.Model.Package
 
         /// <summary>
         /// Tính số ngày còn lại của gói
+        /// Trả về số dương nếu còn hạn, 0 nếu hết hạn hôm nay, số âm nếu đã quá hạn
         /// </summary>
         public int GetDaysRemaining()
         {
             if (!ExpiryDate.HasValue)
                 return 0;
 
-            var timeSpan = ExpiryDate.Value - DateTime.Now;
-            return timeSpan.Days > 0 ? timeSpan.Days : 0;
+            var timeSpan = ExpiryDate.Value.Date - DateTime.Now.Date;
+            return timeSpan.Days;
         }
     }
 }
