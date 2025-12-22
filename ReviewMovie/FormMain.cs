@@ -4209,9 +4209,28 @@ namespace ReviewMovie
             var checkSaveST = _infoProject?.EffectSettup;
             ComboboxModel selectedItem = (ComboboxModel)cboSiteNguon.SelectedItem;
 
-            // Check null để tránh lỗi
-            if (selectedItem == null)
-                return;
+            // Check null hoặc không có value -> chọn T2Psoft mặc định
+            if (selectedItem == null || string.IsNullOrEmpty(selectedItem.Value))
+            {
+                // Tìm index của T2Psoft trong combobox
+                var voiceSources = GetVoiceSourcesByPackageType();
+                int t2psoftIndex = voiceSources.FindIndex(x => x.Value == "T2Psoft");
+
+                if (t2psoftIndex >= 0 && cboSiteNguon.SelectedIndex != t2psoftIndex)
+                {
+                    // Set flag tạm để tránh trigger event lại
+                    _isInitializing = true;
+                    cboSiteNguon.SelectedIndex = t2psoftIndex;
+                    _isInitializing = false;
+
+                    // Gọi trực tiếp handler cho T2Psoft
+                    selectedItem = voiceSources[t2psoftIndex];
+                }
+                else
+                {
+                    return; // Không có T2Psoft hoặc đã được chọn rồi
+                }
+            }
 
             switch (selectedItem.Value)
             {
