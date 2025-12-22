@@ -159,6 +159,12 @@
     <Compile Include="VoiceServices\GoogleTTS\GoogleTTSVoiceCode.cs" />
     <Compile Include="VoiceServices\Vbee\ApiVbee.cs" />
     <Compile Include="Model\Effect\EffectInputDTO.cs" />
+    <Compile Include="Model\Package\PackageType.cs" />
+    <Compile Include="Model\Package\GetVersionRequest.cs" />
+    <Compile Include="Model\Package\GetVersionResponse.cs" />
+    <Compile Include="Model\Package\GetVoiceSourceRequest.cs" />
+    <Compile Include="Model\Package\GetVoiceSourceResponse.cs" />
+    <Compile Include="Services\PackageService.cs" />
     <Compile Include="Constant\Enum.cs" />
     <Compile Include="Extension\ImageExtensions.cs" />
     <Compile Include="Extension\WebPWrapper.cs" />
