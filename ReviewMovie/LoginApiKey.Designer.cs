@@ -46,7 +46,7 @@
             this.btnLoginApiKey.Depth = 0;
             this.btnLoginApiKey.HighEmphasis = true;
             this.btnLoginApiKey.Icon = null;
-            this.btnLoginApiKey.Location = new System.Drawing.Point(170, 244);
+            this.btnLoginApiKey.Location = new System.Drawing.Point(168, 244);
             this.btnLoginApiKey.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnLoginApiKey.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnLoginApiKey.Name = "btnLoginApiKey";
@@ -125,7 +125,7 @@
             this.lkHelp.LinkColor = System.Drawing.Color.Blue;
             this.lkHelp.Location = new System.Drawing.Point(350, 268);
             this.lkHelp.Name = "lkHelp";
-            this.lkHelp.Size = new System.Drawing.Size(67, 16);
+            this.lkHelp.Size = new System.Drawing.Size(82, 20);
             this.lkHelp.TabIndex = 7;
             this.lkHelp.TabStop = true;
             this.lkHelp.Text = "Trợ Giúp";
@@ -137,7 +137,7 @@
             this.lbstatus.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lbstatus.Location = new System.Drawing.Point(64, 208);
             this.lbstatus.Name = "lbstatus";
-            this.lbstatus.Size = new System.Drawing.Size(13, 13);
+            this.lbstatus.Size = new System.Drawing.Size(14, 15);
             this.lbstatus.TabIndex = 8;
             this.lbstatus.Text = "_";
             // 
@@ -148,7 +148,7 @@
             this.linklbRegister.LinkColor = System.Drawing.Color.Red;
             this.linklbRegister.Location = new System.Drawing.Point(350, 244);
             this.linklbRegister.Name = "linklbRegister";
-            this.linklbRegister.Size = new System.Drawing.Size(64, 16);
+            this.linklbRegister.Size = new System.Drawing.Size(79, 20);
             this.linklbRegister.TabIndex = 9;
             this.linklbRegister.TabStop = true;
             this.linklbRegister.Text = "Đăng Ký";

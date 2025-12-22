@@ -83,7 +83,7 @@ namespace LibCommon.Lib.Services
                 var jsonContent = JsonConvert.SerializeObject(request);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync("/GetVoiceSourceEnum", content);
+                var response = await _httpClient.PostAsync("http://localhost:3000/api/Voice", content);
 
                 if (response.IsSuccessStatusCode)
                 {

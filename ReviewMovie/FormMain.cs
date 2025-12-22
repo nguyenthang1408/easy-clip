@@ -38,6 +38,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LibCommon.Lib.Services;
 
 namespace ReviewMovie
 {
@@ -486,7 +487,7 @@ namespace ReviewMovie
                 // Xác định _manualSelected dựa trên voiceType từ server
                 if (!string.IsNullOrEmpty(_voiceSourceInfo.VoiceType))
                 {
-                    if (_voiceSourceInfo.VoiceType.Contains("GG_CLOUD"))
+                    if (_voiceSourceInfo.VoiceType.Contains("Google"))
                     {
                         _manualSelected = ManualSelect.Google;
                         await HandleT2PsoftGoogleTTS(checkSaveST);
@@ -526,6 +527,8 @@ namespace ReviewMovie
 
             if (!string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey))
             {
+                _voiceSourceInfo.VoiceKey = "{   \"type\": \"service_account\",   \"project_id\": \"easyclipt8\",   \"private_key_id\": \"7f60c58eb3d0890b6157cd801a8516053af676e3\",   \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCxvcGvGw1NLtRs\\n4cv2sXPms4V0+9s91xLvgAJh0HEQ6O+8/HgsSgpX1VzvMaBCGGyF+iryd6otFC0m\\nDAt904ji8zM2eqSOT8+QcZRaj5uKLZxowhtm0G+p/HpCEcf7zTDzekREo/aZHy5Z\\nPum6pItNRL3vlvHvh4IbTJKKQI9dwsG7zhlHj09qVmFYFwpk8x8YR1OvqIf7pyuj\\noLE5MdF6qlns5J7BplWuYTjvQ1uW85y0qA4GL76hYLL05TMgCI+yV9oAo2zyAeZm\\niNoiRkJwykbmVtBjvtYKO41eHkOyEhsxbYoWLZmJXDyoR8cvMdA9xTCZZj8LKZwF\\nEADZq11PAgMBAAECggEAAO5CyIvrZxUtJn81GdZPEbchvEE50bo/7MMgzrGSLq5m\\nX4s487Mao2O7dHnfkAMYq93ItyiZ4dYlhkLvbX9xsiPKcc2zHXYOROazz5Fb2rc7\\ngxfjn8HirsXmgU1u7vYuagnMoh1v9zdpEWCueOvPeydw94NgsBVKSB6ZTFq3Y6Ow\\niPzGr22ZRjoKHw8YeHbk7L8I77jbJ/ZAg4DR6Bgf2YNxhQafw3rQYeJz4YaNykRk\\nVEZX/BlG0XGEIvOGGIEtCzZvR+fHoHwiGrtVTYd0h89n7+8qfpL+IPg/WBP6f+qj\\ny4zEefBYQX8BPAQnGxktV7k00TjaU5U1YX77CNoGiQKBgQDorSPf7h0Zn5tmgr5H\\nURyHATw7E3B4qRI7n6enozUuwiqVLUpTWiPQ4WZrh0jG+3EC+oOer1jFD6rV5sj2\\nkaqp+gBc5GzIUFpf749nMR7nTyJIENV9bcmx0fupYO93mJrdeSlxBszOv33HsxbZ\\nba3q5hvmS2nYOIgQMPHykp+FJQKBgQDDjuQZx89sl45op2GuXnZ6F7Z7j0QLN4dN\\n5MFF8lZzgPMod3Ry+HXaytJ7JrCkUkSfaSjS4rgRZMmNE/2S1aEYegwCv/GCT4T7\\nypToRUSYvlazg1PRrFwo1IpBOn8U5oHLGhTjvSeySjJbbfF+Oa83sBZwlZczEUyo\\nvMPSgslgYwKBgBX63Su3Q7p68GQzr6PvDqHWRQlToclUN2u4fk8AxPJg10L2X1IW\\nbtG5qUI5Km/ZquhcH/jqmZksDLheL9fTFOsvub8MuRYHOTJc4BAgfMnfGN7z8CcE\\nKwyISJzMknKa0O5hFsAdo1VYk5o82ci6araI/FO6Bgqt9HSLGyAOJ9GdAoGAVfhc\\naMUBeCDMd0+WTryyYwxHqdwasr+vmNvG58QYo2B+BT02kVCPJydhDsi8gRC1oErv\\nqn4HI4ZmYMH4CPQnhQYqf474Uiw5LyQpAE9rT6bloLdMQvH99ekx+mkH8x0+1BXc\\nNx4x9FxP9QfJUY90awvbYZUxyj6Br/CEOehLNTcCgYBNF25H5ODdlFOEgZp3H8f+\\n6vqEz/qe1uwwKKo5wP3jMisufmR5GaowqIjxkKepTyBVaLqLC842SCGTnsEdMn4+\\naFEfoUanazGbh4zrSzCWhH4GLP0Vp/2t93XG4/tp99DsiXz1APbaa65Xbo2vkCg8\\n7EPPPTlPMovPpBKSQIvoeg==\\n-----END PRIVATE KEY-----\\n\",   \"client_email\": \"text2speecht8@easyclipt8.iam.gserviceaccount.com\",   \"client_id\": \"106338287835136391077\",   \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",   \"token_uri\": \"https://oauth2.googleapis.com/token\",   \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",   \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/text2speecht8%40easyclipt8.iam.gserviceaccount.com\",   \"universe_domain\": \"googleapis.com\" }";
+
                 GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(_voiceSourceInfo.VoiceKey);
                 if (serviceGoogleTTS.CheckClient())
                 {
