@@ -13,6 +13,8 @@ using Lib.VoiceServices.ElevenLabs.V1.Model;
 using Lib.VoiceServices.ElevenLabs.V1.Services;
 using Lib.VoiceServices.GoogleTTS;
 using LibCommon.Common;
+using LibCommon.Lib.Model.Package;
+using LibCommon.Lib.Services;
 using Newtonsoft.Json.Linq;
 using ReviewMovie.Base;
 using ReviewMovie.Infrastructure.Config;
@@ -147,6 +149,12 @@ namespace ReviewMovie
 
         private string _videoMerge;
         private bool _sessionMerge;
+
+        // Package and Voice Source Info
+        private PackageService _packageService;
+        private GetVersionResponse _packageInfo;
+        private GetVoiceSourceResponse _voiceSourceInfo;
+        private PackageType _currentPackageType = PackageType.Trial;
         #endregion
 
         #region Main_Init
@@ -163,6 +171,9 @@ namespace ReviewMovie
             _videoValidationService = new VideoValidationService(VideoMergeConfig.MAX_PARALLEL_VALIDATION_THREADS);
             _videoMergeService = new VideoMergeService();
             _gpuDetectionService = new GpuDetectionService();
+
+            // Initialize package service
+            _packageService = new PackageService();
 
             // Fix cứng màn hình
             this.MaximizeBox = false;
@@ -282,12 +293,397 @@ namespace ReviewMovie
             }
             return true;
         }
-        private void Init()
+        private async void Init()
         {
             //Load data vào Object cục bộ
             LoadProjectListData();
+
+            // Load package info từ server
+            await LoadPackageInfoAsync();
+
+            // Load voice source info từ server
+            await LoadVoiceSourceInfoAsync();
+
             DisplayItemDefault();
             loadApiKey();
+        }
+
+        /// <summary>
+        /// Load thông tin gói từ server
+        /// </summary>
+        private async Task LoadPackageInfoAsync()
+        {
+            try
+            {
+                _packageInfo = await _packageService.GetVersionAsync(_appcode, "EasyClip");
+
+                if (_packageInfo != null && _packageInfo.IsSuccess)
+                {
+                    // Xác định package type
+                    _currentPackageType = PackageTypeHelper.GetPackageType(_packageInfo.PackageId);
+
+                    // Update title app
+                    UpdateAppTitle();
+                }
+                else
+                {
+                    // Nếu failed, mặc định là Trial
+                    _currentPackageType = PackageType.Trial;
+                    this.Text = "EasyClip || TPMEDIA (Trial)";
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log error và fallback to Trial
+                Console.WriteLine($"Error loading package info: {ex.Message}");
+                _currentPackageType = PackageType.Trial;
+                this.Text = "EasyClip || TPMEDIA (Trial)";
+            }
+        }
+
+        /// <summary>
+        /// Load thông tin voice source từ server
+        /// </summary>
+        private async Task LoadVoiceSourceInfoAsync()
+        {
+            try
+            {
+                _voiceSourceInfo = await _packageService.GetVoiceSourceEnumAsync();
+
+                if (_voiceSourceInfo == null || !_voiceSourceInfo.IsSuccess)
+                {
+                    // Nếu failed, tạo default cho Trial
+                    _voiceSourceInfo = new GetVoiceSourceResponse
+                    {
+                        IsSuccess = true,
+                        Unlimit = false,
+                        PackageId = PackageTypeHelper.PKG_TRIAL,
+                        AllowedTotalVoices = 5,
+                        AllowedLanguages = new List<AllowedLanguage>()
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log error và tạo default
+                Console.WriteLine($"Error loading voice source info: {ex.Message}");
+                _voiceSourceInfo = new GetVoiceSourceResponse
+                {
+                    IsSuccess = true,
+                    Unlimit = false,
+                    PackageId = PackageTypeHelper.PKG_TRIAL,
+                    AllowedTotalVoices = 5,
+                    AllowedLanguages = new List<AllowedLanguage>()
+                };
+            }
+        }
+
+        /// <summary>
+        /// Update title của app hiển thị thông tin gói
+        /// </summary>
+        private void UpdateAppTitle()
+        {
+            if (_packageInfo != null && _packageInfo.IsSuccess)
+            {
+                string title = "EasyClip || TPMEDIA";
+
+                // Thêm email
+                if (!string.IsNullOrEmpty(_packageInfo.Email))
+                {
+                    title += $" - {_packageInfo.Email}";
+                }
+
+                // Thêm package type
+                if (!string.IsNullOrEmpty(_packageInfo.PackageType))
+                {
+                    title += $" ({_packageInfo.PackageType})";
+                }
+
+                // Thêm số ngày còn lại nếu là Basic hoặc Premium
+                if (_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Premium)
+                {
+                    int daysRemaining = _packageInfo.GetDaysRemaining();
+                    if (daysRemaining > 0)
+                    {
+                        title += $" - {daysRemaining} ngày còn lại";
+                    }
+                }
+
+                this.Text = title;
+            }
+        }
+
+        /// <summary>
+        /// Lấy danh sách voice sources theo package type
+        /// </summary>
+        private List<ComboboxModel> GetVoiceSourcesByPackageType()
+        {
+            var voiceSources = new List<ComboboxModel>();
+
+            // Luôn có T2Psoft.com cho tất cả các gói
+            voiceSources.Add(new ComboboxModel
+            {
+                Display = "T2Psoft.com",
+                Value = "T2Psoft"
+            });
+
+            // Nếu là Premium, thêm các nguồn khác
+            if (_currentPackageType == PackageType.Premium)
+            {
+                voiceSources.Add(new ComboboxModel
+                {
+                    Display = ListVoiceSite.FptAI_Des,
+                    Value = ListVoiceSite.FptAI
+                });
+
+                voiceSources.Add(new ComboboxModel
+                {
+                    Display = ListVoiceSite.GoogleTTS_Des,
+                    Value = ListVoiceSite.GoogleTTS
+                });
+
+                voiceSources.Add(new ComboboxModel
+                {
+                    Display = ListVoiceSite.Elevenlabs_Des,
+                    Value = ListVoiceSite.Elevenlab
+                });
+
+                voiceSources.Add(new ComboboxModel
+                {
+                    Display = ListVoiceSite.Vbee_Des,
+                    Value = ListVoiceSite.Vbee
+                });
+            }
+
+            return voiceSources;
+        }
+
+        /// <summary>
+        /// Xử lý khi chọn T2Psoft voice source
+        /// </summary>
+        private async Task HandleT2PsoftVoiceSource(EffectSettupDto checkSaveST)
+        {
+            try
+            {
+                // Disable txtAppID và txtToken
+                txtAppID.Enabled = false;
+                txtToken.Enabled = false;
+                lblapi.Text = "T2Psoft Key";
+                txtAppID.Size = new Size(247, 90);
+                lblToken.Visible = false;
+                txtToken.Visible = false;
+
+                cbxSpeechType.DataSource = null;
+                cbxSpeechType.DisplayMember = string.Empty;
+
+                // Kiểm tra voiceSourceInfo
+                if (_voiceSourceInfo == null || !_voiceSourceInfo.IsSuccess)
+                {
+                    MessageBox.Show("Không thể tải thông tin voice source từ server!");
+                    return;
+                }
+
+                // Xác định _manualSelected dựa trên voiceType từ server
+                if (!string.IsNullOrEmpty(_voiceSourceInfo.VoiceType))
+                {
+                    if (_voiceSourceInfo.VoiceType.Contains("GG_CLOUD"))
+                    {
+                        _manualSelected = ManualSelect.Google;
+                        await HandleT2PsoftGoogleTTS(checkSaveST);
+                    }
+                    else if (_voiceSourceInfo.VoiceType.Contains("FPT"))
+                    {
+                        _manualSelected = ManualSelect.FptAI;
+                        HandleT2PsoftFptAI(checkSaveST);
+                    }
+                    else if (_voiceSourceInfo.VoiceType.Contains("Evenlab"))
+                    {
+                        _manualSelected = ManualSelect.Elevenlab;
+                        await HandleT2PsoftElevenLab(checkSaveST);
+                    }
+                    else
+                    {
+                        // Default to Google TTS
+                        _manualSelected = ManualSelect.Google;
+                        await HandleT2PsoftGoogleTTS(checkSaveST);
+                    }
+                }
+
+                UpdateVoiceSourceSelect();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi xử lý T2Psoft voice source: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Xử lý T2Psoft với Google TTS
+        /// </summary>
+        private async Task HandleT2PsoftGoogleTTS(EffectSettupDto checkSaveST)
+        {
+            nbSpeechRatio.Value = _speechratioGoogleTTS;
+
+            if (!string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey))
+            {
+                GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(_voiceSourceInfo.VoiceKey);
+                if (serviceGoogleTTS.CheckClient())
+                {
+                    var allLanguages = serviceGoogleTTS.GetListLanguage()?.ToList();
+
+                    // Filter theo allowedLanguages nếu là gói Trial
+                    var filteredLanguages = FilterLanguagesByPackage(allLanguages);
+
+                    ComboBoxFuncion.CbBlinding(cbLanguageSelect,
+                        filteredLanguages,
+                        !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
+                            ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                            : 0);
+                }
+                else
+                {
+                    MessageBox.Show("VoiceKey từ T2Psoft bị lỗi!");
+                    cbLanguageSelect.DataSource = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Xử lý T2Psoft với FPT AI
+        /// </summary>
+        private void HandleT2PsoftFptAI(EffectSettupDto checkSaveST)
+        {
+            nbSpeechRatio.Value = _speechratioFptAI;
+
+            var allLanguages = ApiFptAI.FptAILanguageTemplate().ToList();
+
+            // Filter theo allowedLanguages nếu là gói Trial
+            var filteredLanguages = FilterLanguagesByPackage(allLanguages);
+
+            ComboBoxFuncion.CbBlinding(cbLanguageSelect,
+                filteredLanguages,
+                !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
+                    ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                    : 0);
+        }
+
+        /// <summary>
+        /// Xử lý T2Psoft với ElevenLab
+        /// </summary>
+        private async Task HandleT2PsoftElevenLab(EffectSettupDto checkSaveST)
+        {
+            nbSpeechRatio.Value = _speechratioElevenlab;
+
+            if (!string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey))
+            {
+                VoicesEndpoint voiceServices = new VoicesEndpoint(_voiceSourceInfo.VoiceKey);
+                var listVoice = await voiceServices.GetAllVoicesAsync();
+
+                if (listVoice == null)
+                {
+                    MessageBox.Show("VoiceKey từ T2Psoft bị lỗi!");
+                    cbLanguageSelect.SelectedIndexChanged -= cbLanguageSelect_SelectedIndexChanged;
+                    cbLanguageSelect.DataSource = null;
+                    cbLanguageSelect.SelectedIndex = -1;
+                    cbLanguageSelect.SelectedIndexChanged += cbLanguageSelect_SelectedIndexChanged;
+                }
+                else
+                {
+                    _listVoice = listVoice?.ToList();
+
+                    var allLanguages = _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null;
+
+                    // Filter theo allowedLanguages nếu là gói Trial
+                    var filteredLanguages = FilterLanguagesByPackage(allLanguages);
+
+                    ComboBoxFuncion.CbBlinding(cbLanguageSelect,
+                        filteredLanguages,
+                        filteredLanguages != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
+                            ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                            : 0);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Filter ngôn ngữ theo package type
+        /// </summary>
+        private List<ComboboxModel> FilterLanguagesByPackage(List<ComboboxModel> allLanguages)
+        {
+            if (allLanguages == null)
+                return null;
+
+            // Nếu là Basic hoặc Premium, không filter
+            if (_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Premium)
+            {
+                return allLanguages;
+            }
+
+            // Nếu là Trial và có allowedLanguages từ server
+            if (_currentPackageType == PackageType.Trial &&
+                _voiceSourceInfo != null &&
+                _voiceSourceInfo.AllowedLanguages != null &&
+                _voiceSourceInfo.AllowedLanguages.Count > 0)
+            {
+                var allowedCodes = _voiceSourceInfo.AllowedLanguages.Select(x => x.LanguageCode).ToList();
+                return allLanguages.Where(lang =>
+                    allowedCodes.Any(code => lang.Value.Contains(code))).ToList();
+            }
+
+            // Default: trả về tất cả
+            return allLanguages;
+        }
+
+        /// <summary>
+        /// Giới hạn số lượng voices theo package type
+        /// </summary>
+        private List<ComboboxModel> LimitVoicesByPackage(List<ComboboxModel> allVoices)
+        {
+            if (allVoices == null)
+                return null;
+
+            // Nếu là Basic hoặc Premium, không giới hạn
+            if (_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Premium)
+            {
+                return allVoices;
+            }
+
+            // Nếu là Trial, giới hạn theo allowedTotalVoices
+            if (_currentPackageType == PackageType.Trial &&
+                _voiceSourceInfo != null &&
+                _voiceSourceInfo.AllowedTotalVoices > 0)
+            {
+                return allVoices.Take(_voiceSourceInfo.AllowedTotalVoices).ToList();
+            }
+
+            // Default: trả về tất cả
+            return allVoices;
+        }
+
+        /// <summary>
+        /// Giới hạn số lượng voices cho Vbee theo package type
+        /// </summary>
+        private List<ComboboxVbeeModel> LimitVbeeVoicesByPackage(List<ComboboxVbeeModel> allVoices)
+        {
+            if (allVoices == null)
+                return null;
+
+            // Nếu là Basic hoặc Premium, không giới hạn
+            if (_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Premium)
+            {
+                return allVoices;
+            }
+
+            // Nếu là Trial, giới hạn theo allowedTotalVoices
+            if (_currentPackageType == PackageType.Trial &&
+                _voiceSourceInfo != null &&
+                _voiceSourceInfo.AllowedTotalVoices > 0)
+            {
+                return allVoices.Take(_voiceSourceInfo.AllowedTotalVoices).ToList();
+            }
+
+            // Default: trả về tất cả
+            return allVoices;
         }
         private void LoadProjectListData()
         {
@@ -872,8 +1268,8 @@ namespace ReviewMovie
         }
         private void DisplayItemDefault()
         {
-            // load % ZoomUp 
-            ComboBoxFuncion.CbBlinding(cboSiteNguon, AISiteSource.VoiceSiteSelectTemplate().ToList(), 0);
+            // Load Voice Sources theo package type
+            ComboBoxFuncion.CbBlinding(cboSiteNguon, GetVoiceSourcesByPackageType(), 0);
 
             // load % ZoomUp 
             ComboBoxFuncion.CbBlinding(cbZoomRatio
@@ -1008,6 +1404,17 @@ namespace ReviewMovie
 
             // Nếu _voiceSetting chưa được khởi tạo thì tạo default để tránh NullReferenceException
             var safeVoiceSetting = _voiceSetting ?? new VoiceSettings();
+
+            // Xác định AppID: nếu chọn T2Psoft thì dùng voiceKey từ server, ngược lại dùng txtAppID.Text
+            string appIdToUse = txtAppID.Text;
+            ComboboxModel selectedVoiceSource = (ComboboxModel)cboSiteNguon.SelectedItem;
+            if (selectedVoiceSource?.Value == "T2Psoft" &&
+                _voiceSourceInfo != null &&
+                !string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey))
+            {
+                appIdToUse = _voiceSourceInfo.VoiceKey;
+            }
+
             _audioConvertContext = new AudioConvertContextModel
             {
                 ProjectName = _projectName,
@@ -1024,7 +1431,7 @@ namespace ReviewMovie
                 VoiceCode = _voiceCode,
                 SpeechRatio = nbSpeechRatio.Value,
                 AudioTempPath = _audioTempPath,
-                AppID = txtAppID.Text,
+                AppID = appIdToUse,
                 Token = txtToken.Text,
 
                 // Lấy text input từ row index
@@ -3101,10 +3508,11 @@ namespace ReviewMovie
 
                     if (!string.IsNullOrEmpty(voiceSite))
                     {
+                        var voiceSources = GetVoiceSourcesByPackageType();
                         ComboBoxFuncion.CbBlinding(
                             cboSiteNguon,
-                            AISiteSource.VoiceSiteSelectTemplate().ToList(),
-                            AISiteSource.VoiceSiteSelectTemplate().FindIndex(x =>
+                            voiceSources,
+                            voiceSources.FindIndex(x =>
                                 string.Equals(x.Value, voiceSite, StringComparison.OrdinalIgnoreCase))
                         );
                     }
@@ -3150,10 +3558,13 @@ namespace ReviewMovie
                     switch (cbLanguageSelect.Text)
                     {
                         case FptAIVoiceLanguage.VietNam_Des:
+                            var fptVoices = ApiFptAI.FptAIVoiceCodeTemplate().ToList();
+                            var limitedFptVoices = LimitVoicesByPackage(fptVoices);
+
                             ComboBoxFuncion.CbBlinding(cbxSpeechType
-                                , ApiFptAI.FptAIVoiceCodeTemplate().ToList()
+                                , limitedFptVoices
                                 , !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                                    ? Math.Max(ApiFptAI.FptAIVoiceCodeTemplate().ToList().FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
+                                    ? Math.Max(limitedFptVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
                                     : 0);
                             break;
                         default:
@@ -3166,21 +3577,24 @@ namespace ReviewMovie
                     string languageCode = selectedItem?.Value;
 
                     GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(txtAppID.Text);
+                    var googleVoices = serviceGoogleTTS.GetVoicesByLanguage(languageCode);
+                    var limitedGoogleVoices = LimitVoicesByPackage(googleVoices);
 
-                    //ComboBoxFuncion.CbBlinding(cbxSpeechType, serviceGoogleTTS.GetVoicesByLanguage(languageCode), 0);
                     ComboBoxFuncion.CbBlinding(cbxSpeechType
-                              , serviceGoogleTTS.GetVoicesByLanguage(languageCode)
+                              , limitedGoogleVoices
                               , !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                                  ? Math.Max(serviceGoogleTTS.GetVoicesByLanguage(languageCode).ToList().FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
+                                  ? Math.Max(limitedGoogleVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
                                   : 0);
                 }
                 else if (_manualSelected == ManualSelect.Elevenlab)
                 {
-                    //ComboBoxFuncion.CbBlinding(cbxSpeechType, GetVoiceTemplate.SearchVoicesByLanguageAccent(_listVoice, cbLanguageSelect.Text), 0);
+                    var elevenLabVoices = GetVoiceTemplate.SearchVoicesByLanguageAccent(_listVoice, cbLanguageSelect.Text);
+                    var limitedElevenLabVoices = LimitVoicesByPackage(elevenLabVoices);
+
                     ComboBoxFuncion.CbBlinding(cbxSpeechType
-                           , GetVoiceTemplate.SearchVoicesByLanguageAccent(_listVoice, cbLanguageSelect.Text)
+                           , limitedElevenLabVoices
                            , !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                               ? Math.Max(GetVoiceTemplate.SearchVoicesByLanguageAccent(_listVoice, cbLanguageSelect.Text).ToList().FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
+                               ? Math.Max(limitedElevenLabVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
                                : 0);
                 }
                 else if (_manualSelected == ManualSelect.Vbee)
@@ -3189,12 +3603,12 @@ namespace ReviewMovie
                     string languageCode = selectedItem?.Value;
 
                     var vietnamVoices = ApiVbee.VbeeVoiceTemplate().Where(x => x.Language == languageCode).ToList();
+                    var limitedVbeeVoices = LimitVbeeVoicesByPackage(vietnamVoices);
 
-                    //ComboBoxFuncion.CbBlinding(cbxSpeechType, vietnamVoices, 0);
                     ComboBoxFuncion.CbBlinding(cbxSpeechType
-                          , vietnamVoices
+                          , limitedVbeeVoices
                           , !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                              ? Math.Max(vietnamVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
+                              ? Math.Max(limitedVbeeVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
                               : 0);
                 }
             }
@@ -3785,6 +4199,10 @@ namespace ReviewMovie
             ComboboxModel selectedItem = (ComboboxModel)cboSiteNguon.SelectedItem;
             switch (selectedItem.Value)
             {
+                case "T2Psoft":
+                    // Xử lý T2Psoft - sử dụng voiceType từ server
+                    await HandleT2PsoftVoiceSource(checkSaveST);
+                    return; // Return sớm để không chạy logic cũ
                 case ListVoiceSite.FptAI:
                     _manualSelected = ManualSelect.FptAI;
                     break;
@@ -3804,6 +4222,10 @@ namespace ReviewMovie
             loadApiKey();
             if (_manualSelected == ManualSelect.FptAI)
             {
+                // Enable lại txtAppID và txtToken cho voice source thật
+                txtAppID.Enabled = true;
+                txtToken.Enabled = true;
+
                 lblapi.Text = "ApiKey";
                 txtAppID.Size = new Size(247, 90);
                 lblToken.Visible = false;
@@ -3823,6 +4245,10 @@ namespace ReviewMovie
             }
             else if (_manualSelected == ManualSelect.Elevenlab)
             {
+                // Enable lại txtAppID và txtToken cho voice source thật
+                txtAppID.Enabled = true;
+                txtToken.Enabled = true;
+
                 lblapi.Text = "Elevenlab";
                 txtAppID.Size = new Size(247, 90);
                 lblToken.Visible = false;
@@ -3858,6 +4284,10 @@ namespace ReviewMovie
             }
             else if (_manualSelected == ManualSelect.Google)
             {
+                // Enable lại txtAppID và txtToken cho voice source thật
+                txtAppID.Enabled = true;
+                txtToken.Enabled = true;
+
                 lblapi.Text = "Json Data";
                 txtAppID.Size = new Size(247, 90);
                 lblToken.Visible = false;
@@ -3887,7 +4317,11 @@ namespace ReviewMovie
             }
             else if (_manualSelected == ManualSelect.Vbee)
             {
-                lblapi.Text = "AppID"; 
+                // Enable lại txtAppID và txtToken cho voice source thật
+                txtAppID.Enabled = true;
+                txtToken.Enabled = true;
+
+                lblapi.Text = "AppID";
                 txtAppID.Size = new Size(247, 40);
                 lblToken.Visible = true;
                 txtToken.Visible = true;
