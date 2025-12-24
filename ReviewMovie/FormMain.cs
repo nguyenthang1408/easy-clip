@@ -481,9 +481,13 @@ namespace ReviewMovie
         {
             try
             {
-                // Luôn ẩn hoàn toàn UI Key khi chọn T2Psoft
-                lblapi.Visible = false;
-                txtAppID.Visible = false;
+                // Hiển thị API Key đăng nhập và disable khi chọn T2Psoft
+                lblapi.Visible = true;
+                lblapi.Text = "API KEY";
+                txtAppID.Visible = true;
+                txtAppID.Text = _apikey;
+                txtAppID.Enabled = false;
+                txtAppID.Size = new Size(247, 90);
                 lblToken.Visible = false;
                 txtToken.Visible = false;
 
