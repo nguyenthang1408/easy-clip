@@ -698,10 +698,26 @@ namespace ReviewMovie
             if (allVoices == null)
                 return null;
 
-            // Nếu là Basic hoặc Premium, không giới hạn
-            if (_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Premium)
+            // Nếu là Premium, không giới hạn
+            if (_currentPackageType == PackageType.Premium)
             {
                 return allVoices;
+            }
+
+            // Nếu là Basic, check unlimit
+            if (_currentPackageType == PackageType.Basic)
+            {
+                // Nếu unlimit = true, hiển thị tất cả
+                if (_voiceSourceInfo != null && _voiceSourceInfo.Unlimit)
+                {
+                    return allVoices;
+                }
+
+                // Nếu unlimit = false, giới hạn theo allowedTotalVoices
+                if (_voiceSourceInfo != null && _voiceSourceInfo.AllowedTotalVoices > 0)
+                {
+                    return allVoices.Take(_voiceSourceInfo.AllowedTotalVoices).ToList();
+                }
             }
 
             // Nếu là Trial, giới hạn theo allowedTotalVoices
@@ -724,10 +740,26 @@ namespace ReviewMovie
             if (allVoices == null)
                 return null;
 
-            // Nếu là Basic hoặc Premium, không giới hạn
-            if (_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Premium)
+            // Nếu là Premium, không giới hạn
+            if (_currentPackageType == PackageType.Premium)
             {
                 return allVoices;
+            }
+
+            // Nếu là Basic, check unlimit
+            if (_currentPackageType == PackageType.Basic)
+            {
+                // Nếu unlimit = true, hiển thị tất cả
+                if (_voiceSourceInfo != null && _voiceSourceInfo.Unlimit)
+                {
+                    return allVoices;
+                }
+
+                // Nếu unlimit = false, giới hạn theo allowedTotalVoices
+                if (_voiceSourceInfo != null && _voiceSourceInfo.AllowedTotalVoices > 0)
+                {
+                    return allVoices.Take(_voiceSourceInfo.AllowedTotalVoices).ToList();
+                }
             }
 
             // Nếu là Trial, giới hạn theo allowedTotalVoices
