@@ -3594,16 +3594,31 @@ namespace ReviewMovie
                         addRow(_infoProject);
                     }
 
-                    if (!string.IsNullOrEmpty(voiceSite))
+                    // Load voice source
+                    var voiceSources = GetVoiceSourcesByPackageType();
+                    int selectedIndex = 0;
+
+                    // Nếu là Premium, luôn chọn T2PSOFT
+                    if (_currentPackageType == PackageType.Premium)
                     {
-                        var voiceSources = GetVoiceSourcesByPackageType();
-                        ComboBoxFuncion.CbBlinding(
-                            cboSiteNguon,
-                            voiceSources,
-                            voiceSources.FindIndex(x =>
-                                string.Equals(x.Value, voiceSite, StringComparison.OrdinalIgnoreCase))
-                        );
+                        int t2psoftIndex = voiceSources.FindIndex(x => x.Value == "T2Psoft");
+                        if (t2psoftIndex >= 0)
+                        {
+                            selectedIndex = t2psoftIndex;
+                        }
                     }
+                    else if (!string.IsNullOrEmpty(voiceSite))
+                    {
+                        // Nếu không phải Premium, restore lại voice source đã lưu
+                        int savedIndex = voiceSources.FindIndex(x =>
+                            string.Equals(x.Value, voiceSite, StringComparison.OrdinalIgnoreCase));
+                        if (savedIndex >= 0)
+                        {
+                            selectedIndex = savedIndex;
+                        }
+                    }
+
+                    ComboBoxFuncion.CbBlinding(cboSiteNguon, voiceSources, selectedIndex);
 
                     _configService.UpdateProjectNameDate(Guid.Parse(selectID));
                 }
