@@ -661,12 +661,52 @@ namespace ReviewMovie
                 _voiceSourceInfo.AllowedLanguages.Count > 0)
             {
                 var allowedCodes = _voiceSourceInfo.AllowedLanguages.Select(x => x.LanguageCode).ToList();
-                return allLanguages.Where(lang =>
-                    allowedCodes.Any(code => lang.Value.Contains(code))).ToList();
+                return allLanguages.Where(lang => IsLanguageAllowedByCode(lang.Value, allowedCodes)).ToList();
             }
 
             // Default: trả về tất cả
             return allLanguages;
+        }
+
+        /// <summary>
+        /// Kiểm tra xem một language value có được phép theo allowed codes không
+        /// Hỗ trợ cả language code format (vi-VN, en-US) và ElevenLabs format (Vietnamese*Vietnamese, English*American)
+        /// </summary>
+        private bool IsLanguageAllowedByCode(string languageValue, List<string> allowedCodes)
+        {
+            if (string.IsNullOrEmpty(languageValue) || allowedCodes == null || allowedCodes.Count == 0)
+                return false;
+
+            // Check direct language code match (vi-VN, en-US, etc.)
+            if (allowedCodes.Any(code => languageValue.Contains(code)))
+                return true;
+
+            // Check ElevenLabs language name match
+            // Map language codes to ElevenLabs language names
+            foreach (var code in allowedCodes)
+            {
+                switch (code)
+                {
+                    case "vi-VN":
+                        if (languageValue.Contains("Vietnamese"))
+                            return true;
+                        break;
+                    case "en-US":
+                        if (languageValue.Contains("American") || languageValue.Contains("English*American"))
+                            return true;
+                        break;
+                    case "en-GB":
+                        if (languageValue.Contains("British") || languageValue.Contains("English*British"))
+                            return true;
+                        break;
+                    case "ja-JP":
+                        if (languageValue.Contains("Japanese"))
+                            return true;
+                        break;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -4296,10 +4336,13 @@ namespace ReviewMovie
 
                 nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioFptAI ? nbSpeechRatio.Value : _speechratioFptAI;
 
+                var allLanguages = ApiFptAI.FptAILanguageTemplate().ToList();
+                var filteredLanguages = FilterLanguagesByPackage(allLanguages);
+
                 ComboBoxFuncion.CbBlinding(cbLanguageSelect
-                                            , ApiFptAI.FptAILanguageTemplate().ToList()
+                                            , filteredLanguages
                                             , !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                                ? Math.Max(ApiFptAI.FptAILanguageTemplate().ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                                                ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                                                 : 0);
 
                 //cbLanguageSelect.DataSource = ApiFptAI.FptAILanguageTemplate().ToList();
@@ -4334,10 +4377,13 @@ namespace ReviewMovie
                 {
                     _listVoice = listVoice?.ToList();
 
+                    var allLanguages = _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null;
+                    var filteredLanguages = FilterLanguagesByPackage(allLanguages);
+
                     ComboBoxFuncion.CbBlinding(cbLanguageSelect
-                                , _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null
-                                , _listVoice != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                    ? Math.Max(GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                                , filteredLanguages
+                                , filteredLanguages != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
+                                    ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                                     : 0);
 
                     //cbLanguageSelect.DataSource = _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null;
@@ -4362,12 +4408,13 @@ namespace ReviewMovie
                 if (serviceGoogleTTS.CheckClient())
                 {
                     var listlanguage = serviceGoogleTTS.GetListLanguage()?.ToList();
+                    var filteredLanguages = FilterLanguagesByPackage(listlanguage);
                     //cbLanguageSelect.DataSource = listlanguage;
 
                     ComboBoxFuncion.CbBlinding(cbLanguageSelect
-                                          , listlanguage
+                                          , filteredLanguages
                                           , !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                              ? Math.Max(listlanguage.ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                                              ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                                               : 0);
                 }
                 else
@@ -4391,10 +4438,13 @@ namespace ReviewMovie
 
                 nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioVbee ? nbSpeechRatio.Value : _speechratioVbee;
 
+                var allLanguages = ApiVbee.VbeeLanguageTemplate().ToList();
+                var filteredLanguages = FilterLanguagesByPackage(allLanguages);
+
                 ComboBoxFuncion.CbBlinding(cbLanguageSelect
-                                          , ApiVbee.VbeeLanguageTemplate().ToList()
+                                          , filteredLanguages
                                           , !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                              ? Math.Max(ApiVbee.VbeeLanguageTemplate().ToList().FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                                              ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                                               : 0);
 
                 //cbLanguageSelect.DataSource = ApiVbee.VbeeLanguageTemplate().ToList();
