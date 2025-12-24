@@ -1078,14 +1078,6 @@ namespace ReviewMovie
 
         private void loadApiKey()
         {
-            // Nếu là gói Premium, clear textbox (để trống)
-            if (_currentPackageType == PackageType.Premium)
-            {
-                txtAppID.Text = string.Empty;
-                txtToken.Text = string.Empty;
-                return;
-            }
-
             var reloadConfig = _configService.GetItem(1);
 
             // Load key từ database vào textbox cho các voice source thật (không phải T2PSOFT)
@@ -3731,9 +3723,8 @@ namespace ReviewMovie
                     ComboboxModel selectedItem = (ComboboxModel)cbLanguageSelect.SelectedItem;
                     string languageCode = selectedItem?.Value;
 
-                    // Lấy key: nếu Premium thì từ textbox, ngược lại từ server
-                    string apiKey = _currentPackageType == PackageType.Premium ? txtAppID.Text : _voiceSourceInfo.VoiceKey;
-                    GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(apiKey);
+                    // Lấy key từ textbox (vì đây là voice source khác T2PSOFT)
+                    GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(txtAppID.Text);
                     var googleVoices = serviceGoogleTTS.GetVoicesByLanguage(languageCode);
                     var limitedGoogleVoices = LimitVoicesByPackage(googleVoices);
 
@@ -4448,9 +4439,8 @@ namespace ReviewMovie
 
                 nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioElevenlab ? nbSpeechRatio.Value : _speechratioElevenlab;
 
-                // Lấy key: nếu Premium thì từ textbox, ngược lại từ server
-                string apiKey = _currentPackageType == PackageType.Premium ? txtAppID.Text : _voiceSourceInfo.VoiceKey;
-                VoicesEndpoint voiceServices = new VoicesEndpoint(apiKey);
+                // Lấy key từ textbox (vì đây là voice source khác T2PSOFT)
+                VoicesEndpoint voiceServices = new VoicesEndpoint(txtAppID.Text);
                 var listVoice = await voiceServices.GetAllVoicesAsync();
                 if(listVoice == null)
                 {
@@ -4494,9 +4484,8 @@ namespace ReviewMovie
 
                 nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioGoogleTTS ? nbSpeechRatio.Value : _speechratioGoogleTTS;
 
-                // Lấy key: nếu Premium thì từ textbox, ngược lại từ server
-                string apiKey = _currentPackageType == PackageType.Premium ? txtAppID.Text : _voiceSourceInfo.VoiceKey;
-                GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(apiKey);
+                // Lấy key từ textbox (vì đây là voice source khác T2PSOFT)
+                GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(txtAppID.Text);
                 if (serviceGoogleTTS.CheckClient())
                 {
                     var listlanguage = serviceGoogleTTS.GetListLanguage()?.ToList();
