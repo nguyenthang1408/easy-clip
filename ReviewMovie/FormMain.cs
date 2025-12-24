@@ -1078,9 +1078,11 @@ namespace ReviewMovie
 
         private void loadApiKey()
         {
-            // Nếu là gói Premium, không load key vào textbox (để trống)
+            // Nếu là gói Premium, clear textbox (để trống)
             if (_currentPackageType == PackageType.Premium)
             {
+                txtAppID.Text = string.Empty;
+                txtToken.Text = string.Empty;
                 return;
             }
 
