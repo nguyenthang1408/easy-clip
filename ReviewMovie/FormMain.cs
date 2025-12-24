@@ -1074,6 +1074,12 @@ namespace ReviewMovie
 
         private void loadApiKey()
         {
+            // Nếu là gói Premium, không load key vào textbox (để trống)
+            if (_currentPackageType == PackageType.Premium)
+            {
+                return;
+            }
+
             var reloadConfig = _configService.GetItem(1);
 
             // Load key từ database vào textbox cho các voice source thật (không phải T2PSOFT)
