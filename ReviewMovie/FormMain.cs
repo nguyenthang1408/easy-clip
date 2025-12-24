@@ -1344,7 +1344,20 @@ namespace ReviewMovie
         private void DisplayItemDefault()
         {
             // Load Voice Sources theo package type
-            ComboBoxFuncion.CbBlinding(cboSiteNguon, GetVoiceSourcesByPackageType(), 0);
+            var voiceSources = GetVoiceSourcesByPackageType();
+            int defaultIndex = 0;
+
+            // Nếu là Premium, chọn T2PSOFT làm mặc định
+            if (_currentPackageType == PackageType.Premium)
+            {
+                int t2psoftIndex = voiceSources.FindIndex(x => x.Value == "T2Psoft");
+                if (t2psoftIndex >= 0)
+                {
+                    defaultIndex = t2psoftIndex;
+                }
+            }
+
+            ComboBoxFuncion.CbBlinding(cboSiteNguon, voiceSources, defaultIndex);
 
             // load % ZoomUp 
             ComboBoxFuncion.CbBlinding(cbZoomRatio
