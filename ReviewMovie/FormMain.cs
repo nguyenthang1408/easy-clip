@@ -1043,21 +1043,24 @@ namespace ReviewMovie
         private void loadApiKey()
         {
             var reloadConfig = _configService.GetItem(1);
+
+            // Load key từ database vào textbox cho các voice source thật (không phải T2PSOFT)
+            // T2PSOFT luôn lấy key từ server nên không cần load
             if (_manualSelected == ManualSelect.FptAI)
             {
-                if (!string.IsNullOrEmpty(reloadConfig.FptAIKey)) _voiceSourceInfo.VoiceKey = reloadConfig.FptAIKey;
+                if (!string.IsNullOrEmpty(reloadConfig.FptAIKey)) txtAppID.Text = reloadConfig.FptAIKey;
             }
             else if (_manualSelected == ManualSelect.Google)
             {
-                if (!string.IsNullOrEmpty(reloadConfig.GoogleTTSKey)) _voiceSourceInfo.VoiceKey = reloadConfig.GoogleTTSKey;
+                if (!string.IsNullOrEmpty(reloadConfig.GoogleTTSKey)) txtAppID.Text = reloadConfig.GoogleTTSKey;
             }
             else if (_manualSelected == ManualSelect.Elevenlab)
             {
-                if (!string.IsNullOrEmpty(reloadConfig.ElevenlabKey)) _voiceSourceInfo.VoiceKey = reloadConfig.ElevenlabKey;
+                if (!string.IsNullOrEmpty(reloadConfig.ElevenlabKey)) txtAppID.Text = reloadConfig.ElevenlabKey;
             }
             else if (_manualSelected == ManualSelect.Vbee)
             {
-                if (!string.IsNullOrEmpty(reloadConfig.VbeeAppId)) _voiceSourceInfo.VoiceKey = reloadConfig.VbeeAppId;
+                if (!string.IsNullOrEmpty(reloadConfig.VbeeAppId)) txtAppID.Text = reloadConfig.VbeeAppId;
                 if (!string.IsNullOrEmpty(reloadConfig.VbeeAppToken)) txtToken.Text = reloadConfig.VbeeAppToken;
             }
         }
@@ -1412,6 +1415,27 @@ namespace ReviewMovie
             {
                 Directory.CreateDirectory(path);
             }
+        }
+
+        /// <summary>
+        /// Lấy AppId/Key dựa trên voice source được chọn
+        /// - T2PSOFT: lấy từ server (_voiceSourceInfo.VoiceKey)
+        /// - FPT/Google/ElevenLabs/Vbee: lấy từ textbox (txtAppID.Text)
+        /// </summary>
+        private string GetCurrentAppId()
+        {
+            ComboboxModel selectedVoiceSource = (ComboboxModel)cboSiteNguon.SelectedItem;
+
+            // Nếu chọn T2Psoft, lấy key từ server
+            if (selectedVoiceSource?.Value == "T2Psoft" &&
+                _voiceSourceInfo != null &&
+                !string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey))
+            {
+                return _voiceSourceInfo.VoiceKey;
+            }
+
+            // Ngược lại, lấy từ textbox
+            return txtAppID.Text;
         }
 
         private bool SaveEffectSetting()
@@ -1931,6 +1955,9 @@ namespace ReviewMovie
 
         private async Task CallDownloadAudioAsync(string addressLink, int index, bool recordStatus, CancellationToken token)
         {
+            // Xác định AppId: nếu chọn T2Psoft thì dùng voiceKey từ server, ngược lại dùng txtAppID.Text
+            string appIdToUse = GetCurrentAppId();
+
             var context = new AudioDownloadContextModel
             {
                 RowIndex = index,
@@ -1939,7 +1966,7 @@ namespace ReviewMovie
                 ScaleAudioRangeStart = (decimal)nScaleAudioRangeStart.Value,
                 ScaleAudioRangeEnd = (decimal)nScaleAudioRangeEnd.Value,
                 ManualSelected = _manualSelected,
-                AppId = _voiceSourceInfo.VoiceKey,
+                AppId = appIdToUse,
 
                 GetDataGridViewRow = idx => dgvMainView.Rows[idx],
                 GetInfoRenderByRowIndex = idx => _allInfoRender.FirstOrDefault(c => c.NoID == idx),
@@ -4494,22 +4521,24 @@ namespace ReviewMovie
                 // Lấy giá trị từ _manualSelected của btnOpenProject_Click
                 ManualSelect manualSelected = _manualSelected;
 
-                // Đảm bảo rằng txtAppID.Text được gán đúng cho fptAIkey hoặc vbeeId
-                if (manualSelected == ManualSelect.FptAI
-                    || manualSelected == ManualSelect.Vbee
-                    || manualSelected == ManualSelect.Google
-                    || manualSelected == ManualSelect.Elevenlab)
+                // Lấy key từ textbox cho các voice source thật (không phải T2PSOFT)
+                if (manualSelected == ManualSelect.FptAI)
                 {
-                    fptAIkey = _voiceSourceInfo.VoiceKey;
-                    googleTTSkey = _voiceSourceInfo.VoiceKey;
-                    evelenlabKey = _voiceSourceInfo.VoiceKey;
-                    vbeeId = _voiceSourceInfo.VoiceKey; // Cả hai đều lấy từ txtAppID.Text
-                };
-
-                if (manualSelected == ManualSelect.Vbee)
+                    fptAIkey = txtAppID.Text;
+                }
+                else if (manualSelected == ManualSelect.Google)
                 {
+                    googleTTSkey = txtAppID.Text;
+                }
+                else if (manualSelected == ManualSelect.Elevenlab)
+                {
+                    evelenlabKey = txtAppID.Text;
+                }
+                else if (manualSelected == ManualSelect.Vbee)
+                {
+                    vbeeId = txtAppID.Text;
                     vbeeToken = txtToken.Text;
-                };
+                }
 
                 // Cập nhật cấu hình bằng cách gọi UpdateConfig với manualSelected được truyền vào
                 var check = _configService.UpdateConfig(new ConfigVoiceDto
