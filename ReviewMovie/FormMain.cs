@@ -4340,7 +4340,7 @@ namespace ReviewMovie
         {
             // Skip nếu đang trong quá trình initialization
             if (_isInitializing)
-                return;
+                return; 
 
             var checkSaveST = _infoProject?.EffectSettup;
             ComboboxModel selectedItem = (ComboboxModel)cboSiteNguon.SelectedItem;

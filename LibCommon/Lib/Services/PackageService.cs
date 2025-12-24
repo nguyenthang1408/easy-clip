@@ -47,7 +47,7 @@ namespace LibCommon.Lib.Services
                 var jsonContent = JsonConvert.SerializeObject(request);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync("/GetVersion/ReviewMovie", content);
+                var response = await _httpClient.PostAsync("http://localhost:3000/api/check", content);
 
                 if (response.IsSuccessStatusCode)
                 {
