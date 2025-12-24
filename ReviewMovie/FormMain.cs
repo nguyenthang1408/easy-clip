@@ -3723,8 +3723,10 @@ namespace ReviewMovie
                     ComboboxModel selectedItem = (ComboboxModel)cbLanguageSelect.SelectedItem;
                     string languageCode = selectedItem?.Value;
 
-                    // Lấy key từ textbox (vì đây là voice source khác T2PSOFT)
-                    GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(txtAppID.Text);
+                    // Lấy key: nếu đang chọn T2PSOFT thì từ server, ngược lại từ textbox
+                    ComboboxModel selectedVoiceSource = (ComboboxModel)cboSiteNguon.SelectedItem;
+                    string apiKey = selectedVoiceSource?.Value == "T2Psoft" ? _voiceSourceInfo.VoiceKey : txtAppID.Text;
+                    GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(apiKey);
                     var googleVoices = serviceGoogleTTS.GetVoicesByLanguage(languageCode);
                     var limitedGoogleVoices = LimitVoicesByPackage(googleVoices);
 
