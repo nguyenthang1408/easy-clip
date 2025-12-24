@@ -3731,7 +3731,9 @@ namespace ReviewMovie
                     ComboboxModel selectedItem = (ComboboxModel)cbLanguageSelect.SelectedItem;
                     string languageCode = selectedItem?.Value;
 
-                    GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(_voiceSourceInfo.VoiceKey);
+                    // Lấy key: nếu Premium thì từ textbox, ngược lại từ server
+                    string apiKey = _currentPackageType == PackageType.Premium ? txtAppID.Text : _voiceSourceInfo.VoiceKey;
+                    GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(apiKey);
                     var googleVoices = serviceGoogleTTS.GetVoicesByLanguage(languageCode);
                     var limitedGoogleVoices = LimitVoicesByPackage(googleVoices);
 
@@ -4446,7 +4448,9 @@ namespace ReviewMovie
 
                 nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioElevenlab ? nbSpeechRatio.Value : _speechratioElevenlab;
 
-                VoicesEndpoint voiceServices = new VoicesEndpoint(_voiceSourceInfo.VoiceKey);
+                // Lấy key: nếu Premium thì từ textbox, ngược lại từ server
+                string apiKey = _currentPackageType == PackageType.Premium ? txtAppID.Text : _voiceSourceInfo.VoiceKey;
+                VoicesEndpoint voiceServices = new VoicesEndpoint(apiKey);
                 var listVoice = await voiceServices.GetAllVoicesAsync();
                 if(listVoice == null)
                 {
@@ -4490,7 +4494,9 @@ namespace ReviewMovie
 
                 nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioGoogleTTS ? nbSpeechRatio.Value : _speechratioGoogleTTS;
 
-                GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(_voiceSourceInfo.VoiceKey);
+                // Lấy key: nếu Premium thì từ textbox, ngược lại từ server
+                string apiKey = _currentPackageType == PackageType.Premium ? txtAppID.Text : _voiceSourceInfo.VoiceKey;
+                GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(apiKey);
                 if (serviceGoogleTTS.CheckClient())
                 {
                     var listlanguage = serviceGoogleTTS.GetListLanguage()?.ToList();
