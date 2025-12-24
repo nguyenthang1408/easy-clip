@@ -4334,7 +4334,9 @@ namespace ReviewMovie
             loadApiKey();
             if (_manualSelected == ManualSelect.FptAI)
             {
-                // Enable lại txtAppID và txtToken cho voice source thật
+                // Hiển thị và enable lại txtAppID và txtToken cho voice source thật
+                lblapi.Visible = true;
+                txtAppID.Visible = true;
                 txtAppID.Enabled = true;
                 txtToken.Enabled = true;
 
@@ -4360,7 +4362,9 @@ namespace ReviewMovie
             }
             else if (_manualSelected == ManualSelect.Elevenlab)
             {
-                // Enable lại txtAppID và txtToken cho voice source thật
+                // Hiển thị và enable lại txtAppID và txtToken cho voice source thật
+                lblapi.Visible = true;
+                txtAppID.Visible = true;
                 txtAppID.Enabled = true;
                 txtToken.Enabled = true;
 
@@ -4402,7 +4406,9 @@ namespace ReviewMovie
             }
             else if (_manualSelected == ManualSelect.Google)
             {
-                // Enable lại txtAppID và txtToken cho voice source thật
+                // Hiển thị và enable lại txtAppID và txtToken cho voice source thật
+                lblapi.Visible = true;
+                txtAppID.Visible = true;
                 txtAppID.Enabled = true;
                 txtToken.Enabled = true;
 
@@ -4436,7 +4442,9 @@ namespace ReviewMovie
             }
             else if (_manualSelected == ManualSelect.Vbee)
             {
-                // Enable lại txtAppID và txtToken cho voice source thật
+                // Hiển thị và enable lại txtAppID và txtToken cho voice source thật
+                lblapi.Visible = true;
+                txtAppID.Visible = true;
                 txtAppID.Enabled = true;
                 txtToken.Enabled = true;
 
