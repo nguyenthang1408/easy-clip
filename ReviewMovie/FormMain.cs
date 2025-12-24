@@ -629,14 +629,14 @@ namespace ReviewMovie
             if (allLanguages == null)
                 return null;
 
-            // Nếu là Basic hoặc Premium, không filter
-            if (_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Premium)
+            // Nếu là Premium, không filter
+            if (_currentPackageType == PackageType.Premium)
             {
                 return allLanguages;
             }
 
-            // Nếu là Trial và có allowedLanguages từ server
-            if (_currentPackageType == PackageType.Trial &&
+            // Nếu là Basic hoặc Trial và có allowedLanguages từ server
+            if ((_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Trial) &&
                 _voiceSourceInfo != null &&
                 _voiceSourceInfo.AllowedLanguages != null &&
                 _voiceSourceInfo.AllowedLanguages.Count > 0)
