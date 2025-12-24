@@ -3739,7 +3739,7 @@ namespace ReviewMovie
 
                     ComboBoxFuncion.CbBlinding(cbxSpeechType
                               , limitedGoogleVoices
-                              , !string.IsNullOrEmpty(ckSetting?.SspeechType)
+                              , limitedGoogleVoices != null && !string.IsNullOrEmpty(ckSetting?.SspeechType)
                                   ? Math.Max(limitedGoogleVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
                                   : 0);
                 }
