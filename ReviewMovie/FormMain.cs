@@ -639,8 +639,27 @@ namespace ReviewMovie
                 return allLanguages;
             }
 
-            // Nếu là Basic hoặc Trial và có allowedLanguages từ server
-            if ((_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Trial) &&
+            // Nếu là Basic, check unlimit
+            if (_currentPackageType == PackageType.Basic)
+            {
+                // Nếu unlimit = true, hiển thị tất cả ngôn ngữ
+                if (_voiceSourceInfo != null && _voiceSourceInfo.Unlimit)
+                {
+                    return allLanguages;
+                }
+
+                // Nếu unlimit = false, filter theo allowedLanguages
+                if (_voiceSourceInfo != null &&
+                    _voiceSourceInfo.AllowedLanguages != null &&
+                    _voiceSourceInfo.AllowedLanguages.Count > 0)
+                {
+                    var allowedCodes = _voiceSourceInfo.AllowedLanguages.Select(x => x.LanguageCode).ToList();
+                    return allLanguages.Where(lang => IsLanguageAllowedByCode(lang.Value, allowedCodes)).ToList();
+                }
+            }
+
+            // Nếu là Trial, filter theo allowedLanguages
+            if (_currentPackageType == PackageType.Trial &&
                 _voiceSourceInfo != null &&
                 _voiceSourceInfo.AllowedLanguages != null &&
                 _voiceSourceInfo.AllowedLanguages.Count > 0)
