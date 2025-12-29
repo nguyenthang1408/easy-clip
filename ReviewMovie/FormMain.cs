@@ -457,8 +457,8 @@ namespace ReviewMovie
             // Luôn có T2Psoft.com cho tất cả các gói
             voiceSources.Add(new ComboboxModel
             {
-                Display = "https://t2psoft.com/",
-                Value = "T2Psoft"
+                Display = ListVoiceSite.T2Psoft_Des,
+                Value = ListVoiceSite.T2Psoft
             });
 
             // Nếu là Premium, thêm các nguồn khác
@@ -1481,7 +1481,7 @@ namespace ReviewMovie
             // Nếu là Premium, chọn T2PSOFT làm mặc định
             if (_currentPackageType == PackageType.Premium)
             {
-                int t2psoftIndex = voiceSources.FindIndex(x => x.Value == "T2Psoft");
+                int t2psoftIndex = voiceSources.FindIndex(x => x.Value == ListVoiceSite.T2Psoft);
                 if (t2psoftIndex >= 0)
                 {
                     defaultIndex = t2psoftIndex;
@@ -1584,7 +1584,7 @@ namespace ReviewMovie
             ComboboxModel selectedVoiceSource = (ComboboxModel)cboSiteNguon.SelectedItem;
 
             // Nếu chọn T2Psoft, lấy key từ server
-            if (selectedVoiceSource?.Value == "T2Psoft" &&
+            if (selectedVoiceSource?.Value == ListVoiceSite.T2Psoft &&
                 _voiceSourceInfo != null &&
                 !string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey))
             {
@@ -1658,7 +1658,7 @@ namespace ReviewMovie
             // Xác định AppID: nếu chọn T2Psoft thì dùng voiceKey từ server, ngược lại dùng txtAppID.Text
             string appIdToUse = _voiceSourceInfo.VoiceKey;
             ComboboxModel selectedVoiceSource = (ComboboxModel)cboSiteNguon.SelectedItem;
-            if (selectedVoiceSource?.Value == "T2Psoft" &&
+            if (selectedVoiceSource?.Value == ListVoiceSite.T2Psoft &&
                 _voiceSourceInfo != null &&
                 !string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey))
             {
@@ -3766,7 +3766,7 @@ namespace ReviewMovie
                     // Nếu là Premium, luôn chọn T2PSOFT
                     if (_currentPackageType == PackageType.Premium)
                     {
-                        int t2psoftIndex = voiceSources.FindIndex(x => x.Value == "T2Psoft");
+                        int t2psoftIndex = voiceSources.FindIndex(x => x.Value == ListVoiceSite.T2Psoft);
                         if (t2psoftIndex >= 0)
                         {
                             selectedIndex = t2psoftIndex;
@@ -3846,7 +3846,7 @@ namespace ReviewMovie
 
                     // Lấy key: nếu đang chọn T2PSOFT thì từ server, ngược lại từ textbox
                     ComboboxModel selectedVoiceSource = (ComboboxModel)cboSiteNguon.SelectedItem;
-                    string apiKey = selectedVoiceSource?.Value == "T2Psoft" ? _voiceSourceInfo.VoiceKey : txtAppID.Text;
+                    string apiKey = selectedVoiceSource?.Value == ListVoiceSite.T2Psoft ? _voiceSourceInfo.VoiceKey : txtAppID.Text;
                     GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(apiKey);
                     var googleVoices = serviceGoogleTTS.GetVoicesByLanguage(languageCode);
                     var limitedGoogleVoices = LimitVoicesByPackage(googleVoices);
@@ -4478,7 +4478,7 @@ namespace ReviewMovie
             {
                 // Tìm index của T2Psoft trong combobox
                 var voiceSources = GetVoiceSourcesByPackageType();
-                int t2psoftIndex = voiceSources.FindIndex(x => x.Value == "T2Psoft");
+                int t2psoftIndex = voiceSources.FindIndex(x => x.Value == ListVoiceSite.T2Psoft);
 
                 if (t2psoftIndex >= 0 && cboSiteNguon.SelectedIndex != t2psoftIndex)
                 {
@@ -4498,7 +4498,7 @@ namespace ReviewMovie
 
             switch (selectedItem.Value)
             {
-                case "T2Psoft":
+                case ListVoiceSite.T2Psoft:
                     // Xử lý T2Psoft - sử dụng voiceType từ server
                     await HandleT2PsoftVoiceSource(checkSaveST);
                     return; // Return sớm để không chạy logic cũ
