@@ -639,8 +639,8 @@ namespace ReviewMovie
                 return allLanguages;
             }
 
-            // Nếu là Basic, check unlimit
-            if (_currentPackageType == PackageType.Basic)
+            // Nếu là Basic hoặc Trial, check unlimit
+            if (_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Trial)
             {
                 // Nếu unlimit = true, hiển thị tất cả ngôn ngữ
                 if (_voiceSourceInfo != null && _voiceSourceInfo.Unlimit)
@@ -656,16 +656,6 @@ namespace ReviewMovie
                     var allowedCodes = _voiceSourceInfo.AllowedLanguages.Select(x => x.LanguageCode).ToList();
                     return allLanguages.Where(lang => IsLanguageAllowedByCode(lang.Value, allowedCodes)).ToList();
                 }
-            }
-
-            // Nếu là Trial, filter theo allowedLanguages
-            if (_currentPackageType == PackageType.Trial &&
-                _voiceSourceInfo != null &&
-                _voiceSourceInfo.AllowedLanguages != null &&
-                _voiceSourceInfo.AllowedLanguages.Count > 0)
-            {
-                var allowedCodes = _voiceSourceInfo.AllowedLanguages.Select(x => x.LanguageCode).ToList();
-                return allLanguages.Where(lang => IsLanguageAllowedByCode(lang.Value, allowedCodes)).ToList();
             }
 
             // Default: trả về tất cả
@@ -715,6 +705,7 @@ namespace ReviewMovie
 
         /// <summary>
         /// Giới hạn số lượng voices theo package type
+        /// Chỉ phụ thuộc vào allowedTotalVoices, không phụ thuộc vào unlimit
         /// </summary>
         private List<ComboboxModel> LimitVoicesByPackage(List<ComboboxModel> allVoices)
         {
@@ -727,24 +718,8 @@ namespace ReviewMovie
                 return allVoices;
             }
 
-            // Nếu là Basic, check unlimit
-            if (_currentPackageType == PackageType.Basic)
-            {
-                // Nếu unlimit = true, hiển thị tất cả
-                if (_voiceSourceInfo != null && _voiceSourceInfo.Unlimit)
-                {
-                    return allVoices;
-                }
-
-                // Nếu unlimit = false, giới hạn theo allowedTotalVoices
-                if (_voiceSourceInfo != null && _voiceSourceInfo.AllowedTotalVoices > 0)
-                {
-                    return allVoices.Take(_voiceSourceInfo.AllowedTotalVoices).ToList();
-                }
-            }
-
-            // Nếu là Trial, giới hạn theo allowedTotalVoices
-            if (_currentPackageType == PackageType.Trial &&
+            // Nếu là Basic hoặc Trial, giới hạn theo allowedTotalVoices
+            if ((_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Trial) &&
                 _voiceSourceInfo != null &&
                 _voiceSourceInfo.AllowedTotalVoices > 0)
             {
@@ -757,6 +732,7 @@ namespace ReviewMovie
 
         /// <summary>
         /// Giới hạn số lượng voices cho Vbee theo package type
+        /// Chỉ phụ thuộc vào allowedTotalVoices, không phụ thuộc vào unlimit
         /// </summary>
         private List<ComboboxVbeeModel> LimitVbeeVoicesByPackage(List<ComboboxVbeeModel> allVoices)
         {
@@ -769,24 +745,8 @@ namespace ReviewMovie
                 return allVoices;
             }
 
-            // Nếu là Basic, check unlimit
-            if (_currentPackageType == PackageType.Basic)
-            {
-                // Nếu unlimit = true, hiển thị tất cả
-                if (_voiceSourceInfo != null && _voiceSourceInfo.Unlimit)
-                {
-                    return allVoices;
-                }
-
-                // Nếu unlimit = false, giới hạn theo allowedTotalVoices
-                if (_voiceSourceInfo != null && _voiceSourceInfo.AllowedTotalVoices > 0)
-                {
-                    return allVoices.Take(_voiceSourceInfo.AllowedTotalVoices).ToList();
-                }
-            }
-
-            // Nếu là Trial, giới hạn theo allowedTotalVoices
-            if (_currentPackageType == PackageType.Trial &&
+            // Nếu là Basic hoặc Trial, giới hạn theo allowedTotalVoices
+            if ((_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Trial) &&
                 _voiceSourceInfo != null &&
                 _voiceSourceInfo.AllowedTotalVoices > 0)
             {
