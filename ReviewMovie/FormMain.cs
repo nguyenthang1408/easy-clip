@@ -1387,9 +1387,13 @@ namespace ReviewMovie
                            , EffectConfig.EffectConfigTemplate().ToList()
                            , EffectConfig.EffectConfigTemplate().ToList().FindIndex(x => x.Value.Equals(EffectConfigName.CUSTOM_Val)));
 
-            // Ẩn AppID và Token khi load app lần đầu
-            lblapi.Visible = false;
-            txtAppID.Visible = false;
+            // Hiển thị API KEY khi load app lần đầu
+            lblapi.Visible = true;
+            lblapi.Text = "API KEY";
+            txtAppID.Visible = true;
+            txtAppID.Text = _apikey;
+            txtAppID.Enabled = false;
+            txtAppID.Size = new Size(247, 90);
             lblToken.Visible = false;
             txtToken.Visible = false;
 
