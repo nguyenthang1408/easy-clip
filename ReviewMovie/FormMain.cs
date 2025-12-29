@@ -457,7 +457,7 @@ namespace ReviewMovie
             // Luôn có T2Psoft.com cho tất cả các gói
             voiceSources.Add(new ComboboxModel
             {
-                Display = "T2Psoft.com",
+                Display = "https://t2psoft.com/",
                 Value = "T2Psoft"
             });
 
