@@ -160,7 +160,7 @@ namespace ReviewMovie
         #endregion
 
         #region Main_Init
-        public FormMain(string appcode, string apikey)
+        public FormMain(string appcode, string apikey, LibCommon.Common.Model.VersionResponse loginResponse = null)
         {
             InitializeComponent();
             this.toolTipPL = new ToolTip();
@@ -168,6 +168,19 @@ namespace ReviewMovie
 
             _appcode = appcode;
             _apikey = apikey;
+
+            // Nếu có loginResponse từ đăng nhập, convert thành GetVersionResponse và lưu lại
+            if (loginResponse != null && loginResponse.IsSuccess)
+            {
+                _packageInfo = new GetVersionResponse
+                {
+                    IsSuccess = loginResponse.IsSuccess,
+                    Email = loginResponse.Email,
+                    PackageId = loginResponse.PackageId,
+                    PackageType = loginResponse.PackageType,
+                    ExpiryDate = loginResponse.ExpiryDate
+                };
+            }
 
             // Initialize video services
             _videoValidationService = new VideoValidationService(VideoMergeConfig.MAX_PARALLEL_VALIDATION_THREADS);
@@ -317,13 +330,17 @@ namespace ReviewMovie
         }
 
         /// <summary>
-        /// Load thông tin gói từ server
+        /// Load thông tin gói từ server (hoặc dùng dữ liệu từ login nếu đã có)
         /// </summary>
         private async Task LoadPackageInfoAsync()
         {
             try
             {
-                _packageInfo = await _packageService.GetVersionAsync(_appcode, "EasyClip");
+                // Nếu chưa có _packageInfo (không truyền từ login), gọi API
+                if (_packageInfo == null)
+                {
+                    _packageInfo = await _packageService.GetVersionAsync(_appcode, "EasyClip");
+                }
 
                 if (_packageInfo != null && _packageInfo.IsSuccess)
                 {

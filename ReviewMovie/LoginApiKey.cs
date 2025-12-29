@@ -104,9 +104,9 @@ namespace ReviewMovie
                     // Đăng nhập thành công
                     MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Mở form chính và đóng form đăng nhập
+                    // Mở form chính và đóng form đăng nhập, truyền response để tránh gọi API lần 2
                     this.Hide();
-                    FormMain mainForm = new FormMain(txAppCodeShow.Text, txInsertApiKey.Text);
+                    FormMain mainForm = new FormMain(txAppCodeShow.Text, txInsertApiKey.Text, response);
 
                     mainForm.ShowDialog();
                     // Sau khi đóng form chính, thoát ứng dụng
