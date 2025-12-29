@@ -160,7 +160,7 @@ namespace ReviewMovie
         #endregion
 
         #region Main_Init
-        public FormMain(string appcode, string apikey, LibCommon.Common.Model.VersionResponse loginResponse = null)
+        public FormMain(string appcode, string apikey, VersionResponse loginResponse = null)
         {
             InitializeComponent();
             this.toolTipPL = new ToolTip();
