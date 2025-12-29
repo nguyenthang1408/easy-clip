@@ -323,7 +323,8 @@ namespace ReviewMovie
             await LoadVoiceSourceInfoAsync();
 
             DisplayItemDefault();
-            loadApiKey();
+            // Không gọi loadApiKey() ở đây để giữ nguyên API KEY từ đăng nhập
+            // Keys sẽ được load khi user chọn voice source khác
 
             // Clear flag sau khi init xong
             _isInitializing = false;
