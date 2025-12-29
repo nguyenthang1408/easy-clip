@@ -689,36 +689,68 @@ namespace ReviewMovie
             if (string.IsNullOrEmpty(languageValue) || allowedCodes == null || allowedCodes.Count == 0)
                 return false;
 
-            // Check direct language code match (vi-VN, en-US, etc.)
-            if (allowedCodes.Any(code => languageValue.Contains(code)))
-                return true;
-
-            // Check ElevenLabs language name match
-            // Map language codes to ElevenLabs language names
+            // Kiểm tra từng code trong allowedCodes
             foreach (var code in allowedCodes)
             {
-                switch (code)
-                {
-                    case "vi-VN":
-                        if (languageValue.Contains("Vietnamese"))
-                            return true;
-                        break;
-                    case "en-US":
-                        if (languageValue.Contains("American") || languageValue.Contains("English*American"))
-                            return true;
-                        break;
-                    case "en-GB":
-                        if (languageValue.Contains("British") || languageValue.Contains("English*British"))
-                            return true;
-                        break;
-                    case "ja-JP":
-                        if (languageValue.Contains("Japanese"))
-                            return true;
-                        break;
-                }
+                // Check 1: Kiểm tra languageValue có chứa code không
+                // Ví dụ: code = "vi" -> match với "vi-VN", "vi-SG", v.v.
+                if (languageValue.ToLower().Contains(code.ToLower()))
+                    return true;
+
+                // Check 2: Kiểm tra language name cho các voice source như ElevenLabs
+                // Map code ngắn sang tên ngôn ngữ đầy đủ
+                string languageName = GetLanguageNameFromCode(code);
+                if (!string.IsNullOrEmpty(languageName) && languageValue.Contains(languageName))
+                    return true;
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Map language code ngắn (vi, en, ja) sang tên ngôn ngữ đầy đủ
+        /// </summary>
+        private string GetLanguageNameFromCode(string code)
+        {
+            if (string.IsNullOrEmpty(code))
+                return null;
+
+            // Loại bỏ phần region nếu có (vi-VN -> vi, en-US -> en)
+            string baseCode = code.Split('-')[0].ToLower();
+
+            switch (baseCode)
+            {
+                case "vi":
+                    return "Vietnamese";
+                case "en":
+                    return "English";
+                case "ja":
+                    return "Japanese";
+                case "zh":
+                    return "Chinese";
+                case "ko":
+                    return "Korean";
+                case "fr":
+                    return "French";
+                case "de":
+                    return "German";
+                case "es":
+                    return "Spanish";
+                case "pt":
+                    return "Portuguese";
+                case "it":
+                    return "Italian";
+                case "ru":
+                    return "Russian";
+                case "ar":
+                    return "Arabic";
+                case "hi":
+                    return "Hindi";
+                case "th":
+                    return "Thai";
+                default:
+                    return null;
+            }
         }
 
         /// <summary>
