@@ -4927,6 +4927,12 @@ namespace ReviewMovie
 
         private void txtAppID_TextChanged(object sender, EventArgs e)
         {
+            // Check if _voiceSourceInfo is null before accessing
+            if (_voiceSourceInfo == null || string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey))
+            {
+                return;
+            }
+
             // Lưu vị trí con trỏ trước khi thay đổi
             int cursorPosition = txtAppID.SelectionStart;
 
