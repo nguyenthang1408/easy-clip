@@ -1387,6 +1387,12 @@ namespace ReviewMovie
                            , EffectConfig.EffectConfigTemplate().ToList()
                            , EffectConfig.EffectConfigTemplate().ToList().FindIndex(x => x.Value.Equals(EffectConfigName.CUSTOM_Val)));
 
+            // Ẩn AppID và Token khi load app lần đầu
+            lblapi.Visible = false;
+            txtAppID.Visible = false;
+            lblToken.Visible = false;
+            txtToken.Visible = false;
+
             SetDefaultEffectControls();
         }
 
