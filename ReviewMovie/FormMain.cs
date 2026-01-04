@@ -188,7 +188,7 @@ namespace ReviewMovie
             _gpuDetectionService = new GpuDetectionService();
 
             // Initialize package service
-            _packageService = new PackageService();
+            _packageService = new PackageService(_apikey);
 
             // Fix cứng màn hình
             this.MaximizeBox = false;

@@ -14,18 +14,17 @@ namespace LibCommon.Lib.Services
     public class PackageService
     {
         private const string BASE_URL = "https://t2psoft.com/api/v1";
-        private const string API_KEY = "5b584a209e954965a0406a4b233a1513";
         private const string API_VERSION = "1.0";
 
         private readonly HttpClient _httpClient;
 
-        public PackageService()
+        public PackageService(string apiKey)
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(BASE_URL);
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
             _httpClient.DefaultRequestHeaders.Add("X-Version", API_VERSION);
-            _httpClient.DefaultRequestHeaders.Add("X-API-KEY", API_KEY);
+            _httpClient.DefaultRequestHeaders.Add("X-API-KEY", apiKey);
         }
 
         /// <summary>
