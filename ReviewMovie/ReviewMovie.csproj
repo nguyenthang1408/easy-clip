@@ -107,7 +107,9 @@
     <Compile Include="Base\CustomTextBox.Designer.cs">
       <DependentUpon>CustomTextBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Base\RoundedPanel.cs" />
+    <Compile Include="Base\RoundedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ModernUI\ModernShellControl.cs" />
     <Compile Include="Base\Enum.cs" />
     <Compile Include="Base\RVFuncion.cs" />

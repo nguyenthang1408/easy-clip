@@ -471,7 +471,7 @@ namespace ReviewMovie
             dgv.DefaultCellStyle.SelectionForeColor = Theme.Text;
             dgv.DefaultCellStyle.Font = new Font("Segoe UI", 8.5f, FontStyle.Regular);
 
-            dgv.AlternatingRowsDefaultCellStyle.BackColor = Theme.Surface;
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Theme.Card;
             dgv.AlternatingRowsDefaultCellStyle.ForeColor = Theme.Text;
             dgv.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.FromArgb(219, 234, 254);
             dgv.AlternatingRowsDefaultCellStyle.SelectionForeColor = Theme.Text;
