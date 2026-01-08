@@ -102,53 +102,20 @@
     </Border>
   </Grid>
 
-  <!-- Right sidebar -->
-  <Border Grid.Column="1" Background="White" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="14" Margin="0,14,14,14" Padding="14">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-      <StackPanel>
-        <DockPanel>
-          <TextBlock Text="Settings" FontWeight="Bold" Foreground="#111827" />
-        </DockPanel>
+  <!-- Right sidebar (host WinForms settings to keep all items + logic) -->
+  <Border Grid.Column="1" Background="White" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="14" Margin="0,14,14,14" Padding="12">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
 
-        <TextBlock Text="PROJECT" Foreground="#F97316" FontWeight="SemiBold" Margin="0,16,0,6"/>
-        <ComboBox x:Name="ProjectCombo" Height="32" />
-        <Button x:Name="BtnCreateProject" Content="Create" Margin="0,8,0,0" Padding="10,6" Background="White" BorderBrush="#E5E7EB"/>
+      <TextBlock Grid.Row="0" Text="Settings" FontWeight="Bold" Foreground="#111827" Margin="4,2,0,10"/>
 
-        <TextBlock Text="VOICE API" Foreground="#6B7280" FontWeight="SemiBold" Margin="0,16,0,6"/>
-        <ComboBox x:Name="VoiceSourceCombo" Height="32" />
-
-        <TextBlock Text="OUTPUT QUALITY" Foreground="#F97316" FontWeight="SemiBold" Margin="0,16,0,6"/>
-        <StackPanel Orientation="Horizontal">
-          <StackPanel Width="160">
-            <TextBlock Text="Zoom %" Foreground="#6B7280" FontSize="11"/>
-            <TextBox x:Name="ZoomBox" Height="32" Background="White" BorderBrush="#E5E7EB" Padding="10,6"/>
-          </StackPanel>
-          <StackPanel Width="160" Margin="12,0,0,0">
-            <TextBlock Text="FPS" Foreground="#6B7280" FontSize="11"/>
-            <TextBox x:Name="FpsBox" Height="32" Background="White" BorderBrush="#E5E7EB" Padding="10,6"/>
-          </StackPanel>
-        </StackPanel>
-
-        <TextBlock Text="Quality Preset" Foreground="#6B7280" FontSize="11" Margin="0,10,0,4"/>
-        <ComboBox x:Name="QualityCombo" Height="32" />
-
-        <TextBlock Text="LANGUAGE &amp; VOICE" Foreground="#6B7280" FontWeight="SemiBold" Margin="0,16,0,6"/>
-        <ComboBox x:Name="LanguageCombo" Height="32" />
-        <ComboBox x:Name="VoiceCombo" Height="32" Margin="0,8,0,0"/>
-
-        <Border Background="#F9FAFB" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="12" Padding="12" Margin="0,16,0,0">
-          <StackPanel>
-            <TextBlock Text="Use CPU / GPU" Foreground="#6B7280" FontSize="11"/>
-            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-              <RadioButton x:Name="RbCpu" Content="Use CPU" IsChecked="True" Margin="0,0,14,0"/>
-              <RadioButton x:Name="RbGpu" Content="Use GPU" />
-            </StackPanel>
-          </StackPanel>
-        </Border>
-
-        <Button x:Name="BtnMerge" Content="MERGE SECTIONS" Height="44" Margin="0,14,0,0" Background="#F97316" Foreground="White" BorderThickness="0" FontWeight="SemiBold"/>
-      </StackPanel>
-    </ScrollViewer>
+      <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <wf:WindowsFormsHost x:Name="SettingsHost" />
+      </ScrollViewer>
+    </Grid>
   </Border>
 </Grid>
 

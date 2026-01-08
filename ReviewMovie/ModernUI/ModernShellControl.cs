@@ -20,29 +20,17 @@ namespace ReviewMovie.ModernUI
         public TextBox TextInputBox { get; }
         public TextBox SearchBox { get; }
 
+        public Button BtnRecord { get; }
         public Button BtnNewLine { get; }
         public Button BtnAutoSubtitle { get; }
         public Button BtnCancel { get; }
         public Button BtnConvert { get; }
         public Button BtnSave { get; }
         public Button BtnRender { get; }
-        public Button BtnMerge { get; }
-        public Button BtnCreateProject { get; }
         public Button BtnClearText { get; }
 
-        public ComboBox ProjectCombo { get; }
-        public ComboBox VoiceSourceCombo { get; }
-        public ComboBox QualityCombo { get; }
-        public ComboBox LanguageCombo { get; }
-        public ComboBox VoiceCombo { get; }
-
-        public TextBox ZoomBox { get; }
-        public TextBox FpsBox { get; }
-
-        public RadioButton RbCpu { get; }
-        public RadioButton RbGpu { get; }
-
         public WindowsFormsHost MainGridHost { get; }
+        public WindowsFormsHost SettingsHost { get; }
 
         public ModernShellControl()
         {
@@ -52,29 +40,17 @@ namespace ReviewMovie.ModernUI
             TextInputBox = (TextBox)Root.FindName("TextInputBox");
             SearchBox = (TextBox)Root.FindName("SearchBox");
 
+            BtnRecord = (Button)Root.FindName("BtnRecord");
             BtnNewLine = (Button)Root.FindName("BtnNewLine");
             BtnAutoSubtitle = (Button)Root.FindName("BtnAutoSubtitle");
             BtnCancel = (Button)Root.FindName("BtnCancel");
             BtnConvert = (Button)Root.FindName("BtnConvert");
             BtnSave = (Button)Root.FindName("BtnSave");
             BtnRender = (Button)Root.FindName("BtnRender");
-            BtnMerge = (Button)Root.FindName("BtnMerge");
-            BtnCreateProject = (Button)Root.FindName("BtnCreateProject");
             BtnClearText = (Button)Root.FindName("BtnClearText");
 
-            ProjectCombo = (ComboBox)Root.FindName("ProjectCombo");
-            VoiceSourceCombo = (ComboBox)Root.FindName("VoiceSourceCombo");
-            QualityCombo = (ComboBox)Root.FindName("QualityCombo");
-            LanguageCombo = (ComboBox)Root.FindName("LanguageCombo");
-            VoiceCombo = (ComboBox)Root.FindName("VoiceCombo");
-
-            ZoomBox = (TextBox)Root.FindName("ZoomBox");
-            FpsBox = (TextBox)Root.FindName("FpsBox");
-
-            RbCpu = (RadioButton)Root.FindName("RbCpu");
-            RbGpu = (RadioButton)Root.FindName("RbGpu");
-
             MainGridHost = (WindowsFormsHost)Root.FindName("MainGridHost");
+            SettingsHost = (WindowsFormsHost)Root.FindName("SettingsHost");
         }
 
         private static object LoadEmbeddedXamlBySuffix(string suffix)
