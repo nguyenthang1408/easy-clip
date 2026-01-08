@@ -135,10 +135,10 @@ namespace ReviewMovie
         {
             InitializeComponent();
             this.toolTipPL = new ToolTip();
-            this.Text = "EasyClip || " + "TPMEDIA";
+            this.Text = "EasyClip Studio | TPMEDIA";
 
-            // UI-only: apply modern dark theme (không đổi logic)
-            ApplyModernDarkTheme();
+            // UI-only: apply modern light theme (không đổi logic)
+            ApplyModernLightTheme();
 
             _appcode = appcode;
             _apikey = apikey;
@@ -165,17 +165,19 @@ namespace ReviewMovie
         #region UI_Theme (UI only)
         private static class Theme
         {
-            public static readonly Color Bg = Color.FromArgb(10, 14, 25);           // app background
-            public static readonly Color Surface = Color.FromArgb(15, 23, 42);      // panels/cards
-            public static readonly Color Surface2 = Color.FromArgb(17, 24, 39);     // headers/toolbars
-            public static readonly Color Border = Color.FromArgb(30, 41, 59);       // separators
-            public static readonly Color Text = Color.FromArgb(226, 232, 240);      // primary text
-            public static readonly Color Muted = Color.FromArgb(148, 163, 184);     // secondary text
-            public static readonly Color Accent = Color.FromArgb(99, 102, 241);     // indigo
-            public static readonly Color AccentHover = Color.FromArgb(129, 140, 248);
+            // Light modern palette (match screenshot)
+            public static readonly Color Bg = Color.White;                           // app background
+            public static readonly Color Surface = Color.FromArgb(248, 250, 252);    // cards/sections
+            public static readonly Color Surface2 = Color.FromArgb(241, 245, 249);   // toolbars/headers background
+            public static readonly Color Border = Color.FromArgb(226, 232, 240);     // separators
+            public static readonly Color Text = Color.FromArgb(15, 23, 42);          // primary text
+            public static readonly Color Muted = Color.FromArgb(100, 116, 139);      // secondary text
+            public static readonly Color Accent = Color.FromArgb(37, 99, 235);       // blue
+            public static readonly Color AccentHover = Color.FromArgb(29, 78, 216);
+            public static readonly Color Orange = Color.FromArgb(249, 115, 22);
         }
 
-        private void ApplyModernDarkTheme()
+        private void ApplyModernLightTheme()
         {
             SuspendLayout();
 
@@ -188,38 +190,38 @@ namespace ReviewMovie
             scSetting.BorderStyle = BorderStyle.None;
 
             // Major surfaces
-            grboxSetting.BackColor = Theme.Surface;
+            grboxSetting.BackColor = Theme.Bg;
             grboxSetting.ForeColor = Theme.Text;
 
-            grViewHeader.BackColor = Theme.Surface;
+            grViewHeader.BackColor = Theme.Bg;
             grViewHeader.ForeColor = Theme.Text;
 
-            tsMenuView.BackColor = Theme.Surface2;
+            tsMenuView.BackColor = Theme.Bg;
             tsMenuView.ForeColor = Theme.Text;
             tsMenuView.GripStyle = ToolStripGripStyle.Hidden;
-            tsMenuView.Renderer = new DarkToolStripRenderer();
+            tsMenuView.Renderer = new LightToolStripRenderer();
 
-            ctMenu.BackColor = Theme.Surface2;
+            ctMenu.BackColor = Theme.Bg;
             ctMenu.ForeColor = Theme.Text;
-            ctMenu.Renderer = new DarkToolStripRenderer();
+            ctMenu.Renderer = new LightToolStripRenderer();
 
             // Header labels
-            lbHeaderText.BackColor = Theme.Surface2;
-            lbHeaderText.ForeColor = Theme.Text;
+            lbHeaderText.BackColor = Theme.Accent;
+            lbHeaderText.ForeColor = Color.White;
             lbHeaderInputMedia.BackColor = Theme.Surface2;
             lbHeaderInputMedia.ForeColor = Theme.Text;
 
             // Text areas
-            txtTextInput.BackColor = Theme.Surface;
+            txtTextInput.BackColor = Theme.Bg;
             txtTextInput.ForeColor = Theme.Text;
             txtTextInput.BorderStyle = BorderStyle.FixedSingle;
 
-            txtImPortMedia.BackColor = Theme.Surface;
+            txtImPortMedia.BackColor = Theme.Bg;
             txtImPortMedia.ForeColor = Theme.Muted;
             txtImPortMedia.BorderStyle = BorderStyle.FixedSingle;
 
             // Buttons
-            StyleButtonPrimary(btnAddAll);
+            StyleButtonExport(btnAddAll);
             StyleButtonSecondary(btnConvertAudio);
             StyleButtonSecondary(btnSaveAudio);
             StyleButtonSecondary(btnRenderVideoPart);
@@ -287,7 +289,7 @@ namespace ReviewMovie
             foreach (ToolStripItem item in ctMenu.Items)
             {
                 item.ForeColor = Theme.Text;
-                item.BackColor = Theme.Surface2;
+                item.BackColor = Theme.Bg;
             }
 
             ApplyThemeRecursive(this);
@@ -334,7 +336,7 @@ namespace ReviewMovie
 
         private static void StyleGroupBox(GroupBox gb)
         {
-            gb.BackColor = Theme.Surface;
+            gb.BackColor = Theme.Bg;
             gb.ForeColor = Theme.Text;
         }
 
@@ -345,37 +347,37 @@ namespace ReviewMovie
 
         private static void StyleTextBox(TextBox tb)
         {
-            tb.BackColor = Theme.Surface;
+            tb.BackColor = Theme.Bg;
             tb.ForeColor = Theme.Text;
             tb.BorderStyle = BorderStyle.FixedSingle;
         }
 
         private static void StyleComboBox(ComboBox cb)
         {
-            cb.BackColor = Theme.Surface;
+            cb.BackColor = Theme.Bg;
             cb.ForeColor = Theme.Text;
             cb.FlatStyle = FlatStyle.Flat;
         }
 
         private static void StyleNumeric(NumericUpDown nb)
         {
-            nb.BackColor = Theme.Surface;
+            nb.BackColor = Theme.Bg;
             nb.ForeColor = Theme.Text;
         }
 
         private static void StyleButtonSecondary(Button btn)
         {
             btn.FlatStyle = FlatStyle.Flat;
-            btn.BackColor = Theme.Surface2;
+            btn.BackColor = Theme.Bg;
             btn.ForeColor = Theme.Text;
             btn.FlatAppearance.BorderColor = Theme.Border;
             btn.FlatAppearance.BorderSize = 1;
         }
 
-        private static void StyleButtonPrimary(Button btn)
+        private static void StyleButtonExport(Button btn)
         {
             btn.FlatStyle = FlatStyle.Flat;
-            btn.BackColor = Theme.Accent;
+            btn.BackColor = Theme.Orange;
             btn.ForeColor = Color.White;
             btn.FlatAppearance.BorderSize = 0;
         }
@@ -389,46 +391,46 @@ namespace ReviewMovie
 
             dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dgv.ColumnHeadersDefaultCellStyle.BackColor = Theme.Surface2;
-            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Theme.Text;
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Theme.Muted;
             dgv.ColumnHeadersDefaultCellStyle.SelectionBackColor = Theme.Surface2;
             dgv.ColumnHeadersDefaultCellStyle.SelectionForeColor = Theme.Text;
             dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 8.5f, FontStyle.Bold);
 
             dgv.DefaultCellStyle.BackColor = Theme.Bg;
             dgv.DefaultCellStyle.ForeColor = Theme.Text;
-            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(37, 51, 78);
+            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(219, 234, 254); // light blue
             dgv.DefaultCellStyle.SelectionForeColor = Theme.Text;
             dgv.DefaultCellStyle.Font = new Font("Segoe UI", 8.5f, FontStyle.Regular);
 
-            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(12, 18, 34);
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Theme.Surface;
             dgv.AlternatingRowsDefaultCellStyle.ForeColor = Theme.Text;
-            dgv.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.FromArgb(37, 51, 78);
+            dgv.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.FromArgb(219, 234, 254);
             dgv.AlternatingRowsDefaultCellStyle.SelectionForeColor = Theme.Text;
 
             dgv.RowHeadersVisible = false;
             dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
         }
 
-        private sealed class DarkToolStripRenderer : ToolStripProfessionalRenderer
+        private sealed class LightToolStripRenderer : ToolStripProfessionalRenderer
         {
-            public DarkToolStripRenderer() : base(new DarkColorTable()) { }
+            public LightToolStripRenderer() : base(new LightColorTable()) { }
         }
 
-        private sealed class DarkColorTable : ProfessionalColorTable
+        private sealed class LightColorTable : ProfessionalColorTable
         {
-            public override Color ToolStripDropDownBackground => Theme.Surface2;
-            public override Color ImageMarginGradientBegin => Theme.Surface2;
-            public override Color ImageMarginGradientMiddle => Theme.Surface2;
-            public override Color ImageMarginGradientEnd => Theme.Surface2;
+            public override Color ToolStripDropDownBackground => Theme.Bg;
+            public override Color ImageMarginGradientBegin => Theme.Bg;
+            public override Color ImageMarginGradientMiddle => Theme.Bg;
+            public override Color ImageMarginGradientEnd => Theme.Bg;
             public override Color MenuBorder => Theme.Border;
             public override Color SeparatorDark => Theme.Border;
             public override Color SeparatorLight => Theme.Border;
-            public override Color MenuItemSelected => Color.FromArgb(37, 51, 78);
+            public override Color MenuItemSelected => Theme.Surface2;
             public override Color MenuItemBorder => Theme.Border;
             public override Color ToolStripBorder => Theme.Border;
-            public override Color ToolStripGradientBegin => Theme.Surface2;
-            public override Color ToolStripGradientMiddle => Theme.Surface2;
-            public override Color ToolStripGradientEnd => Theme.Surface2;
+            public override Color ToolStripGradientBegin => Theme.Bg;
+            public override Color ToolStripGradientMiddle => Theme.Bg;
+            public override Color ToolStripGradientEnd => Theme.Bg;
         }
         #endregion
 
@@ -3714,9 +3716,9 @@ namespace ReviewMovie
                 }
             }
 
-            // UI-only: dark dropdown styling
+            // UI-only: light dropdown styling
             bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
-            using (var bg = new SolidBrush(selected ? Color.FromArgb(37, 51, 78) : Theme.Surface2))
+            using (var bg = new SolidBrush(selected ? Theme.Surface2 : Theme.Bg))
             using (var fg = new SolidBrush(Theme.Text))
             {
                 e.Graphics.FillRectangle(bg, e.Bounds);
