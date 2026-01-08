@@ -34,6 +34,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ReviewMovie.Base;
 
 namespace ReviewMovie
 {
@@ -166,12 +167,12 @@ namespace ReviewMovie
         private static class Theme
         {
             // Light modern palette (match screenshot)
-            public static readonly Color Bg = Color.White;                           // app background
-            public static readonly Color Surface = Color.FromArgb(248, 250, 252);    // cards/sections
-            public static readonly Color Surface2 = Color.FromArgb(241, 245, 249);   // toolbars/headers background
-            public static readonly Color Border = Color.FromArgb(226, 232, 240);     // separators
+            public static readonly Color Bg = Color.FromArgb(243, 244, 246);         // #F3F4F6 app background
+            public static readonly Color Card = Color.White;                          // cards
+            public static readonly Color Surface2 = Color.FromArgb(249, 250, 251);    // #F9FAFB toolbars/headers background
+            public static readonly Color Border = Color.FromArgb(229, 231, 235);      // #E5E7EB separators
             public static readonly Color Text = Color.FromArgb(15, 23, 42);          // primary text
-            public static readonly Color Muted = Color.FromArgb(100, 116, 139);      // secondary text
+            public static readonly Color Muted = Color.FromArgb(107, 114, 128);      // #6B7280 secondary text
             public static readonly Color Accent = Color.FromArgb(37, 99, 235);       // blue
             public static readonly Color AccentHover = Color.FromArgb(29, 78, 216);
             public static readonly Color Orange = Color.FromArgb(249, 115, 22);
@@ -188,9 +189,22 @@ namespace ReviewMovie
             scMain.BorderStyle = BorderStyle.None;
             scView.BorderStyle = BorderStyle.None;
             scSetting.BorderStyle = BorderStyle.None;
+            try
+            {
+                scMain.Panel1.BackColor = Theme.Bg;
+                scMain.Panel2.BackColor = Theme.Bg;
+                scView.Panel1.BackColor = Theme.Bg;
+                scView.Panel2.BackColor = Theme.Bg;
+                scSetting.Panel1.BackColor = Theme.Bg;
+                scSetting.Panel2.BackColor = Theme.Bg;
+            }
+            catch
+            {
+                // ignore: designer may not have all panels initialized in some contexts
+            }
 
             // Major surfaces
-            grboxSetting.BackColor = Theme.Bg;
+            grboxSetting.BackColor = Theme.Card;
             grboxSetting.ForeColor = Theme.Text;
 
             grViewHeader.BackColor = Theme.Bg;
@@ -212,11 +226,11 @@ namespace ReviewMovie
             lbHeaderInputMedia.ForeColor = Theme.Text;
 
             // Text areas
-            txtTextInput.BackColor = Theme.Bg;
+            txtTextInput.BackColor = Theme.Card;
             txtTextInput.ForeColor = Theme.Text;
             txtTextInput.BorderStyle = BorderStyle.FixedSingle;
 
-            txtImPortMedia.BackColor = Theme.Bg;
+            txtImPortMedia.BackColor = Theme.Card;
             txtImPortMedia.ForeColor = Theme.Muted;
             txtImPortMedia.BorderStyle = BorderStyle.FixedSingle;
 
@@ -272,7 +286,7 @@ namespace ReviewMovie
             StyleDataGridView(dgvMainView);
 
             // Toolstrip search box
-            txtTim.BackColor = Theme.Surface;
+            txtTim.BackColor = Theme.Surface2;
             txtTim.ForeColor = Theme.Text;
             txtTim.BorderStyle = BorderStyle.FixedSingle;
             lbTitle.ForeColor = Theme.Muted;
@@ -294,7 +308,59 @@ namespace ReviewMovie
 
             ApplyThemeRecursive(this);
 
+            // Rounded textbox wrappers (UI-only)
+            WrapTextBoxRounded(txtTextInput, radius: 12, padding: new Padding(12, 10, 12, 10));
+            WrapTextBoxRounded(txtImPortMedia, radius: 12, padding: new Padding(12, 10, 12, 10));
+            WrapTextBoxRounded(txtAppID, radius: 12, padding: new Padding(10, 8, 10, 8));
+            WrapTextBoxRounded(txtToken, radius: 12, padding: new Padding(10, 8, 10, 8));
+
             ResumeLayout(true);
+        }
+
+        private void WrapTextBoxRounded(TextBox tb, int radius, Padding padding)
+        {
+            if (tb == null || tb.IsDisposed)
+                return;
+
+            // Prevent double-wrap
+            if (tb.Parent is RoundedPanel)
+                return;
+
+            var parent = tb.Parent;
+            if (parent == null)
+                return;
+
+            int childIndex = parent.Controls.GetChildIndex(tb);
+            var dock = tb.Dock;
+
+            var host = new RoundedPanel
+            {
+                BorderRadius = radius,
+                BorderThickness = 1,
+                BorderColor = Theme.Border,
+                FillColor = Theme.Card,
+                Location = tb.Location,
+                Size = tb.Size,
+                Margin = tb.Margin,
+                Anchor = tb.Anchor,
+                Dock = dock,
+                Padding = padding,
+                TabIndex = tb.TabIndex,
+                Name = $"rp_{tb.Name}"
+            };
+
+            // Re-parent without breaking events/logic (giữ nguyên instance textbox)
+            parent.Controls.Remove(tb);
+            parent.Controls.Add(host);
+            parent.Controls.SetChildIndex(host, childIndex);
+
+            tb.BorderStyle = BorderStyle.None;
+            tb.Dock = DockStyle.Fill;
+            tb.Margin = Padding.Empty;
+            tb.BackColor = Theme.Card;
+            tb.ForeColor = Theme.Text;
+
+            host.Controls.Add(tb);
         }
 
         private void ApplyThemeRecursive(Control root)
@@ -336,7 +402,7 @@ namespace ReviewMovie
 
         private static void StyleGroupBox(GroupBox gb)
         {
-            gb.BackColor = Theme.Bg;
+            gb.BackColor = Theme.Card;
             gb.ForeColor = Theme.Text;
         }
 
@@ -347,28 +413,28 @@ namespace ReviewMovie
 
         private static void StyleTextBox(TextBox tb)
         {
-            tb.BackColor = Theme.Bg;
+            tb.BackColor = Theme.Card;
             tb.ForeColor = Theme.Text;
             tb.BorderStyle = BorderStyle.FixedSingle;
         }
 
         private static void StyleComboBox(ComboBox cb)
         {
-            cb.BackColor = Theme.Bg;
+            cb.BackColor = Theme.Card;
             cb.ForeColor = Theme.Text;
             cb.FlatStyle = FlatStyle.Flat;
         }
 
         private static void StyleNumeric(NumericUpDown nb)
         {
-            nb.BackColor = Theme.Bg;
+            nb.BackColor = Theme.Card;
             nb.ForeColor = Theme.Text;
         }
 
         private static void StyleButtonSecondary(Button btn)
         {
             btn.FlatStyle = FlatStyle.Flat;
-            btn.BackColor = Theme.Bg;
+            btn.BackColor = Theme.Card;
             btn.ForeColor = Theme.Text;
             btn.FlatAppearance.BorderColor = Theme.Border;
             btn.FlatAppearance.BorderSize = 1;
@@ -385,7 +451,7 @@ namespace ReviewMovie
         private static void StyleDataGridView(DataGridView dgv)
         {
             dgv.EnableHeadersVisualStyles = false;
-            dgv.BackgroundColor = Theme.Bg;
+            dgv.BackgroundColor = Theme.Card;
             dgv.BorderStyle = BorderStyle.None;
             dgv.GridColor = Theme.Border;
 
@@ -396,7 +462,7 @@ namespace ReviewMovie
             dgv.ColumnHeadersDefaultCellStyle.SelectionForeColor = Theme.Text;
             dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 8.5f, FontStyle.Bold);
 
-            dgv.DefaultCellStyle.BackColor = Theme.Bg;
+            dgv.DefaultCellStyle.BackColor = Theme.Card;
             dgv.DefaultCellStyle.ForeColor = Theme.Text;
             dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(219, 234, 254); // light blue
             dgv.DefaultCellStyle.SelectionForeColor = Theme.Text;
