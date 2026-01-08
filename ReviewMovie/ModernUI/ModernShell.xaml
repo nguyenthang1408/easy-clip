@@ -25,13 +25,7 @@
 
       <!-- Record card -->
       <Border Grid.Column="0" Background="White" CornerRadius="14" BorderBrush="#E5E7EB" BorderThickness="1" Padding="12" Margin="0,0,10,0">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-          <Border Width="56" Height="56" Background="#F3F4F6" CornerRadius="28" BorderBrush="#E5E7EB" BorderThickness="1">
-            <TextBlock Text="🎤" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-          </Border>
-          <TextBlock Text="Record" FontWeight="SemiBold" Margin="0,10,0,0" HorizontalAlignment="Center"/>
-          <Button x:Name="BtnRecord" Content="Click to start mic" Margin="0,6,0,0" Padding="10,6" Background="#F9FAFB" BorderBrush="#E5E7EB" Foreground="#111827" />
-        </StackPanel>
+        <wf:WindowsFormsHost x:Name="RecordHost" />
       </Border>
 
       <!-- Text input card -->
@@ -47,18 +41,8 @@
             <Button x:Name="BtnClearText" Content="Clear" DockPanel.Dock="Right" Padding="10,4" Background="#F3F4F6" BorderBrush="#E5E7EB" />
           </DockPanel>
 
-          <Border Grid.Row="1" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" Background="White" Margin="0,10,0,0" Padding="10">
-            <TextBox x:Name="TextInputBox"
-                     Background="Transparent"
-                     BorderThickness="0"
-                     Foreground="#111827"
-                     FontSize="12"
-                     TextWrapping="Wrap"
-                     AcceptsReturn="True"
-                     MinHeight="84"
-                     VerticalScrollBarVisibility="Auto"
-                     AllowDrop="True"
-                     Text="Type text to synthesize or drag audio files here..." />
+          <Border Grid.Row="1" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" Background="White" Margin="0,10,0,0" Padding="6">
+            <wf:WindowsFormsHost x:Name="TextInputHost" />
           </Border>
         </Grid>
       </Border>
@@ -69,32 +53,19 @@
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
           </Grid.RowDefinitions>
           <TextBlock Text="VISUALS" FontWeight="SemiBold" Foreground="#6B7280" />
-          <Border Grid.Row="1" Margin="0,10,0,10" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" Background="#F9FAFB">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-              <TextBlock Text="🖼️" FontSize="22" HorizontalAlignment="Center"/>
-              <TextBlock Text="Drop Visuals Here" FontWeight="SemiBold" Margin="0,6,0,0" HorizontalAlignment="Center"/>
-              <TextBlock Text="Images and Videos" Foreground="#6B7280" FontSize="11" HorizontalAlignment="Center"/>
-            </StackPanel>
+          <Border Grid.Row="1" Margin="0,10,0,0" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" Background="#F9FAFB" Padding="6">
+            <wf:WindowsFormsHost x:Name="VisualsHost" />
           </Border>
-          <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="BtnConvert" Content="Convert" Padding="12,6" Background="White" BorderBrush="#E5E7EB" Margin="0,0,8,0"/>
-            <Button x:Name="BtnSave" Content="Save" Padding="12,6" Background="White" BorderBrush="#E5E7EB" Margin="0,0,8,0"/>
-            <Button x:Name="BtnRender" Content="Render" Padding="12,6" Background="White" BorderBrush="#E5E7EB"/>
-          </StackPanel>
         </Grid>
       </Border>
     </Grid>
 
-    <!-- Actions row -->
-    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
-      <Button x:Name="BtnNewLine" Content="+ New Line" Padding="12,6" Background="#F97316" Foreground="White" BorderThickness="0" Margin="0,0,10,0"/>
-      <Button x:Name="BtnAutoSubtitle" Content="Auto Subtitle" Padding="12,6" Background="White" BorderBrush="#E5E7EB" Margin="0,0,10,0"/>
-      <Button x:Name="BtnCancel" Content="Cancel" Padding="12,6" Background="White" BorderBrush="#E5E7EB"/>
-      <TextBox x:Name="SearchBox" Width="220" Margin="16,0,0,0" Padding="10,6" Background="White" BorderBrush="#E5E7EB" />
-    </StackPanel>
+    <!-- Toolbar row (host WinForms ToolStrip to keep all items) -->
+    <Border Grid.Row="1" Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" Padding="6" Margin="0,0,0,10">
+      <wf:WindowsFormsHost x:Name="ToolbarHost" />
+    </Border>
 
     <!-- Table (host WinForms DataGridView) -->
     <Border Grid.Row="2" Background="White" CornerRadius="14" BorderBrush="#E5E7EB" BorderThickness="1">

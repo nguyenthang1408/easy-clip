@@ -17,40 +17,28 @@ namespace ReviewMovie.ModernUI
         public Grid Root { get; }
 
         // Named elements we need to wire up
-        public TextBox TextInputBox { get; }
-        public TextBox SearchBox { get; }
-
-        public Button BtnRecord { get; }
-        public Button BtnNewLine { get; }
-        public Button BtnAutoSubtitle { get; }
-        public Button BtnCancel { get; }
-        public Button BtnConvert { get; }
-        public Button BtnSave { get; }
-        public Button BtnRender { get; }
         public Button BtnClearText { get; }
 
         public WindowsFormsHost MainGridHost { get; }
         public WindowsFormsHost SettingsHost { get; }
+        public WindowsFormsHost RecordHost { get; }
+        public WindowsFormsHost TextInputHost { get; }
+        public WindowsFormsHost VisualsHost { get; }
+        public WindowsFormsHost ToolbarHost { get; }
 
         public ModernShellControl()
         {
             Root = (Grid)LoadEmbeddedXamlBySuffix("ModernUI.ModernShell.xaml");
             Content = Root;
 
-            TextInputBox = (TextBox)Root.FindName("TextInputBox");
-            SearchBox = (TextBox)Root.FindName("SearchBox");
-
-            BtnRecord = (Button)Root.FindName("BtnRecord");
-            BtnNewLine = (Button)Root.FindName("BtnNewLine");
-            BtnAutoSubtitle = (Button)Root.FindName("BtnAutoSubtitle");
-            BtnCancel = (Button)Root.FindName("BtnCancel");
-            BtnConvert = (Button)Root.FindName("BtnConvert");
-            BtnSave = (Button)Root.FindName("BtnSave");
-            BtnRender = (Button)Root.FindName("BtnRender");
             BtnClearText = (Button)Root.FindName("BtnClearText");
 
             MainGridHost = (WindowsFormsHost)Root.FindName("MainGridHost");
             SettingsHost = (WindowsFormsHost)Root.FindName("SettingsHost");
+            RecordHost = (WindowsFormsHost)Root.FindName("RecordHost");
+            TextInputHost = (WindowsFormsHost)Root.FindName("TextInputHost");
+            VisualsHost = (WindowsFormsHost)Root.FindName("VisualsHost");
+            ToolbarHost = (WindowsFormsHost)Root.FindName("ToolbarHost");
         }
 
         private static object LoadEmbeddedXamlBySuffix(string suffix)

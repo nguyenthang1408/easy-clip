@@ -548,40 +548,43 @@ namespace ReviewMovie
                     grboxSetting.Dock = DockStyle.Fill;
                 }
 
-                // Wire top actions to existing WinForms logic
-                if (_shell.BtnRecord != null)
-                    _shell.BtnRecord.Click += (_, __) => btnRecord.PerformClick();
-                _shell.BtnNewLine.Click += (_, __) => btnAddRow.PerformClick();
-                _shell.BtnAutoSubtitle.Click += (_, __) => btnImportSubtitle.PerformClick();
-                _shell.BtnCancel.Click += (_, __) => btnDestroyAction.PerformClick();
-                _shell.BtnConvert.Click += (_, __) => btnConvertAudio.PerformClick();
-                _shell.BtnSave.Click += (_, __) => btnSaveAudio.PerformClick();
-                _shell.BtnRender.Click += (_, __) => btnRenderVideoPart.PerformClick();
+                // Host WinForms header controls to keep all original items + drag/drop
+                if (_shell.RecordHost != null)
+                {
+                    if (btnRecord.Parent != null)
+                        btnRecord.Parent.Controls.Remove(btnRecord);
+                    _shell.RecordHost.Child = btnRecord;
+                    btnRecord.Dock = DockStyle.Fill;
+                }
+
+                if (_shell.TextInputHost != null)
+                {
+                    if (txtTextInput.Parent != null)
+                        txtTextInput.Parent.Controls.Remove(txtTextInput);
+                    _shell.TextInputHost.Child = txtTextInput;
+                    txtTextInput.Dock = DockStyle.Fill;
+                    txtTextInput.BorderStyle = BorderStyle.None;
+                }
+
+                if (_shell.VisualsHost != null)
+                {
+                    if (txtImPortMedia.Parent != null)
+                        txtImPortMedia.Parent.Controls.Remove(txtImPortMedia);
+                    _shell.VisualsHost.Child = txtImPortMedia;
+                    txtImPortMedia.Dock = DockStyle.Fill;
+                    txtImPortMedia.BorderStyle = BorderStyle.None;
+                }
+
+                if (_shell.ToolbarHost != null)
+                {
+                    if (tsMenuView.Parent != null)
+                        tsMenuView.Parent.Controls.Remove(tsMenuView);
+                    _shell.ToolbarHost.Child = tsMenuView;
+                    tsMenuView.Dock = DockStyle.Fill;
+                }
+
+                // Clear button still supported
                 _shell.BtnClearText.Click += (_, __) => txtTextInput.Clear();
-
-                // Sync text input
-                _shell.TextInputBox.TextChanged += (_, __) =>
-                {
-                    if (!string.Equals(txtTextInput.Text, _shell.TextInputBox.Text, StringComparison.Ordinal))
-                        txtTextInput.Text = _shell.TextInputBox.Text;
-                };
-                txtTextInput.TextChanged += (_, __) =>
-                {
-                    if (!string.Equals(_shell.TextInputBox.Text, txtTextInput.Text, StringComparison.Ordinal))
-                        _shell.TextInputBox.Text = txtTextInput.Text;
-                };
-
-                // Sync search
-                _shell.SearchBox.TextChanged += (_, __) =>
-                {
-                    if (!string.Equals(txtTim.Text, _shell.SearchBox.Text, StringComparison.Ordinal))
-                        txtTim.Text = _shell.SearchBox.Text;
-                };
-                txtTim.TextChanged += (_, __) =>
-                {
-                    if (!string.Equals(_shell.SearchBox.Text, txtTim.Text, StringComparison.Ordinal))
-                        _shell.SearchBox.Text = txtTim.Text;
-                };
 
             }
             catch
