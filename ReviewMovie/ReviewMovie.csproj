@@ -110,6 +110,7 @@
     <Compile Include="Base\RoundedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Base\RoundedButton.cs" />
     <Compile Include="ModernUI\ModernShellControl.cs" />
     <Compile Include="Base\Enum.cs" />
     <Compile Include="Base\RVFuncion.cs" />

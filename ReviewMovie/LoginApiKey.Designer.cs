@@ -34,7 +34,6 @@ namespace ReviewMovie
             this.lblLogo = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblSubtitle = new System.Windows.Forms.Label();
-            this.btnLoginApiKey = new MaterialSkin.Controls.MaterialButton();
             this.rpAppCode = new ReviewMovie.Base.RoundedPanel();
             this.txAppCodeShow = new System.Windows.Forms.TextBox();
             this.rpApiKey = new ReviewMovie.Base.RoundedPanel();
@@ -42,8 +41,9 @@ namespace ReviewMovie
             this.lkHelp = new System.Windows.Forms.LinkLabel();
             this.lbstatus = new System.Windows.Forms.Label();
             this.linklbRegister = new System.Windows.Forms.LinkLabel();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.lblAppCode = new System.Windows.Forms.Label();
+            this.lblApiKey = new System.Windows.Forms.Label();
+            this.btnLoginApiKey = new ReviewMovie.Base.RoundedButton();
             this.tlpRoot.SuspendLayout();
             this.panelCard.SuspendLayout();
             this.rpAppCode.SuspendLayout();
@@ -79,8 +79,8 @@ namespace ReviewMovie
             this.panelCard.Controls.Add(this.lkHelp);
             this.panelCard.Controls.Add(this.lbstatus);
             this.panelCard.Controls.Add(this.linklbRegister);
-            this.panelCard.Controls.Add(this.materialLabel1);
-            this.panelCard.Controls.Add(this.materialLabel2);
+            this.panelCard.Controls.Add(this.lblAppCode);
+            this.panelCard.Controls.Add(this.lblApiKey);
             this.panelCard.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelCard.Location = new System.Drawing.Point(33, 23);
             this.panelCard.Name = "panelCard";
@@ -125,22 +125,15 @@ namespace ReviewMovie
             // 
             // btnLoginApiKey
             // 
-            this.btnLoginApiKey.AutoSize = false;
-            this.btnLoginApiKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnLoginApiKey.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnLoginApiKey.Depth = 0;
-            this.btnLoginApiKey.HighEmphasis = true;
-            this.btnLoginApiKey.Icon = null;
             this.btnLoginApiKey.Location = new System.Drawing.Point(31, 375);
-            this.btnLoginApiKey.Margin = new System.Windows.Forms.Padding(4, 8, 4, 8);
-            this.btnLoginApiKey.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnLoginApiKey.Name = "btnLoginApiKey";
-            this.btnLoginApiKey.NoAccentTextColor = System.Drawing.Color.Empty;
             this.btnLoginApiKey.Size = new System.Drawing.Size(312, 44);
             this.btnLoginApiKey.TabIndex = 1;
-            this.btnLoginApiKey.Text = "Đăng nhập  →";
-            this.btnLoginApiKey.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnLoginApiKey.UseAccentColor = false;
+            this.btnLoginApiKey.Text = "ĐĂNG NHẬP  →";
+            this.btnLoginApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLoginApiKey.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(97)))), ((int)(((byte)(255)))));
+            this.btnLoginApiKey.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(79)))), ((int)(((byte)(235)))));
+            this.btnLoginApiKey.BorderRadius = 16;
             this.btnLoginApiKey.UseVisualStyleBackColor = true;
             this.btnLoginApiKey.Click += new System.EventHandler(this.btnLoginApiKey_Click);
             // 
@@ -229,31 +222,27 @@ namespace ReviewMovie
             this.linklbRegister.Text = "Register";
             this.linklbRegister.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklbRegister_LinkClicked);
             // 
-            // materialLabel1
+            // lblAppCode
             // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(118)))), ((int)(((byte)(140)))));
-            this.materialLabel1.Location = new System.Drawing.Point(31, 176);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(68, 15);
-            this.materialLabel1.TabIndex = 4;
-            this.materialLabel1.Text = "APP CODE";
+            this.lblAppCode.AutoSize = true;
+            this.lblAppCode.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAppCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(118)))), ((int)(((byte)(140)))));
+            this.lblAppCode.Location = new System.Drawing.Point(31, 176);
+            this.lblAppCode.Name = "lblAppCode";
+            this.lblAppCode.Size = new System.Drawing.Size(68, 15);
+            this.lblAppCode.TabIndex = 4;
+            this.lblAppCode.Text = "APP CODE";
             // 
-            // materialLabel2
+            // lblApiKey
             // 
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(118)))), ((int)(((byte)(140)))));
-            this.materialLabel2.Location = new System.Drawing.Point(31, 272);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(52, 15);
-            this.materialLabel2.TabIndex = 6;
-            this.materialLabel2.Text = "API KEY";
+            this.lblApiKey.AutoSize = true;
+            this.lblApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblApiKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(118)))), ((int)(((byte)(140)))));
+            this.lblApiKey.Location = new System.Drawing.Point(31, 272);
+            this.lblApiKey.Name = "lblApiKey";
+            this.lblApiKey.Size = new System.Drawing.Size(52, 15);
+            this.lblApiKey.TabIndex = 6;
+            this.lblApiKey.Text = "API KEY";
             // 
             // LoginApiKey
             // 
@@ -288,13 +277,13 @@ namespace ReviewMovie
         private System.Windows.Forms.Label lblLogo;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblSubtitle;
-        private MaterialSkin.Controls.MaterialButton btnLoginApiKey;
         private ReviewMovie.Base.RoundedPanel rpAppCode;
         private System.Windows.Forms.TextBox txAppCodeShow;
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private ReviewMovie.Base.RoundedPanel rpApiKey;
         private System.Windows.Forms.TextBox txInsertApiKey;
-        private MaterialSkin.Controls.MaterialLabel materialLabel2;
+        private System.Windows.Forms.Label lblAppCode;
+        private System.Windows.Forms.Label lblApiKey;
+        private ReviewMovie.Base.RoundedButton btnLoginApiKey;
         private System.Windows.Forms.LinkLabel lkHelp;
         private System.Windows.Forms.Label lbstatus;
         private System.Windows.Forms.LinkLabel linklbRegister;
