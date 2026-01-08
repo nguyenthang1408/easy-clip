@@ -35,8 +35,10 @@ namespace ReviewMovie
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.btnLoginApiKey = new MaterialSkin.Controls.MaterialButton();
-            this.txAppCodeShow = new MaterialSkin.Controls.MaterialTextBox();
-            this.txInsertApiKey = new MaterialSkin.Controls.MaterialTextBox();
+            this.rpAppCode = new ReviewMovie.Base.RoundedPanel();
+            this.txAppCodeShow = new System.Windows.Forms.TextBox();
+            this.rpApiKey = new ReviewMovie.Base.RoundedPanel();
+            this.txInsertApiKey = new System.Windows.Forms.TextBox();
             this.lkHelp = new System.Windows.Forms.LinkLabel();
             this.lbstatus = new System.Windows.Forms.Label();
             this.linklbRegister = new System.Windows.Forms.LinkLabel();
@@ -44,6 +46,8 @@ namespace ReviewMovie
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.tlpRoot.SuspendLayout();
             this.panelCard.SuspendLayout();
+            this.rpAppCode.SuspendLayout();
+            this.rpApiKey.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpRoot
@@ -70,8 +74,8 @@ namespace ReviewMovie
             this.panelCard.Controls.Add(this.lblTitle);
             this.panelCard.Controls.Add(this.lblSubtitle);
             this.panelCard.Controls.Add(this.btnLoginApiKey);
-            this.panelCard.Controls.Add(this.txAppCodeShow);
-            this.panelCard.Controls.Add(this.txInsertApiKey);
+            this.panelCard.Controls.Add(this.rpAppCode);
+            this.panelCard.Controls.Add(this.rpApiKey);
             this.panelCard.Controls.Add(this.lkHelp);
             this.panelCard.Controls.Add(this.lbstatus);
             this.panelCard.Controls.Add(this.linklbRegister);
@@ -140,40 +144,56 @@ namespace ReviewMovie
             this.btnLoginApiKey.UseVisualStyleBackColor = true;
             this.btnLoginApiKey.Click += new System.EventHandler(this.btnLoginApiKey_Click);
             // 
+            // rpAppCode
+            // 
+            this.rpAppCode.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(231)))), ((int)(((byte)(235)))));
+            this.rpAppCode.BorderRadius = 14;
+            this.rpAppCode.BorderThickness = 1;
+            this.rpAppCode.FillColor = System.Drawing.Color.White;
+            this.rpAppCode.Location = new System.Drawing.Point(31, 200);
+            this.rpAppCode.Name = "rpAppCode";
+            this.rpAppCode.Padding = new System.Windows.Forms.Padding(12, 10, 12, 10);
+            this.rpAppCode.Size = new System.Drawing.Size(312, 46);
+            this.rpAppCode.TabIndex = 2;
+            this.rpAppCode.Controls.Add(this.txAppCodeShow);
+            // 
             // txAppCodeShow
             // 
-            this.txAppCodeShow.AnimateReadOnly = false;
+            this.txAppCodeShow.BackColor = System.Drawing.Color.White;
             this.txAppCodeShow.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txAppCodeShow.Depth = 0;
-            this.txAppCodeShow.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txAppCodeShow.LeadingIcon = null;
-            this.txAppCodeShow.Location = new System.Drawing.Point(31, 200);
-            this.txAppCodeShow.MaxLength = 50;
-            this.txAppCodeShow.MouseState = MaterialSkin.MouseState.OUT;
-            this.txAppCodeShow.Multiline = false;
+            this.txAppCodeShow.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txAppCodeShow.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txAppCodeShow.Location = new System.Drawing.Point(12, 10);
+            this.txAppCodeShow.MaxLength = 200;
             this.txAppCodeShow.Name = "txAppCodeShow";
             this.txAppCodeShow.ReadOnly = true;
-            this.txAppCodeShow.Size = new System.Drawing.Size(312, 50);
-            this.txAppCodeShow.TabIndex = 2;
-            this.txAppCodeShow.Text = "";
-            this.txAppCodeShow.TrailingIcon = null;
+            this.txAppCodeShow.Size = new System.Drawing.Size(288, 19);
+            this.txAppCodeShow.TabIndex = 0;
+            // 
+            // rpApiKey
+            // 
+            this.rpApiKey.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(231)))), ((int)(((byte)(235)))));
+            this.rpApiKey.BorderRadius = 14;
+            this.rpApiKey.BorderThickness = 1;
+            this.rpApiKey.FillColor = System.Drawing.Color.White;
+            this.rpApiKey.Location = new System.Drawing.Point(31, 300);
+            this.rpApiKey.Name = "rpApiKey";
+            this.rpApiKey.Padding = new System.Windows.Forms.Padding(12, 10, 12, 10);
+            this.rpApiKey.Size = new System.Drawing.Size(312, 46);
+            this.rpApiKey.TabIndex = 5;
+            this.rpApiKey.Controls.Add(this.txInsertApiKey);
             // 
             // txInsertApiKey
             // 
-            this.txInsertApiKey.AnimateReadOnly = false;
+            this.txInsertApiKey.BackColor = System.Drawing.Color.White;
             this.txInsertApiKey.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txInsertApiKey.Depth = 0;
-            this.txInsertApiKey.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txInsertApiKey.LeadingIcon = null;
-            this.txInsertApiKey.Location = new System.Drawing.Point(31, 300);
-            this.txInsertApiKey.MaxLength = 50;
-            this.txInsertApiKey.MouseState = MaterialSkin.MouseState.OUT;
-            this.txInsertApiKey.Multiline = false;
+            this.txInsertApiKey.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txInsertApiKey.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txInsertApiKey.Location = new System.Drawing.Point(12, 10);
+            this.txInsertApiKey.MaxLength = 200;
             this.txInsertApiKey.Name = "txInsertApiKey";
-            this.txInsertApiKey.Size = new System.Drawing.Size(312, 50);
-            this.txInsertApiKey.TabIndex = 5;
-            this.txInsertApiKey.Text = "";
-            this.txInsertApiKey.TrailingIcon = null;
+            this.txInsertApiKey.Size = new System.Drawing.Size(288, 19);
+            this.txInsertApiKey.TabIndex = 0;
             // 
             // lkHelp
             // 
@@ -254,6 +274,10 @@ namespace ReviewMovie
             this.tlpRoot.ResumeLayout(false);
             this.panelCard.ResumeLayout(false);
             this.panelCard.PerformLayout();
+            this.rpAppCode.ResumeLayout(false);
+            this.rpAppCode.PerformLayout();
+            this.rpApiKey.ResumeLayout(false);
+            this.rpApiKey.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -265,9 +289,11 @@ namespace ReviewMovie
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblSubtitle;
         private MaterialSkin.Controls.MaterialButton btnLoginApiKey;
-        private MaterialSkin.Controls.MaterialTextBox txAppCodeShow;
+        private ReviewMovie.Base.RoundedPanel rpAppCode;
+        private System.Windows.Forms.TextBox txAppCodeShow;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
-        private MaterialSkin.Controls.MaterialTextBox txInsertApiKey;
+        private ReviewMovie.Base.RoundedPanel rpApiKey;
+        private System.Windows.Forms.TextBox txInsertApiKey;
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private System.Windows.Forms.LinkLabel lkHelp;
         private System.Windows.Forms.Label lbstatus;

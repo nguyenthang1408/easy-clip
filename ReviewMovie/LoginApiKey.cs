@@ -44,7 +44,7 @@ namespace ReviewMovie
             var rect = panelCard.ClientRectangle;
             rect.Inflate(-1, -1);
 
-            using (var path = CreateRoundedRectPath(rect, 18))
+            using (var path = CreateRoundedRectPath(rect, 22))
             using (var fill = new SolidBrush(Color.White))
             using (var border = new Pen(Color.FromArgb(232, 236, 246), 1f))
             {
