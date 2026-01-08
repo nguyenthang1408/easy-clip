@@ -1,4 +1,4 @@
-﻿namespace ReviewMovie
+namespace ReviewMovie
 {
     partial class LoginApiKey
     {
@@ -29,31 +29,112 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginApiKey));
+            this.tlpRoot = new System.Windows.Forms.TableLayoutPanel();
+            this.panelCard = new System.Windows.Forms.Panel();
+            this.lblLogo = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblSubtitle = new System.Windows.Forms.Label();
             this.btnLoginApiKey = new MaterialSkin.Controls.MaterialButton();
             this.txAppCodeShow = new MaterialSkin.Controls.MaterialTextBox();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.txInsertApiKey = new MaterialSkin.Controls.MaterialTextBox();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.lkHelp = new System.Windows.Forms.LinkLabel();
             this.lbstatus = new System.Windows.Forms.Label();
             this.linklbRegister = new System.Windows.Forms.LinkLabel();
+            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.tlpRoot.SuspendLayout();
+            this.panelCard.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // tlpRoot
+            // 
+            this.tlpRoot.ColumnCount = 3;
+            this.tlpRoot.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpRoot.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 380F));
+            this.tlpRoot.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpRoot.Controls.Add(this.panelCard, 1, 1);
+            this.tlpRoot.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpRoot.Location = new System.Drawing.Point(0, 0);
+            this.tlpRoot.Name = "tlpRoot";
+            this.tlpRoot.RowCount = 3;
+            this.tlpRoot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpRoot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 520F));
+            this.tlpRoot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpRoot.Size = new System.Drawing.Size(440, 560);
+            this.tlpRoot.TabIndex = 0;
+            // 
+            // panelCard
+            // 
+            this.panelCard.BackColor = System.Drawing.Color.Transparent;
+            this.panelCard.Controls.Add(this.lblLogo);
+            this.panelCard.Controls.Add(this.lblTitle);
+            this.panelCard.Controls.Add(this.lblSubtitle);
+            this.panelCard.Controls.Add(this.btnLoginApiKey);
+            this.panelCard.Controls.Add(this.txAppCodeShow);
+            this.panelCard.Controls.Add(this.txInsertApiKey);
+            this.panelCard.Controls.Add(this.lkHelp);
+            this.panelCard.Controls.Add(this.lbstatus);
+            this.panelCard.Controls.Add(this.linklbRegister);
+            this.panelCard.Controls.Add(this.materialLabel1);
+            this.panelCard.Controls.Add(this.materialLabel2);
+            this.panelCard.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelCard.Location = new System.Drawing.Point(33, 23);
+            this.panelCard.Name = "panelCard";
+            this.panelCard.Padding = new System.Windows.Forms.Padding(28, 26, 28, 22);
+            this.panelCard.Size = new System.Drawing.Size(374, 514);
+            this.panelCard.TabIndex = 0;
+            this.panelCard.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCard_Paint);
+            // 
+            // lblLogo
+            // 
+            this.lblLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
+            this.lblLogo.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLogo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(97)))), ((int)(((byte)(255)))));
+            this.lblLogo.Location = new System.Drawing.Point(28, 26);
+            this.lblLogo.Name = "lblLogo";
+            this.lblLogo.Size = new System.Drawing.Size(44, 44);
+            this.lblLogo.TabIndex = 20;
+            this.lblLogo.Text = "✓";
+            this.lblLogo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(24)))), ((int)(((byte)(38)))));
+            this.lblTitle.Location = new System.Drawing.Point(28, 86);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(173, 32);
+            this.lblTitle.TabIndex = 21;
+            this.lblTitle.Text = "Welcome Back";
+            // 
+            // lblSubtitle
+            // 
+            this.lblSubtitle.AutoSize = true;
+            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(118)))), ((int)(((byte)(140)))));
+            this.lblSubtitle.Location = new System.Drawing.Point(31, 126);
+            this.lblSubtitle.Name = "lblSubtitle";
+            this.lblSubtitle.Size = new System.Drawing.Size(255, 17);
+            this.lblSubtitle.TabIndex = 22;
+            this.lblSubtitle.Text = "Enter your credentials to access the studio.";
             // 
             // btnLoginApiKey
             // 
+            this.btnLoginApiKey.AutoSize = false;
             this.btnLoginApiKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnLoginApiKey.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnLoginApiKey.Depth = 0;
             this.btnLoginApiKey.HighEmphasis = true;
             this.btnLoginApiKey.Icon = null;
-            this.btnLoginApiKey.Location = new System.Drawing.Point(170, 244);
-            this.btnLoginApiKey.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnLoginApiKey.Location = new System.Drawing.Point(31, 375);
+            this.btnLoginApiKey.Margin = new System.Windows.Forms.Padding(4, 8, 4, 8);
             this.btnLoginApiKey.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnLoginApiKey.Name = "btnLoginApiKey";
             this.btnLoginApiKey.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnLoginApiKey.Size = new System.Drawing.Size(105, 36);
+            this.btnLoginApiKey.Size = new System.Drawing.Size(312, 44);
             this.btnLoginApiKey.TabIndex = 1;
-            this.btnLoginApiKey.Text = "ĐĂNG NHẬP";
+            this.btnLoginApiKey.Text = "Đăng nhập  →";
             this.btnLoginApiKey.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnLoginApiKey.UseAccentColor = false;
             this.btnLoginApiKey.UseVisualStyleBackColor = true;
@@ -66,7 +147,7 @@
             this.txAppCodeShow.Depth = 0;
             this.txAppCodeShow.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txAppCodeShow.LeadingIcon = null;
-            this.txAppCodeShow.Location = new System.Drawing.Point(67, 49);
+            this.txAppCodeShow.Location = new System.Drawing.Point(31, 200);
             this.txAppCodeShow.MaxLength = 50;
             this.txAppCodeShow.MouseState = MaterialSkin.MouseState.OUT;
             this.txAppCodeShow.Multiline = false;
@@ -77,18 +158,6 @@
             this.txAppCodeShow.Text = "";
             this.txAppCodeShow.TrailingIcon = null;
             // 
-            // materialLabel1
-            // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel1.Location = new System.Drawing.Point(33, 21);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(76, 19);
-            this.materialLabel1.TabIndex = 4;
-            this.materialLabel1.Text = "APP CODE";
-            // 
             // txInsertApiKey
             // 
             this.txInsertApiKey.AnimateReadOnly = false;
@@ -96,7 +165,7 @@
             this.txInsertApiKey.Depth = 0;
             this.txInsertApiKey.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txInsertApiKey.LeadingIcon = null;
-            this.txInsertApiKey.Location = new System.Drawing.Point(67, 145);
+            this.txInsertApiKey.Location = new System.Drawing.Point(31, 300);
             this.txInsertApiKey.MaxLength = 50;
             this.txInsertApiKey.MouseState = MaterialSkin.MouseState.OUT;
             this.txInsertApiKey.Multiline = false;
@@ -106,36 +175,23 @@
             this.txInsertApiKey.Text = "";
             this.txInsertApiKey.TrailingIcon = null;
             // 
-            // materialLabel2
-            // 
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel2.Location = new System.Drawing.Point(33, 113);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(58, 19);
-            this.materialLabel2.TabIndex = 6;
-            this.materialLabel2.Text = "API KEY";
-            // 
             // lkHelp
             // 
             this.lkHelp.AutoSize = true;
-            this.lkHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lkHelp.LinkColor = System.Drawing.Color.Blue;
-            this.lkHelp.Location = new System.Drawing.Point(350, 268);
+            this.lkHelp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lkHelp.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(97)))), ((int)(((byte)(255)))));
+            this.lkHelp.Location = new System.Drawing.Point(31, 465);
             this.lkHelp.Name = "lkHelp";
-            this.lkHelp.Size = new System.Drawing.Size(67, 16);
+            this.lkHelp.Size = new System.Drawing.Size(31, 15);
             this.lkHelp.TabIndex = 7;
-            this.lkHelp.TabStop = true;
-            this.lkHelp.Text = "Trợ Giúp";
+            this.lkHelp.Text = "Help";
             this.lkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lkHelp_LinkClicked);
             // 
             // lbstatus
             // 
             this.lbstatus.AutoSize = true;
             this.lbstatus.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lbstatus.Location = new System.Drawing.Point(64, 208);
+            this.lbstatus.Location = new System.Drawing.Point(31, 358);
             this.lbstatus.Name = "lbstatus";
             this.lbstatus.Size = new System.Drawing.Size(13, 13);
             this.lbstatus.TabIndex = 8;
@@ -144,29 +200,48 @@
             // linklbRegister
             // 
             this.linklbRegister.AutoSize = true;
-            this.linklbRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linklbRegister.LinkColor = System.Drawing.Color.Red;
-            this.linklbRegister.Location = new System.Drawing.Point(350, 244);
+            this.linklbRegister.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linklbRegister.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(97)))), ((int)(((byte)(255)))));
+            this.linklbRegister.Location = new System.Drawing.Point(295, 465);
             this.linklbRegister.Name = "linklbRegister";
-            this.linklbRegister.Size = new System.Drawing.Size(64, 16);
+            this.linklbRegister.Size = new System.Drawing.Size(52, 15);
             this.linklbRegister.TabIndex = 9;
-            this.linklbRegister.TabStop = true;
-            this.linklbRegister.Text = "Đăng Ký";
+            this.linklbRegister.Text = "Register";
             this.linklbRegister.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklbRegister_LinkClicked);
+            // 
+            // materialLabel1
+            // 
+            this.materialLabel1.AutoSize = true;
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(118)))), ((int)(((byte)(140)))));
+            this.materialLabel1.Location = new System.Drawing.Point(31, 176);
+            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(68, 15);
+            this.materialLabel1.TabIndex = 4;
+            this.materialLabel1.Text = "APP CODE";
+            // 
+            // materialLabel2
+            // 
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(118)))), ((int)(((byte)(140)))));
+            this.materialLabel2.Location = new System.Drawing.Point(31, 272);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(52, 15);
+            this.materialLabel2.TabIndex = 6;
+            this.materialLabel2.Text = "API KEY";
             // 
             // LoginApiKey
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(441, 301);
-            this.Controls.Add(this.linklbRegister);
-            this.Controls.Add(this.lbstatus);
-            this.Controls.Add(this.lkHelp);
-            this.Controls.Add(this.materialLabel2);
-            this.Controls.Add(this.txInsertApiKey);
-            this.Controls.Add(this.materialLabel1);
-            this.Controls.Add(this.txAppCodeShow);
-            this.Controls.Add(this.btnLoginApiKey);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(255)))));
+            this.ClientSize = new System.Drawing.Size(440, 560);
+            this.Controls.Add(this.tlpRoot);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -176,12 +251,19 @@
             this.Text = "REVIEW_MOVIE LOGIN";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoginApiKey_FormClosing);
             this.Load += new System.EventHandler(this.LoginApiKey_Load);
+            this.tlpRoot.ResumeLayout(false);
+            this.panelCard.ResumeLayout(false);
+            this.panelCard.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
+        private System.Windows.Forms.TableLayoutPanel tlpRoot;
+        private System.Windows.Forms.Panel panelCard;
+        private System.Windows.Forms.Label lblLogo;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblSubtitle;
         private MaterialSkin.Controls.MaterialButton btnLoginApiKey;
         private MaterialSkin.Controls.MaterialTextBox txAppCodeShow;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;

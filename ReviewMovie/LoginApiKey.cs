@@ -1,10 +1,11 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
 using Lib;
 using ReviewMovie.Infrastructure.Config;
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Net.Http;
 using System.Windows.Forms;
@@ -28,6 +29,62 @@ namespace ReviewMovie
 
             // Đặt sự kiện cho việc đóng form
             this.FormClosing += LoginApiKey_FormClosing;
+
+            // UI polish (không ảnh hưởng logic)
+            lbstatus.MaximumSize = new Size(312, 0);
+            lbstatus.AutoEllipsis = true;
+            MakeCircle(lblLogo);
+        }
+
+        private void panelCard_Paint(object sender, PaintEventArgs e)
+        {
+            // Vẽ card bo góc + viền nhẹ theo style modern
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            var rect = panelCard.ClientRectangle;
+            rect.Inflate(-1, -1);
+
+            using (var path = CreateRoundedRectPath(rect, 18))
+            using (var fill = new SolidBrush(Color.White))
+            using (var border = new Pen(Color.FromArgb(232, 236, 246), 1f))
+            {
+                e.Graphics.FillPath(fill, path);
+                e.Graphics.DrawPath(border, path);
+            }
+        }
+
+        private static void MakeCircle(Control c)
+        {
+            // Tạo badge tròn cho logo (UI-only)
+            var diameter = Math.Min(c.Width, c.Height);
+            var rect = new Rectangle(0, 0, diameter, diameter);
+            using (var path = new GraphicsPath())
+            {
+                path.AddEllipse(rect);
+                c.Region = new Region(path);
+            }
+        }
+
+        private static GraphicsPath CreateRoundedRectPath(Rectangle bounds, int radius)
+        {
+            var path = new GraphicsPath();
+            int d = radius * 2;
+            var arc = new Rectangle(bounds.Location, new Size(d, d));
+
+            // top-left
+            path.AddArc(arc, 180, 90);
+            // top-right
+            arc.X = bounds.Right - d;
+            path.AddArc(arc, 270, 90);
+            // bottom-right
+            arc.Y = bounds.Bottom - d;
+            path.AddArc(arc, 0, 90);
+            // bottom-left
+            arc.X = bounds.Left;
+            path.AddArc(arc, 90, 90);
+
+            path.CloseFigure();
+            return path;
         }
 
         private void DisplayAppCode()
