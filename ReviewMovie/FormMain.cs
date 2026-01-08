@@ -35,6 +35,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ReviewMovie.Base;
+using ReviewMovie.ModernUI;
+using System.Windows.Forms.Integration;
 
 namespace ReviewMovie
 {
@@ -140,6 +142,7 @@ namespace ReviewMovie
 
             // UI-only: apply modern light theme (không đổi logic)
             ApplyModernLightTheme();
+            MountModernXamlShell();
 
             _appcode = appcode;
             _apikey = apikey;
@@ -497,6 +500,169 @@ namespace ReviewMovie
             public override Color ToolStripGradientBegin => Theme.Bg;
             public override Color ToolStripGradientMiddle => Theme.Bg;
             public override Color ToolStripGradientEnd => Theme.Bg;
+        }
+        #endregion
+
+        #region WPF_XAML_SHELL (UI only)
+        private ElementHost _xamlHost;
+        private ModernShellControl _shell;
+
+        private void MountModernXamlShell()
+        {
+            // Host WPF layout for a closer match to the modern UI screenshot.
+            // Logic remains in existing WinForms controls; we sync + forward clicks.
+            try
+            {
+                if (_xamlHost != null)
+                    return;
+
+                _shell = new ModernShellControl();
+
+                _xamlHost = new ElementHost
+                {
+                    Dock = DockStyle.Fill,
+                    Child = _shell
+                };
+
+                // Hide old layout (still exists for logic/state)
+                scMain.Visible = false;
+                Controls.Add(_xamlHost);
+                Controls.SetChildIndex(_xamlHost, 0);
+
+                // Host existing DataGridView inside WPF
+                if (_shell.MainGridHost != null)
+                {
+                    // detach from old parent
+                    if (dgvMainView.Parent != null)
+                        dgvMainView.Parent.Controls.Remove(dgvMainView);
+                    _shell.MainGridHost.Child = dgvMainView;
+                    dgvMainView.Dock = DockStyle.Fill;
+                }
+
+                // Wire top actions to existing WinForms logic
+                _shell.BtnNewLine.Click += (_, __) => btnAddRow.PerformClick();
+                _shell.BtnAutoSubtitle.Click += (_, __) => btnImportSubtitle.PerformClick();
+                _shell.BtnCancel.Click += (_, __) => btnDestroyAction.PerformClick();
+                _shell.BtnConvert.Click += (_, __) => btnConvertAudio.PerformClick();
+                _shell.BtnSave.Click += (_, __) => btnSaveAudio.PerformClick();
+                _shell.BtnRender.Click += (_, __) => btnRenderVideoPart.PerformClick();
+                _shell.BtnMerge.Click += (_, __) => btnAddAll.PerformClick();
+                _shell.BtnCreateProject.Click += (_, __) => btnOpenProject.PerformClick();
+                _shell.BtnClearText.Click += (_, __) => txtTextInput.Clear();
+
+                // Sync text input
+                _shell.TextInputBox.TextChanged += (_, __) =>
+                {
+                    if (!string.Equals(txtTextInput.Text, _shell.TextInputBox.Text, StringComparison.Ordinal))
+                        txtTextInput.Text = _shell.TextInputBox.Text;
+                };
+                txtTextInput.TextChanged += (_, __) =>
+                {
+                    if (!string.Equals(_shell.TextInputBox.Text, txtTextInput.Text, StringComparison.Ordinal))
+                        _shell.TextInputBox.Text = txtTextInput.Text;
+                };
+
+                // Sync search
+                _shell.SearchBox.TextChanged += (_, __) =>
+                {
+                    if (!string.Equals(txtTim.Text, _shell.SearchBox.Text, StringComparison.Ordinal))
+                        txtTim.Text = _shell.SearchBox.Text;
+                };
+                txtTim.TextChanged += (_, __) =>
+                {
+                    if (!string.Equals(_shell.SearchBox.Text, txtTim.Text, StringComparison.Ordinal))
+                        _shell.SearchBox.Text = txtTim.Text;
+                };
+
+                // Project dropdown mirror (simple string mirror)
+                RefreshWpfCombosFromWinForms();
+
+                cbProjectName.SelectedIndexChanged += (_, __) => SyncComboSelection(cbProjectName, _shell.ProjectCombo);
+                _shell.ProjectCombo.SelectionChanged += (_, __) => SyncComboSelection(_shell.ProjectCombo, cbProjectName);
+
+                cboSiteNguon.SelectedIndexChanged += (_, __) => SyncComboSelection(cboSiteNguon, _shell.VoiceSourceCombo);
+                _shell.VoiceSourceCombo.SelectionChanged += (_, __) => SyncComboSelection(_shell.VoiceSourceCombo, cboSiteNguon);
+
+                cbxVideoQuality.SelectedIndexChanged += (_, __) => SyncComboSelection(cbxVideoQuality, _shell.QualityCombo);
+                _shell.QualityCombo.SelectionChanged += (_, __) => SyncComboSelection(_shell.QualityCombo, cbxVideoQuality);
+
+                cbLanguageSelect.SelectedIndexChanged += (_, __) => SyncComboSelection(cbLanguageSelect, _shell.LanguageCombo);
+                _shell.LanguageCombo.SelectionChanged += (_, __) => SyncComboSelection(_shell.LanguageCombo, cbLanguageSelect);
+
+                cbxSpeechType.SelectedIndexChanged += (_, __) => SyncComboSelection(cbxSpeechType, _shell.VoiceCombo);
+                _shell.VoiceCombo.SelectionChanged += (_, __) => SyncComboSelection(_shell.VoiceCombo, cbxSpeechType);
+
+                // Basic numeric sync for Zoom % and FPS (best-effort)
+                _shell.ZoomBox.TextChanged += (_, __) =>
+                {
+                    if (decimal.TryParse(_shell.ZoomBox.Text, out var v))
+                    {
+                        // map to combo if zoom ratio uses preset values; else ignore
+                        // keep existing logic in place; just a UI mirror.
+                    }
+                };
+                _shell.FpsBox.TextChanged += (_, __) =>
+                {
+                    if (decimal.TryParse(_shell.FpsBox.Text, out var v))
+                    {
+                        var intV = (int)Math.Max((decimal)nFPS.Minimum, Math.Min((decimal)nFPS.Maximum, v));
+                        if (nFPS.Value != intV)
+                            nFPS.Value = intV;
+                    }
+                };
+                nFPS.ValueChanged += (_, __) =>
+                {
+                    var s = nFPS.Value.ToString();
+                    if (!string.Equals(_shell.FpsBox.Text, s, StringComparison.Ordinal))
+                        _shell.FpsBox.Text = s;
+                };
+                _shell.FpsBox.Text = nFPS.Value.ToString();
+            }
+            catch
+            {
+                // If WPF hosting is unavailable, the WinForms UI still works.
+            }
+        }
+
+        private void RefreshWpfCombosFromWinForms()
+        {
+            try
+            {
+                FillWpfComboFromWinForms(cbProjectName, _shell.ProjectCombo);
+                FillWpfComboFromWinForms(cboSiteNguon, _shell.VoiceSourceCombo);
+                FillWpfComboFromWinForms(cbxVideoQuality, _shell.QualityCombo);
+                FillWpfComboFromWinForms(cbLanguageSelect, _shell.LanguageCombo);
+                FillWpfComboFromWinForms(cbxSpeechType, _shell.VoiceCombo);
+
+                SyncComboSelection(cbProjectName, _shell.ProjectCombo);
+                SyncComboSelection(cboSiteNguon, _shell.VoiceSourceCombo);
+                SyncComboSelection(cbxVideoQuality, _shell.QualityCombo);
+                SyncComboSelection(cbLanguageSelect, _shell.LanguageCombo);
+                SyncComboSelection(cbxSpeechType, _shell.VoiceCombo);
+            }
+            catch { }
+        }
+
+        private static void FillWpfComboFromWinForms(ComboBox win, System.Windows.Controls.ComboBox wpf)
+        {
+            if (win == null || wpf == null) return;
+            wpf.Items.Clear();
+            foreach (var item in win.Items)
+                wpf.Items.Add(item?.ToString() ?? string.Empty);
+        }
+
+        private static void SyncComboSelection(ComboBox win, System.Windows.Controls.ComboBox wpf)
+        {
+            if (win == null || wpf == null) return;
+            if (win.SelectedIndex >= 0 && win.SelectedIndex < wpf.Items.Count)
+                wpf.SelectedIndex = win.SelectedIndex;
+        }
+
+        private static void SyncComboSelection(System.Windows.Controls.ComboBox wpf, ComboBox win)
+        {
+            if (win == null || wpf == null) return;
+            if (wpf.SelectedIndex >= 0 && wpf.SelectedIndex < win.Items.Count)
+                win.SelectedIndex = wpf.SelectedIndex;
         }
         #endregion
 
