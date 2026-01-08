@@ -544,6 +544,14 @@ namespace ReviewMovie
                 mounted |= TryHostControl(shell.VisualsHost, txtImPortMedia, BorderStyle.None, dockFill: true);
                 mounted |= TryHostControl(shell.ToolbarHost, tsMenuView, borderStyle: null, dockFill: true);
 
+                // Ensure text input behaves like a big editor
+                txtTextInput.Multiline = true;
+                txtTextInput.ReadOnly = false;
+                txtTextInput.Enabled = true;
+                txtTextInput.ScrollBars = ScrollBars.Vertical;
+                txtTextInput.AcceptsReturn = true;
+                txtTextInput.AcceptsTab = true;
+
                 if (shell.BtnClearText != null)
                     shell.BtnClearText.Click += (_, __) => txtTextInput.Clear();
 
