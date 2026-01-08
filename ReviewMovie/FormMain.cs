@@ -761,7 +761,7 @@ namespace ReviewMovie
                 dgvMainView.Refresh();
 
                 txtTextInput.Text = string.Empty;
-                txtTextInput.ReadOnly = true;
+                txtTextInput.ReadOnly = false;
                 txtImPortMedia.Text = string.Empty;
 
                 if (_listdata.Count > 0)
@@ -2269,7 +2269,7 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    MessageBox.Show(ERR_ROW_INDEX);
+                    // Không show popup khi user đang gõ; chỉ bỏ qua update.
                 }
             }
             //else
@@ -2721,7 +2721,7 @@ namespace ReviewMovie
         private void ClearTextInput()
         {
             txtTextInput.Text = string.Empty;
-            txtTextInput.ReadOnly = true;
+            txtTextInput.ReadOnly = false;
             txtImPortMedia.Text = string.Empty;
         }
 
