@@ -1,4 +1,4 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Model;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
@@ -137,6 +137,9 @@ namespace ReviewMovie
             this.toolTipPL = new ToolTip();
             this.Text = "EasyClip || " + "TPMEDIA";
 
+            // UI-only: apply modern dark theme (không đổi logic)
+            ApplyModernDarkTheme();
+
             _appcode = appcode;
             _apikey = apikey;
 
@@ -158,6 +161,277 @@ namespace ReviewMovie
             
             Init();
         }
+
+        #region UI_Theme (UI only)
+        private static class Theme
+        {
+            public static readonly Color Bg = Color.FromArgb(10, 14, 25);           // app background
+            public static readonly Color Surface = Color.FromArgb(15, 23, 42);      // panels/cards
+            public static readonly Color Surface2 = Color.FromArgb(17, 24, 39);     // headers/toolbars
+            public static readonly Color Border = Color.FromArgb(30, 41, 59);       // separators
+            public static readonly Color Text = Color.FromArgb(226, 232, 240);      // primary text
+            public static readonly Color Muted = Color.FromArgb(148, 163, 184);     // secondary text
+            public static readonly Color Accent = Color.FromArgb(99, 102, 241);     // indigo
+            public static readonly Color AccentHover = Color.FromArgb(129, 140, 248);
+        }
+
+        private void ApplyModernDarkTheme()
+        {
+            SuspendLayout();
+
+            BackColor = Theme.Bg;
+            ForeColor = Theme.Text;
+
+            // Modern borders
+            scMain.BorderStyle = BorderStyle.None;
+            scView.BorderStyle = BorderStyle.None;
+            scSetting.BorderStyle = BorderStyle.None;
+
+            // Major surfaces
+            grboxSetting.BackColor = Theme.Surface;
+            grboxSetting.ForeColor = Theme.Text;
+
+            grViewHeader.BackColor = Theme.Surface;
+            grViewHeader.ForeColor = Theme.Text;
+
+            tsMenuView.BackColor = Theme.Surface2;
+            tsMenuView.ForeColor = Theme.Text;
+            tsMenuView.GripStyle = ToolStripGripStyle.Hidden;
+            tsMenuView.Renderer = new DarkToolStripRenderer();
+
+            ctMenu.BackColor = Theme.Surface2;
+            ctMenu.ForeColor = Theme.Text;
+            ctMenu.Renderer = new DarkToolStripRenderer();
+
+            // Header labels
+            lbHeaderText.BackColor = Theme.Surface2;
+            lbHeaderText.ForeColor = Theme.Text;
+            lbHeaderInputMedia.BackColor = Theme.Surface2;
+            lbHeaderInputMedia.ForeColor = Theme.Text;
+
+            // Text areas
+            txtTextInput.BackColor = Theme.Surface;
+            txtTextInput.ForeColor = Theme.Text;
+            txtTextInput.BorderStyle = BorderStyle.FixedSingle;
+
+            txtImPortMedia.BackColor = Theme.Surface;
+            txtImPortMedia.ForeColor = Theme.Muted;
+            txtImPortMedia.BorderStyle = BorderStyle.FixedSingle;
+
+            // Buttons
+            StyleButtonPrimary(btnAddAll);
+            StyleButtonSecondary(btnConvertAudio);
+            StyleButtonSecondary(btnSaveAudio);
+            StyleButtonSecondary(btnRenderVideoPart);
+
+            StyleButtonSecondary(btnRecord);
+            StyleButtonSecondary(btnOpenProject);
+            StyleButtonSecondary(btnSaveVoiceSource);
+            StyleButtonSecondary(btnSaveEffectSetting);
+            StyleButtonSecondary(btnCollapse);
+            StyleButtonSecondary(btnExpand);
+
+            // Right settings sections
+            StyleGroupBox(grbConfigVoice);
+            StyleGroupBox(grbConfigRender);
+            StyleGroupBox(grbActionRender);
+
+            // Inputs on right panel
+            StyleTextBox(txtAppID);
+            StyleTextBox(txtToken);
+
+            StyleComboBox(cbProjectName);
+            StyleComboBox(cboSiteNguon);
+            StyleComboBox(cbxVideoQuality);
+            StyleComboBox(cbxSpeechType);
+            StyleComboBox(cbZoomRatio);
+            StyleComboBox(cbZoomQuality);
+            StyleComboBox(cbMode);
+            StyleComboBox(cbEffectType);
+            StyleComboBox(cbLanguageSelect);
+            StyleComboBox(cbSettingTemplate);
+
+            StyleNumeric(nFPS);
+            StyleNumeric(nbThread);
+            StyleNumeric(nbVolumnOrigin);
+            StyleNumeric(nbSpeechRatio);
+            StyleNumeric(nScaleAudioRangeStart);
+            StyleNumeric(nScaleAudioRangeEnd);
+
+            StyleCheckBox(CkZoom);
+            StyleCheckBox(ckRotate);
+            StyleCheckBox(ckHflip);
+            StyleCheckBox(ckHflipRandom);
+            StyleCheckBox(ckRandomMoveLeftRight);
+            StyleCheckBox(ckNotUseAudio);
+            StyleCheckBox(ckOpenPlayer);
+
+            // DataGridView
+            StyleDataGridView(dgvMainView);
+
+            // Toolstrip search box
+            txtTim.BackColor = Theme.Surface;
+            txtTim.ForeColor = Theme.Text;
+            txtTim.BorderStyle = BorderStyle.FixedSingle;
+            lbTitle.ForeColor = Theme.Muted;
+
+            // Toolstrip items
+            foreach (ToolStripItem item in tsMenuView.Items)
+            {
+                item.ForeColor = Theme.Text;
+                if (item is ToolStripButton btn)
+                {
+                    btn.BackColor = Theme.Surface2;
+                }
+            }
+            foreach (ToolStripItem item in ctMenu.Items)
+            {
+                item.ForeColor = Theme.Text;
+                item.BackColor = Theme.Surface2;
+            }
+
+            ApplyThemeRecursive(this);
+
+            ResumeLayout(true);
+        }
+
+        private void ApplyThemeRecursive(Control root)
+        {
+            foreach (Control c in root.Controls)
+            {
+                if (c is Panel || c is TableLayoutPanel)
+                {
+                    if (c.BackColor == SystemColors.Control || c.BackColor == Color.Transparent)
+                        c.BackColor = Theme.Bg;
+                    c.ForeColor = Theme.Text;
+                }
+
+                if (c is Label lbl)
+                {
+                    if (lbl == lbHeaderText || lbl == lbHeaderInputMedia)
+                    {
+                        // keep styled
+                    }
+                    else
+                    {
+                        if (lbl.ForeColor == SystemColors.ControlText || lbl.ForeColor == Color.Black)
+                            lbl.ForeColor = Theme.Muted;
+                    }
+                }
+
+                if (c is LinkLabel link)
+                {
+                    link.LinkColor = Theme.AccentHover;
+                    link.ActiveLinkColor = Theme.Accent;
+                    link.VisitedLinkColor = Theme.AccentHover;
+                    link.ForeColor = Theme.AccentHover;
+                }
+
+                if (c.HasChildren)
+                    ApplyThemeRecursive(c);
+            }
+        }
+
+        private static void StyleGroupBox(GroupBox gb)
+        {
+            gb.BackColor = Theme.Surface;
+            gb.ForeColor = Theme.Text;
+        }
+
+        private static void StyleCheckBox(CheckBox cb)
+        {
+            cb.ForeColor = Theme.Text;
+        }
+
+        private static void StyleTextBox(TextBox tb)
+        {
+            tb.BackColor = Theme.Surface;
+            tb.ForeColor = Theme.Text;
+            tb.BorderStyle = BorderStyle.FixedSingle;
+        }
+
+        private static void StyleComboBox(ComboBox cb)
+        {
+            cb.BackColor = Theme.Surface;
+            cb.ForeColor = Theme.Text;
+            cb.FlatStyle = FlatStyle.Flat;
+        }
+
+        private static void StyleNumeric(NumericUpDown nb)
+        {
+            nb.BackColor = Theme.Surface;
+            nb.ForeColor = Theme.Text;
+        }
+
+        private static void StyleButtonSecondary(Button btn)
+        {
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.BackColor = Theme.Surface2;
+            btn.ForeColor = Theme.Text;
+            btn.FlatAppearance.BorderColor = Theme.Border;
+            btn.FlatAppearance.BorderSize = 1;
+        }
+
+        private static void StyleButtonPrimary(Button btn)
+        {
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.BackColor = Theme.Accent;
+            btn.ForeColor = Color.White;
+            btn.FlatAppearance.BorderSize = 0;
+        }
+
+        private static void StyleDataGridView(DataGridView dgv)
+        {
+            dgv.EnableHeadersVisualStyles = false;
+            dgv.BackgroundColor = Theme.Bg;
+            dgv.BorderStyle = BorderStyle.None;
+            dgv.GridColor = Theme.Border;
+
+            dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Theme.Surface2;
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Theme.Text;
+            dgv.ColumnHeadersDefaultCellStyle.SelectionBackColor = Theme.Surface2;
+            dgv.ColumnHeadersDefaultCellStyle.SelectionForeColor = Theme.Text;
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 8.5f, FontStyle.Bold);
+
+            dgv.DefaultCellStyle.BackColor = Theme.Bg;
+            dgv.DefaultCellStyle.ForeColor = Theme.Text;
+            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(37, 51, 78);
+            dgv.DefaultCellStyle.SelectionForeColor = Theme.Text;
+            dgv.DefaultCellStyle.Font = new Font("Segoe UI", 8.5f, FontStyle.Regular);
+
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(12, 18, 34);
+            dgv.AlternatingRowsDefaultCellStyle.ForeColor = Theme.Text;
+            dgv.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.FromArgb(37, 51, 78);
+            dgv.AlternatingRowsDefaultCellStyle.SelectionForeColor = Theme.Text;
+
+            dgv.RowHeadersVisible = false;
+            dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+        }
+
+        private sealed class DarkToolStripRenderer : ToolStripProfessionalRenderer
+        {
+            public DarkToolStripRenderer() : base(new DarkColorTable()) { }
+        }
+
+        private sealed class DarkColorTable : ProfessionalColorTable
+        {
+            public override Color ToolStripDropDownBackground => Theme.Surface2;
+            public override Color ImageMarginGradientBegin => Theme.Surface2;
+            public override Color ImageMarginGradientMiddle => Theme.Surface2;
+            public override Color ImageMarginGradientEnd => Theme.Surface2;
+            public override Color MenuBorder => Theme.Border;
+            public override Color SeparatorDark => Theme.Border;
+            public override Color SeparatorLight => Theme.Border;
+            public override Color MenuItemSelected => Color.FromArgb(37, 51, 78);
+            public override Color MenuItemBorder => Theme.Border;
+            public override Color ToolStripBorder => Theme.Border;
+            public override Color ToolStripGradientBegin => Theme.Surface2;
+            public override Color ToolStripGradientMiddle => Theme.Surface2;
+            public override Color ToolStripGradientEnd => Theme.Surface2;
+        }
+        #endregion
+
         private void Form1_Load(object sender, EventArgs e)
         {
             //CreateProjectPath();  // bỏ tạo project tại thư mục gốc
@@ -3440,8 +3714,14 @@ namespace ReviewMovie
                 }
             }
 
-            e.DrawBackground();
-            e.Graphics.DrawString(displayText, e.Font, Brushes.Black, e.Bounds, StringFormat.GenericDefault);
+            // UI-only: dark dropdown styling
+            bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
+            using (var bg = new SolidBrush(selected ? Color.FromArgb(37, 51, 78) : Theme.Surface2))
+            using (var fg = new SolidBrush(Theme.Text))
+            {
+                e.Graphics.FillRectangle(bg, e.Bounds);
+                e.Graphics.DrawString(displayText, e.Font, fg, e.Bounds, StringFormat.GenericDefault);
+            }
             e.DrawFocusRectangle();
         }
         private void cbProjectName_MeasureItem(object sender, MeasureItemEventArgs e)
