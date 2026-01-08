@@ -510,86 +510,98 @@ namespace ReviewMovie
         private void MountModernXamlShell()
         {
             // Host WPF layout for a closer match to the modern UI screenshot.
-            // Logic remains in existing WinForms controls; we sync + forward clicks.
+            // Logic remains in existing WinForms controls; we host the original controls to preserve items + events.
+            if (_xamlHost != null)
+                return;
+
+            bool mounted = false;
+            ElementHost host = null;
+            ModernShellControl shell = null;
+
             try
             {
-                if (_xamlHost != null)
-                    return;
+                shell = new ModernShellControl();
 
-                _shell = new ModernShellControl();
-
-                _xamlHost = new ElementHost
+                host = new ElementHost
                 {
                     Dock = DockStyle.Fill,
-                    Child = _shell
+                    Child = shell,
+                    Visible = false, // show only after successful mount
                 };
 
-                // Hide old layout (still exists for logic/state)
-                scMain.Visible = false;
-                Controls.Add(_xamlHost);
-                Controls.SetChildIndex(_xamlHost, 0);
+                Controls.Add(host);
+                Controls.SetChildIndex(host, 0);
 
-                // Host existing DataGridView inside WPF
-                if (_shell.MainGridHost != null)
-                {
-                    // detach from old parent
-                    if (dgvMainView.Parent != null)
-                        dgvMainView.Parent.Controls.Remove(dgvMainView);
-                    _shell.MainGridHost.Child = dgvMainView;
-                    dgvMainView.Dock = DockStyle.Fill;
-                }
+                // Give ToolStrip a stable height when hosted
+                tsMenuView.AutoSize = false;
+                if (tsMenuView.Height < 28) tsMenuView.Height = 28;
 
-                // Host full WinForms settings panel to keep all items + logic
-                if (_shell.SettingsHost != null)
-                {
-                    if (grboxSetting.Parent != null)
-                        grboxSetting.Parent.Controls.Remove(grboxSetting);
-                    _shell.SettingsHost.Child = grboxSetting;
-                    grboxSetting.Dock = DockStyle.Fill;
-                }
+                // Attach children one-by-one (do not abort whole mount)
+                mounted |= TryHostControl(shell.MainGridHost, dgvMainView, BorderStyle.None, dockFill: true);
+                mounted |= TryHostControl(shell.SettingsHost, grboxSetting, borderStyle: null, dockFill: true);
+                mounted |= TryHostControl(shell.RecordHost, btnRecord, borderStyle: null, dockFill: true);
+                mounted |= TryHostControl(shell.TextInputHost, txtTextInput, BorderStyle.None, dockFill: true);
+                mounted |= TryHostControl(shell.VisualsHost, txtImPortMedia, BorderStyle.None, dockFill: true);
+                mounted |= TryHostControl(shell.ToolbarHost, tsMenuView, borderStyle: null, dockFill: true);
 
-                // Host WinForms header controls to keep all original items + drag/drop
-                if (_shell.RecordHost != null)
-                {
-                    if (btnRecord.Parent != null)
-                        btnRecord.Parent.Controls.Remove(btnRecord);
-                    _shell.RecordHost.Child = btnRecord;
-                    btnRecord.Dock = DockStyle.Fill;
-                }
+                if (shell.BtnClearText != null)
+                    shell.BtnClearText.Click += (_, __) => txtTextInput.Clear();
 
-                if (_shell.TextInputHost != null)
-                {
-                    if (txtTextInput.Parent != null)
-                        txtTextInput.Parent.Controls.Remove(txtTextInput);
-                    _shell.TextInputHost.Child = txtTextInput;
-                    txtTextInput.Dock = DockStyle.Fill;
-                    txtTextInput.BorderStyle = BorderStyle.None;
-                }
-
-                if (_shell.VisualsHost != null)
-                {
-                    if (txtImPortMedia.Parent != null)
-                        txtImPortMedia.Parent.Controls.Remove(txtImPortMedia);
-                    _shell.VisualsHost.Child = txtImPortMedia;
-                    txtImPortMedia.Dock = DockStyle.Fill;
-                    txtImPortMedia.BorderStyle = BorderStyle.None;
-                }
-
-                if (_shell.ToolbarHost != null)
-                {
-                    if (tsMenuView.Parent != null)
-                        tsMenuView.Parent.Controls.Remove(tsMenuView);
-                    _shell.ToolbarHost.Child = tsMenuView;
-                    tsMenuView.Dock = DockStyle.Fill;
-                }
-
-                // Clear button still supported
-                _shell.BtnClearText.Click += (_, __) => txtTextInput.Clear();
-
+                // Commit
+                _shell = shell;
+                _xamlHost = host;
             }
             catch
             {
-                // If WPF hosting is unavailable, the WinForms UI still works.
+                mounted = false;
+                // Cleanup local host if created
+                if (host != null)
+                {
+                    try { Controls.Remove(host); } catch { }
+                    try { host.Dispose(); } catch { }
+                }
+            }
+
+            // Only hide old layout after we actually mounted content
+            if (mounted && _xamlHost != null)
+            {
+                scMain.Visible = false;
+                _xamlHost.Visible = true;
+            }
+            else
+            {
+                // keep original WinForms UI visible
+                scMain.Visible = true;
+                _shell = null;
+                _xamlHost = null;
+            }
+        }
+
+        private static bool TryHostControl(WindowsFormsHost host, Control child, BorderStyle? borderStyle, bool dockFill)
+        {
+            if (host == null || child == null)
+                return false;
+
+            try
+            {
+                if (child.Parent != null)
+                    child.Parent.Controls.Remove(child);
+
+                if (dockFill)
+                    child.Dock = DockStyle.Fill;
+
+                if (borderStyle.HasValue)
+                {
+                    if (child is TextBox tb) tb.BorderStyle = borderStyle.Value;
+                    if (child is DataGridView dgv) dgv.BorderStyle = borderStyle.Value;
+                }
+
+                host.Child = child;
+                return host.Child != null;
+            }
+            catch
+            {
+                return false;
             }
         }
 
