@@ -510,6 +510,7 @@ namespace ReviewMovie
         private ElementHost _xamlHost;
         private ModernShellControl _shell;
         private Panel _settingsScrollPanel;
+        private bool _syncingWpfText;
 
         private void MountModernXamlShell()
         {
@@ -543,21 +544,95 @@ namespace ReviewMovie
                 // Attach children one-by-one (do not abort whole mount)
                 mounted |= TryHostControl(shell.MainGridHost, dgvMainView, BorderStyle.None, dockFill: true);
                 mounted |= TryHostSettings(shell.SettingsHost);
-                mounted |= TryHostControl(shell.RecordHost, btnRecord, borderStyle: null, dockFill: true);
-                mounted |= TryHostControl(shell.TextInputHost, txtTextInput, BorderStyle.None, dockFill: true);
-                mounted |= TryHostControl(shell.VisualsHost, txtImPortMedia, BorderStyle.None, dockFill: true);
                 mounted |= TryHostControl(shell.ToolbarHost, tsMenuView, borderStyle: null, dockFill: true);
 
-                // Ensure text input behaves like a big editor
-                txtTextInput.Multiline = true;
-                txtTextInput.ReadOnly = false;
-                txtTextInput.Enabled = true;
-                txtTextInput.ScrollBars = ScrollBars.Vertical;
-                txtTextInput.AcceptsReturn = true;
-                txtTextInput.AcceptsTab = true;
+                // Wire WPF top cards -> existing WinForms logic
+                if (shell.BtnRecord != null)
+                    shell.BtnRecord.Click += (_, __) => btnRecord.PerformClick();
+                if (shell.BtnConvert != null)
+                    shell.BtnConvert.Click += (_, __) => btnConvertAudio.PerformClick();
+                if (shell.BtnSave != null)
+                    shell.BtnSave.Click += (_, __) => btnSaveAudio.PerformClick();
+                if (shell.BtnRender != null)
+                    shell.BtnRender.Click += (_, __) => btnRenderVideoPart.PerformClick();
+
+                // Sync WPF text input <-> WinForms txtTextInput (logic stays in WinForms)
+                if (shell.TextInputBox != null)
+                {
+                    shell.TextInputBox.TextChanged += (_, __) =>
+                    {
+                        if (_syncingWpfText) return;
+                        _syncingWpfText = true;
+                        try { txtTextInput.Text = shell.TextInputBox.Text; }
+                        finally { _syncingWpfText = false; }
+                    };
+                    txtTextInput.TextChanged += (_, __) =>
+                    {
+                        if (_syncingWpfText) return;
+                        _syncingWpfText = true;
+                        try { shell.TextInputBox.Text = txtTextInput.Text; }
+                        finally { _syncingWpfText = false; }
+                    };
+                }
+
+                // Drag-drop audio files onto WPF text box -> reuse existing logic
+                if (shell.TextInputBox != null)
+                {
+                    shell.TextInputBox.PreviewDragOver += (_, e) =>
+                    {
+                        e.Effects = System.Windows.DragDropEffects.Copy;
+                        e.Handled = true;
+                    };
+                    shell.TextInputBox.Drop += async (_, e) =>
+                    {
+                        try
+                        {
+                            var data = e.Data.GetData(System.Windows.DataFormats.FileDrop) as string[];
+                            if (data != null && data.Length > 0 && _indexRowSelect >= 0)
+                            {
+                                await CallDownloadAudioAsync(data[0], _indexRowSelect, false, CancellationToken.None);
+                                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_audiolink", data[0], Color.White);
+                            }
+                        }
+                        catch { }
+                    };
+                }
+
+                // Drag-drop visuals onto WPF zone -> reuse existing logic
+                if (shell.VisualDropZone != null)
+                {
+                    shell.VisualDropZone.PreviewDragOver += (_, e) =>
+                    {
+                        e.Effects = System.Windows.DragDropEffects.Copy;
+                        e.Handled = true;
+                    };
+                    shell.VisualDropZone.Drop += (_, e) =>
+                    {
+                        try
+                        {
+                            var data = e.Data.GetData(System.Windows.DataFormats.FileDrop) as string[];
+                            if (data != null && data.Length > 0 && _indexRowSelect >= 0)
+                            {
+                                string file = data[0];
+                                Task.Run(() =>
+                                {
+                                    try { InSertInputMediaData(file, _indexRowSelect); }
+                                    catch { }
+                                });
+                            }
+                        }
+                        catch { }
+                    };
+                }
 
                 if (shell.BtnClearText != null)
-                    shell.BtnClearText.Click += (_, __) => txtTextInput.Clear();
+                {
+                    shell.BtnClearText.Click += (_, __) =>
+                    {
+                        txtTextInput.Clear();
+                        if (shell.TextInputBox != null) shell.TextInputBox.Clear();
+                    };
+                }
 
                 // Header info (UI-only placeholders)
                 if (shell.TxtStatus != null) shell.TxtStatus.Text = "Active";

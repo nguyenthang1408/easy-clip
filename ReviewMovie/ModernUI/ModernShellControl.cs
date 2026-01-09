@@ -23,9 +23,6 @@ namespace ReviewMovie.ModernUI
 
         public WindowsFormsHost MainGridHost { get; }
         public WindowsFormsHost SettingsHost { get; }
-        public WindowsFormsHost RecordHost { get; }
-        public WindowsFormsHost TextInputHost { get; }
-        public WindowsFormsHost VisualsHost { get; }
         public WindowsFormsHost ToolbarHost { get; }
 
         // Header elements
@@ -38,6 +35,15 @@ namespace ReviewMovie.ModernUI
         public Button BtnMinimize { get; }
         public Button BtnClose { get; }
 
+        // Top cards (WPF controls)
+        public Button BtnRecord { get; }
+        public TextBox TextInputBox { get; }
+        public TextBlock TextInputPlaceholder { get; }
+        public FrameworkElement VisualDropZone { get; }
+        public Button BtnConvert { get; }
+        public Button BtnSave { get; }
+        public Button BtnRender { get; }
+
         public ModernShellControl()
         {
             Root = (Grid)LoadEmbeddedXamlBySuffix("ModernUI.ModernShell.xaml");
@@ -47,9 +53,6 @@ namespace ReviewMovie.ModernUI
 
             MainGridHost = (WindowsFormsHost)Root.FindName("MainGridHost");
             SettingsHost = (WindowsFormsHost)Root.FindName("SettingsHost");
-            RecordHost = (WindowsFormsHost)Root.FindName("RecordHost");
-            TextInputHost = (WindowsFormsHost)Root.FindName("TextInputHost");
-            VisualsHost = (WindowsFormsHost)Root.FindName("VisualsHost");
             ToolbarHost = (WindowsFormsHost)Root.FindName("ToolbarHost");
 
             TopHeader = (Border)Root.FindName("TopHeader");
@@ -60,6 +63,25 @@ namespace ReviewMovie.ModernUI
             BtnSettings = (Button)Root.FindName("BtnSettings");
             BtnMinimize = (Button)Root.FindName("BtnMinimize");
             BtnClose = (Button)Root.FindName("BtnClose");
+
+            BtnRecord = (Button)Root.FindName("BtnRecord");
+            TextInputBox = (TextBox)Root.FindName("TextInputBox");
+            TextInputPlaceholder = (TextBlock)Root.FindName("TextInputPlaceholder");
+            VisualDropZone = (FrameworkElement)Root.FindName("VisualDropZone");
+            BtnConvert = (Button)Root.FindName("BtnConvert");
+            BtnSave = (Button)Root.FindName("BtnSave");
+            BtnRender = (Button)Root.FindName("BtnRender");
+
+            if (TextInputBox != null && TextInputPlaceholder != null)
+            {
+                TextInputBox.TextChanged += (_, __) =>
+                {
+                    TextInputPlaceholder.Visibility = string.IsNullOrEmpty(TextInputBox.Text)
+                        ? Visibility.Visible
+                        : Visibility.Collapsed;
+                };
+                TextInputPlaceholder.Visibility = Visibility.Visible;
+            }
         }
 
         private static object LoadEmbeddedXamlBySuffix(string suffix)
