@@ -594,6 +594,8 @@ namespace ReviewMovie
                 FormBorderStyle = FormBorderStyle.None;
                 ControlBox = false;
                 ApplyRoundedWindowCorners(18);
+                this.SizeChanged -= FormMain_SizeChanged_RoundedCorners;
+                this.SizeChanged += FormMain_SizeChanged_RoundedCorners;
                 scMain.Visible = false;
                 _xamlHost.Visible = true;
             }
@@ -604,6 +606,12 @@ namespace ReviewMovie
                 _shell = null;
                 _xamlHost = null;
             }
+        }
+
+        private void FormMain_SizeChanged_RoundedCorners(object sender, EventArgs e)
+        {
+            if (FormBorderStyle == FormBorderStyle.None)
+                ApplyRoundedWindowCorners(18);
         }
 
         private static bool TryHostControl(WindowsFormsHost host, Control child, BorderStyle? borderStyle, bool dockFill)
@@ -679,6 +687,12 @@ namespace ReviewMovie
         [DllImport("dwmapi.dll", PreserveSig = true)]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
 
+        [DllImport("gdi32.dll", SetLastError = true)]
+        private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern int SetWindowRgn(IntPtr hWnd, IntPtr hRgn, bool bRedraw);
+
         private void BeginDragMove()
         {
             try
@@ -701,7 +715,14 @@ namespace ReviewMovie
             {
                 // 1) Prefer native rounded corners on supported Windows (Win11)
                 int pref = DWMWCP_ROUND;
-                _ = DwmSetWindowAttribute(Handle, DWMWA_WINDOW_CORNER_PREFERENCE, ref pref, sizeof(int));
+                int hr = DwmSetWindowAttribute(Handle, DWMWA_WINDOW_CORNER_PREFERENCE, ref pref, sizeof(int));
+
+                // If DWM succeeds, avoid Region clipping (prevents dark/dirty corner artifacts)
+                if (hr == 0)
+                {
+                    Region = null;
+                    return;
+                }
             }
             catch
             {
@@ -710,11 +731,11 @@ namespace ReviewMovie
 
             try
             {
-                // 2) Fallback: clip window to rounded region (works everywhere)
-                using (var path = CreateRoundedRectPath(new Rectangle(0, 0, Width, Height), radius))
-                {
-                    Region = new Region(path);
-                }
+                // 2) Fallback (Win10/older): use Win32 window region (no black anti-alias fringe)
+                int d = Math.Max(1, radius) * 2;
+                IntPtr rgn = CreateRoundRectRgn(0, 0, Width + 1, Height + 1, d, d);
+                if (rgn != IntPtr.Zero)
+                    SetWindowRgn(Handle, rgn, true);
             }
             catch
             {
