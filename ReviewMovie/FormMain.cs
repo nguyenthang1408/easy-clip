@@ -506,6 +506,7 @@ namespace ReviewMovie
         #region WPF_XAML_SHELL (UI only)
         private ElementHost _xamlHost;
         private ModernShellControl _shell;
+        private Panel _settingsScrollPanel;
 
         private void MountModernXamlShell()
         {
@@ -538,7 +539,7 @@ namespace ReviewMovie
 
                 // Attach children one-by-one (do not abort whole mount)
                 mounted |= TryHostControl(shell.MainGridHost, dgvMainView, BorderStyle.None, dockFill: true);
-                mounted |= TryHostControl(shell.SettingsHost, grboxSetting, borderStyle: null, dockFill: true);
+                mounted |= TryHostSettings(shell.SettingsHost);
                 mounted |= TryHostControl(shell.RecordHost, btnRecord, borderStyle: null, dockFill: true);
                 mounted |= TryHostControl(shell.TextInputHost, txtTextInput, BorderStyle.None, dockFill: true);
                 mounted |= TryHostControl(shell.VisualsHost, txtImPortMedia, BorderStyle.None, dockFill: true);
@@ -605,6 +606,45 @@ namespace ReviewMovie
                 }
 
                 host.Child = child;
+                return host.Child != null;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool TryHostSettings(WindowsFormsHost host)
+        {
+            if (host == null)
+                return false;
+
+            try
+            {
+                if (_settingsScrollPanel == null || _settingsScrollPanel.IsDisposed)
+                {
+                    _settingsScrollPanel = new Panel
+                    {
+                        Dock = DockStyle.Fill,
+                        AutoScroll = true,
+                        BackColor = System.Drawing.Color.White,
+                        Padding = new Padding(0),
+                    };
+                }
+
+                // Detach settings groupbox from old parent
+                if (grboxSetting.Parent != null)
+                    grboxSetting.Parent.Controls.Remove(grboxSetting);
+
+                // Make settings content scroll inside WinForms (not WPF)
+                grboxSetting.Dock = DockStyle.Top;
+                grboxSetting.AutoSize = true;
+                grboxSetting.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+
+                _settingsScrollPanel.Controls.Clear();
+                _settingsScrollPanel.Controls.Add(grboxSetting);
+
+                host.Child = _settingsScrollPanel;
                 return host.Child != null;
             }
             catch

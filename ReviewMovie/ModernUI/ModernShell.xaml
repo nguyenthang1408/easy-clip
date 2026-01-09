@@ -90,9 +90,9 @@
 
       <TextBlock Grid.Row="0" Text="Settings" FontWeight="Bold" Foreground="#111827" Margin="4,2,0,10"/>
 
-      <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-        <wf:WindowsFormsHost x:Name="SettingsHost" />
-      </ScrollViewer>
+      <!-- IMPORTANT: Do NOT wrap WindowsFormsHost in WPF ScrollViewer (airspace issues).
+           We use WinForms AutoScroll panel instead (see FormMain). -->
+      <wf:WindowsFormsHost Grid.Row="1" x:Name="SettingsHost" />
     </Grid>
   </Border>
 </Grid>
