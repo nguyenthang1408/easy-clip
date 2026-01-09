@@ -2,6 +2,98 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:wf="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
       Background="#F3F4F6">
+  <Grid.Resources>
+    <!-- Modern button styles -->
+    <Style x:Key="BtnPrimary" TargetType="{x:Type Button}">
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="Background" Value="#F97316"/>
+      <Setter Property="BorderBrush" Value="#F97316"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="Padding" Value="14,7"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type Button}">
+            <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#FB923C"/>
+                <Setter TargetName="bd" Property="BorderBrush" Value="#FB923C"/>
+              </Trigger>
+              <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#EA580C"/>
+                <Setter TargetName="bd" Property="BorderBrush" Value="#EA580C"/>
+              </Trigger>
+              <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="bd" Property="Opacity" Value="0.55"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="BtnSecondary" TargetType="{x:Type Button}">
+      <Setter Property="Foreground" Value="#111827"/>
+      <Setter Property="Background" Value="White"/>
+      <Setter Property="BorderBrush" Value="#E5E7EB"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="Padding" Value="12,6"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type Button}">
+            <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#F3F4F6"/>
+              </Trigger>
+              <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#E5E7EB"/>
+              </Trigger>
+              <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="bd" Property="Opacity" Value="0.55"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="BtnPill" TargetType="{x:Type Button}" BasedOn="{StaticResource BtnSecondary}">
+      <Setter Property="Padding" Value="10,4"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type Button}">
+            <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="999">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#F3F4F6"/>
+              </Trigger>
+              <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#E5E7EB"/>
+              </Trigger>
+              <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="bd" Property="Opacity" Value="0.55"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Grid.Resources>
   <Grid.RowDefinitions>
     <!-- Top header -->
     <RowDefinition Height="72" />
@@ -113,8 +205,7 @@
           </Border>
           <TextBlock Text="Record" FontWeight="SemiBold" Foreground="#111827" Margin="0,10,0,0" HorizontalAlignment="Center"/>
           <TextBlock Text="Click to start mic" Foreground="#6B7280" FontSize="11" Margin="0,4,0,0" HorizontalAlignment="Center"/>
-          <Button x:Name="BtnRecord" Content="Start" Margin="0,10,0,0" Padding="14,6"
-                  Background="#FFFFFF" BorderBrush="#E5E7EB" Foreground="#111827" />
+          <Button x:Name="BtnRecord" Content="Start" Margin="0,10,0,0" Style="{StaticResource BtnPrimary}"/>
         </StackPanel>
       </Border>
 
@@ -131,7 +222,7 @@
               <TextBlock Text="≡" Foreground="#94A3B8" Margin="0,0,6,0"/>
               <TextBlock Text="TEXT INPUT" FontWeight="SemiBold" Foreground="#6B7280" />
             </StackPanel>
-            <Button x:Name="BtnClearText" Content="Clear" DockPanel.Dock="Right" Padding="10,4" Background="#F3F4F6" BorderBrush="#E5E7EB" />
+            <Button x:Name="BtnClearText" Content="Clear" DockPanel.Dock="Right" Style="{StaticResource BtnPill}" />
           </DockPanel>
 
           <Border Grid.Row="1"
@@ -181,9 +272,9 @@
           </Grid>
 
           <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="BtnConvert" Content="Convert" Padding="12,6" Background="White" BorderBrush="#E5E7EB" Margin="0,0,8,0"/>
-            <Button x:Name="BtnSave" Content="Save" Padding="12,6" Background="White" BorderBrush="#E5E7EB" Margin="0,0,8,0"/>
-            <Button x:Name="BtnRender" Content="Render" Padding="12,6" Background="White" BorderBrush="#E5E7EB"/>
+            <Button x:Name="BtnConvert" Content="Convert" Margin="0,0,8,0" Style="{StaticResource BtnSecondary}"/>
+            <Button x:Name="BtnSave" Content="Save" Margin="0,0,8,0" Style="{StaticResource BtnSecondary}"/>
+            <Button x:Name="BtnRender" Content="Render" Style="{StaticResource BtnSecondary}"/>
           </StackPanel>
         </Grid>
       </Border>
