@@ -49,7 +49,7 @@
                   Margin="0,10,0,0"
                   Padding="6"
                   MinHeight="140">
-            <wf:WindowsFormsHost x:Name="TextInputHost" Focusable="True" IsTabStop="True" />
+            <wf:WindowsFormsHost x:Name="TextInputHost" />
           </Border>
         </Grid>
       </Border>
