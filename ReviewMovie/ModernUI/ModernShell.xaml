@@ -13,8 +13,8 @@
     <ColumnDefinition Width="420" />
   </Grid.ColumnDefinitions>
 
-  <!-- Top header bar (match target screenshot) -->
-  <Border Grid.Row="0" Grid.ColumnSpan="2" Background="White" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1">
+  <!-- Top header bar (used as window title bar) -->
+  <Border x:Name="TopHeader" Grid.Row="0" Grid.ColumnSpan="2" Background="White" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1">
     <Grid Margin="18,12">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
@@ -76,6 +76,15 @@
         <Border x:Name="Avatar" Width="32" Height="32" CornerRadius="16" Background="#F97316" BorderBrush="#FB923C" BorderThickness="1">
           <TextBlock x:Name="TxtAvatar" Text="TN" Foreground="White" FontWeight="Bold" FontSize="11.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
+
+        <!-- Window buttons -->
+        <Border Width="1" Height="22" Background="#E5E7EB" Margin="12,0,12,0"/>
+        <Button x:Name="BtnMinimize" Width="32" Height="32" Background="Transparent" BorderBrush="#E5E7EB">
+          <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE921;" Foreground="#6B7280" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Button>
+        <Button x:Name="BtnClose" Width="32" Height="32" Background="Transparent" BorderBrush="#E5E7EB" Margin="8,0,0,0">
+          <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8BB;" Foreground="#6B7280" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Button>
       </StackPanel>
     </Grid>
   </Border>

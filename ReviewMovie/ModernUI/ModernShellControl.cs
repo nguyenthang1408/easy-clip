@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Forms.Integration;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ReviewMovie.ModernUI
 {
@@ -28,11 +29,14 @@ namespace ReviewMovie.ModernUI
         public WindowsFormsHost ToolbarHost { get; }
 
         // Header elements
+        public Border TopHeader { get; }
         public TextBlock TxtStatus { get; }
         public TextBlock TxtRemaining { get; }
         public TextBlock TxtAvatar { get; }
         public Button BtnHelp { get; }
         public Button BtnSettings { get; }
+        public Button BtnMinimize { get; }
+        public Button BtnClose { get; }
 
         public ModernShellControl()
         {
@@ -48,11 +52,14 @@ namespace ReviewMovie.ModernUI
             VisualsHost = (WindowsFormsHost)Root.FindName("VisualsHost");
             ToolbarHost = (WindowsFormsHost)Root.FindName("ToolbarHost");
 
+            TopHeader = (Border)Root.FindName("TopHeader");
             TxtStatus = (TextBlock)Root.FindName("TxtStatus");
             TxtRemaining = (TextBlock)Root.FindName("TxtRemaining");
             TxtAvatar = (TextBlock)Root.FindName("TxtAvatar");
             BtnHelp = (Button)Root.FindName("BtnHelp");
             BtnSettings = (Button)Root.FindName("BtnSettings");
+            BtnMinimize = (Button)Root.FindName("BtnMinimize");
+            BtnClose = (Button)Root.FindName("BtnClose");
         }
 
         private static object LoadEmbeddedXamlBySuffix(string suffix)

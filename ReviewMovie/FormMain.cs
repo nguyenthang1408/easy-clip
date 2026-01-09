@@ -37,6 +37,7 @@ using System.Windows.Forms;
 using ReviewMovie.Base;
 using ReviewMovie.ModernUI;
 using System.Windows.Forms.Integration;
+using System.Runtime.InteropServices;
 
 namespace ReviewMovie
 {
@@ -563,6 +564,12 @@ namespace ReviewMovie
                 if (shell.TxtAvatar != null) shell.TxtAvatar.Text = "TP";
                 if (shell.BtnHelp != null) shell.BtnHelp.Click += (_, __) => System.Diagnostics.Process.Start("https://www.facebook.com/La.studio.top");
                 if (shell.BtnSettings != null) shell.BtnSettings.Click += (_, __) => { /* reserved */ };
+                if (shell.BtnMinimize != null) shell.BtnMinimize.Click += (_, __) => this.WindowState = FormWindowState.Minimized;
+                if (shell.BtnClose != null) shell.BtnClose.Click += (_, __) => this.Close();
+                if (shell.TopHeader != null)
+                {
+                    shell.TopHeader.MouseLeftButtonDown += (_, __) => BeginDragMove();
+                }
 
                 // Commit
                 _shell = shell;
@@ -582,6 +589,9 @@ namespace ReviewMovie
             // Only hide old layout after we actually mounted content
             if (mounted && _xamlHost != null)
             {
+                // Remove the native title bar (khoanh 1) and use the WPF header as title bar (khoanh 2)
+                FormBorderStyle = FormBorderStyle.None;
+                ControlBox = false;
                 scMain.Visible = false;
                 _xamlHost.Visible = true;
             }
@@ -632,7 +642,7 @@ namespace ReviewMovie
                 int targetW = Math.Min(wa.Width, 1380);
                 int targetH = Math.Min(wa.Height, 860);
 
-                FormBorderStyle = FormBorderStyle.FixedSingle;
+                // Size is fixed, but border style is controlled elsewhere (borderless when using XAML header).
                 MaximizeBox = false;
                 MinimizeBox = true;
                 StartPosition = FormStartPosition.CenterScreen;
@@ -645,6 +655,30 @@ namespace ReviewMovie
             {
                 // don't block startup
             }
+        }
+
+        // Borderless window drag support
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HTCAPTION = 0x2;
+
+        [DllImport("user32.dll")]
+        private static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+
+        private void BeginDragMove()
+        {
+            try
+            {
+                // Make the form borderless so header becomes the title bar
+                if (FormBorderStyle != FormBorderStyle.None)
+                    FormBorderStyle = FormBorderStyle.None;
+
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+            }
+            catch { }
         }
 
         private bool TryHostSettings(WindowsFormsHost host)
