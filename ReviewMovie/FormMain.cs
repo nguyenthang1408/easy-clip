@@ -38,6 +38,7 @@ using ReviewMovie.Base;
 using ReviewMovie.ModernUI;
 using System.Windows.Forms.Integration;
 using System.Runtime.InteropServices;
+using System.Drawing.Drawing2D;
 
 namespace ReviewMovie
 {
@@ -592,6 +593,7 @@ namespace ReviewMovie
                 // Remove the native title bar (khoanh 1) and use the WPF header as title bar (khoanh 2)
                 FormBorderStyle = FormBorderStyle.None;
                 ControlBox = false;
+                ApplyRoundedWindowCorners(18);
                 scMain.Visible = false;
                 _xamlHost.Visible = true;
             }
@@ -667,6 +669,16 @@ namespace ReviewMovie
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
 
+        // Rounded corners (Windows 11+ via DWM, fallback via Region)
+        private const int DWMWA_WINDOW_CORNER_PREFERENCE = 33;
+        private const int DWMWCP_DEFAULT = 0;
+        private const int DWMWCP_DONOTROUND = 1;
+        private const int DWMWCP_ROUND = 2;
+        private const int DWMWCP_ROUNDSMALL = 3;
+
+        [DllImport("dwmapi.dll", PreserveSig = true)]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
         private void BeginDragMove()
         {
             try
@@ -675,10 +687,63 @@ namespace ReviewMovie
                 if (FormBorderStyle != FormBorderStyle.None)
                     FormBorderStyle = FormBorderStyle.None;
 
+                ApplyRoundedWindowCorners(18);
+
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
             catch { }
+        }
+
+        private void ApplyRoundedWindowCorners(int radius)
+        {
+            try
+            {
+                // 1) Prefer native rounded corners on supported Windows (Win11)
+                int pref = DWMWCP_ROUND;
+                _ = DwmSetWindowAttribute(Handle, DWMWA_WINDOW_CORNER_PREFERENCE, ref pref, sizeof(int));
+            }
+            catch
+            {
+                // ignore: dwmapi may not be available
+            }
+
+            try
+            {
+                // 2) Fallback: clip window to rounded region (works everywhere)
+                using (var path = CreateRoundedRectPath(new Rectangle(0, 0, Width, Height), radius))
+                {
+                    Region = new Region(path);
+                }
+            }
+            catch
+            {
+                // ignore
+            }
+        }
+
+        private static GraphicsPath CreateRoundedRectPath(Rectangle bounds, int radius)
+        {
+            var path = new GraphicsPath();
+            if (radius <= 0)
+            {
+                path.AddRectangle(bounds);
+                path.CloseFigure();
+                return path;
+            }
+
+            int d = radius * 2;
+            var arc = new Rectangle(bounds.Location, new Size(d, d));
+
+            path.AddArc(arc, 180, 90);
+            arc.X = bounds.Right - d;
+            path.AddArc(arc, 270, 90);
+            arc.Y = bounds.Bottom - d;
+            path.AddArc(arc, 0, 90);
+            arc.X = bounds.Left;
+            path.AddArc(arc, 90, 90);
+            path.CloseFigure();
+            return path;
         }
 
         private bool TryHostSettings(WindowsFormsHost host)
