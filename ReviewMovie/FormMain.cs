@@ -143,6 +143,7 @@ namespace ReviewMovie
             // UI-only: apply modern light theme (không đổi logic)
             ApplyModernLightTheme();
             MountModernXamlShell();
+            ApplyFixedWindowSize();
 
             _appcode = appcode;
             _apikey = apikey;
@@ -611,6 +612,31 @@ namespace ReviewMovie
             catch
             {
                 return false;
+            }
+        }
+
+        private void ApplyFixedWindowSize()
+        {
+            try
+            {
+                var wa = Screen.FromControl(this).WorkingArea;
+
+                // Target size chosen to show full Settings without clipping on 1366x768+.
+                int targetW = Math.Min(wa.Width, 1380);
+                int targetH = Math.Min(wa.Height, 860);
+
+                FormBorderStyle = FormBorderStyle.FixedSingle;
+                MaximizeBox = false;
+                MinimizeBox = true;
+                StartPosition = FormStartPosition.CenterScreen;
+
+                Size = new Size(targetW, targetH);
+                MinimumSize = Size;
+                MaximumSize = Size;
+            }
+            catch
+            {
+                // don't block startup
             }
         }
 
