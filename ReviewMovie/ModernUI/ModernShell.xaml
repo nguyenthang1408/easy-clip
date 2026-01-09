@@ -2,13 +2,46 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:wf="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
       Background="#F3F4F6">
+  <Grid.RowDefinitions>
+    <!-- Top header -->
+    <RowDefinition Height="72" />
+    <!-- Content -->
+    <RowDefinition Height="*" />
+  </Grid.RowDefinitions>
   <Grid.ColumnDefinitions>
     <ColumnDefinition Width="*" />
     <ColumnDefinition Width="420" />
   </Grid.ColumnDefinitions>
 
+  <!-- Top header bar (match screenshot) -->
+  <Border Grid.Row="0" Grid.ColumnSpan="2" Background="White" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1">
+    <Grid Margin="18,12">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+
+      <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+        <Border Width="40" Height="40" CornerRadius="10" Background="#FFF7ED" BorderBrush="#FED7AA" BorderThickness="1">
+          <TextBlock Text="🎬" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Border>
+        <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+          <TextBlock Text="EasyClip Studio" FontWeight="Bold" FontSize="14" Foreground="#111827" />
+          <TextBlock Text="TPMEDIA PREMIUM" FontSize="10.5" Foreground="#6B7280" Margin="0,2,0,0"/>
+        </StackPanel>
+      </StackPanel>
+
+      <!-- Right side placeholder (kept minimal like screenshot crop) -->
+      <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+        <Border Width="34" Height="34" CornerRadius="10" Background="#F3F4F6" BorderBrush="#E5E7EB" BorderThickness="1">
+          <TextBlock Text="≡" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#6B7280"/>
+        </Border>
+      </StackPanel>
+    </Grid>
+  </Border>
+
   <!-- Main -->
-  <Grid Grid.Column="0" Margin="14">
+  <Grid Grid.Row="1" Grid.Column="0" Margin="14">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
@@ -81,7 +114,7 @@
   </Grid>
 
   <!-- Right sidebar (host WinForms settings to keep all items + logic) -->
-  <Border Grid.Column="1" Background="White" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="14" Margin="0,14,14,14" Padding="12">
+  <Border Grid.Row="1" Grid.Column="1" Background="White" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="14" Margin="0,14,14,14" Padding="12">
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
