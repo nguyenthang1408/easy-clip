@@ -35,11 +35,33 @@
 
       <!-- Right: status + remaining + icons + avatar -->
       <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-        <Border x:Name="BadgeStatus" Background="#DCFCE7" BorderBrush="#BBF7D0" BorderThickness="1" CornerRadius="10" Padding="8,3" Margin="0,0,10,0">
-          <TextBlock x:Name="TxtStatus" Text="Active" Foreground="#16A34A" FontWeight="SemiBold" FontSize="11"/>
+        <Border x:Name="BadgeStatus"
+                Background="#DCFCE7"
+                BorderBrush="#BBF7D0"
+                BorderThickness="1"
+                CornerRadius="12"
+                Height="26"
+                Padding="10,0"
+                VerticalAlignment="Center"
+                Margin="0,0,10,0">
+          <Grid>
+            <TextBlock x:Name="TxtStatus"
+                       Text="Active"
+                       Foreground="#16A34A"
+                       FontWeight="Bold"
+                       FontSize="11.5"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+          </Grid>
         </Border>
 
-        <TextBlock x:Name="TxtRemaining" Text="1 Day Remaining" Foreground="#6B7280" FontSize="11.5" VerticalAlignment="Center" Margin="0,0,12,0"/>
+        <TextBlock x:Name="TxtRemaining"
+                   Text="1 Day Remaining"
+                   Foreground="#374151"
+                   FontSize="11.5"
+                   FontWeight="SemiBold"
+                   VerticalAlignment="Center"
+                   Margin="0,0,12,0"/>
 
         <Border Width="1" Height="22" Background="#E5E7EB" Margin="0,0,12,0"/>
 
