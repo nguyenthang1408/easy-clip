@@ -13,17 +13,19 @@
     <ColumnDefinition Width="420" />
   </Grid.ColumnDefinitions>
 
-  <!-- Top header bar (match screenshot) -->
+  <!-- Top header bar (match target screenshot) -->
   <Border Grid.Row="0" Grid.ColumnSpan="2" Background="White" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1">
     <Grid Margin="18,12">
       <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
 
-      <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+      <!-- Left: logo + app name -->
+      <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
         <Border Width="40" Height="40" CornerRadius="10" Background="#FFF7ED" BorderBrush="#FED7AA" BorderThickness="1">
-          <TextBlock Text="🎬" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          <TextBlock Text="EC" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#F97316"/>
         </Border>
         <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
           <TextBlock Text="EasyClip Studio" FontWeight="Bold" FontSize="14" Foreground="#111827" />
@@ -31,10 +33,26 @@
         </StackPanel>
       </StackPanel>
 
-      <!-- Right side placeholder (kept minimal like screenshot crop) -->
-      <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-        <Border Width="34" Height="34" CornerRadius="10" Background="#F3F4F6" BorderBrush="#E5E7EB" BorderThickness="1">
-          <TextBlock Text="≡" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#6B7280"/>
+      <!-- Right: status + remaining + icons + avatar -->
+      <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+        <Border x:Name="BadgeStatus" Background="#DCFCE7" BorderBrush="#BBF7D0" BorderThickness="1" CornerRadius="10" Padding="8,3" Margin="0,0,10,0">
+          <TextBlock x:Name="TxtStatus" Text="Active" Foreground="#16A34A" FontWeight="SemiBold" FontSize="11"/>
+        </Border>
+
+        <TextBlock x:Name="TxtRemaining" Text="1 Day Remaining" Foreground="#6B7280" FontSize="11.5" VerticalAlignment="Center" Margin="0,0,12,0"/>
+
+        <Border Width="1" Height="22" Background="#E5E7EB" Margin="0,0,12,0"/>
+
+        <Button x:Name="BtnHelp" Width="32" Height="32" Background="#F3F4F6" BorderBrush="#E5E7EB" Margin="0,0,8,0">
+          <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE897;" Foreground="#6B7280" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Button>
+
+        <Button x:Name="BtnSettings" Width="32" Height="32" Background="#F3F4F6" BorderBrush="#E5E7EB" Margin="0,0,12,0">
+          <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE713;" Foreground="#6B7280" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Button>
+
+        <Border x:Name="Avatar" Width="32" Height="32" CornerRadius="16" Background="#F97316" BorderBrush="#FB923C" BorderThickness="1">
+          <TextBlock x:Name="TxtAvatar" Text="TN" Foreground="White" FontWeight="Bold" FontSize="11.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
       </StackPanel>
     </Grid>

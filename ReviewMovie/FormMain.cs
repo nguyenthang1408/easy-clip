@@ -557,6 +557,13 @@ namespace ReviewMovie
                 if (shell.BtnClearText != null)
                     shell.BtnClearText.Click += (_, __) => txtTextInput.Clear();
 
+                // Header info (UI-only placeholders)
+                if (shell.TxtStatus != null) shell.TxtStatus.Text = "Active";
+                if (shell.TxtRemaining != null) shell.TxtRemaining.Text = "1 Day Remaining";
+                if (shell.TxtAvatar != null) shell.TxtAvatar.Text = "TP";
+                if (shell.BtnHelp != null) shell.BtnHelp.Click += (_, __) => System.Diagnostics.Process.Start("https://www.facebook.com/La.studio.top");
+                if (shell.BtnSettings != null) shell.BtnSettings.Click += (_, __) => { /* reserved */ };
+
                 // Commit
                 _shell = shell;
                 _xamlHost = host;
