@@ -628,8 +628,10 @@ namespace ReviewMovie
                         Dock = DockStyle.Fill,
                         AutoScroll = true,
                         BackColor = System.Drawing.Color.White,
-                        Padding = new Padding(0),
+                        // Reserve space so the vertical scrollbar doesn't cover content.
+                        Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth + 6, 0),
                     };
+                    _settingsScrollPanel.SizeChanged += (_, __) => AdjustSettingsWidth();
                 }
 
                 // Detach settings groupbox from old parent
@@ -638,11 +640,13 @@ namespace ReviewMovie
 
                 // Make settings content scroll inside WinForms (not WPF)
                 grboxSetting.Dock = DockStyle.Top;
-                grboxSetting.AutoSize = true;
-                grboxSetting.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+                // Keep height driven by its children, but allow width to be controlled
+                grboxSetting.AutoSize = false;
+                grboxSetting.AutoSizeMode = AutoSizeMode.GrowOnly;
 
                 _settingsScrollPanel.Controls.Clear();
                 _settingsScrollPanel.Controls.Add(grboxSetting);
+                AdjustSettingsWidth();
 
                 host.Child = _settingsScrollPanel;
                 return host.Child != null;
@@ -651,6 +655,22 @@ namespace ReviewMovie
             {
                 return false;
             }
+        }
+
+        private void AdjustSettingsWidth()
+        {
+            if (_settingsScrollPanel == null || _settingsScrollPanel.IsDisposed)
+                return;
+            if (grboxSetting == null || grboxSetting.IsDisposed)
+                return;
+
+            // Fit inside visible client area (avoid being under the scrollbar)
+            int targetWidth = Math.Max(
+                0,
+                _settingsScrollPanel.ClientSize.Width - _settingsScrollPanel.Padding.Right - 2);
+
+            if (targetWidth > 0)
+                grboxSetting.Width = targetWidth;
         }
 
         // Combo mirroring helpers removed: we now host the original WinForms settings panel.
