@@ -146,7 +146,7 @@ namespace ReviewMovie
             ApplyModernLightTheme();
             MountModernXamlShell();
             ApplyFixedWindowSize();
-            SetupProjectComboZoom();
+            SetupComboZoomAll();
 
             _appcode = appcode;
             _apikey = apikey;
@@ -512,10 +512,23 @@ namespace ReviewMovie
         private ModernShellControl _shell;
         private Panel _settingsScrollPanel;
         private bool _syncingWpfText;
-        private Font _projectComboNormalFont;
-        private int _projectComboNormalItemHeight;
-        private int _projectComboNormalDropDownHeight;
-        private int _projectComboNormalDropDownWidth;
+        private readonly Dictionary<ComboBox, ComboZoomState> _comboZoomStates = new Dictionary<ComboBox, ComboZoomState>();
+
+        private readonly struct ComboZoomState
+        {
+            public ComboZoomState(Font normalFont, int normalDropDownHeight, int normalDropDownWidth, bool integralHeight)
+            {
+                NormalFont = normalFont;
+                NormalDropDownHeight = normalDropDownHeight;
+                NormalDropDownWidth = normalDropDownWidth;
+                IntegralHeight = integralHeight;
+            }
+
+            public Font NormalFont { get; }
+            public int NormalDropDownHeight { get; }
+            public int NormalDropDownWidth { get; }
+            public bool IntegralHeight { get; }
+        }
 
         private void MountModernXamlShell()
         {
@@ -4204,44 +4217,62 @@ namespace ReviewMovie
             e.DrawFocusRectangle();
         }
 
-        private void SetupProjectComboZoom()
+        private void SetupComboZoomAll()
         {
-            // Make project dropdown easier to read (bigger when opened)
-            _projectComboNormalFont = cbProjectName.Font;
-            _projectComboNormalItemHeight = cbProjectName.ItemHeight;
-            _projectComboNormalDropDownHeight = cbProjectName.DropDownHeight;
-            _projectComboNormalDropDownWidth = cbProjectName.DropDownWidth;
-
-            cbProjectName.DropDown += cbProjectName_DropDown;
-            cbProjectName.DropDownClosed += cbProjectName_DropDownClosed;
+            // Apply the same focus/zoom behavior to all comboboxes
+            RegisterComboZoom(cbProjectName);
+            RegisterComboZoom(cboSiteNguon);
+            RegisterComboZoom(cbxVideoQuality);
+            RegisterComboZoom(cbxSpeechType);
+            RegisterComboZoom(cbZoomRatio);
+            RegisterComboZoom(cbZoomQuality);
+            RegisterComboZoom(cbMode);
+            RegisterComboZoom(cbEffectType);
+            RegisterComboZoom(cbLanguageSelect);
+            RegisterComboZoom(cbSettingTemplate);
         }
 
-        private void cbProjectName_DropDown(object sender, EventArgs e)
+        private void RegisterComboZoom(ComboBox cb)
         {
+            if (cb == null) return;
+            if (_comboZoomStates.ContainsKey(cb)) return;
+
+            _comboZoomStates[cb] = new ComboZoomState(cb.Font, cb.DropDownHeight, cb.DropDownWidth, cb.IntegralHeight);
+
+            cb.Enter += Combo_ZoomIn;
+            cb.DropDown += Combo_ZoomIn;
+            cb.Leave += Combo_ZoomOut;
+            cb.DropDownClosed += Combo_ZoomOut;
+        }
+
+        private void Combo_ZoomIn(object sender, EventArgs e)
+        {
+            if (sender is not ComboBox cb) return;
+            if (!_comboZoomStates.TryGetValue(cb, out var st)) return;
+
             try
             {
-                // Increase readability
-                cbProjectName.Font = new Font(_projectComboNormalFont.FontFamily, _projectComboNormalFont.Size + 2.0f, FontStyle.Regular);
-                cbProjectName.ItemHeight = 28;
-                cbProjectName.DropDownHeight = 360;
-                cbProjectName.IntegralHeight = false;
-
-                // Make sure dropdown is wide enough to see paths
-                cbProjectName.DropDownWidth = Math.Max(_projectComboNormalDropDownWidth, ComputeComboDropDownWidth(cbProjectName, cbProjectName.Font, 760));
-                cbProjectName.Refresh();
+                cb.Font = new Font(st.NormalFont.FontFamily, st.NormalFont.Size + 2.0f, st.NormalFont.Style);
+                cb.IntegralHeight = false;
+                cb.DropDownHeight = 360;
+                cb.DropDownWidth = Math.Max(st.NormalDropDownWidth, ComputeComboDropDownWidth(cb, cb.Font, 900));
+                cb.Refresh();
             }
             catch { }
         }
 
-        private void cbProjectName_DropDownClosed(object sender, EventArgs e)
+        private void Combo_ZoomOut(object sender, EventArgs e)
         {
+            if (sender is not ComboBox cb) return;
+            if (!_comboZoomStates.TryGetValue(cb, out var st)) return;
+
             try
             {
-                cbProjectName.Font = _projectComboNormalFont ?? cbProjectName.Font;
-                if (_projectComboNormalItemHeight > 0) cbProjectName.ItemHeight = _projectComboNormalItemHeight;
-                if (_projectComboNormalDropDownHeight > 0) cbProjectName.DropDownHeight = _projectComboNormalDropDownHeight;
-                if (_projectComboNormalDropDownWidth > 0) cbProjectName.DropDownWidth = _projectComboNormalDropDownWidth;
-                cbProjectName.Refresh();
+                cb.Font = st.NormalFont;
+                cb.DropDownHeight = st.NormalDropDownHeight;
+                cb.DropDownWidth = st.NormalDropDownWidth;
+                cb.IntegralHeight = st.IntegralHeight;
+                cb.Refresh();
             }
             catch { }
         }
