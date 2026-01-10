@@ -4247,7 +4247,8 @@ namespace ReviewMovie
 
         private void Combo_ZoomIn(object sender, EventArgs e)
         {
-            if (sender is not ComboBox cb) return;
+            var cb = sender as ComboBox;
+            if (cb == null) return;
             if (!_comboZoomStates.TryGetValue(cb, out var st)) return;
 
             try
@@ -4263,7 +4264,8 @@ namespace ReviewMovie
 
         private void Combo_ZoomOut(object sender, EventArgs e)
         {
-            if (sender is not ComboBox cb) return;
+            var cb = sender as ComboBox;
+            if (cb == null) return;
             if (!_comboZoomStates.TryGetValue(cb, out var st)) return;
 
             try
