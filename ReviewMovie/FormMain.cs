@@ -892,9 +892,18 @@ namespace ReviewMovie
                 // Keep height driven by its children, but allow width to be controlled
                 grboxSetting.AutoSize = false;
                 grboxSetting.AutoSizeMode = AutoSizeMode.GrowOnly;
+                grboxSetting.Visible = true;
 
                 _settingsScrollPanel.Controls.Clear();
                 _settingsScrollPanel.Controls.Add(grboxSetting);
+                // Ensure it has a non-zero height when re-parented
+                try
+                {
+                    int preferredH = grboxSetting.PreferredSize.Height;
+                    if (preferredH > 0 && grboxSetting.Height < preferredH)
+                        grboxSetting.Height = preferredH;
+                }
+                catch { }
                 // Force vertical-only scrolling (prevents horizontal offset that clips left text)
                 try
                 {
