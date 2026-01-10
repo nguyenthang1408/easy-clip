@@ -45,8 +45,8 @@ namespace ReviewMovie
     public partial class FormMain : Form
     {
         // Toggle WPF shell. Set false to keep original WinForms UI (classic layout).
-        private const bool USE_MODERN_WPF_SHELL = false;
-        private const bool USE_MODERN_TOP_CARDS = true;
+        private const bool USE_MODERN_WPF_SHELL = true;
+        private const bool USE_MODERN_TOP_CARDS = false;
         private readonly IClipPlayerService _clipPlayerService = new ClipPlayerService();
 
         private readonly IProjectDataService _projectService;
@@ -160,7 +160,8 @@ namespace ReviewMovie
             ApplyInitialWindowSize();
             SetupComboZoomAll();
             MountModernTopCardsIntoClassicHeader();
-            BeginInvoke((Action)(() => ApplyFixedClassicLayoutIfNeeded()));
+            if (!USE_MODERN_WPF_SHELL)
+                BeginInvoke((Action)(() => ApplyFixedClassicLayoutIfNeeded()));
 
             _appcode = appcode;
             _apikey = apikey;
@@ -583,6 +584,9 @@ namespace ReviewMovie
                 mounted |= TryHostSettings(shell.SettingsHost);
                 mounted |= TryHostControl(shell.ToolbarHost, tsMenuView, borderStyle: null, dockFill: true);
 
+                // Hide old toolstrip visual; keep its logic/state available
+                tsMenuView.Visible = false;
+
                 // Wire WPF top cards -> existing WinForms logic
                 if (shell.BtnRecord != null)
                     shell.BtnRecord.Click += (_, __) => btnRecord.PerformClick();
@@ -592,6 +596,21 @@ namespace ReviewMovie
                     shell.BtnSave.Click += (_, __) => btnSaveAudio.PerformClick();
                 if (shell.BtnRender != null)
                     shell.BtnRender.Click += (_, __) => btnRenderVideoPart.PerformClick();
+
+                // Actions row -> existing actions
+                if (shell.BtnNewLine != null) shell.BtnNewLine.Click += (_, __) => btnAddRow.PerformClick();
+                if (shell.BtnAutoSubtitle != null) shell.BtnAutoSubtitle.Click += (_, __) => btnImportSubtitle.PerformClick();
+                if (shell.BtnCancel != null) shell.BtnCancel.Click += (_, __) => btnDestroyAction.PerformClick();
+
+                // Search box mirrors existing toolstrip textbox
+                if (shell.SearchBox != null)
+                {
+                    shell.SearchBox.TextChanged += (_, __) =>
+                    {
+                        try { txtTim.Text = shell.SearchBox.Text; }
+                        catch { }
+                    };
+                }
 
                 // Sync WPF text input <-> WinForms txtTextInput (logic stays in WinForms)
                 if (shell.TextInputBox != null)
@@ -1259,6 +1278,9 @@ namespace ReviewMovie
                 grboxSetting.AutoSizeMode = AutoSizeMode.GrowOnly;
                 grboxSetting.Visible = true;
 
+                // Modern sidebar styling (keep items, change look)
+                ApplyModernSidebarLook();
+
                 _settingsScrollPanel.Controls.Clear();
                 _settingsScrollPanel.Controls.Add(grboxSetting);
                 // Ensure it has a non-zero height when re-parented
@@ -1361,6 +1383,89 @@ namespace ReviewMovie
                     txtToken.Left = left;
                     txtToken.Width = Math.Max(120, fullW - left - paddingRight);
                 }
+            }
+            catch { }
+        }
+
+        private void ApplyModernSidebarLook()
+        {
+            try
+            {
+                // Light/clean colors like screenshot
+                var bg = Color.White;
+                var border = Color.FromArgb(229, 231, 235);
+                var text = Color.FromArgb(17, 24, 39);
+                var muted = Color.FromArgb(107, 114, 128);
+
+                if (grboxSetting != null && !grboxSetting.IsDisposed)
+                {
+                    grboxSetting.BackColor = bg;
+                    grboxSetting.ForeColor = text;
+                }
+
+                // GroupBoxes
+                GroupBox[] groups = { grbConfigVoice, grbConfigRender, grbActionRender };
+                foreach (var gb in groups)
+                {
+                    if (gb == null || gb.IsDisposed) continue;
+                    gb.BackColor = bg;
+                    gb.ForeColor = text;
+                }
+
+                // Labels -> muted
+                foreach (Control c in grboxSetting.Controls)
+                {
+                    if (c is Label lbl)
+                        lbl.ForeColor = muted;
+                }
+
+                // Inputs
+                Action<Control> styleInputs = null;
+                styleInputs = ctrl =>
+                {
+                    foreach (Control ch in ctrl.Controls)
+                    {
+                        if (ch is TextBox tb)
+                        {
+                            tb.BackColor = bg;
+                            tb.ForeColor = text;
+                        }
+                        else if (ch is ComboBox cb)
+                        {
+                            cb.BackColor = bg;
+                            cb.ForeColor = text;
+                        }
+                        else if (ch is NumericUpDown nb)
+                        {
+                            nb.BackColor = bg;
+                            nb.ForeColor = text;
+                        }
+                        else if (ch is CheckBox ck)
+                        {
+                            ck.ForeColor = text;
+                        }
+                        else if (ch is Button btn)
+                        {
+                            btn.FlatStyle = FlatStyle.Flat;
+                            btn.FlatAppearance.BorderColor = border;
+                            btn.FlatAppearance.BorderSize = 1;
+                            btn.BackColor = bg;
+                            btn.ForeColor = text;
+
+                            // Primary action
+                            if (btn == btnAddAll)
+                            {
+                                btn.BackColor = Color.FromArgb(249, 115, 22);
+                                btn.ForeColor = Color.White;
+                                btn.FlatAppearance.BorderSize = 0;
+                            }
+                        }
+
+                        if (ch.HasChildren)
+                            styleInputs(ch);
+                    }
+                };
+                styleInputs(grboxSetting);
             }
             catch { }
         }

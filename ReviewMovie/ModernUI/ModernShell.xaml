@@ -101,7 +101,7 @@
     <RowDefinition Height="*" />
   </Grid.RowDefinitions>
   <Grid.ColumnDefinitions>
-    <ColumnDefinition Width="3*" />
+    <ColumnDefinition Width="4*" />
     <!-- Responsive sidebar: scales with screen, but stays usable -->
     <ColumnDefinition Width="2*" MinWidth="420" MaxWidth="620" />
   </Grid.ColumnDefinitions>
@@ -281,9 +281,23 @@
       </Border>
     </Grid>
 
-    <!-- Toolbar row (host WinForms ToolStrip to keep all items) -->
-    <Border Grid.Row="1" Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" Padding="6" Margin="0,0,0,10">
-      <wf:WindowsFormsHost x:Name="ToolbarHost" />
+    <!-- Actions row (like screenshot) -->
+    <Border Grid.Row="1" Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" Padding="10" Margin="0,0,0,10">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="BtnNewLine" Content="+ New Line" Style="{StaticResource BtnPrimary}" Margin="0,0,10,0"/>
+        <Button x:Name="BtnAutoSubtitle" Grid.Column="1" Content="Auto Subtitle" Style="{StaticResource BtnSecondary}" Margin="0,0,10,0"/>
+        <Button x:Name="BtnCancel" Grid.Column="2" Content="Cancel" Style="{StaticResource BtnSecondary}" />
+
+        <TextBox x:Name="SearchBox" Grid.Column="4" Width="220" Padding="10,6" Background="White" BorderBrush="#E5E7EB" />
+      </Grid>
     </Border>
 
     <!-- Table (host WinForms DataGridView) -->

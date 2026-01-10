@@ -44,6 +44,12 @@ namespace ReviewMovie.ModernUI
         public Button BtnSave { get; }
         public Button BtnRender { get; }
 
+        // Actions row
+        public Button BtnNewLine { get; }
+        public Button BtnAutoSubtitle { get; }
+        public Button BtnCancel { get; }
+        public TextBox SearchBox { get; }
+
         public ModernShellControl()
         {
             Root = (Grid)LoadEmbeddedXamlBySuffix("ModernUI.ModernShell.xaml");
@@ -71,6 +77,11 @@ namespace ReviewMovie.ModernUI
             BtnConvert = (Button)Root.FindName("BtnConvert");
             BtnSave = (Button)Root.FindName("BtnSave");
             BtnRender = (Button)Root.FindName("BtnRender");
+
+            BtnNewLine = (Button)Root.FindName("BtnNewLine");
+            BtnAutoSubtitle = (Button)Root.FindName("BtnAutoSubtitle");
+            BtnCancel = (Button)Root.FindName("BtnCancel");
+            SearchBox = (TextBox)Root.FindName("SearchBox");
 
             if (TextInputBox != null && TextInputPlaceholder != null)
             {
