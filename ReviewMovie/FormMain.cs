@@ -946,6 +946,7 @@ namespace ReviewMovie
                 FixProjectLayout();
                 FixConfigVoiceLayout();
                 FixConfigRenderLayout();
+                FixSettingsGroupBoxesLayout();
             }
             catch { }
         }
@@ -959,8 +960,8 @@ namespace ReviewMovie
                 if (totalW <= 0) return;
 
                 // Desired width for the whole right side (includes scSetting split + padding)
-                int desiredRight = Math.Min(560, Math.Max(480, (int)(totalW * 0.40)));
-                int minLeft = 640;
+                int desiredRight = Math.Min(700, Math.Max(560, (int)(totalW * 0.45)));
+                int minLeft = 560;
 
                 int splitterDistance = Math.Max(minLeft, totalW - desiredRight);
                 splitterDistance = Math.Min(splitterDistance, totalW - 380); // keep right panel usable
@@ -1007,13 +1008,15 @@ namespace ReviewMovie
                 if (grbConfigRender == null || grbConfigRender.IsDisposed) return;
 
                 int paddingRight = 10;
-                int left = 78; // most controls start at 78 in designer
                 int fullW = grbConfigRender.ClientSize.Width;
                 if (fullW <= 0) return;
 
-                // Right column checkboxes block width
-                int rightColumnLeft = 230; // designer uses 230
-                int leftColumnRight = rightColumnLeft - 10;
+                int left = 78; // most controls start at 78 in designer
+
+                // Compute a dynamic right column for checkboxes/numerics so we can use all available width
+                int rightColumnWidth = 190;
+                int rightColumnLeft = Math.Max(240, fullW - rightColumnWidth - paddingRight);
+                int leftColumnRight = rightColumnLeft - 12;
 
                 // Stretch common comboboxes in left column
                 ComboBox[] combos =
@@ -1029,6 +1032,38 @@ namespace ReviewMovie
                     cb.Width = Math.Max(120, leftColumnRight - cb.Left);
                 }
 
+                // Move right-side checkboxes to the computed right column
+                CheckBox[] rightChecks = { CkZoom, ckRotate, ckHflip, ckHflipRandom, ckNotUseAudio };
+                foreach (var ck in rightChecks)
+                {
+                    if (ck == null || ck.IsDisposed) continue;
+                    ck.Left = rightColumnLeft;
+                    ck.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                }
+
+                // Move numeric up-downs (FPS/Thread) to the right column area
+                if (nFPS != null && !nFPS.IsDisposed)
+                {
+                    nFPS.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    nFPS.Left = fullW - nFPS.Width - paddingRight;
+                }
+                if (nbThread != null && !nbThread.IsDisposed)
+                {
+                    nbThread.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    nbThread.Left = fullW - nbThread.Width - paddingRight;
+                }
+                // Align their labels just before the numeric controls
+                if (label10 != null && !label10.IsDisposed && nFPS != null && !nFPS.IsDisposed)
+                {
+                    label10.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    label10.Left = Math.Max(rightColumnLeft, nFPS.Left - label10.Width - 6);
+                }
+                if (label13 != null && !label13.IsDisposed && nbThread != null && !nbThread.IsDisposed)
+                {
+                    label13.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    label13.Left = Math.Max(rightColumnLeft, nbThread.Left - label13.Width - 6);
+                }
+
                 // Keep Save effect button pinned right
                 if (btnSaveEffectSetting != null && !btnSaveEffectSetting.IsDisposed)
                 {
@@ -1041,6 +1076,53 @@ namespace ReviewMovie
                     cbLanguageSelect.Width = Math.Max(120, fullW - cbLanguageSelect.Left - paddingRight);
                 if (cbxSpeechType != null && !cbxSpeechType.IsDisposed)
                     cbxSpeechType.Width = Math.Max(120, fullW - cbxSpeechType.Left - paddingRight);
+            }
+            catch { }
+        }
+
+        private void FixSettingsGroupBoxesLayout()
+        {
+            // Use available space in the right panel: widen groupboxes and reduce "empty" areas.
+            try
+            {
+                if (grboxSetting == null || grboxSetting.IsDisposed) return;
+
+                int padding = 10;
+                int fullW = grboxSetting.ClientSize.Width;
+                int fullH = grboxSetting.ClientSize.Height;
+                if (fullW <= 0 || fullH <= 0) return;
+
+                // Make top-level groupboxes stretch horizontally
+                GroupBox[] groups = { grbConfigVoice, grbConfigRender, grbActionRender };
+                foreach (var gb in groups)
+                {
+                    if (gb == null || gb.IsDisposed) continue;
+                    gb.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    gb.Width = Math.Max(200, fullW - 2 * padding);
+                    gb.Left = padding;
+                }
+
+                // Place action box at bottom
+                if (grbActionRender != null && !grbActionRender.IsDisposed)
+                {
+                    grbActionRender.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+                    grbActionRender.Top = fullH - grbActionRender.Height - padding;
+                }
+
+                // Let render config fill the remaining vertical space (so no big empty area)
+                if (grbConfigVoice != null && !grbConfigVoice.IsDisposed &&
+                    grbConfigRender != null && !grbConfigRender.IsDisposed)
+                {
+                    grbConfigRender.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+
+                    int top = grbConfigVoice.Bottom + padding;
+                    int bottomLimit = (grbActionRender != null && !grbActionRender.IsDisposed)
+                        ? grbActionRender.Top - padding
+                        : fullH - padding;
+
+                    grbConfigRender.Top = top;
+                    grbConfigRender.Height = Math.Max(200, bottomLimit - top);
+                }
             }
             catch { }
         }
