@@ -1,4 +1,4 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Model;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
@@ -29,11 +29,14 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
+using ReviewMovie.WpfUi;
 
 namespace ReviewMovie
 {
@@ -128,6 +131,15 @@ namespace ReviewMovie
 
         private string _videoMerge;
         private bool _sessionMerge;
+
+        // Modern UI (WPF hosted in WinForms)
+        private ElementHost _modernHeaderHost;
+        private ModernHeaderView _modernHeaderView;
+        private bool _syncModernHeaderText;
+
+        private ElementHost _modernSettingsHost;
+        private ModernSettingsView _modernSettingsView;
+        private bool _syncModernSettings;
         #endregion
 
         #region Main_Init
@@ -157,6 +169,10 @@ namespace ReviewMovie
             _loadConfig.InitOrUpdateBaseConfig(_apikey, txtAppID.Text, txtAppID.Text, txtToken.Text);
             
             Init();
+
+            // UI makeover: replace header block with WPF (XAML) like design
+            InitModernHeaderUi();
+            InitModernSettingsUi();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -174,6 +190,297 @@ namespace ReviewMovie
             LoadProjectListData();
             DisplayItemDefault();
             loadApiKey();
+        }
+
+        private void InitModernHeaderUi()
+        {
+            // Avoid double init
+            if (_modernHeaderHost != null) return;
+
+            _modernHeaderView = new ModernHeaderView();
+
+            // Sync initial text
+            _modernHeaderView.Text = txtTextInput.Text;
+
+            _modernHeaderView.StartRecordClicked += (_, __) => btnRecord.PerformClick();
+            _modernHeaderView.ConvertClicked += (_, __) => btnConvertAudio.PerformClick();
+            _modernHeaderView.SaveClicked += (_, __) => btnSaveAudio.PerformClick();
+            _modernHeaderView.RenderClicked += (_, __) => btnRenderVideoPart.PerformClick();
+            _modernHeaderView.ClearClicked += (_, __) =>
+            {
+                _syncModernHeaderText = true;
+                try
+                {
+                    txtTextInput.Text = string.Empty;
+                    _modernHeaderView.Text = string.Empty;
+                }
+                finally
+                {
+                    _syncModernHeaderText = false;
+                }
+            };
+
+            _modernHeaderView.TextChanged += (_, __) =>
+            {
+                if (_syncModernHeaderText) return;
+                _syncModernHeaderText = true;
+                try
+                {
+                    txtTextInput.Text = _modernHeaderView.Text;
+                }
+                finally
+                {
+                    _syncModernHeaderText = false;
+                }
+            };
+
+            // Keep WPF textbox updated if WinForms changes it (drag-drop, load subtitle, etc.)
+            txtTextInput.TextChanged += (_, __) =>
+            {
+                if (_modernHeaderView == null || _syncModernHeaderText) return;
+                _syncModernHeaderText = true;
+                try
+                {
+                    _modernHeaderView.Text = txtTextInput.Text;
+                }
+                finally
+                {
+                    _syncModernHeaderText = false;
+                }
+            };
+
+            _modernHeaderHost = new ElementHost
+            {
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0),
+                Child = _modernHeaderView
+            };
+
+            // Replace old header groupbox visually (keep it for existing logic/drag-drop if needed)
+            grViewHeader.Visible = false;
+            tlpView.Controls.Add(_modernHeaderHost, 0, 0);
+            _modernHeaderHost.BringToFront();
+        }
+
+        private void InitModernSettingsUi()
+        {
+            if (_modernSettingsHost != null) return;
+
+            _modernSettingsView = new ModernSettingsView();
+            _modernSettingsHost = new ElementHost
+            {
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0),
+                Child = _modernSettingsView
+            };
+
+            // Hide old panel but keep controls for logic/state
+            grboxSetting.Visible = false;
+            scSetting.Panel2.Controls.Add(_modernSettingsHost);
+            _modernSettingsHost.BringToFront();
+
+            WireModernSettingsEvents();
+            SyncModernSettingsFromWinForms();
+        }
+
+        private void WireModernSettingsEvents()
+        {
+            if (_modernSettingsView == null) return;
+
+            // Buttons
+            _modernSettingsView.BtnCreateProject.Click += (_, __) => btnOpenProject.PerformClick();
+            _modernSettingsView.BtnSaveVoice.Click += (_, __) => btnSaveVoiceSource.PerformClick();
+            _modernSettingsView.BtnSaveEffect.Click += (_, __) => btnSaveEffectSetting.PerformClick();
+            _modernSettingsView.BtnMergeSegments.Click += (_, __) => btnAddAll.PerformClick();
+
+            // Combos -> map by SelectedIndex
+            _modernSettingsView.CbProject.SelectionChanged += (_, __) =>
+            {
+                if (_syncModernSettings) return;
+                var idx = _modernSettingsView.CbProject.SelectedIndex;
+                if (idx >= 0 && idx < cbProjectName.Items.Count) cbProjectName.SelectedIndex = idx;
+            };
+
+            _modernSettingsView.CbVoiceSource.SelectionChanged += (_, __) =>
+            {
+                if (_syncModernSettings) return;
+                var idx = _modernSettingsView.CbVoiceSource.SelectedIndex;
+                if (idx >= 0 && idx < cboSiteNguon.Items.Count) cboSiteNguon.SelectedIndex = idx;
+            };
+
+            _modernSettingsView.CbZoomUp.SelectionChanged += (_, __) =>
+            {
+                if (_syncModernSettings) return;
+                var idx = _modernSettingsView.CbZoomUp.SelectedIndex;
+                if (idx >= 0 && idx < cbZoomRatio.Items.Count) cbZoomRatio.SelectedIndex = idx;
+            };
+            _modernSettingsView.CbZQuality.SelectionChanged += (_, __) =>
+            {
+                if (_syncModernSettings) return;
+                var idx = _modernSettingsView.CbZQuality.SelectedIndex;
+                if (idx >= 0 && idx < cbZoomQuality.Items.Count) cbZoomQuality.SelectedIndex = idx;
+            };
+            _modernSettingsView.CbQuality.SelectionChanged += (_, __) =>
+            {
+                if (_syncModernSettings) return;
+                var idx = _modernSettingsView.CbQuality.SelectedIndex;
+                if (idx >= 0 && idx < cbxVideoQuality.Items.Count) cbxVideoQuality.SelectedIndex = idx;
+            };
+            _modernSettingsView.CbMode.SelectionChanged += (_, __) =>
+            {
+                if (_syncModernSettings) return;
+                var idx = _modernSettingsView.CbMode.SelectedIndex;
+                if (idx >= 0 && idx < cbMode.Items.Count) cbMode.SelectedIndex = idx;
+            };
+            _modernSettingsView.CbEffect.SelectionChanged += (_, __) =>
+            {
+                if (_syncModernSettings) return;
+                var idx = _modernSettingsView.CbEffect.SelectedIndex;
+                if (idx >= 0 && idx < cbEffectType.Items.Count) cbEffectType.SelectedIndex = idx;
+            };
+            _modernSettingsView.CbLanguage.SelectionChanged += (_, __) =>
+            {
+                if (_syncModernSettings) return;
+                var idx = _modernSettingsView.CbLanguage.SelectedIndex;
+                if (idx >= 0 && idx < cbLanguageSelect.Items.Count) cbLanguageSelect.SelectedIndex = idx;
+            };
+            _modernSettingsView.CbVoice.SelectionChanged += (_, __) =>
+            {
+                if (_syncModernSettings) return;
+                var idx = _modernSettingsView.CbVoice.SelectedIndex;
+                if (idx >= 0 && idx < cbxSpeechType.Items.Count) cbxSpeechType.SelectedIndex = idx;
+            };
+            _modernSettingsView.CbTemplate.SelectionChanged += (_, __) =>
+            {
+                if (_syncModernSettings) return;
+                var idx = _modernSettingsView.CbTemplate.SelectedIndex;
+                if (idx >= 0 && idx < cbSettingTemplate.Items.Count) cbSettingTemplate.SelectedIndex = idx;
+            };
+
+            // Text fields -> push on LostFocus
+            _modernSettingsView.TxtApiKey.LostFocus += (_, __) => txtAppID.Text = _modernSettingsView.TxtApiKey.Text;
+            _modernSettingsView.TxtToken.LostFocus += (_, __) => txtToken.Text = _modernSettingsView.TxtToken.Text;
+
+            _modernSettingsView.TxtFps.LostFocus += (_, __) =>
+                TrySetNumeric(nFPS, _modernSettingsView.TxtFps.Text, isDecimal: false);
+            _modernSettingsView.TxtThread.LostFocus += (_, __) =>
+                TrySetNumeric(nbThread, _modernSettingsView.TxtThread.Text, isDecimal: false);
+
+            _modernSettingsView.TxtVolume.LostFocus += (_, __) =>
+                TrySetNumeric(nbVolumnOrigin, _modernSettingsView.TxtVolume.Text, isDecimal: true);
+            _modernSettingsView.TxtSpeechSpeed.LostFocus += (_, __) =>
+                TrySetNumeric(nbSpeechRatio, _modernSettingsView.TxtSpeechSpeed.Text, isDecimal: true);
+            _modernSettingsView.TxtAudioScaleFrom.LostFocus += (_, __) =>
+                TrySetNumeric(nScaleAudioRangeStart, _modernSettingsView.TxtAudioScaleFrom.Text, isDecimal: true);
+            _modernSettingsView.TxtAudioScaleTo.LostFocus += (_, __) =>
+                TrySetNumeric(nScaleAudioRangeEnd, _modernSettingsView.TxtAudioScaleTo.Text, isDecimal: true);
+
+            // Checkboxes
+            _modernSettingsView.ChkZoom.Checked += (_, __) => CkZoom.Checked = true;
+            _modernSettingsView.ChkZoom.Unchecked += (_, __) => CkZoom.Checked = false;
+
+            _modernSettingsView.ChkRotate.Checked += (_, __) => ckRotate.Checked = true;
+            _modernSettingsView.ChkRotate.Unchecked += (_, __) => ckRotate.Checked = false;
+
+            _modernSettingsView.ChkFlip.Checked += (_, __) => ckHflip.Checked = true;
+            _modernSettingsView.ChkFlip.Unchecked += (_, __) => ckHflip.Checked = false;
+
+            _modernSettingsView.ChkFlipRandom.Checked += (_, __) => ckHflipRandom.Checked = true;
+            _modernSettingsView.ChkFlipRandom.Unchecked += (_, __) => ckHflipRandom.Checked = false;
+
+            _modernSettingsView.ChkMoveLR.Checked += (_, __) => ckRandomMoveLeftRight.Checked = true;
+            _modernSettingsView.ChkMoveLR.Unchecked += (_, __) => ckRandomMoveLeftRight.Checked = false;
+
+            _modernSettingsView.ChkOpenPlayer.Checked += (_, __) => ckOpenPlayer.Checked = true;
+            _modernSettingsView.ChkOpenPlayer.Unchecked += (_, __) => ckOpenPlayer.Checked = false;
+
+            _modernSettingsView.ChkMuted.Checked += (_, __) => ckNotUseAudio.Checked = true;
+            _modernSettingsView.ChkMuted.Unchecked += (_, __) => ckNotUseAudio.Checked = false;
+
+            // WinForms -> WPF resync for big state changes
+            cbProjectName.SelectedIndexChanged += (_, __) => SyncModernSettingsFromWinForms();
+            cboSiteNguon.SelectedIndexChanged += (_, __) => SyncModernSettingsFromWinForms();
+            lblstatus.TextChanged += (_, __) =>
+            {
+                if (_modernSettingsView == null) return;
+                _modernSettingsView.SetStatus(lblstatus.Text);
+            };
+        }
+
+        private void SyncModernSettingsFromWinForms()
+        {
+            if (_modernSettingsView == null) return;
+            if (_syncModernSettings) return;
+
+            _syncModernSettings = true;
+            try
+            {
+                SetWpfComboFromWinForms(cbProjectName, _modernSettingsView.CbProject);
+                SetWpfComboFromWinForms(cboSiteNguon, _modernSettingsView.CbVoiceSource);
+                _modernSettingsView.TxtApiKey.Text = txtAppID.Text ?? string.Empty;
+                _modernSettingsView.TxtToken.Text = txtToken.Text ?? string.Empty;
+
+                SetWpfComboFromWinForms(cbZoomRatio, _modernSettingsView.CbZoomUp);
+                SetWpfComboFromWinForms(cbZoomQuality, _modernSettingsView.CbZQuality);
+                _modernSettingsView.TxtFps.Text = nFPS.Value.ToString(CultureInfo.InvariantCulture);
+                _modernSettingsView.TxtThread.Text = nbThread.Value.ToString(CultureInfo.InvariantCulture);
+
+                SetWpfComboFromWinForms(cbxVideoQuality, _modernSettingsView.CbQuality);
+                SetWpfComboFromWinForms(cbMode, _modernSettingsView.CbMode);
+                SetWpfComboFromWinForms(cbEffectType, _modernSettingsView.CbEffect);
+
+                _modernSettingsView.ChkZoom.IsChecked = CkZoom.Checked;
+                _modernSettingsView.ChkRotate.IsChecked = ckRotate.Checked;
+                _modernSettingsView.ChkFlip.IsChecked = ckHflip.Checked;
+                _modernSettingsView.ChkFlipRandom.IsChecked = ckHflipRandom.Checked;
+                _modernSettingsView.ChkMoveLR.IsChecked = ckRandomMoveLeftRight.Checked;
+                _modernSettingsView.ChkOpenPlayer.IsChecked = ckOpenPlayer.Checked;
+
+                _modernSettingsView.TxtVolume.Text = nbVolumnOrigin.Value.ToString(CultureInfo.InvariantCulture);
+                _modernSettingsView.TxtSpeechSpeed.Text = nbSpeechRatio.Value.ToString(CultureInfo.InvariantCulture);
+                _modernSettingsView.TxtAudioScaleFrom.Text = nScaleAudioRangeStart.Value.ToString(CultureInfo.InvariantCulture);
+                _modernSettingsView.TxtAudioScaleTo.Text = nScaleAudioRangeEnd.Value.ToString(CultureInfo.InvariantCulture);
+                _modernSettingsView.ChkMuted.IsChecked = ckNotUseAudio.Checked;
+
+                SetWpfComboFromWinForms(cbLanguageSelect, _modernSettingsView.CbLanguage);
+                SetWpfComboFromWinForms(cbxSpeechType, _modernSettingsView.CbVoice);
+                SetWpfComboFromWinForms(cbSettingTemplate, _modernSettingsView.CbTemplate);
+
+                _modernSettingsView.SetStatus(lblstatus.Text);
+            }
+            finally
+            {
+                _syncModernSettings = false;
+            }
+        }
+
+        private static void SetWpfComboFromWinForms(System.Windows.Forms.ComboBox winFormsCombo, System.Windows.Controls.ComboBox wpfCombo)
+        {
+            wpfCombo.Items.Clear();
+            for (int i = 0; i < winFormsCombo.Items.Count; i++)
+            {
+                wpfCombo.Items.Add(winFormsCombo.GetItemText(winFormsCombo.Items[i]));
+            }
+            wpfCombo.SelectedIndex = winFormsCombo.SelectedIndex;
+        }
+
+        private static void TrySetNumeric(NumericUpDown nud, string input, bool isDecimal)
+        {
+            if (nud == null) return;
+            if (string.IsNullOrWhiteSpace(input)) return;
+
+            // Accept both "1.2" and "1,2"
+            var normalized = input.Trim().Replace(',', '.');
+            if (!decimal.TryParse(normalized, NumberStyles.Number, CultureInfo.InvariantCulture, out var value))
+                return;
+
+            if (!isDecimal)
+                value = Math.Round(value, 0);
+
+            if (value < nud.Minimum) value = nud.Minimum;
+            if (value > nud.Maximum) value = nud.Maximum;
+
+            nud.Value = value;
         }
         private void LoadProjectListData()
         {
