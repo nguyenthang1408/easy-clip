@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Net;
@@ -162,10 +162,30 @@ namespace Lib
         {
             if (datasrc != null)
             {
-                cbname.DataSource = datasrc;
-                cbname.DisplayMember = "Display";
-                cbname.ValueMember = "Value";
-                cbname.SelectedIndex = index;
+                cbname.BeginUpdate();
+                try
+                {
+                    cbname.DataSource = datasrc;
+                    cbname.DisplayMember = "Display";
+                    cbname.ValueMember = "Value";
+
+                    // Safe select: avoid ArgumentException when datasource is empty
+                    if (cbname.Items != null && cbname.Items.Count > 0)
+                    {
+                        int safeIndex = index;
+                        if (safeIndex < 0) safeIndex = 0;
+                        if (safeIndex >= cbname.Items.Count) safeIndex = cbname.Items.Count - 1;
+                        cbname.SelectedIndex = safeIndex;
+                    }
+                    else
+                    {
+                        cbname.SelectedIndex = -1;
+                    }
+                }
+                finally
+                {
+                    cbname.EndUpdate();
+                }
             }
         }
     }

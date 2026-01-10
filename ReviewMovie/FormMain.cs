@@ -1,4 +1,4 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Model;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
@@ -32,13 +32,22 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using ReviewMovie.Base;
+using ReviewMovie.ModernUI;
+using System.Windows.Forms.Integration;
+using System.Runtime.InteropServices;
+using System.Drawing.Drawing2D;
+using System.Threading.Tasks;
 
 namespace ReviewMovie
 {
     public partial class FormMain : Form
     {
+        // Toggle WPF shell. Set false to keep original WinForms UI (classic layout).
+        // Stable default: keep classic WinForms layout so all items always show.
+        private const bool USE_MODERN_WPF_SHELL = false;
+        private const bool USE_MODERN_TOP_CARDS = true;
         private readonly IClipPlayerService _clipPlayerService = new ClipPlayerService();
 
         private readonly IProjectDataService _projectService;
@@ -135,7 +144,26 @@ namespace ReviewMovie
         {
             InitializeComponent();
             this.toolTipPL = new ToolTip();
-            this.Text = "EasyClip || " + "TPMEDIA";
+            this.Text = "EasyClip Studio | TPMEDIA";
+
+            // UI-only: apply modern light theme (không đổi logic)
+            ApplyModernLightTheme();
+            if (USE_MODERN_WPF_SHELL)
+            {
+                MountModernXamlShell();
+            }
+            else
+            {
+                // Ensure original WinForms layout is visible
+                scMain.Visible = true;
+                RestoreClassicLayout();
+            }
+
+            ApplyInitialWindowSize();
+            SetupComboZoomAll();
+            MountModernTopCardsIntoClassicHeader();
+            if (!USE_MODERN_WPF_SHELL)
+                BeginInvoke((Action)(() => ApplyFixedClassicLayoutIfNeeded()));
 
             _appcode = appcode;
             _apikey = apikey;
@@ -158,6 +186,1365 @@ namespace ReviewMovie
             
             Init();
         }
+
+        #region UI_Theme (UI only)
+        private static class Theme
+        {
+            // Light modern palette (match screenshot)
+            public static readonly Color Bg = Color.FromArgb(243, 244, 246);         // #F3F4F6 app background
+            public static readonly Color Card = Color.White;                          // cards
+            public static readonly Color Surface2 = Color.FromArgb(249, 250, 251);    // #F9FAFB toolbars/headers background
+            public static readonly Color Border = Color.FromArgb(229, 231, 235);      // #E5E7EB separators
+            public static readonly Color Text = Color.FromArgb(15, 23, 42);          // primary text
+            public static readonly Color Muted = Color.FromArgb(107, 114, 128);      // #6B7280 secondary text
+            public static readonly Color Accent = Color.FromArgb(37, 99, 235);       // blue
+            public static readonly Color AccentHover = Color.FromArgb(29, 78, 216);
+            public static readonly Color Orange = Color.FromArgb(249, 115, 22);
+        }
+
+        private void ApplyModernLightTheme()
+        {
+            SuspendLayout();
+
+            BackColor = Theme.Bg;
+            ForeColor = Theme.Text;
+
+            // Modern borders
+            scMain.BorderStyle = BorderStyle.None;
+            scView.BorderStyle = BorderStyle.None;
+            scSetting.BorderStyle = BorderStyle.None;
+            try
+            {
+                scMain.Panel1.BackColor = Theme.Bg;
+                scMain.Panel2.BackColor = Theme.Bg;
+                scView.Panel1.BackColor = Theme.Bg;
+                scView.Panel2.BackColor = Theme.Bg;
+                scSetting.Panel1.BackColor = Theme.Bg;
+                scSetting.Panel2.BackColor = Theme.Bg;
+            }
+            catch
+            {
+                // ignore: designer may not have all panels initialized in some contexts
+            }
+
+            // Major surfaces
+            grboxSetting.BackColor = Theme.Card;
+            grboxSetting.ForeColor = Theme.Text;
+
+            grViewHeader.BackColor = Theme.Bg;
+            grViewHeader.ForeColor = Theme.Text;
+
+            tsMenuView.BackColor = Theme.Bg;
+            tsMenuView.ForeColor = Theme.Text;
+            tsMenuView.GripStyle = ToolStripGripStyle.Hidden;
+            tsMenuView.Renderer = new LightToolStripRenderer();
+
+            ctMenu.BackColor = Theme.Bg;
+            ctMenu.ForeColor = Theme.Text;
+            ctMenu.Renderer = new LightToolStripRenderer();
+
+            // Header labels
+            lbHeaderText.BackColor = Theme.Accent;
+            lbHeaderText.ForeColor = Color.White;
+            lbHeaderInputMedia.BackColor = Theme.Surface2;
+            lbHeaderInputMedia.ForeColor = Theme.Text;
+
+            // Text areas
+            txtTextInput.BackColor = Theme.Card;
+            txtTextInput.ForeColor = Theme.Text;
+            txtTextInput.BorderStyle = BorderStyle.FixedSingle;
+
+            txtImPortMedia.BackColor = Theme.Card;
+            txtImPortMedia.ForeColor = Theme.Muted;
+            txtImPortMedia.BorderStyle = BorderStyle.FixedSingle;
+
+            // Buttons
+            StyleButtonExport(btnAddAll);
+            StyleButtonSecondary(btnConvertAudio);
+            StyleButtonSecondary(btnSaveAudio);
+            StyleButtonSecondary(btnRenderVideoPart);
+
+            StyleButtonSecondary(btnRecord);
+            StyleButtonSecondary(btnOpenProject);
+            StyleButtonSecondary(btnSaveVoiceSource);
+            StyleButtonSecondary(btnSaveEffectSetting);
+            StyleButtonSecondary(btnCollapse);
+            StyleButtonSecondary(btnExpand);
+
+            // Right settings sections
+            StyleGroupBox(grbConfigVoice);
+            StyleGroupBox(grbConfigRender);
+            StyleGroupBox(grbActionRender);
+
+            // Inputs on right panel
+            StyleTextBox(txtAppID);
+            StyleTextBox(txtToken);
+
+            StyleComboBox(cbProjectName);
+            StyleComboBox(cboSiteNguon);
+            StyleComboBox(cbxVideoQuality);
+            StyleComboBox(cbxSpeechType);
+            StyleComboBox(cbZoomRatio);
+            StyleComboBox(cbZoomQuality);
+            StyleComboBox(cbMode);
+            StyleComboBox(cbEffectType);
+            StyleComboBox(cbLanguageSelect);
+            StyleComboBox(cbSettingTemplate);
+
+            StyleNumeric(nFPS);
+            StyleNumeric(nbThread);
+            StyleNumeric(nbVolumnOrigin);
+            StyleNumeric(nbSpeechRatio);
+            StyleNumeric(nScaleAudioRangeStart);
+            StyleNumeric(nScaleAudioRangeEnd);
+
+            StyleCheckBox(CkZoom);
+            StyleCheckBox(ckRotate);
+            StyleCheckBox(ckHflip);
+            StyleCheckBox(ckHflipRandom);
+            StyleCheckBox(ckRandomMoveLeftRight);
+            StyleCheckBox(ckNotUseAudio);
+            StyleCheckBox(ckOpenPlayer);
+
+            // DataGridView
+            StyleDataGridView(dgvMainView);
+
+            // Toolstrip search box
+            txtTim.BackColor = Theme.Surface2;
+            txtTim.ForeColor = Theme.Text;
+            txtTim.BorderStyle = BorderStyle.FixedSingle;
+            lbTitle.ForeColor = Theme.Muted;
+
+            // Toolstrip items
+            foreach (ToolStripItem item in tsMenuView.Items)
+            {
+                item.ForeColor = Theme.Text;
+                if (item is ToolStripButton btn)
+                {
+                    btn.BackColor = Theme.Surface2;
+                }
+            }
+            foreach (ToolStripItem item in ctMenu.Items)
+            {
+                item.ForeColor = Theme.Text;
+                item.BackColor = Theme.Bg;
+            }
+
+            ApplyThemeRecursive(this);
+
+            // Rounded textbox wrappers (UI-only)
+            WrapTextBoxRounded(txtTextInput, radius: 12, padding: new Padding(12, 10, 12, 10));
+            WrapTextBoxRounded(txtImPortMedia, radius: 12, padding: new Padding(12, 10, 12, 10));
+            WrapTextBoxRounded(txtAppID, radius: 12, padding: new Padding(10, 8, 10, 8));
+            WrapTextBoxRounded(txtToken, radius: 12, padding: new Padding(10, 8, 10, 8));
+
+            ResumeLayout(true);
+        }
+
+        private void WrapTextBoxRounded(TextBox tb, int radius, Padding padding)
+        {
+            if (tb == null || tb.IsDisposed)
+                return;
+
+            // Prevent double-wrap
+            if (tb.Parent is RoundedPanel)
+                return;
+
+            var parent = tb.Parent;
+            if (parent == null)
+                return;
+
+            int childIndex = parent.Controls.GetChildIndex(tb);
+            var dock = tb.Dock;
+
+            var host = new RoundedPanel
+            {
+                BorderRadius = radius,
+                BorderThickness = 1,
+                BorderColor = Theme.Border,
+                FillColor = Theme.Card,
+                Location = tb.Location,
+                Size = tb.Size,
+                Margin = tb.Margin,
+                Anchor = tb.Anchor,
+                Dock = dock,
+                Padding = padding,
+                TabIndex = tb.TabIndex,
+                Name = $"rp_{tb.Name}"
+            };
+
+            // Re-parent without breaking events/logic (giữ nguyên instance textbox)
+            parent.Controls.Remove(tb);
+            parent.Controls.Add(host);
+            parent.Controls.SetChildIndex(host, childIndex);
+
+            tb.BorderStyle = BorderStyle.None;
+            tb.Dock = DockStyle.Fill;
+            tb.Margin = Padding.Empty;
+            tb.BackColor = Theme.Card;
+            tb.ForeColor = Theme.Text;
+
+            host.Controls.Add(tb);
+        }
+
+        private void ApplyThemeRecursive(Control root)
+        {
+            foreach (Control c in root.Controls)
+            {
+                if (c is Panel || c is TableLayoutPanel)
+                {
+                    if (c.BackColor == SystemColors.Control || c.BackColor == Color.Transparent)
+                        c.BackColor = Theme.Bg;
+                    c.ForeColor = Theme.Text;
+                }
+
+                if (c is Label lbl)
+                {
+                    if (lbl == lbHeaderText || lbl == lbHeaderInputMedia)
+                    {
+                        // keep styled
+                    }
+                    else
+                    {
+                        if (lbl.ForeColor == SystemColors.ControlText || lbl.ForeColor == Color.Black)
+                            lbl.ForeColor = Theme.Muted;
+                    }
+                }
+
+                if (c is LinkLabel link)
+                {
+                    link.LinkColor = Theme.AccentHover;
+                    link.ActiveLinkColor = Theme.Accent;
+                    link.VisitedLinkColor = Theme.AccentHover;
+                    link.ForeColor = Theme.AccentHover;
+                }
+
+                if (c.HasChildren)
+                    ApplyThemeRecursive(c);
+            }
+        }
+
+        private static void StyleGroupBox(GroupBox gb)
+        {
+            gb.BackColor = Theme.Card;
+            gb.ForeColor = Theme.Text;
+        }
+
+        private static void StyleCheckBox(CheckBox cb)
+        {
+            cb.ForeColor = Theme.Text;
+        }
+
+        private static void StyleTextBox(TextBox tb)
+        {
+            tb.BackColor = Theme.Card;
+            tb.ForeColor = Theme.Text;
+            tb.BorderStyle = BorderStyle.FixedSingle;
+        }
+
+        private static void StyleComboBox(ComboBox cb)
+        {
+            cb.BackColor = Theme.Card;
+            cb.ForeColor = Theme.Text;
+            cb.FlatStyle = FlatStyle.Flat;
+        }
+
+        private static void StyleNumeric(NumericUpDown nb)
+        {
+            nb.BackColor = Theme.Card;
+            nb.ForeColor = Theme.Text;
+        }
+
+        private static void StyleButtonSecondary(Button btn)
+        {
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.BackColor = Theme.Card;
+            btn.ForeColor = Theme.Text;
+            btn.FlatAppearance.BorderColor = Theme.Border;
+            btn.FlatAppearance.BorderSize = 1;
+        }
+
+        private static void StyleButtonExport(Button btn)
+        {
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.BackColor = Theme.Orange;
+            btn.ForeColor = Color.White;
+            btn.FlatAppearance.BorderSize = 0;
+        }
+
+        private static void StyleDataGridView(DataGridView dgv)
+        {
+            dgv.EnableHeadersVisualStyles = false;
+            dgv.BackgroundColor = Theme.Card;
+            dgv.BorderStyle = BorderStyle.None;
+            dgv.GridColor = Theme.Border;
+
+            dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Theme.Surface2;
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Theme.Muted;
+            dgv.ColumnHeadersDefaultCellStyle.SelectionBackColor = Theme.Surface2;
+            dgv.ColumnHeadersDefaultCellStyle.SelectionForeColor = Theme.Text;
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 8.5f, FontStyle.Bold);
+
+            dgv.DefaultCellStyle.BackColor = Theme.Card;
+            dgv.DefaultCellStyle.ForeColor = Theme.Text;
+            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(219, 234, 254); // light blue
+            dgv.DefaultCellStyle.SelectionForeColor = Theme.Text;
+            dgv.DefaultCellStyle.Font = new Font("Segoe UI", 8.5f, FontStyle.Regular);
+
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Theme.Card;
+            dgv.AlternatingRowsDefaultCellStyle.ForeColor = Theme.Text;
+            dgv.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.FromArgb(219, 234, 254);
+            dgv.AlternatingRowsDefaultCellStyle.SelectionForeColor = Theme.Text;
+
+            dgv.RowHeadersVisible = false;
+            dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+        }
+
+        private sealed class LightToolStripRenderer : ToolStripProfessionalRenderer
+        {
+            public LightToolStripRenderer() : base(new LightColorTable()) { }
+        }
+
+        private sealed class LightColorTable : ProfessionalColorTable
+        {
+            public override Color ToolStripDropDownBackground => Theme.Bg;
+            public override Color ImageMarginGradientBegin => Theme.Bg;
+            public override Color ImageMarginGradientMiddle => Theme.Bg;
+            public override Color ImageMarginGradientEnd => Theme.Bg;
+            public override Color MenuBorder => Theme.Border;
+            public override Color SeparatorDark => Theme.Border;
+            public override Color SeparatorLight => Theme.Border;
+            public override Color MenuItemSelected => Theme.Surface2;
+            public override Color MenuItemBorder => Theme.Border;
+            public override Color ToolStripBorder => Theme.Border;
+            public override Color ToolStripGradientBegin => Theme.Bg;
+            public override Color ToolStripGradientMiddle => Theme.Bg;
+            public override Color ToolStripGradientEnd => Theme.Bg;
+        }
+        #endregion
+
+        #region WPF_XAML_SHELL (UI only)
+        private ElementHost _xamlHost;
+        private ModernShellControl _shell;
+        private ElementHost _topCardsHost;
+        private ModernTopCardsControl _topCards;
+        private Panel _settingsScrollPanel;
+        private bool _syncingWpfText;
+        private readonly Dictionary<ComboBox, ComboZoomState> _comboZoomStates = new Dictionary<ComboBox, ComboZoomState>();
+
+        private readonly struct ComboZoomState
+        {
+            public ComboZoomState(Font normalFont, int normalDropDownHeight, int normalDropDownWidth, bool integralHeight)
+            {
+                NormalFont = normalFont;
+                NormalDropDownHeight = normalDropDownHeight;
+                NormalDropDownWidth = normalDropDownWidth;
+                IntegralHeight = integralHeight;
+            }
+
+            public Font NormalFont { get; }
+            public int NormalDropDownHeight { get; }
+            public int NormalDropDownWidth { get; }
+            public bool IntegralHeight { get; }
+        }
+
+        private void MountModernXamlShell()
+        {
+            // Host WPF layout for a closer match to the modern UI screenshot.
+            // Logic remains in existing WinForms controls; we host the original controls to preserve items + events.
+            if (!USE_MODERN_WPF_SHELL)
+                return;
+
+            if (_xamlHost != null)
+                return;
+
+            bool mounted = false;
+            ElementHost host = null;
+            ModernShellControl shell = null;
+
+            try
+            {
+                shell = new ModernShellControl();
+
+                host = new ElementHost
+                {
+                    Dock = DockStyle.Fill,
+                    Child = shell,
+                    Visible = false, // show only after successful mount
+                };
+
+                Controls.Add(host);
+                Controls.SetChildIndex(host, 0);
+
+                // Give ToolStrip a stable height when hosted
+                tsMenuView.AutoSize = false;
+                if (tsMenuView.Height < 28) tsMenuView.Height = 28;
+
+                // Attach required children. If these fail, do NOT switch to WPF shell.
+                bool mountedGrid = TryHostControl(shell.MainGridHost, dgvMainView, BorderStyle.None, dockFill: true);
+                bool mountedSettings = TryHostSettings(shell.SettingsHost);
+
+                // Optional (legacy) toolbar host; in current XAML the actions row is WPF.
+                bool mountedToolbar = shell.ToolbarHost != null && TryHostControl(shell.ToolbarHost, tsMenuView, borderStyle: null, dockFill: true);
+
+                mounted = mountedGrid && mountedSettings;
+
+                // Hide old toolstrip visual; keep its logic/state available
+                if (mounted)
+                    tsMenuView.Visible = false;
+
+                // Wire WPF top cards -> existing WinForms logic
+                if (shell.BtnRecord != null)
+                    shell.BtnRecord.Click += (_, __) => btnRecord.PerformClick();
+                if (shell.BtnConvert != null)
+                    shell.BtnConvert.Click += (_, __) => btnConvertAudio.PerformClick();
+                if (shell.BtnSave != null)
+                    shell.BtnSave.Click += (_, __) => btnSaveAudio.PerformClick();
+                if (shell.BtnRender != null)
+                    shell.BtnRender.Click += (_, __) => btnRenderVideoPart.PerformClick();
+
+                // Actions row -> existing actions
+                if (shell.BtnNewLine != null) shell.BtnNewLine.Click += (_, __) => btnAddRow.PerformClick();
+                if (shell.BtnAutoSubtitle != null) shell.BtnAutoSubtitle.Click += (_, __) => btnImportSubtitle.PerformClick();
+                if (shell.BtnCancel != null) shell.BtnCancel.Click += (_, __) => btnDestroyAction.PerformClick();
+
+                // Search box mirrors existing toolstrip textbox
+                if (shell.SearchBox != null)
+                {
+                    shell.SearchBox.TextChanged += (_, __) =>
+                    {
+                        try { txtTim.Text = shell.SearchBox.Text; }
+                        catch { }
+                    };
+                }
+
+                // Sync WPF text input <-> WinForms txtTextInput (logic stays in WinForms)
+                if (shell.TextInputBox != null)
+                {
+                    shell.TextInputBox.TextChanged += (_, __) =>
+                    {
+                        if (_syncingWpfText) return;
+                        _syncingWpfText = true;
+                        try { txtTextInput.Text = shell.TextInputBox.Text; }
+                        finally { _syncingWpfText = false; }
+                    };
+                    txtTextInput.TextChanged += (_, __) =>
+                    {
+                        if (_syncingWpfText) return;
+                        _syncingWpfText = true;
+                        try { shell.TextInputBox.Text = txtTextInput.Text; }
+                        finally { _syncingWpfText = false; }
+                    };
+                }
+
+                // Drag-drop audio files onto WPF text box -> reuse existing logic
+                if (shell.TextInputBox != null)
+                {
+                    shell.TextInputBox.PreviewDragOver += (_, e) =>
+                    {
+                        e.Effects = System.Windows.DragDropEffects.Copy;
+                        e.Handled = true;
+                    };
+                    shell.TextInputBox.Drop += async (_, e) =>
+                    {
+                        try
+                        {
+                            var data = e.Data.GetData(System.Windows.DataFormats.FileDrop) as string[];
+                            if (data != null && data.Length > 0 && _indexRowSelect >= 0)
+                            {
+                                await CallDownloadAudioAsync(data[0], _indexRowSelect, false, CancellationToken.None);
+                                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_audiolink", data[0], Color.White);
+                            }
+                        }
+                        catch { }
+                    };
+                }
+
+                // Drag-drop visuals onto WPF zone -> reuse existing logic
+                if (shell.VisualDropZone != null)
+                {
+                    shell.VisualDropZone.PreviewDragOver += (_, e) =>
+                    {
+                        e.Effects = System.Windows.DragDropEffects.Copy;
+                        e.Handled = true;
+                    };
+                    shell.VisualDropZone.Drop += (_, e) =>
+                    {
+                        try
+                        {
+                            var data = e.Data.GetData(System.Windows.DataFormats.FileDrop) as string[];
+                            if (data != null && data.Length > 0 && _indexRowSelect >= 0)
+                            {
+                                string file = data[0];
+                                Task.Run(() =>
+                                {
+                                    try { InSertInputMediaData(file, _indexRowSelect); }
+                                    catch { }
+                                });
+                            }
+                        }
+                        catch { }
+                    };
+                }
+
+                if (shell.BtnClearText != null)
+                {
+                    shell.BtnClearText.Click += (_, __) =>
+                    {
+                        txtTextInput.Clear();
+                        if (shell.TextInputBox != null) shell.TextInputBox.Clear();
+                    };
+                }
+
+                // Header info (UI-only placeholders)
+                if (shell.TxtStatus != null) shell.TxtStatus.Text = "Active";
+                if (shell.TxtRemaining != null) shell.TxtRemaining.Text = "1 Day Remaining";
+                if (shell.TxtAvatar != null) shell.TxtAvatar.Text = "TP";
+                if (shell.BtnHelp != null) shell.BtnHelp.Click += (_, __) => System.Diagnostics.Process.Start("https://www.facebook.com/La.studio.top");
+                if (shell.BtnSettings != null) shell.BtnSettings.Click += (_, __) => { /* reserved */ };
+                if (shell.BtnMinimize != null) shell.BtnMinimize.Click += (_, __) => this.WindowState = FormWindowState.Minimized;
+                if (shell.BtnClose != null) shell.BtnClose.Click += (_, __) => this.Close();
+                if (shell.TopHeader != null)
+                {
+                    shell.TopHeader.MouseLeftButtonDown += (_, __) => BeginDragMove();
+                }
+
+                // Commit
+                _shell = shell;
+                _xamlHost = host;
+            }
+            catch
+            {
+                mounted = false;
+                // Cleanup local host if created
+                if (host != null)
+                {
+                    try { Controls.Remove(host); } catch { }
+                    try { host.Dispose(); } catch { }
+                }
+            }
+
+            // Only hide old layout after we actually mounted required content
+            if (mounted && _xamlHost != null)
+            {
+                // Remove the native title bar (khoanh 1) and use the WPF header as title bar (khoanh 2)
+                FormBorderStyle = FormBorderStyle.None;
+                ControlBox = false;
+                ApplyRoundedWindowCorners(18);
+                this.SizeChanged -= FormMain_SizeChanged_RoundedCorners;
+                this.SizeChanged += FormMain_SizeChanged_RoundedCorners;
+                scMain.Visible = false;
+                _xamlHost.Visible = true;
+            }
+            else
+            {
+                // keep original WinForms UI visible
+                try { tsMenuView.Visible = true; } catch { }
+                scMain.Visible = true;
+                RestoreClassicLayout();
+                _shell = null;
+                _xamlHost = null;
+            }
+        }
+
+        private void RestoreClassicLayout()
+        {
+            // If we attempted WPF hosting and it failed, some controls may be detached.
+            // Put them back into the original WinForms containers.
+            try
+            {
+                // Restore settings panel (always force it back)
+                if (grboxSetting != null && !grboxSetting.IsDisposed && scSetting != null)
+                {
+                    try
+                    {
+                        if (grboxSetting.Parent != null && grboxSetting.Parent != scSetting.Panel2)
+                            grboxSetting.Parent.Controls.Remove(grboxSetting);
+                    }
+                    catch { }
+
+                    if (!scSetting.Panel2.Controls.Contains(grboxSetting))
+                        scSetting.Panel2.Controls.Add(grboxSetting);
+
+                    scSetting.Panel2Collapsed = false;
+                    grboxSetting.Dock = DockStyle.Fill;
+                    grboxSetting.Visible = true;
+                    grboxSetting.BringToFront();
+                }
+
+                // Restore view header if needed
+                if (grViewHeader != null && !grViewHeader.IsDisposed && grViewHeader.Parent == null && tlpView != null)
+                {
+                    tlpView.Controls.Add(grViewHeader, 0, 0);
+                    grViewHeader.Dock = DockStyle.Fill;
+                    grViewHeader.Visible = true;
+                }
+
+                // Restore ToolStrip row
+                if (tsMenuView != null && !tsMenuView.IsDisposed && tsMenuView.Parent == null && tlpView != null)
+                {
+                    tlpView.Controls.Add(tsMenuView, 0, 1);
+                    tsMenuView.Dock = DockStyle.Fill;
+                    tsMenuView.Visible = true;
+                }
+
+                // Restore DataGridView
+                if (dgvMainView != null && !dgvMainView.IsDisposed && dgvMainView.Parent == null && tlpView != null)
+                {
+                    tlpView.Controls.Add(dgvMainView, 0, 2);
+                    dgvMainView.Dock = DockStyle.Fill;
+                    dgvMainView.Visible = true;
+                }
+
+                // Ensure split panels are visible
+                try
+                {
+                    scSetting.Panel2Collapsed = false;
+                    scView.Panel2Collapsed = true;
+                }
+                catch { }
+            }
+            catch
+            {
+                // best-effort restore
+            }
+        }
+
+        private void FormMain_SizeChanged_RoundedCorners(object sender, EventArgs e)
+        {
+            if (FormBorderStyle == FormBorderStyle.None)
+                ApplyRoundedWindowCorners(18);
+        }
+
+        private static bool TryHostControl(WindowsFormsHost host, Control child, BorderStyle? borderStyle, bool dockFill)
+        {
+            if (host == null || child == null)
+                return false;
+
+            try
+            {
+                if (child.Parent != null)
+                    child.Parent.Controls.Remove(child);
+
+                if (dockFill)
+                    child.Dock = DockStyle.Fill;
+
+                if (borderStyle.HasValue)
+                {
+                    if (child is TextBox tb) tb.BorderStyle = borderStyle.Value;
+                    if (child is DataGridView dgv) dgv.BorderStyle = borderStyle.Value;
+                }
+
+                host.Child = child;
+                return host.Child != null;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private void MountModernTopCardsIntoClassicHeader()
+        {
+            if (!USE_MODERN_TOP_CARDS)
+                return;
+            if (USE_MODERN_WPF_SHELL)
+                return; // already modern
+            if (_topCardsHost != null)
+                return;
+
+            try
+            {
+                _topCards = new ModernTopCardsControl();
+                _topCardsHost = new ElementHost
+                {
+                    Dock = DockStyle.Fill,
+                    Child = _topCards
+                };
+
+                // Replace the old GroupBox header (grViewHeader) with modern top cards
+                if (tlpView != null)
+                {
+                    tlpView.SuspendLayout();
+                    try
+                    {
+                        if (grViewHeader != null)
+                        {
+                            tlpView.Controls.Remove(grViewHeader);
+                            grViewHeader.Visible = false;
+                        }
+
+                        tlpView.Controls.Add(_topCardsHost, 0, 0);
+                        _topCardsHost.Margin = new Padding(0);
+                    }
+                    finally
+                    {
+                        tlpView.ResumeLayout(true);
+                    }
+                }
+
+                // Wire actions to existing WinForms logic
+                if (_topCards.BtnRecord != null) _topCards.BtnRecord.Click += (_, __) => btnRecord.PerformClick();
+                if (_topCards.BtnConvert != null) _topCards.BtnConvert.Click += (_, __) => btnConvertAudio.PerformClick();
+                if (_topCards.BtnSave != null) _topCards.BtnSave.Click += (_, __) => btnSaveAudio.PerformClick();
+                if (_topCards.BtnRender != null) _topCards.BtnRender.Click += (_, __) => btnRenderVideoPart.PerformClick();
+                if (_topCards.BtnClearText != null) _topCards.BtnClearText.Click += (_, __) => txtTextInput.Clear();
+
+                // Sync text input (2-way) so existing logic still works
+                bool syncing = false;
+                if (_topCards.TextInputBox != null)
+                {
+                    _topCards.TextInputBox.TextChanged += (_, __) =>
+                    {
+                        if (syncing) return;
+                        syncing = true;
+                        try { txtTextInput.Text = _topCards.TextInputBox.Text; }
+                        finally { syncing = false; }
+                    };
+                }
+
+                txtTextInput.TextChanged += (_, __) =>
+                {
+                    if (_topCards == null || _topCards.TextInputBox == null) return;
+                    if (syncing) return;
+                    syncing = true;
+                    try { _topCards.TextInputBox.Text = txtTextInput.Text; }
+                    finally { syncing = false; }
+                };
+
+                // Drag-drop audio on WPF textbox
+                if (_topCards.TextInputBox != null)
+                {
+                    _topCards.TextInputBox.PreviewDragOver += (_, e) =>
+                    {
+                        e.Effects = System.Windows.DragDropEffects.Copy;
+                        e.Handled = true;
+                    };
+                    _topCards.TextInputBox.Drop += async (_, e) =>
+                    {
+                        try
+                        {
+                            var data = e.Data.GetData(System.Windows.DataFormats.FileDrop) as string[];
+                            if (data != null && data.Length > 0 && _indexRowSelect >= 0)
+                            {
+                                await CallDownloadAudioAsync(data[0], _indexRowSelect, false, CancellationToken.None);
+                                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_audiolink", data[0], Color.White);
+                            }
+                        }
+                        catch { }
+                    };
+                }
+
+                // Drag-drop visuals on WPF zone
+                if (_topCards.VisualDropZone != null)
+                {
+                    _topCards.VisualDropZone.PreviewDragOver += (_, e) =>
+                    {
+                        e.Effects = System.Windows.DragDropEffects.Copy;
+                        e.Handled = true;
+                    };
+                    _topCards.VisualDropZone.Drop += (_, e) =>
+                    {
+                        try
+                        {
+                            var data = e.Data.GetData(System.Windows.DataFormats.FileDrop) as string[];
+                            if (data != null && data.Length > 0 && _indexRowSelect >= 0)
+                            {
+                                string file = data[0];
+                                Task.Run(() =>
+                                {
+                                    try { InSertInputMediaData(file, _indexRowSelect); }
+                                    catch { }
+                                });
+                            }
+                        }
+                        catch { }
+                    };
+                }
+            }
+            catch
+            {
+                // If anything fails, keep original header
+                try
+                {
+                    if (_topCardsHost != null) _topCardsHost.Dispose();
+                }
+                catch { }
+                _topCardsHost = null;
+                _topCards = null;
+                if (grViewHeader != null) grViewHeader.Visible = true;
+            }
+        }
+
+        private void ApplyInitialWindowSize()
+        {
+            try
+            {
+                var wa = Screen.FromControl(this).WorkingArea;
+
+                // Fit to screen (not full screen), centered.
+                MaximizeBox = true;
+                MinimizeBox = true;
+                StartPosition = FormStartPosition.CenterScreen;
+                MinimumSize = new Size(1100, 720);
+
+                int targetW = Math.Max(MinimumSize.Width, wa.Width - 60);
+                int targetH = Math.Max(MinimumSize.Height, wa.Height - 60);
+
+                WindowState = FormWindowState.Normal;
+                Size = new Size(targetW, targetH);
+                Location = new Point(
+                    wa.Left + Math.Max(0, (wa.Width - targetW) / 2),
+                    wa.Top + Math.Max(0, (wa.Height - targetH) / 2));
+
+                // If not using WPF shell, keep normal window chrome.
+                if (!USE_MODERN_WPF_SHELL)
+                {
+                    FormBorderStyle = FormBorderStyle.FixedSingle;
+                    ControlBox = true;
+                }
+            }
+            catch
+            {
+                // don't block startup
+            }
+        }
+
+        private void ApplyFixedClassicLayoutIfNeeded()
+        {
+            // User wants fixed size + all text visible in classic layout.
+            if (USE_MODERN_WPF_SHELL)
+                return;
+
+            try
+            {
+                var wa = Screen.FromControl(this).WorkingArea;
+
+                // Fix window to working area (looks like maximized, but fixed)
+                WindowState = FormWindowState.Normal;
+                FormBorderStyle = FormBorderStyle.FixedSingle;
+                MaximizeBox = false;
+                MinimizeBox = true;
+                ControlBox = true;
+
+                Location = wa.Location;
+                Size = wa.Size;
+                MinimumSize = wa.Size;
+                MaximumSize = wa.Size;
+
+                ApplyClassicSplitWidths();
+                FixProjectLayout();
+                FixConfigVoiceLayout();
+                FixConfigRenderLayout();
+                FixSettingsGroupBoxesLayout();
+            }
+            catch { }
+        }
+
+        private void ApplyClassicSplitWidths()
+        {
+            // Ensure the Settings panel is wide enough so labels aren't clipped.
+            try
+            {
+                int totalW = scMain.Width;
+                if (totalW <= 0) return;
+
+                // Desired width for the whole right side (includes scSetting split + padding)
+                int desiredRight = Math.Min(700, Math.Max(560, (int)(totalW * 0.45)));
+                int minLeft = 560;
+
+                int splitterDistance = Math.Max(minLeft, totalW - desiredRight);
+                splitterDistance = Math.Min(splitterDistance, totalW - 380); // keep right panel usable
+
+                scMain.SplitterDistance = splitterDistance;
+            }
+            catch { }
+        }
+
+        private void FixProjectLayout()
+        {
+            try
+            {
+                if (grboxSetting == null || grboxSetting.IsDisposed) return;
+                if (cbProjectName == null || cbProjectName.IsDisposed) return;
+
+                int paddingRight = 10;
+                int left = 86; // current designer uses 86 for cbProjectName
+
+                // Keep Create button pinned right
+                if (btnOpenProject != null && !btnOpenProject.IsDisposed)
+                {
+                    btnOpenProject.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    btnOpenProject.Left = grboxSetting.ClientSize.Width - btnOpenProject.Width - paddingRight;
+                }
+
+                cbProjectName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                cbProjectName.Left = left;
+
+                int rightLimit = (btnOpenProject != null && !btnOpenProject.IsDisposed)
+                    ? btnOpenProject.Left - 8
+                    : grboxSetting.ClientSize.Width - paddingRight;
+
+                cbProjectName.Width = Math.Max(140, rightLimit - cbProjectName.Left);
+            }
+            catch { }
+        }
+
+        private void FixConfigRenderLayout()
+        {
+            // Reduce clipping in "Lựa Chọn Hiệu Ứng" by widening combos and pinning right column.
+            try
+            {
+                if (grbConfigRender == null || grbConfigRender.IsDisposed) return;
+
+                int paddingRight = 10;
+                int fullW = grbConfigRender.ClientSize.Width;
+                if (fullW <= 0) return;
+
+                int left = 78; // most controls start at 78 in designer
+
+                // Compute a dynamic right column for checkboxes/numerics so we can use all available width
+                int rightColumnWidth = 190;
+                int rightColumnLeft = Math.Max(240, fullW - rightColumnWidth - paddingRight);
+                int leftColumnRight = rightColumnLeft - 12;
+
+                // Stretch common comboboxes in left column
+                ComboBox[] combos =
+                {
+                    cbZoomRatio, cbZoomQuality, cbxVideoQuality, cbMode, cbEffectType, cbLanguageSelect, cbxSpeechType, cbSettingTemplate
+                };
+
+                foreach (var cb in combos)
+                {
+                    if (cb == null || cb.IsDisposed) continue;
+                    cb.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    cb.Left = left;
+                    cb.Width = Math.Max(120, leftColumnRight - cb.Left);
+                }
+
+                // Move right-side checkboxes to the computed right column
+                CheckBox[] rightChecks = { CkZoom, ckRotate, ckHflip, ckHflipRandom, ckNotUseAudio };
+                foreach (var ck in rightChecks)
+                {
+                    if (ck == null || ck.IsDisposed) continue;
+                    ck.Left = rightColumnLeft;
+                    ck.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                }
+
+                // Move numeric up-downs (FPS/Thread) to the right column area
+                if (nFPS != null && !nFPS.IsDisposed)
+                {
+                    nFPS.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    nFPS.Left = fullW - nFPS.Width - paddingRight;
+                }
+                if (nbThread != null && !nbThread.IsDisposed)
+                {
+                    nbThread.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    nbThread.Left = fullW - nbThread.Width - paddingRight;
+                }
+                // Align their labels just before the numeric controls
+                if (label10 != null && !label10.IsDisposed && nFPS != null && !nFPS.IsDisposed)
+                {
+                    label10.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    label10.Left = Math.Max(rightColumnLeft, nFPS.Left - label10.Width - 6);
+                }
+                if (label13 != null && !label13.IsDisposed && nbThread != null && !nbThread.IsDisposed)
+                {
+                    label13.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    label13.Left = Math.Max(rightColumnLeft, nbThread.Left - label13.Width - 6);
+                }
+
+                // Keep Save effect button pinned right
+                if (btnSaveEffectSetting != null && !btnSaveEffectSetting.IsDisposed)
+                {
+                    btnSaveEffectSetting.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    btnSaveEffectSetting.Left = fullW - btnSaveEffectSetting.Width - paddingRight;
+                }
+
+                // Stretch language/voice rows to full width (they are near bottom)
+                if (cbLanguageSelect != null && !cbLanguageSelect.IsDisposed)
+                    cbLanguageSelect.Width = Math.Max(120, fullW - cbLanguageSelect.Left - paddingRight);
+                if (cbxSpeechType != null && !cbxSpeechType.IsDisposed)
+                    cbxSpeechType.Width = Math.Max(120, fullW - cbxSpeechType.Left - paddingRight);
+            }
+            catch { }
+        }
+
+        private void FixSettingsGroupBoxesLayout()
+        {
+            // Use available space in the right panel: widen groupboxes and reduce "empty" areas.
+            try
+            {
+                if (grboxSetting == null || grboxSetting.IsDisposed) return;
+
+                int padding = 10;
+                int fullW = grboxSetting.ClientSize.Width;
+                int fullH = grboxSetting.ClientSize.Height;
+                if (fullW <= 0 || fullH <= 0) return;
+
+                // Make top-level groupboxes stretch horizontally
+                GroupBox[] groups = { grbConfigVoice, grbConfigRender, grbActionRender };
+                foreach (var gb in groups)
+                {
+                    if (gb == null || gb.IsDisposed) continue;
+                    gb.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    gb.Width = Math.Max(200, fullW - 2 * padding);
+                    gb.Left = padding;
+                }
+
+                // Place action box at bottom
+                if (grbActionRender != null && !grbActionRender.IsDisposed)
+                {
+                    grbActionRender.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+                    grbActionRender.Top = fullH - grbActionRender.Height - padding;
+                }
+
+                // Let render config fill the remaining vertical space (so no big empty area)
+                if (grbConfigVoice != null && !grbConfigVoice.IsDisposed &&
+                    grbConfigRender != null && !grbConfigRender.IsDisposed)
+                {
+                    grbConfigRender.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+
+                    int top = grbConfigVoice.Bottom + padding;
+                    int bottomLimit = (grbActionRender != null && !grbActionRender.IsDisposed)
+                        ? grbActionRender.Top - padding
+                        : fullH - padding;
+
+                    grbConfigRender.Top = top;
+                    grbConfigRender.Height = Math.Max(200, bottomLimit - top);
+                }
+            }
+            catch { }
+        }
+
+        // Borderless window drag support
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HTCAPTION = 0x2;
+
+        [DllImport("user32.dll")]
+        private static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+
+        // Rounded corners (Windows 11+ via DWM, fallback via Region)
+        private const int DWMWA_WINDOW_CORNER_PREFERENCE = 33;
+        private const int DWMWCP_DEFAULT = 0;
+        private const int DWMWCP_DONOTROUND = 1;
+        private const int DWMWCP_ROUND = 2;
+        private const int DWMWCP_ROUNDSMALL = 3;
+
+        [DllImport("dwmapi.dll", PreserveSig = true)]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern int SetWindowRgn(IntPtr hWnd, IntPtr hRgn, bool bRedraw);
+
+        private void BeginDragMove()
+        {
+            try
+            {
+                // Make the form borderless so header becomes the title bar
+                if (FormBorderStyle != FormBorderStyle.None)
+                    FormBorderStyle = FormBorderStyle.None;
+
+                ApplyRoundedWindowCorners(18);
+
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+            }
+            catch { }
+        }
+
+        private void ApplyRoundedWindowCorners(int radius)
+        {
+            try
+            {
+                // 1) Prefer native rounded corners on supported Windows (Win11)
+                int pref = DWMWCP_ROUND;
+                int hr = DwmSetWindowAttribute(Handle, DWMWA_WINDOW_CORNER_PREFERENCE, ref pref, sizeof(int));
+
+                // If DWM succeeds, avoid Region clipping (prevents dark/dirty corner artifacts)
+                if (hr == 0)
+                {
+                    Region = null;
+                    return;
+                }
+            }
+            catch
+            {
+                // ignore: dwmapi may not be available
+            }
+
+            try
+            {
+                // 2) Fallback (Win10/older): use Win32 window region (no black anti-alias fringe)
+                int d = Math.Max(1, radius) * 2;
+                IntPtr rgn = CreateRoundRectRgn(0, 0, Width + 1, Height + 1, d, d);
+                if (rgn != IntPtr.Zero)
+                    SetWindowRgn(Handle, rgn, true);
+            }
+            catch
+            {
+                // ignore
+            }
+        }
+
+        private static GraphicsPath CreateRoundedRectPath(Rectangle bounds, int radius)
+        {
+            var path = new GraphicsPath();
+            if (radius <= 0)
+            {
+                path.AddRectangle(bounds);
+                path.CloseFigure();
+                return path;
+            }
+
+            int d = radius * 2;
+            var arc = new Rectangle(bounds.Location, new Size(d, d));
+
+            path.AddArc(arc, 180, 90);
+            arc.X = bounds.Right - d;
+            path.AddArc(arc, 270, 90);
+            arc.Y = bounds.Bottom - d;
+            path.AddArc(arc, 0, 90);
+            arc.X = bounds.Left;
+            path.AddArc(arc, 90, 90);
+            path.CloseFigure();
+            return path;
+        }
+
+        private bool TryHostSettings(WindowsFormsHost host)
+        {
+            if (host == null)
+                return false;
+
+            try
+            {
+                if (_settingsScrollPanel == null || _settingsScrollPanel.IsDisposed)
+                {
+                    _settingsScrollPanel = new Panel
+                    {
+                        Dock = DockStyle.Fill,
+                        AutoScroll = true,
+                        BackColor = System.Drawing.Color.White,
+                        // Reserve space so the vertical scrollbar doesn't cover content.
+                        Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth + 6, 0),
+                    };
+                    _settingsScrollPanel.SizeChanged += (_, __) => AdjustSettingsWidth();
+                    _settingsScrollPanel.Layout += (_, __) => AdjustSettingsWidth();
+                }
+
+                // Detach settings groupbox from old parent
+                if (grboxSetting.Parent != null)
+                    grboxSetting.Parent.Controls.Remove(grboxSetting);
+
+                // Make settings content scroll inside WinForms (not WPF)
+                grboxSetting.Dock = DockStyle.Top;
+                // Keep height driven by its children, but allow width to be controlled
+                grboxSetting.AutoSize = false;
+                grboxSetting.AutoSizeMode = AutoSizeMode.GrowOnly;
+                grboxSetting.Visible = true;
+
+                // Modern sidebar styling (keep items, change look)
+                ApplyModernSidebarLook();
+
+                _settingsScrollPanel.Controls.Clear();
+                _settingsScrollPanel.Controls.Add(grboxSetting);
+                // Ensure it has a non-zero height when re-parented
+                try
+                {
+                    int preferredH = grboxSetting.PreferredSize.Height;
+                    if (preferredH > 0 && grboxSetting.Height < preferredH)
+                        grboxSetting.Height = preferredH;
+                }
+                catch { }
+                // Force vertical-only scrolling (prevents horizontal offset that clips left text)
+                try
+                {
+                    _settingsScrollPanel.HorizontalScroll.Enabled = false;
+                    _settingsScrollPanel.HorizontalScroll.Visible = false;
+                }
+                catch { }
+
+                // Defer one pass so sizes are non-zero under WindowsFormsHost
+                BeginInvoke((Action)(() =>
+                {
+                    AdjustSettingsWidth();
+                    FixConfigVoiceLayout();
+                }));
+
+                host.Child = _settingsScrollPanel;
+                return host.Child != null;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private void AdjustSettingsWidth()
+        {
+            if (_settingsScrollPanel == null || _settingsScrollPanel.IsDisposed)
+                return;
+            if (grboxSetting == null || grboxSetting.IsDisposed)
+                return;
+
+            // Fit inside visible client area (avoid being under the scrollbar)
+            int targetWidth = Math.Max(
+                0,
+                _settingsScrollPanel.ClientSize.Width - _settingsScrollPanel.Padding.Right - 2);
+
+            if (targetWidth > 0)
+                grboxSetting.Width = targetWidth;
+
+            // Keep scroll only vertical
+            try
+            {
+                _settingsScrollPanel.AutoScrollMinSize = new Size(0, Math.Max(grboxSetting.Height + 10, _settingsScrollPanel.ClientSize.Height + 1));
+            }
+            catch { }
+        }
+
+        private void FixConfigVoiceLayout()
+        {
+            // Ensure left labels don't get covered by inputs on different DPI/screen sizes
+            try
+            {
+                if (grbConfigVoice == null || grbConfigVoice.IsDisposed)
+                    return;
+
+                int paddingRight = 10;
+                int left = 110; // give labels enough room
+                int fullW = grbConfigVoice.ClientSize.Width;
+                if (fullW <= 0) return;
+
+                // Keep the "Save" button pinned to the right
+                if (btnSaveVoiceSource != null && !btnSaveVoiceSource.IsDisposed)
+                {
+                    btnSaveVoiceSource.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    btnSaveVoiceSource.Left = fullW - btnSaveVoiceSource.Width - paddingRight;
+                }
+
+                // Project/voice row: combo should stop before the Save button
+                if (cboSiteNguon != null && !cboSiteNguon.IsDisposed)
+                {
+                    cboSiteNguon.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    cboSiteNguon.Left = left;
+                    int rightLimit = (btnSaveVoiceSource != null && !btnSaveVoiceSource.IsDisposed)
+                        ? btnSaveVoiceSource.Left - 8
+                        : fullW - paddingRight;
+                    cboSiteNguon.Width = Math.Max(120, rightLimit - cboSiteNguon.Left);
+                }
+
+                // AppID/Token occupy full width
+                if (txtAppID != null && !txtAppID.IsDisposed)
+                {
+                    txtAppID.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    txtAppID.Left = left;
+                    txtAppID.Width = Math.Max(120, fullW - left - paddingRight);
+                }
+
+                if (txtToken != null && !txtToken.IsDisposed)
+                {
+                    txtToken.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    txtToken.Left = left;
+                    txtToken.Width = Math.Max(120, fullW - left - paddingRight);
+                }
+            }
+            catch { }
+        }
+
+        private void ApplyModernSidebarLook()
+        {
+            try
+            {
+                // Light/clean colors like screenshot
+                var bg = Color.White;
+                var border = Color.FromArgb(229, 231, 235);
+                var text = Color.FromArgb(17, 24, 39);
+                var muted = Color.FromArgb(107, 114, 128);
+
+                if (grboxSetting != null && !grboxSetting.IsDisposed)
+                {
+                    grboxSetting.BackColor = bg;
+                    grboxSetting.ForeColor = text;
+                }
+
+                // GroupBoxes
+                GroupBox[] groups = { grbConfigVoice, grbConfigRender, grbActionRender };
+                foreach (var gb in groups)
+                {
+                    if (gb == null || gb.IsDisposed) continue;
+                    gb.BackColor = bg;
+                    gb.ForeColor = text;
+                }
+
+                // Labels -> muted
+                foreach (Control c in grboxSetting.Controls)
+                {
+                    if (c is Label lbl)
+                        lbl.ForeColor = muted;
+                }
+
+                // Inputs
+                Action<Control> styleInputs = null;
+                styleInputs = ctrl =>
+                {
+                    foreach (Control ch in ctrl.Controls)
+                    {
+                        if (ch is TextBox tb)
+                        {
+                            tb.BackColor = bg;
+                            tb.ForeColor = text;
+                        }
+                        else if (ch is ComboBox cb)
+                        {
+                            cb.BackColor = bg;
+                            cb.ForeColor = text;
+                        }
+                        else if (ch is NumericUpDown nb)
+                        {
+                            nb.BackColor = bg;
+                            nb.ForeColor = text;
+                        }
+                        else if (ch is CheckBox ck)
+                        {
+                            ck.ForeColor = text;
+                        }
+                        else if (ch is Button btn)
+                        {
+                            btn.FlatStyle = FlatStyle.Flat;
+                            btn.FlatAppearance.BorderColor = border;
+                            btn.FlatAppearance.BorderSize = 1;
+                            btn.BackColor = bg;
+                            btn.ForeColor = text;
+
+                            // Primary action
+                            if (btn == btnAddAll)
+                            {
+                                btn.BackColor = Color.FromArgb(249, 115, 22);
+                                btn.ForeColor = Color.White;
+                                btn.FlatAppearance.BorderSize = 0;
+                            }
+                        }
+
+                        if (ch.HasChildren)
+                            styleInputs(ch);
+                    }
+                };
+                styleInputs(grboxSetting);
+            }
+            catch { }
+        }
+
+        // Combo mirroring helpers removed: we now host the original WinForms settings panel.
+        #endregion
+
         private void Form1_Load(object sender, EventArgs e)
         {
             //CreateProjectPath();  // bỏ tạo project tại thư mục gốc
@@ -167,6 +1554,9 @@ namespace ReviewMovie
             dgvMainView.AutoGenerateColumns = false;    // tạo các cột tùy chỉnh cho DataGridView  => ko có là lỗi
             _statusZoom = true; // Khai báo cờ check
             _statusOpenPlayer = true;
+
+            // Ensure classic controls are mounted/visible (in case a previous failed host detached them)
+            RestoreClassicLayout();
         }
         private void Init()
         {
@@ -303,7 +1693,7 @@ namespace ReviewMovie
                 dgvMainView.Refresh();
 
                 txtTextInput.Text = string.Empty;
-                txtTextInput.ReadOnly = true;
+                txtTextInput.ReadOnly = false;
                 txtImPortMedia.Text = string.Empty;
 
                 if (_listdata.Count > 0)
@@ -1811,7 +3201,7 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    MessageBox.Show(ERR_ROW_INDEX);
+                    // Không show popup khi user đang gõ; chỉ bỏ qua update.
                 }
             }
             //else
@@ -2263,7 +3653,7 @@ namespace ReviewMovie
         private void ClearTextInput()
         {
             txtTextInput.Text = string.Empty;
-            txtTextInput.ReadOnly = true;
+            txtTextInput.ReadOnly = false;
             txtImPortMedia.Text = string.Empty;
         }
 
@@ -3422,7 +4812,9 @@ namespace ReviewMovie
 
             int maxWidth = cbProjectName.DropDownWidth - 10;
 
-            SizeF fullTextSize = e.Graphics.MeasureString(fullText, e.Font);
+            // Use a consistent font to avoid mixed sizes
+            Font font = cbProjectName.Font;
+            SizeF fullTextSize = e.Graphics.MeasureString(fullText, font);
             string displayText = fullText;
 
             if (fullTextSize.Width > maxWidth)
@@ -3430,7 +4822,7 @@ namespace ReviewMovie
                 for (int i = 0; i < fullText.Length; i++)
                 {
                     string subString = "..." + fullText.Substring(i);
-                    SizeF subStringSize = e.Graphics.MeasureString(subString, e.Font);
+                    SizeF subStringSize = e.Graphics.MeasureString(subString, font);
 
                     if (subStringSize.Width <= maxWidth)
                     {
@@ -3440,9 +4832,102 @@ namespace ReviewMovie
                 }
             }
 
-            e.DrawBackground();
-            e.Graphics.DrawString(displayText, e.Font, Brushes.Black, e.Bounds, StringFormat.GenericDefault);
+            // UI-only: light dropdown styling
+            bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
+            using (var bg = new SolidBrush(selected ? Theme.Surface2 : Color.White))
+            using (var fg = new SolidBrush(Theme.Text))
+            {
+                e.Graphics.FillRectangle(bg, e.Bounds);
+                e.Graphics.DrawString(displayText, font, fg, e.Bounds, StringFormat.GenericDefault);
+            }
             e.DrawFocusRectangle();
+        }
+
+        private void SetupComboZoomAll()
+        {
+            // Apply the same focus/zoom behavior to all comboboxes
+            RegisterComboZoom(cbProjectName);
+            RegisterComboZoom(cboSiteNguon);
+            RegisterComboZoom(cbxVideoQuality);
+            RegisterComboZoom(cbxSpeechType);
+            RegisterComboZoom(cbZoomRatio);
+            RegisterComboZoom(cbZoomQuality);
+            RegisterComboZoom(cbMode);
+            RegisterComboZoom(cbEffectType);
+            RegisterComboZoom(cbLanguageSelect);
+            RegisterComboZoom(cbSettingTemplate);
+        }
+
+        private void RegisterComboZoom(ComboBox cb)
+        {
+            if (cb == null) return;
+            if (_comboZoomStates.ContainsKey(cb)) return;
+
+            _comboZoomStates[cb] = new ComboZoomState(cb.Font, cb.DropDownHeight, cb.DropDownWidth, cb.IntegralHeight);
+
+            cb.Enter += Combo_ZoomIn;
+            cb.DropDown += Combo_ZoomIn;
+            cb.Leave += Combo_ZoomOut;
+            cb.DropDownClosed += Combo_ZoomOut;
+        }
+
+        private void Combo_ZoomIn(object sender, EventArgs e)
+        {
+            var cb = sender as ComboBox;
+            if (cb == null) return;
+            if (!_comboZoomStates.TryGetValue(cb, out var st)) return;
+
+            try
+            {
+                cb.Font = new Font(st.NormalFont.FontFamily, st.NormalFont.Size + 2.0f, st.NormalFont.Style);
+                cb.IntegralHeight = false;
+                cb.DropDownHeight = 360;
+                cb.DropDownWidth = Math.Max(st.NormalDropDownWidth, ComputeComboDropDownWidth(cb, cb.Font, 900));
+                cb.Refresh();
+            }
+            catch { }
+        }
+
+        private void Combo_ZoomOut(object sender, EventArgs e)
+        {
+            var cb = sender as ComboBox;
+            if (cb == null) return;
+            if (!_comboZoomStates.TryGetValue(cb, out var st)) return;
+
+            try
+            {
+                cb.Font = st.NormalFont;
+                cb.DropDownHeight = st.NormalDropDownHeight;
+                cb.DropDownWidth = st.NormalDropDownWidth;
+                cb.IntegralHeight = st.IntegralHeight;
+                cb.Refresh();
+            }
+            catch { }
+        }
+
+        private static int ComputeComboDropDownWidth(ComboBox cb, Font font, int maxWidth)
+        {
+            try
+            {
+                int width = 0;
+                using (var g = cb.CreateGraphics())
+                {
+                    foreach (var it in cb.Items)
+                    {
+                        string s = it?.ToString() ?? string.Empty;
+                        int w = (int)Math.Ceiling(g.MeasureString(s, font).Width);
+                        if (w > width) width = w;
+                    }
+                }
+
+                // add padding & scrollbar space
+                width += SystemInformation.VerticalScrollBarWidth + 30;
+                return Math.Min(Math.Max(width, cb.Width), maxWidth);
+            }
+            catch
+            {
+                return cb.DropDownWidth;
+            }
         }
         private void cbProjectName_MeasureItem(object sender, MeasureItemEventArgs e)
         {
