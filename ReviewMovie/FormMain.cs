@@ -45,8 +45,9 @@ namespace ReviewMovie
     public partial class FormMain : Form
     {
         // Toggle WPF shell. Set false to keep original WinForms UI (classic layout).
-        private const bool USE_MODERN_WPF_SHELL = true;
-        private const bool USE_MODERN_TOP_CARDS = false;
+        // Stable default: keep classic WinForms layout so all items always show.
+        private const bool USE_MODERN_WPF_SHELL = false;
+        private const bool USE_MODERN_TOP_CARDS = true;
         private readonly IClipPlayerService _clipPlayerService = new ClipPlayerService();
 
         private readonly IProjectDataService _projectService;
@@ -753,16 +754,23 @@ namespace ReviewMovie
             // Put them back into the original WinForms containers.
             try
             {
-                // Restore settings panel
-                if (grboxSetting != null && !grboxSetting.IsDisposed && grboxSetting.Parent == null)
+                // Restore settings panel (always force it back)
+                if (grboxSetting != null && !grboxSetting.IsDisposed && scSetting != null)
                 {
-                    // Original parent is scSetting.Panel2
-                    if (scSetting != null && scSetting.Panel2 != null)
+                    try
                     {
-                        scSetting.Panel2.Controls.Add(grboxSetting);
-                        grboxSetting.Dock = DockStyle.Fill;
-                        grboxSetting.Visible = true;
+                        if (grboxSetting.Parent != null && grboxSetting.Parent != scSetting.Panel2)
+                            grboxSetting.Parent.Controls.Remove(grboxSetting);
                     }
+                    catch { }
+
+                    if (!scSetting.Panel2.Controls.Contains(grboxSetting))
+                        scSetting.Panel2.Controls.Add(grboxSetting);
+
+                    scSetting.Panel2Collapsed = false;
+                    grboxSetting.Dock = DockStyle.Fill;
+                    grboxSetting.Visible = true;
+                    grboxSetting.BringToFront();
                 }
 
                 // Restore view header if needed
@@ -1546,6 +1554,9 @@ namespace ReviewMovie
             dgvMainView.AutoGenerateColumns = false;    // tạo các cột tùy chỉnh cho DataGridView  => ko có là lỗi
             _statusZoom = true; // Khai báo cờ check
             _statusOpenPlayer = true;
+
+            // Ensure classic controls are mounted/visible (in case a previous failed host detached them)
+            RestoreClassicLayout();
         }
         private void Init()
         {
