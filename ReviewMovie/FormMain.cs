@@ -145,7 +145,7 @@ namespace ReviewMovie
             // UI-only: apply modern light theme (không đổi logic)
             ApplyModernLightTheme();
             MountModernXamlShell();
-            ApplyFixedWindowSize();
+            ApplyInitialWindowSize();
             SetupComboZoomAll();
 
             _appcode = appcode;
@@ -735,24 +735,22 @@ namespace ReviewMovie
             }
         }
 
-        private void ApplyFixedWindowSize()
+        private void ApplyInitialWindowSize()
         {
             try
             {
                 var wa = Screen.FromControl(this).WorkingArea;
 
-                // Target size chosen to show full Settings without clipping on 1366x768+.
-                int targetW = Math.Min(wa.Width, 1380);
-                int targetH = Math.Min(wa.Height, 860);
-
-                // Size is fixed, but border style is controlled elsewhere (borderless when using XAML header).
-                MaximizeBox = false;
+                // Start maximized so all layouts fit on different screens.
+                // (User can still minimize/close from the custom header.)
+                MaximizeBox = true;
                 MinimizeBox = true;
                 StartPosition = FormStartPosition.CenterScreen;
+                MinimumSize = new Size(1100, 720);
 
-                Size = new Size(targetW, targetH);
-                MinimumSize = Size;
-                MaximumSize = Size;
+                // Use full working area
+                Size = new Size(Math.Max(MinimumSize.Width, wa.Width), Math.Max(MinimumSize.Height, wa.Height));
+                WindowState = FormWindowState.Maximized;
             }
             catch
             {
