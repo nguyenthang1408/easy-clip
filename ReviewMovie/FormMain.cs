@@ -579,13 +579,18 @@ namespace ReviewMovie
                 tsMenuView.AutoSize = false;
                 if (tsMenuView.Height < 28) tsMenuView.Height = 28;
 
-                // Attach children one-by-one (do not abort whole mount)
-                mounted |= TryHostControl(shell.MainGridHost, dgvMainView, BorderStyle.None, dockFill: true);
-                mounted |= TryHostSettings(shell.SettingsHost);
-                mounted |= TryHostControl(shell.ToolbarHost, tsMenuView, borderStyle: null, dockFill: true);
+                // Attach required children. If these fail, do NOT switch to WPF shell.
+                bool mountedGrid = TryHostControl(shell.MainGridHost, dgvMainView, BorderStyle.None, dockFill: true);
+                bool mountedSettings = TryHostSettings(shell.SettingsHost);
+
+                // Optional (legacy) toolbar host; in current XAML the actions row is WPF.
+                bool mountedToolbar = shell.ToolbarHost != null && TryHostControl(shell.ToolbarHost, tsMenuView, borderStyle: null, dockFill: true);
+
+                mounted = mountedGrid && mountedSettings;
 
                 // Hide old toolstrip visual; keep its logic/state available
-                tsMenuView.Visible = false;
+                if (mounted)
+                    tsMenuView.Visible = false;
 
                 // Wire WPF top cards -> existing WinForms logic
                 if (shell.BtnRecord != null)
@@ -718,7 +723,7 @@ namespace ReviewMovie
                 }
             }
 
-            // Only hide old layout after we actually mounted content
+            // Only hide old layout after we actually mounted required content
             if (mounted && _xamlHost != null)
             {
                 // Remove the native title bar (khoanh 1) and use the WPF header as title bar (khoanh 2)
@@ -733,6 +738,7 @@ namespace ReviewMovie
             else
             {
                 // keep original WinForms UI visible
+                try { tsMenuView.Visible = true; } catch { }
                 scMain.Visible = true;
                 _shell = null;
                 _xamlHost = null;
