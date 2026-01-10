@@ -880,6 +880,7 @@ namespace ReviewMovie
                         Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth + 6, 0),
                     };
                     _settingsScrollPanel.SizeChanged += (_, __) => AdjustSettingsWidth();
+                    _settingsScrollPanel.Layout += (_, __) => AdjustSettingsWidth();
                 }
 
                 // Detach settings groupbox from old parent
@@ -894,8 +895,20 @@ namespace ReviewMovie
 
                 _settingsScrollPanel.Controls.Clear();
                 _settingsScrollPanel.Controls.Add(grboxSetting);
-                AdjustSettingsWidth();
-                FixConfigVoiceLayout();
+                // Force vertical-only scrolling (prevents horizontal offset that clips left text)
+                try
+                {
+                    _settingsScrollPanel.HorizontalScroll.Enabled = false;
+                    _settingsScrollPanel.HorizontalScroll.Visible = false;
+                }
+                catch { }
+
+                // Defer one pass so sizes are non-zero under WindowsFormsHost
+                BeginInvoke((Action)(() =>
+                {
+                    AdjustSettingsWidth();
+                    FixConfigVoiceLayout();
+                }));
 
                 host.Child = _settingsScrollPanel;
                 return host.Child != null;
@@ -920,6 +933,13 @@ namespace ReviewMovie
 
             if (targetWidth > 0)
                 grboxSetting.Width = targetWidth;
+
+            // Keep scroll only vertical
+            try
+            {
+                _settingsScrollPanel.AutoScrollMinSize = new Size(0, Math.Max(grboxSetting.Height + 10, _settingsScrollPanel.ClientSize.Height + 1));
+            }
+            catch { }
         }
 
         private void FixConfigVoiceLayout()
