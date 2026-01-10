@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="Base\RoundedButton.cs" />
     <Compile Include="ModernUI\ModernShellControl.cs" />
+    <Compile Include="ModernUI\ModernTopCardsControl.cs" />
     <Compile Include="Base\Enum.cs" />
     <Compile Include="Base\RVFuncion.cs" />
     <Compile Include="Base\UIThreadHelper.cs" />
@@ -162,6 +163,7 @@
       <DependentUpon>LoginApiKey.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ModernUI\ModernShell.xaml" />
+    <EmbeddedResource Include="ModernUI\ModernTopCards.xaml" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

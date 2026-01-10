@@ -32,13 +32,13 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ReviewMovie.Base;
 using ReviewMovie.ModernUI;
 using System.Windows.Forms.Integration;
 using System.Runtime.InteropServices;
 using System.Drawing.Drawing2D;
+using System.Threading.Tasks;
 
 namespace ReviewMovie
 {
@@ -46,6 +46,7 @@ namespace ReviewMovie
     {
         // Toggle WPF shell. Set false to keep original WinForms UI (classic layout).
         private const bool USE_MODERN_WPF_SHELL = false;
+        private const bool USE_MODERN_TOP_CARDS = true;
         private readonly IClipPlayerService _clipPlayerService = new ClipPlayerService();
 
         private readonly IProjectDataService _projectService;
@@ -158,6 +159,7 @@ namespace ReviewMovie
 
             ApplyInitialWindowSize();
             SetupComboZoomAll();
+            MountModernTopCardsIntoClassicHeader();
 
             _appcode = appcode;
             _apikey = apikey;
@@ -521,6 +523,8 @@ namespace ReviewMovie
         #region WPF_XAML_SHELL (UI only)
         private ElementHost _xamlHost;
         private ModernShellControl _shell;
+        private ElementHost _topCardsHost;
+        private ModernTopCardsControl _topCards;
         private Panel _settingsScrollPanel;
         private bool _syncingWpfText;
         private readonly Dictionary<ComboBox, ComboZoomState> _comboZoomStates = new Dictionary<ComboBox, ComboZoomState>();
@@ -746,6 +750,138 @@ namespace ReviewMovie
             catch
             {
                 return false;
+            }
+        }
+
+        private void MountModernTopCardsIntoClassicHeader()
+        {
+            if (!USE_MODERN_TOP_CARDS)
+                return;
+            if (USE_MODERN_WPF_SHELL)
+                return; // already modern
+            if (_topCardsHost != null)
+                return;
+
+            try
+            {
+                _topCards = new ModernTopCardsControl();
+                _topCardsHost = new ElementHost
+                {
+                    Dock = DockStyle.Fill,
+                    Child = _topCards
+                };
+
+                // Replace the old GroupBox header (grViewHeader) with modern top cards
+                if (tlpView != null)
+                {
+                    tlpView.SuspendLayout();
+                    try
+                    {
+                        if (grViewHeader != null)
+                        {
+                            tlpView.Controls.Remove(grViewHeader);
+                            grViewHeader.Visible = false;
+                        }
+
+                        tlpView.Controls.Add(_topCardsHost, 0, 0);
+                        _topCardsHost.Margin = new Padding(0);
+                    }
+                    finally
+                    {
+                        tlpView.ResumeLayout(true);
+                    }
+                }
+
+                // Wire actions to existing WinForms logic
+                if (_topCards.BtnRecord != null) _topCards.BtnRecord.Click += (_, __) => btnRecord.PerformClick();
+                if (_topCards.BtnConvert != null) _topCards.BtnConvert.Click += (_, __) => btnConvertAudio.PerformClick();
+                if (_topCards.BtnSave != null) _topCards.BtnSave.Click += (_, __) => btnSaveAudio.PerformClick();
+                if (_topCards.BtnRender != null) _topCards.BtnRender.Click += (_, __) => btnRenderVideoPart.PerformClick();
+                if (_topCards.BtnClearText != null) _topCards.BtnClearText.Click += (_, __) => txtTextInput.Clear();
+
+                // Sync text input (2-way) so existing logic still works
+                bool syncing = false;
+                if (_topCards.TextInputBox != null)
+                {
+                    _topCards.TextInputBox.TextChanged += (_, __) =>
+                    {
+                        if (syncing) return;
+                        syncing = true;
+                        try { txtTextInput.Text = _topCards.TextInputBox.Text; }
+                        finally { syncing = false; }
+                    };
+                }
+
+                txtTextInput.TextChanged += (_, __) =>
+                {
+                    if (_topCards == null || _topCards.TextInputBox == null) return;
+                    if (syncing) return;
+                    syncing = true;
+                    try { _topCards.TextInputBox.Text = txtTextInput.Text; }
+                    finally { syncing = false; }
+                };
+
+                // Drag-drop audio on WPF textbox
+                if (_topCards.TextInputBox != null)
+                {
+                    _topCards.TextInputBox.PreviewDragOver += (_, e) =>
+                    {
+                        e.Effects = System.Windows.DragDropEffects.Copy;
+                        e.Handled = true;
+                    };
+                    _topCards.TextInputBox.Drop += async (_, e) =>
+                    {
+                        try
+                        {
+                            var data = e.Data.GetData(System.Windows.DataFormats.FileDrop) as string[];
+                            if (data != null && data.Length > 0 && _indexRowSelect >= 0)
+                            {
+                                await CallDownloadAudioAsync(data[0], _indexRowSelect, false, CancellationToken.None);
+                                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, _indexRowSelect, "Column_audiolink", data[0], Color.White);
+                            }
+                        }
+                        catch { }
+                    };
+                }
+
+                // Drag-drop visuals on WPF zone
+                if (_topCards.VisualDropZone != null)
+                {
+                    _topCards.VisualDropZone.PreviewDragOver += (_, e) =>
+                    {
+                        e.Effects = System.Windows.DragDropEffects.Copy;
+                        e.Handled = true;
+                    };
+                    _topCards.VisualDropZone.Drop += (_, e) =>
+                    {
+                        try
+                        {
+                            var data = e.Data.GetData(System.Windows.DataFormats.FileDrop) as string[];
+                            if (data != null && data.Length > 0 && _indexRowSelect >= 0)
+                            {
+                                string file = data[0];
+                                Task.Run(() =>
+                                {
+                                    try { InSertInputMediaData(file, _indexRowSelect); }
+                                    catch { }
+                                });
+                            }
+                        }
+                        catch { }
+                    };
+                }
+            }
+            catch
+            {
+                // If anything fails, keep original header
+                try
+                {
+                    if (_topCardsHost != null) _topCardsHost.Dispose();
+                }
+                catch { }
+                _topCardsHost = null;
+                _topCards = null;
+                if (grViewHeader != null) grViewHeader.Visible = true;
             }
         }
 
