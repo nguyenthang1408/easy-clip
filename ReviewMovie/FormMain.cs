@@ -155,6 +155,7 @@ namespace ReviewMovie
             {
                 // Ensure original WinForms layout is visible
                 scMain.Visible = true;
+                RestoreClassicLayout();
             }
 
             ApplyInitialWindowSize();
@@ -740,8 +741,65 @@ namespace ReviewMovie
                 // keep original WinForms UI visible
                 try { tsMenuView.Visible = true; } catch { }
                 scMain.Visible = true;
+                RestoreClassicLayout();
                 _shell = null;
                 _xamlHost = null;
+            }
+        }
+
+        private void RestoreClassicLayout()
+        {
+            // If we attempted WPF hosting and it failed, some controls may be detached.
+            // Put them back into the original WinForms containers.
+            try
+            {
+                // Restore settings panel
+                if (grboxSetting != null && !grboxSetting.IsDisposed && grboxSetting.Parent == null)
+                {
+                    // Original parent is scSetting.Panel2
+                    if (scSetting != null && scSetting.Panel2 != null)
+                    {
+                        scSetting.Panel2.Controls.Add(grboxSetting);
+                        grboxSetting.Dock = DockStyle.Fill;
+                        grboxSetting.Visible = true;
+                    }
+                }
+
+                // Restore view header if needed
+                if (grViewHeader != null && !grViewHeader.IsDisposed && grViewHeader.Parent == null && tlpView != null)
+                {
+                    tlpView.Controls.Add(grViewHeader, 0, 0);
+                    grViewHeader.Dock = DockStyle.Fill;
+                    grViewHeader.Visible = true;
+                }
+
+                // Restore ToolStrip row
+                if (tsMenuView != null && !tsMenuView.IsDisposed && tsMenuView.Parent == null && tlpView != null)
+                {
+                    tlpView.Controls.Add(tsMenuView, 0, 1);
+                    tsMenuView.Dock = DockStyle.Fill;
+                    tsMenuView.Visible = true;
+                }
+
+                // Restore DataGridView
+                if (dgvMainView != null && !dgvMainView.IsDisposed && dgvMainView.Parent == null && tlpView != null)
+                {
+                    tlpView.Controls.Add(dgvMainView, 0, 2);
+                    dgvMainView.Dock = DockStyle.Fill;
+                    dgvMainView.Visible = true;
+                }
+
+                // Ensure split panels are visible
+                try
+                {
+                    scSetting.Panel2Collapsed = false;
+                    scView.Panel2Collapsed = true;
+                }
+                catch { }
+            }
+            catch
+            {
+                // best-effort restore
             }
         }
 
