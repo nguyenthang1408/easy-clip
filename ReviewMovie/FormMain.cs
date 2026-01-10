@@ -44,6 +44,8 @@ namespace ReviewMovie
 {
     public partial class FormMain : Form
     {
+        // Toggle WPF shell. Set false to keep original WinForms UI (classic layout).
+        private const bool USE_MODERN_WPF_SHELL = false;
         private readonly IClipPlayerService _clipPlayerService = new ClipPlayerService();
 
         private readonly IProjectDataService _projectService;
@@ -144,7 +146,16 @@ namespace ReviewMovie
 
             // UI-only: apply modern light theme (không đổi logic)
             ApplyModernLightTheme();
-            MountModernXamlShell();
+            if (USE_MODERN_WPF_SHELL)
+            {
+                MountModernXamlShell();
+            }
+            else
+            {
+                // Ensure original WinForms layout is visible
+                scMain.Visible = true;
+            }
+
             ApplyInitialWindowSize();
             SetupComboZoomAll();
 
@@ -534,6 +545,9 @@ namespace ReviewMovie
         {
             // Host WPF layout for a closer match to the modern UI screenshot.
             // Logic remains in existing WinForms controls; we host the original controls to preserve items + events.
+            if (!USE_MODERN_WPF_SHELL)
+                return;
+
             if (_xamlHost != null)
                 return;
 
@@ -755,6 +769,13 @@ namespace ReviewMovie
                 Location = new Point(
                     wa.Left + Math.Max(0, (wa.Width - targetW) / 2),
                     wa.Top + Math.Max(0, (wa.Height - targetH) / 2));
+
+                // If not using WPF shell, keep normal window chrome.
+                if (!USE_MODERN_WPF_SHELL)
+                {
+                    FormBorderStyle = FormBorderStyle.FixedSingle;
+                    ControlBox = true;
+                }
             }
             catch
             {
