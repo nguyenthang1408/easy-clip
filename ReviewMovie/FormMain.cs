@@ -741,16 +741,20 @@ namespace ReviewMovie
             {
                 var wa = Screen.FromControl(this).WorkingArea;
 
-                // Start maximized so all layouts fit on different screens.
-                // (User can still minimize/close from the custom header.)
+                // Fit to screen (not full screen), centered.
                 MaximizeBox = true;
                 MinimizeBox = true;
                 StartPosition = FormStartPosition.CenterScreen;
                 MinimumSize = new Size(1100, 720);
 
-                // Use full working area
-                Size = new Size(Math.Max(MinimumSize.Width, wa.Width), Math.Max(MinimumSize.Height, wa.Height));
-                WindowState = FormWindowState.Maximized;
+                int targetW = Math.Max(MinimumSize.Width, wa.Width - 60);
+                int targetH = Math.Max(MinimumSize.Height, wa.Height - 60);
+
+                WindowState = FormWindowState.Normal;
+                Size = new Size(targetW, targetH);
+                Location = new Point(
+                    wa.Left + Math.Max(0, (wa.Width - targetW) / 2),
+                    wa.Top + Math.Max(0, (wa.Height - targetH) / 2));
             }
             catch
             {
@@ -891,6 +895,7 @@ namespace ReviewMovie
                 _settingsScrollPanel.Controls.Clear();
                 _settingsScrollPanel.Controls.Add(grboxSetting);
                 AdjustSettingsWidth();
+                FixConfigVoiceLayout();
 
                 host.Child = _settingsScrollPanel;
                 return host.Child != null;
@@ -915,6 +920,55 @@ namespace ReviewMovie
 
             if (targetWidth > 0)
                 grboxSetting.Width = targetWidth;
+        }
+
+        private void FixConfigVoiceLayout()
+        {
+            // Ensure left labels don't get covered by inputs on different DPI/screen sizes
+            try
+            {
+                if (grbConfigVoice == null || grbConfigVoice.IsDisposed)
+                    return;
+
+                int paddingRight = 10;
+                int left = 110; // give labels enough room
+                int fullW = grbConfigVoice.ClientSize.Width;
+                if (fullW <= 0) return;
+
+                // Keep the "Save" button pinned to the right
+                if (btnSaveVoiceSource != null && !btnSaveVoiceSource.IsDisposed)
+                {
+                    btnSaveVoiceSource.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    btnSaveVoiceSource.Left = fullW - btnSaveVoiceSource.Width - paddingRight;
+                }
+
+                // Project/voice row: combo should stop before the Save button
+                if (cboSiteNguon != null && !cboSiteNguon.IsDisposed)
+                {
+                    cboSiteNguon.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    cboSiteNguon.Left = left;
+                    int rightLimit = (btnSaveVoiceSource != null && !btnSaveVoiceSource.IsDisposed)
+                        ? btnSaveVoiceSource.Left - 8
+                        : fullW - paddingRight;
+                    cboSiteNguon.Width = Math.Max(120, rightLimit - cboSiteNguon.Left);
+                }
+
+                // AppID/Token occupy full width
+                if (txtAppID != null && !txtAppID.IsDisposed)
+                {
+                    txtAppID.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    txtAppID.Left = left;
+                    txtAppID.Width = Math.Max(120, fullW - left - paddingRight);
+                }
+
+                if (txtToken != null && !txtToken.IsDisposed)
+                {
+                    txtToken.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    txtToken.Left = left;
+                    txtToken.Width = Math.Max(120, fullW - left - paddingRight);
+                }
+            }
+            catch { }
         }
 
         // Combo mirroring helpers removed: we now host the original WinForms settings panel.

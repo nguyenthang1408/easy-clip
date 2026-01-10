@@ -103,7 +103,7 @@
   <Grid.ColumnDefinitions>
     <ColumnDefinition Width="3*" />
     <!-- Responsive sidebar: scales with screen, but stays usable -->
-    <ColumnDefinition Width="2*" MinWidth="380" MaxWidth="520" />
+    <ColumnDefinition Width="2*" MinWidth="420" MaxWidth="620" />
   </Grid.ColumnDefinitions>
 
   <!-- Top header bar (used as window title bar) -->
