@@ -157,11 +157,26 @@ namespace ReviewMovie
                     // Đăng nhập thành công
                     MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                    // Tạo FormMain trước. Nếu có lỗi khởi tạo, giữ nguyên login để user không bị "mất màn hình".
+                    FormMain mainForm;
+                    try
+                    {
+                        mainForm = new FormMain(txAppCodeShow.Text, txInsertApiKey.Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            "Không thể mở ứng dụng. Vui lòng thử lại.\n\nChi tiết: " + ex.Message,
+                            "Lỗi",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        return;
+                    }
+
                     // Mở form chính và đóng form đăng nhập
                     this.Hide();
-                    FormMain mainForm = new FormMain(txAppCodeShow.Text, txInsertApiKey.Text);
-
                     mainForm.ShowDialog();
+
                     // Sau khi đóng form chính, thoát ứng dụng
                     Application.Exit();
                 }
