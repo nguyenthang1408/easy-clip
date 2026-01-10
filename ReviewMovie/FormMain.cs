@@ -160,6 +160,7 @@ namespace ReviewMovie
             ApplyInitialWindowSize();
             SetupComboZoomAll();
             MountModernTopCardsIntoClassicHeader();
+            BeginInvoke((Action)(() => ApplyFixedClassicLayoutIfNeeded()));
 
             _appcode = appcode;
             _apikey = apikey;
@@ -917,6 +918,131 @@ namespace ReviewMovie
             {
                 // don't block startup
             }
+        }
+
+        private void ApplyFixedClassicLayoutIfNeeded()
+        {
+            // User wants fixed size + all text visible in classic layout.
+            if (USE_MODERN_WPF_SHELL)
+                return;
+
+            try
+            {
+                var wa = Screen.FromControl(this).WorkingArea;
+
+                // Fix window to working area (looks like maximized, but fixed)
+                WindowState = FormWindowState.Normal;
+                FormBorderStyle = FormBorderStyle.FixedSingle;
+                MaximizeBox = false;
+                MinimizeBox = true;
+                ControlBox = true;
+
+                Location = wa.Location;
+                Size = wa.Size;
+                MinimumSize = wa.Size;
+                MaximumSize = wa.Size;
+
+                ApplyClassicSplitWidths();
+                FixProjectLayout();
+                FixConfigVoiceLayout();
+                FixConfigRenderLayout();
+            }
+            catch { }
+        }
+
+        private void ApplyClassicSplitWidths()
+        {
+            // Ensure the Settings panel is wide enough so labels aren't clipped.
+            try
+            {
+                int totalW = scMain.Width;
+                if (totalW <= 0) return;
+
+                // Desired width for the whole right side (includes scSetting split + padding)
+                int desiredRight = Math.Min(560, Math.Max(480, (int)(totalW * 0.40)));
+                int minLeft = 640;
+
+                int splitterDistance = Math.Max(minLeft, totalW - desiredRight);
+                splitterDistance = Math.Min(splitterDistance, totalW - 380); // keep right panel usable
+
+                scMain.SplitterDistance = splitterDistance;
+            }
+            catch { }
+        }
+
+        private void FixProjectLayout()
+        {
+            try
+            {
+                if (grboxSetting == null || grboxSetting.IsDisposed) return;
+                if (cbProjectName == null || cbProjectName.IsDisposed) return;
+
+                int paddingRight = 10;
+                int left = 86; // current designer uses 86 for cbProjectName
+
+                // Keep Create button pinned right
+                if (btnOpenProject != null && !btnOpenProject.IsDisposed)
+                {
+                    btnOpenProject.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    btnOpenProject.Left = grboxSetting.ClientSize.Width - btnOpenProject.Width - paddingRight;
+                }
+
+                cbProjectName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                cbProjectName.Left = left;
+
+                int rightLimit = (btnOpenProject != null && !btnOpenProject.IsDisposed)
+                    ? btnOpenProject.Left - 8
+                    : grboxSetting.ClientSize.Width - paddingRight;
+
+                cbProjectName.Width = Math.Max(140, rightLimit - cbProjectName.Left);
+            }
+            catch { }
+        }
+
+        private void FixConfigRenderLayout()
+        {
+            // Reduce clipping in "Lựa Chọn Hiệu Ứng" by widening combos and pinning right column.
+            try
+            {
+                if (grbConfigRender == null || grbConfigRender.IsDisposed) return;
+
+                int paddingRight = 10;
+                int left = 78; // most controls start at 78 in designer
+                int fullW = grbConfigRender.ClientSize.Width;
+                if (fullW <= 0) return;
+
+                // Right column checkboxes block width
+                int rightColumnLeft = 230; // designer uses 230
+                int leftColumnRight = rightColumnLeft - 10;
+
+                // Stretch common comboboxes in left column
+                ComboBox[] combos =
+                {
+                    cbZoomRatio, cbZoomQuality, cbxVideoQuality, cbMode, cbEffectType, cbLanguageSelect, cbxSpeechType, cbSettingTemplate
+                };
+
+                foreach (var cb in combos)
+                {
+                    if (cb == null || cb.IsDisposed) continue;
+                    cb.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    cb.Left = left;
+                    cb.Width = Math.Max(120, leftColumnRight - cb.Left);
+                }
+
+                // Keep Save effect button pinned right
+                if (btnSaveEffectSetting != null && !btnSaveEffectSetting.IsDisposed)
+                {
+                    btnSaveEffectSetting.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    btnSaveEffectSetting.Left = fullW - btnSaveEffectSetting.Width - paddingRight;
+                }
+
+                // Stretch language/voice rows to full width (they are near bottom)
+                if (cbLanguageSelect != null && !cbLanguageSelect.IsDisposed)
+                    cbLanguageSelect.Width = Math.Max(120, fullW - cbLanguageSelect.Left - paddingRight);
+                if (cbxSpeechType != null && !cbxSpeechType.IsDisposed)
+                    cbxSpeechType.Width = Math.Max(120, fullW - cbxSpeechType.Left - paddingRight);
+            }
+            catch { }
         }
 
         // Borderless window drag support
