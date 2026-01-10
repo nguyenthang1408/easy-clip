@@ -201,7 +201,6 @@
                 Margin="0,10,0,10"
                 CornerRadius="12"
                 BorderThickness="2"
-                BorderBrush="#CBD5E1"
                 Background="#F8FAFC">
           <Border.BorderBrush>
             <SolidColorBrush Color="#CBD5E1" />
