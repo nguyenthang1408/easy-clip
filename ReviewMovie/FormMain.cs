@@ -144,6 +144,9 @@ namespace ReviewMovie
         private ElementHost _modernTitleBarHost;
         private ModernTitleBarView _modernTitleBarView;
 
+        private ElementHost _modernActionBarHost;
+        private ModernActionBarView _modernActionBarView;
+
         private TableLayoutPanel _chromeLayout;
         #endregion
 
@@ -180,6 +183,7 @@ namespace ReviewMovie
 
             // UI makeover: replace header block with WPF (XAML) like design
             InitModernHeaderUi();
+            InitModernActionBarUi();
             InitModernSettingsUi();
 
             // Responsive for laptop/small screens
@@ -377,6 +381,36 @@ namespace ReviewMovie
             grViewHeader.Visible = false;
             tlpView.Controls.Add(_modernHeaderHost, 0, 0);
             _modernHeaderHost.BringToFront();
+        }
+
+        private void InitModernActionBarUi()
+        {
+            if (_modernActionBarHost != null) return;
+
+            _modernActionBarView = new ModernActionBarView();
+            _modernActionBarView.NewLineClicked += (_, __) => btnAddRow.PerformClick();
+            _modernActionBarView.AutoSubtitleClicked += (_, __) => btnImportSubtitle.PerformClick();
+            _modernActionBarView.CancelClicked += (_, __) => btnDestroyAction.PerformClick();
+
+            _modernActionBarHost = new ElementHost
+            {
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0),
+                Child = _modernActionBarView
+            };
+
+            // Replace old ToolStrip visually
+            tsMenuView.Visible = false;
+
+            // Make row height friendly on laptop
+            if (tlpView.RowStyles.Count > 1)
+            {
+                tlpView.RowStyles[1].SizeType = SizeType.Absolute;
+                tlpView.RowStyles[1].Height = 48;
+            }
+
+            tlpView.Controls.Add(_modernActionBarHost, 0, 1);
+            _modernActionBarHost.BringToFront();
         }
 
         private void InitModernSettingsUi()
