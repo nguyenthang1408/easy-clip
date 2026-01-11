@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Markup;
 using System.Xml;
 
@@ -9,6 +9,8 @@ namespace ReviewMovie.WpfUi
 {
     public sealed class ModernSettingsView : UserControl
     {
+        private readonly UserControl _root;
+
         public ComboBox CbProject { get; }
         public Button BtnCreateProject { get; }
 
@@ -49,6 +51,7 @@ namespace ReviewMovie.WpfUi
         public ModernSettingsView()
         {
             var root = LoadFromEmbeddedXaml("EasyClip.WpfUi.ModernSettings.xaml");
+            _root = root;
             Resources = root.Resources;
             Content = root.Content;
 
@@ -88,6 +91,18 @@ namespace ReviewMovie.WpfUi
 
             BtnMergeSegments = (Button)root.FindName("BtnMergeSegments");
             TxtStatus = (TextBlock)root.FindName("TxtStatus");
+        }
+
+        public void SetUiScale(double scale)
+        {
+            if (scale <= 0) scale = 1.0;
+            if (scale > 1.0) scale = 1.0;
+            if (scale < 0.80) scale = 0.80;
+
+            if (_root?.Content is System.Windows.FrameworkElement fe)
+            {
+                fe.LayoutTransform = new ScaleTransform(scale, scale);
+            }
         }
 
         public void SetStatus(string text)

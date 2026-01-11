@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Markup;
 using System.Xml;
 
@@ -10,6 +11,8 @@ namespace ReviewMovie.WpfUi
     {
         private readonly TextBox _txtInput;
         private readonly TextBlock _txtPlaceholder;
+
+        private readonly UserControl _root;
 
         public event EventHandler StartRecordClicked;
         public event EventHandler ConvertClicked;
@@ -21,6 +24,7 @@ namespace ReviewMovie.WpfUi
         public ModernHeaderView()
         {
             var root = LoadFromEmbeddedXaml("EasyClip.WpfUi.ModernHeader.xaml");
+            _root = root;
             // Keep styles/resources declared in XAML root
             Resources = root.Resources;
             Content = root.Content;
@@ -47,6 +51,18 @@ namespace ReviewMovie.WpfUi
             };
 
             UpdatePlaceholderVisibility();
+        }
+
+        public void SetUiScale(double scale)
+        {
+            if (scale <= 0) scale = 1.0;
+            if (scale > 1.0) scale = 1.0;
+            if (scale < 0.80) scale = 0.80;
+
+            if (_root?.Content is System.Windows.FrameworkElement fe)
+            {
+                fe.LayoutTransform = new ScaleTransform(scale, scale);
+            }
         }
 
         public string Text

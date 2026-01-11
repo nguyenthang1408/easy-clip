@@ -20,7 +20,7 @@
       <Setter Property="BorderBrush" Value="{StaticResource Border}" />
       <Setter Property="Effect" Value="{StaticResource CardShadow}" />
       <Setter Property="Padding" Value="14" />
-      <Setter Property="Margin" Value="10,10,10,10" />
+      <Setter Property="Margin" Value="8,8,8,8" />
       <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 

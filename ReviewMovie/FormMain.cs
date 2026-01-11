@@ -143,6 +143,8 @@ namespace ReviewMovie
 
         private ElementHost _modernTitleBarHost;
         private ModernTitleBarView _modernTitleBarView;
+
+        private Panel _chromeRoot;
         #endregion
 
         #region Main_Init
@@ -179,6 +181,10 @@ namespace ReviewMovie
             // UI makeover: replace header block with WPF (XAML) like design
             InitModernHeaderUi();
             InitModernSettingsUi();
+
+            // Responsive for laptop/small screens
+            Resize += (_, __) => ApplyResponsiveUiScaling();
+            ApplyResponsiveUiScaling();
         }
 
         // ===== Custom window chrome (WinForms borderless + WPF title bar) =====
@@ -214,10 +220,20 @@ namespace ReviewMovie
                 Child = _modernTitleBarView
             };
 
-            // Ensure layout: title bar on top, main content fills remaining
-            Controls.Add(_modernTitleBarHost);
+            // Ensure layout is correct (avoid content being hidden under title bar)
+            if (_chromeRoot == null)
+            {
+                _chromeRoot = new Panel { Dock = DockStyle.Fill };
+                Controls.Add(_chromeRoot);
+
+                // Move existing main container under chrome root
+                Controls.Remove(scMain);
+                _chromeRoot.Controls.Add(scMain);
+                scMain.Dock = DockStyle.Fill;
+            }
+
+            _chromeRoot.Controls.Add(_modernTitleBarHost);
             _modernTitleBarHost.BringToFront();
-            scMain.Dock = DockStyle.Fill;
         }
 
         private void BeginWindowDragMove()
@@ -225,6 +241,17 @@ namespace ReviewMovie
             // Simulate dragging the native caption area
             ReleaseCapture();
             SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+        }
+
+        private void ApplyResponsiveUiScaling()
+        {
+            // 1294 is the original designed width in FormMain.Designer
+            var baseWidth = 1294.0;
+            var scale = ClientSize.Width / baseWidth;
+            if (scale > 1.0) scale = 1.0;
+
+            _modernHeaderView?.SetUiScale(scale);
+            _modernSettingsView?.SetUiScale(scale);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
