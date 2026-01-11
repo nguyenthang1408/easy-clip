@@ -144,7 +144,7 @@ namespace ReviewMovie
         private ElementHost _modernTitleBarHost;
         private ModernTitleBarView _modernTitleBarView;
 
-        private Panel _chromeRoot;
+        private TableLayoutPanel _chromeLayout;
         #endregion
 
         #region Main_Init
@@ -214,26 +214,42 @@ namespace ReviewMovie
 
             _modernTitleBarHost = new ElementHost
             {
-                Dock = DockStyle.Top,
-                Height = 64,
+                Dock = DockStyle.Fill,
+                Height = 64, // used as row height in layout
                 Margin = new Padding(0),
                 Child = _modernTitleBarView
             };
 
             // Ensure layout is correct (avoid content being hidden under title bar)
-            if (_chromeRoot == null)
+            // Use a 2-row layout: row0 = titlebar (fixed), row1 = app content (fill)
+            if (_chromeLayout == null)
             {
-                _chromeRoot = new Panel { Dock = DockStyle.Fill };
-                Controls.Add(_chromeRoot);
+                _chromeLayout = new TableLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    Margin = new Padding(0),
+                    Padding = new Padding(0),
+                    ColumnCount = 1,
+                    RowCount = 2
+                };
+                _chromeLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+                _chromeLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 64F));
+                _chromeLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 
-                // Move existing main container under chrome root
+                Controls.Add(_chromeLayout);
+
+                // Move existing main container into row1
                 Controls.Remove(scMain);
-                _chromeRoot.Controls.Add(scMain);
                 scMain.Dock = DockStyle.Fill;
+                _chromeLayout.Controls.Add(scMain, 0, 1);
             }
 
-            _chromeRoot.Controls.Add(_modernTitleBarHost);
-            _modernTitleBarHost.BringToFront();
+            // Put titlebar in row0
+            if (!_chromeLayout.Controls.Contains(_modernTitleBarHost))
+            {
+                _chromeLayout.Controls.Add(_modernTitleBarHost, 0, 0);
+            }
+            _chromeLayout.RowStyles[0].Height = 64F;
         }
 
         private void BeginWindowDragMove()
