@@ -183,7 +183,7 @@ namespace ReviewMovie
 
             // UI makeover: replace header block with WPF (XAML) like design
             InitModernHeaderUi();
-            InitModernActionBarUi();
+            RestoreClassicToolStripUi();
             InitModernSettingsUi();
 
             // Responsive for laptop/small screens
@@ -383,34 +383,21 @@ namespace ReviewMovie
             _modernHeaderHost.BringToFront();
         }
 
-        private void InitModernActionBarUi()
+        private void RestoreClassicToolStripUi()
         {
-            if (_modernActionBarHost != null) return;
-
-            _modernActionBarView = new ModernActionBarView();
-            _modernActionBarView.NewLineClicked += (_, __) => btnAddRow.PerformClick();
-            _modernActionBarView.AutoSubtitleClicked += (_, __) => btnImportSubtitle.PerformClick();
-            _modernActionBarView.CancelClicked += (_, __) => btnDestroyAction.PerformClick();
-
-            _modernActionBarHost = new ElementHost
+            // If we previously created the WPF action bar, hide it.
+            if (_modernActionBarHost != null)
             {
-                Dock = DockStyle.Fill,
-                Margin = new Padding(0),
-                Child = _modernActionBarView
-            };
-
-            // Replace old ToolStrip visually
-            tsMenuView.Visible = false;
-
-            // Make row height friendly on laptop
-            if (tlpView.RowStyles.Count > 1)
-            {
-                tlpView.RowStyles[1].SizeType = SizeType.Absolute;
-                tlpView.RowStyles[1].Height = 48;
+                _modernActionBarHost.Visible = false;
             }
 
-            tlpView.Controls.Add(_modernActionBarHost, 0, 1);
-            _modernActionBarHost.BringToFront();
+            // Bring back original ToolStrip and style it (rounded + nicer colors)
+            tsMenuView.Visible = true;
+            tsMenuView.GripStyle = ToolStripGripStyle.Hidden;
+            tsMenuView.Padding = new Padding(10, 8, 10, 8);
+            tsMenuView.AutoSize = false;
+            tsMenuView.Height = 48;
+            tsMenuView.Renderer = new ReviewMovie.Base.RoundedToolStripRenderer();
         }
 
         private void InitModernSettingsUi()
