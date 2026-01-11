@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.IO.Pipes;
 using System.Linq;
@@ -148,6 +149,9 @@ namespace ReviewMovie
         private ModernActionBarView _modernActionBarView;
 
         private TableLayoutPanel _chromeLayout;
+
+        // DataGridView hover row
+        private int _hoverRowIndex = -1;
         #endregion
 
         #region Main_Init
@@ -295,6 +299,196 @@ namespace ReviewMovie
             _modernHeaderView?.SetUiScale(scale);
             _modernSettingsView?.SetUiScale(scale);
         }
+
+        private void ApplyModernDataGridViewStyle()
+        {
+            if (dgvMainView == null) return;
+
+            dgvMainView.BackgroundColor = Color.White;
+            dgvMainView.BorderStyle = BorderStyle.None;
+            dgvMainView.GridColor = Color.White;
+            dgvMainView.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dgvMainView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvMainView.EnableHeadersVisualStyles = false;
+            dgvMainView.RowHeadersVisible = false;
+            dgvMainView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvMainView.MultiSelect = false;
+            dgvMainView.RowTemplate.Height = 44;
+            dgvMainView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+
+            dgvMainView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvMainView.ColumnHeadersHeight = 38;
+            dgvMainView.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.FromArgb(249, 250, 251),
+                ForeColor = Color.FromArgb(107, 114, 128),
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                Alignment = DataGridViewContentAlignment.MiddleLeft,
+                Padding = new Padding(10, 0, 10, 0),
+                WrapMode = DataGridViewTriState.False
+            };
+
+            dgvMainView.DefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.White,
+                ForeColor = Color.FromArgb(17, 24, 39),
+                SelectionBackColor = Color.FromArgb(224, 242, 254),
+                SelectionForeColor = Color.FromArgb(15, 23, 42),
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular),
+                Alignment = DataGridViewContentAlignment.MiddleLeft,
+                Padding = new Padding(10, 0, 10, 0),
+                WrapMode = DataGridViewTriState.False
+            };
+
+            dgvMainView.AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.FromArgb(252, 252, 253)
+            };
+
+            dgvMainView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            if (dgvMainView.Columns.Contains("Column_check"))
+            {
+                var c = dgvMainView.Columns["Column_check"];
+                c.Width = 52;
+                c.MinimumWidth = 52;
+                c.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                c.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+
+            if (dgvMainView.Columns.Contains("Column_index"))
+            {
+                var c = dgvMainView.Columns["Column_index"];
+                c.Width = 54;
+                c.MinimumWidth = 54;
+                c.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                c.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+
+            dgvMainView.CellPainting -= DgvMainView_CellPainting;
+            dgvMainView.CellPainting += DgvMainView_CellPainting;
+
+            dgvMainView.CellMouseEnter -= DgvMainView_CellMouseEnter;
+            dgvMainView.CellMouseEnter += DgvMainView_CellMouseEnter;
+            dgvMainView.CellMouseLeave -= DgvMainView_CellMouseLeave;
+            dgvMainView.CellMouseLeave += DgvMainView_CellMouseLeave;
+            dgvMainView.RowPrePaint -= DgvMainView_RowPrePaint;
+            dgvMainView.RowPrePaint += DgvMainView_RowPrePaint;
+        }
+
+        private void DgvMainView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            if (_hoverRowIndex == e.RowIndex) return;
+            var old = _hoverRowIndex;
+            _hoverRowIndex = e.RowIndex;
+            if (old >= 0 && old < dgvMainView.Rows.Count) dgvMainView.InvalidateRow(old);
+            dgvMainView.InvalidateRow(_hoverRowIndex);
+        }
+
+        private void DgvMainView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            var old = _hoverRowIndex;
+            _hoverRowIndex = -1;
+            if (old >= 0 && old < dgvMainView.Rows.Count) dgvMainView.InvalidateRow(old);
+        }
+
+        private void DgvMainView_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= dgvMainView.Rows.Count) return;
+            var row = dgvMainView.Rows[e.RowIndex];
+            if (!row.Selected && e.RowIndex == _hoverRowIndex)
+            {
+                row.DefaultCellStyle.BackColor = Color.FromArgb(248, 250, 252);
+            }
+            else
+            {
+                row.DefaultCellStyle.BackColor = Color.Empty;
+            }
+        }
+
+        private void DgvMainView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            var colName = dgvMainView.Columns[e.ColumnIndex].Name;
+            if (colName != "Column_audiostatus" && colName != "Column_renderstatus") return;
+
+            var raw = e.Value?.ToString()?.Trim();
+            if (string.IsNullOrEmpty(raw)) return;
+
+            GetStatusPillStyle(raw, out var bg, out var fg);
+
+            e.Handled = true;
+            e.PaintBackground(e.CellBounds, true);
+
+            var g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            var text = raw;
+            using (var font = new Font("Segoe UI", 8.5F, FontStyle.Bold))
+            using (var textBrush = new SolidBrush(fg))
+            using (var fillBrush = new SolidBrush(bg))
+            {
+                var textSize = g.MeasureString(text, font);
+                var pillW = (int)Math.Ceiling(textSize.Width) + 18;
+                var pillH = 24;
+
+                var x = e.CellBounds.X + (e.CellBounds.Width - pillW) / 2;
+                var y = e.CellBounds.Y + (e.CellBounds.Height - pillH) / 2;
+
+                var pillRect = new Rectangle(x, y, pillW, pillH);
+                using (var path = CreateRoundRectPath(pillRect, 12))
+                {
+                    g.FillPath(fillBrush, path);
+                }
+
+                var tx = pillRect.X + (pillRect.Width - textSize.Width) / 2;
+                var ty = pillRect.Y + (pillRect.Height - textSize.Height) / 2;
+                g.DrawString(text, font, textBrush, (float)tx, (float)ty);
+            }
+        }
+
+        private static void GetStatusPillStyle(string status, out Color bg, out Color fg)
+        {
+            var s = status.ToLowerInvariant();
+
+            if (s.Contains("ready") || s.Contains("converted") || s.Contains("done") || s.Contains("xong"))
+            {
+                bg = Color.FromArgb(220, 252, 231);
+                fg = Color.FromArgb(22, 163, 74);
+                return;
+            }
+
+            if (s.Contains("pending") || s.Contains("wait") || s.Contains("đợi") || s.Contains("dang") || s.Contains("đang"))
+            {
+                bg = Color.FromArgb(255, 237, 213);
+                fg = Color.FromArgb(234, 88, 12);
+                return;
+            }
+
+            if (s.Contains("error") || s.Contains("fail") || s.Contains("lỗi") || s.Contains("không"))
+            {
+                bg = Color.FromArgb(254, 226, 226);
+                fg = Color.FromArgb(185, 28, 28);
+                return;
+            }
+
+            bg = Color.FromArgb(243, 244, 246);
+            fg = Color.FromArgb(75, 85, 99);
+        }
+
+        private static GraphicsPath CreateRoundRectPath(Rectangle rect, int radius)
+        {
+            var path = new GraphicsPath();
+            var d = radius * 2;
+            path.AddArc(rect.X, rect.Y, d, d, 180, 90);
+            path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
+            path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
+            path.CloseFigure();
+            return path;
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             //CreateProjectPath();  // bỏ tạo project tại thư mục gốc
@@ -304,6 +498,8 @@ namespace ReviewMovie
             dgvMainView.AutoGenerateColumns = false;    // tạo các cột tùy chỉnh cho DataGridView  => ko có là lỗi
             _statusZoom = true; // Khai báo cờ check
             _statusOpenPlayer = true;
+
+            ApplyModernDataGridViewStyle();
         }
         private void Init()
         {
