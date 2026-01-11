@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              Background="White"
-             d:DesignHeight="44" d:DesignWidth="1200">
+             d:DesignHeight="64" d:DesignWidth="1200">
   <UserControl.Resources>
     <SolidColorBrush x:Key="Border" Color="#E5E7EB" />
     <SolidColorBrush x:Key="Accent" Color="#F97316" />
@@ -14,9 +14,9 @@
       <Setter Property="Background" Value="Transparent" />
       <Setter Property="Foreground" Value="#111827" />
       <Setter Property="BorderThickness" Value="0" />
-      <Setter Property="Width" Value="42" />
-      <Setter Property="Height" Value="28" />
-      <Setter Property="FontSize" Value="14" />
+      <Setter Property="Width" Value="52" />
+      <Setter Property="Height" Value="36" />
+      <Setter Property="FontSize" Value="16" />
       <Setter Property="FontWeight" Value="SemiBold" />
       <Setter Property="Cursor" Value="Hand" />
       <Setter Property="Template">
@@ -46,7 +46,7 @@
   </UserControl.Resources>
 
   <Border BorderBrush="{StaticResource Border}" BorderThickness="0,0,0,1" Background="White">
-    <Grid Height="44">
+    <Grid Height="64">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="Auto" />
@@ -55,19 +55,20 @@
       <!-- Drag area -->
       <Grid x:Name="DragArea" Grid.Column="0" Background="Transparent" Margin="10,0,0,0">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-          <Border Width="22" Height="22" CornerRadius="6" Background="{StaticResource Accent}">
-            <TextBlock Text="E" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          <Border Width="30" Height="30" CornerRadius="8" Background="{StaticResource Accent}">
+            <TextBlock Text="E" Foreground="White" FontWeight="Bold" FontSize="16"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
           </Border>
 
-          <StackPanel Margin="10,0,0,0">
-            <TextBlock Text="EasyClip Studio" FontWeight="SemiBold" Foreground="#111827" />
-            <TextBlock Text="TPMEDIA PREMIUM" FontSize="10" Foreground="{StaticResource TextMuted}" />
+          <StackPanel Margin="12,0,0,0">
+            <TextBlock Text="EasyClip Studio" FontWeight="SemiBold" FontSize="16" Foreground="#111827" />
+            <TextBlock Text="TPMEDIA PREMIUM" FontSize="12" Foreground="{StaticResource TextMuted}" />
           </StackPanel>
         </StackPanel>
       </Grid>
 
       <!-- Window buttons -->
-      <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,8,0">
+      <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
         <Button x:Name="BtnMinimize" Style="{StaticResource WinBtn}" Content="—" />
         <Button x:Name="BtnClose" Style="{StaticResource CloseBtn}" Content="✕" />
       </StackPanel>

@@ -209,7 +209,7 @@ namespace ReviewMovie
             _modernTitleBarHost = new ElementHost
             {
                 Dock = DockStyle.Top,
-                Height = 44,
+                Height = 64,
                 Margin = new Padding(0),
                 Child = _modernTitleBarView
             };
