@@ -76,8 +76,17 @@
       <!-- Window buttons -->
       <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
         <!-- status -->
-        <Border Background="#ECFDF3" CornerRadius="10" Padding="8,3" Margin="0,0,10,0">
-          <TextBlock Text="Active" Foreground="#16A34A" FontSize="12" FontWeight="SemiBold"/>
+        <Border Background="#ECFDF3"
+                CornerRadius="10"
+                Height="30"
+                Padding="10,0"
+                Margin="0,0,10,0"
+                VerticalAlignment="Center">
+          <TextBlock Text="Active"
+                     Foreground="#16A34A"
+                     FontSize="12"
+                     FontWeight="SemiBold"
+                     VerticalAlignment="Center" />
         </Border>
 
         <TextBlock Text="1 Day Remaining" Foreground="{StaticResource TextMuted}" FontSize="12"
@@ -88,7 +97,8 @@
         <Button x:Name="BtnSettings" Style="{StaticResource IconBtn}" Content="⚙" Margin="0,0,8,0"/>
 
         <!-- avatar -->
-        <Border Width="34" Height="34" CornerRadius="17" Background="{StaticResource Accent}" Margin="0,0,10,0">
+        <Border Width="34" Height="34" CornerRadius="17" Background="{StaticResource Accent}" Margin="0,0,10,0"
+                VerticalAlignment="Center">
           <TextBlock Text="TN" Foreground="White" FontWeight="Bold" FontSize="12"
                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
