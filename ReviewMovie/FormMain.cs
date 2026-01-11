@@ -313,19 +313,19 @@ namespace ReviewMovie
             dgvMainView.RowHeadersVisible = false;
             dgvMainView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvMainView.MultiSelect = false;
-            dgvMainView.RowTemplate.Height = 44;
+            dgvMainView.RowTemplate.Height = 50;
             dgvMainView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
 
-            dgvMainView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvMainView.ColumnHeadersHeight = 38;
+            // Header: bigger text + allow wrapping (no "...")
+            dgvMainView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvMainView.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
             {
                 BackColor = Color.FromArgb(249, 250, 251),
                 ForeColor = Color.FromArgb(107, 114, 128),
-                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleLeft,
                 Padding = new Padding(10, 0, 10, 0),
-                WrapMode = DataGridViewTriState.False
+                WrapMode = DataGridViewTriState.True
             };
 
             dgvMainView.DefaultCellStyle = new DataGridViewCellStyle
@@ -334,7 +334,7 @@ namespace ReviewMovie
                 ForeColor = Color.FromArgb(17, 24, 39),
                 SelectionBackColor = Color.FromArgb(224, 242, 254),
                 SelectionForeColor = Color.FromArgb(15, 23, 42),
-                Font = new Font("Segoe UI", 9F, FontStyle.Regular),
+                Font = new Font("Segoe UI", 10F, FontStyle.Regular),
                 Alignment = DataGridViewContentAlignment.MiddleLeft,
                 Padding = new Padding(10, 0, 10, 0),
                 WrapMode = DataGridViewTriState.False
@@ -426,13 +426,13 @@ namespace ReviewMovie
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
             var text = raw;
-            using (var font = new Font("Segoe UI", 8.5F, FontStyle.Bold))
+            using (var font = new Font("Segoe UI", 9.5F, FontStyle.Bold))
             using (var textBrush = new SolidBrush(fg))
             using (var fillBrush = new SolidBrush(bg))
             {
                 var textSize = g.MeasureString(text, font);
                 var pillW = (int)Math.Ceiling(textSize.Width) + 18;
-                var pillH = 24;
+                var pillH = 26;
 
                 var x = e.CellBounds.X + (e.CellBounds.Width - pillW) / 2;
                 var y = e.CellBounds.Y + (e.CellBounds.Height - pillH) / 2;
