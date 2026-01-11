@@ -1,4 +1,4 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
 using Lib;
@@ -102,7 +102,7 @@ namespace ReviewMovie
 
                     // Mở form chính và đóng form đăng nhập
                     this.Hide();
-                    FormMain mainForm = new FormMain(txAppCodeShow.Text, txInsertApiKey.Text);
+                    MainForm mainForm = new MainForm(txAppCodeShow.Text, txInsertApiKey.Text);
 
                     mainForm.ShowDialog();
                     // Sau khi đóng form chính, thoát ứng dụng
