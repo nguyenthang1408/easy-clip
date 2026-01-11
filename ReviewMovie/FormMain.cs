@@ -1,4 +1,4 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Model;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
@@ -28,6 +28,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -39,6 +40,29 @@ namespace ReviewMovie
 {
     public partial class FormMain : Form
     {
+        // ===== Modern UI theme (dark + orange accent) =====
+        private static readonly Color UiBg = Color.FromArgb(18, 18, 18);
+        private static readonly Color UiCard = Color.FromArgb(28, 28, 28);
+        private static readonly Color UiCard2 = Color.FromArgb(22, 22, 22);
+        private static readonly Color UiBorder = Color.FromArgb(45, 45, 45);
+        private static readonly Color UiText = Color.FromArgb(235, 235, 235);
+        private static readonly Color UiMuted = Color.FromArgb(160, 160, 160);
+        private static readonly Color UiAccent = Color.FromArgb(255, 132, 0);
+
+        private Panel _pnlTopBar;
+        private Label _lblTopTitle;
+        private Label _lblTopSubTitle;
+        private PictureBox _pbTopIcon;
+
+        private sealed class RoundInfo
+        {
+            public int Radius { get; }
+            public RoundInfo(int radius) { Radius = radius; }
+        }
+
+        private static readonly ConditionalWeakTable<Control, RoundInfo> _roundInfo =
+            new ConditionalWeakTable<Control, RoundInfo>();
+
         private readonly IClipPlayerService _clipPlayerService = new ClipPlayerService();
 
         private readonly IProjectDataService _projectService;
@@ -157,6 +181,20 @@ namespace ReviewMovie
             _loadConfig.InitOrUpdateBaseConfig(_apikey, txtAppID.Text, txtAppID.Text, txtToken.Text);
             
             Init();
+
+            // Apply modern UI theme after layout is ready (doesn't change logic/handlers).
+            this.Shown += (_, __) =>
+            {
+                try
+                {
+                    EnsureModernTopBar();
+                    ApplyModernTheme();
+                }
+                catch
+                {
+                    // Never crash the app because of styling.
+                }
+            };
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -168,6 +206,467 @@ namespace ReviewMovie
             _statusZoom = true; // Khai báo cờ check
             _statusOpenPlayer = true;
         }
+        // ===== Modern UI implementation (styling only) =====
+        private void EnsureModernTopBar()
+        {
+            if (_pnlTopBar != null) return;
+
+            _pnlTopBar = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 62,
+                BackColor = UiCard2,
+                Padding = new Padding(16, 10, 16, 10)
+            };
+
+            _pbTopIcon = new PictureBox
+            {
+                Size = new Size(34, 34),
+                Location = new Point(16, 14),
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BackColor = Color.Transparent,
+                Image = (this.Icon != null) ? this.Icon.ToBitmap() : null
+            };
+
+            _lblTopTitle = new Label
+            {
+                AutoSize = true,
+                ForeColor = UiText,
+                Font = new Font("Segoe UI", 12.5f, FontStyle.Bold),
+                Location = new Point(_pbTopIcon.Right + 10, 12),
+                Text = "EasyClip Pro"
+            };
+
+            _lblTopSubTitle = new Label
+            {
+                AutoSize = true,
+                ForeColor = UiMuted,
+                Font = new Font("Segoe UI", 8.5f, FontStyle.Bold),
+                Location = new Point(_pbTopIcon.Right + 10, 34),
+                Text = "STUDIO EDITION"
+            };
+
+            _pnlTopBar.Controls.Add(_pbTopIcon);
+            _pnlTopBar.Controls.Add(_lblTopTitle);
+            _pnlTopBar.Controls.Add(_lblTopSubTitle);
+
+            // Add top bar without touching designer.
+            this.Controls.Add(_pnlTopBar);
+            this.Controls.SetChildIndex(_pnlTopBar, 0);
+        }
+
+        private void ApplyModernTheme()
+        {
+            // Form
+            this.BackColor = UiBg;
+            this.ForeColor = UiText;
+            this.Font = new Font("Segoe UI", 9f, FontStyle.Regular);
+            this.DoubleBuffered = true;
+
+            // Main containers
+            TrySetBack(scMain, UiBg);
+            TrySetBack(scView, UiBg);
+            TrySetBack(scSetting, UiBg);
+
+            if (scMain != null)
+            {
+                scMain.BackColor = UiBg;
+                scMain.Panel1.BackColor = UiBg;
+                scMain.Panel2.BackColor = UiBg;
+            }
+            if (scView != null)
+            {
+                scView.BackColor = UiBg;
+                scView.Panel1.BackColor = UiBg;
+                scView.Panel2.BackColor = UiBg;
+            }
+            if (scSetting != null)
+            {
+                scSetting.BackColor = UiBg;
+                scSetting.Panel1.BackColor = UiBg;
+                scSetting.Panel2.BackColor = UiBg;
+            }
+
+            // Cards (group boxes)
+            ApplyCard(grViewHeader);
+            ApplyCard(grboxSetting);
+            ApplyCard(grbConfigVoice);
+            ApplyCard(grbConfigRender);
+            ApplyCard(grbActionRender);
+
+            // Header / record zone
+            StyleButtonPrimary(btnRecord, radius: 16);
+            if (btnRecord != null)
+            {
+                btnRecord.Text = "Live Record";
+                btnRecord.TextAlign = ContentAlignment.MiddleCenter;
+                btnRecord.Image = null;
+            }
+
+            // Main actions (top right buttons)
+            StyleButtonSecondary(btnConvertAudio, radius: 12);
+            StyleButtonSecondary(btnSaveAudio, radius: 12);
+            StyleButtonSecondary(btnRenderVideoPart, radius: 12);
+
+            // Merge button (bottom)
+            StyleButtonPrimary(btnAddAll, radius: 18);
+            if (btnAddAll != null)
+            {
+                btnAddAll.Text = "MERGE SECTIONS";
+                btnAddAll.Height = Math.Max(btnAddAll.Height, 46);
+            }
+
+            // Collapse/Expand
+            StyleButtonSecondary(btnCollapse, radius: 10);
+            StyleButtonSecondary(btnExpand, radius: 10);
+
+            // Text inputs
+            StyleTextBox(txtTextInput, multiline: true);
+            SetCueBanner(txtTextInput, "Paste your script segments here for processing...");
+
+            StyleTextBox(txtImPortMedia, multiline: true);
+            StyleTextBox(txtAppID, multiline: true);
+            StyleTextBox(txtToken, multiline: true);
+
+            StyleHeaderLabel(lbHeaderText);
+            StyleHeaderLabel(lbHeaderInputMedia);
+
+            // Combos / Numeric / Checkboxes / Buttons
+            ApplyRecursive(this, c =>
+            {
+                if (c is ComboBox cb) StyleComboBox(cb);
+                else if (c is NumericUpDown nud) StyleNumeric(nud);
+                else if (c is CheckBox chk) StyleCheckBox(chk);
+                else if (c is Label lbl) StyleLabel(lbl);
+                else if (c is TextBox tb && tb != txtTextInput && tb != txtImPortMedia && tb != txtAppID && tb != txtToken) StyleTextBox(tb, multiline: tb.Multiline);
+                else if (c is Button b &&
+                         b != btnRecord && b != btnAddAll &&
+                         b != btnConvertAudio && b != btnSaveAudio && b != btnRenderVideoPart &&
+                         b != btnCollapse && b != btnExpand)
+                {
+                    StyleButtonSecondary(b, radius: 12);
+                }
+            });
+
+            // ToolStrip (timeline actions)
+            StyleToolStrip(tsMenuView);
+
+            // DataGridView (timeline)
+            StyleTimelineGrid(dgvMainView);
+
+            // Scrollable settings like screenshot (stack of cards)
+            if (grboxSetting != null)
+            {
+                grboxSetting.AutoScroll = true;
+            }
+
+            // Rounded corners after sizing
+            RoundOnSize(grViewHeader, 16);
+            RoundOnSize(grboxSetting, 16);
+            RoundOnSize(grbConfigVoice, 16);
+            RoundOnSize(grbConfigRender, 16);
+            RoundOnSize(grbActionRender, 16);
+            RoundOnSize(txtTextInput, 12);
+            RoundOnSize(txtImPortMedia, 12);
+            RoundOnSize(btnRecord, 16);
+            RoundOnSize(btnAddAll, 18);
+        }
+
+        private static void SetCueBanner(TextBox tb, string cue)
+        {
+            if (tb == null) return;
+            try
+            {
+                // EM_SETCUEBANNER = 0x1501. Does not modify Text, so it won't break existing logic.
+                NativeMethods.SendMessage(tb.Handle, 0x1501, (IntPtr)1, cue);
+            }
+            catch
+            {
+                // ignore
+            }
+        }
+
+        private static void ApplyCard(Control card)
+        {
+            if (card == null) return;
+            card.BackColor = UiCard;
+            card.ForeColor = UiText;
+            card.Padding = new Padding(
+                Math.Max(card.Padding.Left, 12),
+                Math.Max(card.Padding.Top, 12),
+                Math.Max(card.Padding.Right, 12),
+                Math.Max(card.Padding.Bottom, 12));
+        }
+
+        private static void StyleHeaderLabel(Label lbl)
+        {
+            if (lbl == null) return;
+            lbl.BackColor = UiCard2;
+            lbl.ForeColor = UiText;
+            lbl.Font = new Font("Segoe UI", 9.5f, FontStyle.Bold);
+        }
+
+        private static void StyleLabel(Label lbl)
+        {
+            if (lbl == null) return;
+            lbl.ForeColor = UiText;
+        }
+
+        private static void StyleTextBox(TextBox tb, bool multiline)
+        {
+            if (tb == null) return;
+            tb.BorderStyle = BorderStyle.FixedSingle;
+            tb.BackColor = Color.FromArgb(34, 34, 34);
+            tb.ForeColor = UiText;
+            tb.Font = new Font("Segoe UI", 9f, FontStyle.Regular);
+            tb.Multiline = multiline;
+        }
+
+        private static void StyleComboBox(ComboBox cb)
+        {
+            if (cb == null) return;
+            cb.FlatStyle = FlatStyle.Flat;
+            cb.BackColor = Color.FromArgb(34, 34, 34);
+            cb.ForeColor = UiText;
+            cb.Font = new Font("Segoe UI", 9f, FontStyle.Regular);
+
+            // Many combos are OwnerDraw already; do not override.
+            if (cb.DrawMode == DrawMode.Normal)
+            {
+                cb.DrawMode = DrawMode.OwnerDrawFixed;
+                cb.DrawItem -= ComboDark_DrawItem;
+                cb.DrawItem += ComboDark_DrawItem;
+            }
+        }
+
+        private static void ComboDark_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            var cb = sender as ComboBox;
+            if (cb == null) return;
+            e.DrawBackground();
+            if (e.Index < 0) return;
+
+            bool isSelected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
+            using (var bg = new SolidBrush(isSelected ? Color.FromArgb(60, UiAccent) : cb.BackColor))
+            using (var fg = new SolidBrush(isSelected ? UiText : cb.ForeColor))
+            {
+                e.Graphics.FillRectangle(bg, e.Bounds);
+                e.Graphics.DrawString(cb.GetItemText(cb.Items[e.Index]), cb.Font, fg, e.Bounds);
+            }
+            e.DrawFocusRectangle();
+        }
+
+        private static void StyleNumeric(NumericUpDown nud)
+        {
+            if (nud == null) return;
+            nud.BackColor = Color.FromArgb(34, 34, 34);
+            nud.ForeColor = UiText;
+            nud.BorderStyle = BorderStyle.FixedSingle;
+            nud.Font = new Font("Segoe UI", 9f, FontStyle.Regular);
+        }
+
+        private static void StyleCheckBox(CheckBox chk)
+        {
+            if (chk == null) return;
+            chk.ForeColor = UiText;
+            chk.BackColor = Color.Transparent;
+            chk.Font = new Font("Segoe UI", 9f, chk.Font.Style);
+        }
+
+        private static void StyleButtonPrimary(Button btn, int radius)
+        {
+            if (btn == null) return;
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
+            btn.BackColor = UiAccent;
+            btn.ForeColor = Color.White;
+            btn.Font = new Font("Segoe UI", 10.5f, FontStyle.Bold);
+            btn.Cursor = Cursors.Hand;
+            RoundOnSize(btn, radius);
+        }
+
+        private static void StyleButtonSecondary(Button btn, int radius)
+        {
+            if (btn == null) return;
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 1;
+            btn.FlatAppearance.BorderColor = UiBorder;
+            btn.BackColor = Color.FromArgb(36, 36, 36);
+            btn.ForeColor = UiText;
+            btn.Font = new Font("Segoe UI", 9.5f, FontStyle.Bold);
+            btn.Cursor = Cursors.Hand;
+            RoundOnSize(btn, radius);
+        }
+
+        private static void StyleToolStrip(ToolStrip ts)
+        {
+            if (ts == null) return;
+            ts.BackColor = UiCard2;
+            ts.ForeColor = UiText;
+            ts.GripStyle = ToolStripGripStyle.Hidden;
+            ts.Renderer = new DarkToolStripRenderer();
+
+            foreach (ToolStripItem item in ts.Items)
+            {
+                item.ForeColor = UiText;
+                item.BackColor = UiCard2;
+                if (item is ToolStripTextBox tb)
+                {
+                    tb.BorderStyle = BorderStyle.FixedSingle;
+                    tb.BackColor = Color.FromArgb(34, 34, 34);
+                    tb.ForeColor = UiText;
+                }
+            }
+        }
+
+        private static void StyleTimelineGrid(DataGridView grid)
+        {
+            if (grid == null) return;
+            SetDoubleBuffered(grid, true);
+
+            grid.BackgroundColor = UiBg;
+            grid.BorderStyle = BorderStyle.None;
+            grid.GridColor = UiBorder;
+
+            grid.EnableHeadersVisualStyles = false;
+            grid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            grid.ColumnHeadersDefaultCellStyle.BackColor = UiCard2;
+            grid.ColumnHeadersDefaultCellStyle.ForeColor = UiText;
+            grid.ColumnHeadersDefaultCellStyle.SelectionBackColor = UiCard2;
+            grid.ColumnHeadersDefaultCellStyle.SelectionForeColor = UiText;
+            grid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9f, FontStyle.Bold);
+
+            grid.DefaultCellStyle.BackColor = UiCard;
+            grid.DefaultCellStyle.ForeColor = UiText;
+            grid.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 180, 120);
+            grid.DefaultCellStyle.SelectionForeColor = Color.Black;
+            grid.DefaultCellStyle.Font = new Font("Segoe UI", 9f, FontStyle.Regular);
+
+            grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(32, 32, 32);
+            grid.AlternatingRowsDefaultCellStyle.ForeColor = UiText;
+
+            grid.RowHeadersVisible = false;
+            grid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        }
+
+        private static void ApplyRecursive(Control root, Action<Control> apply)
+        {
+            if (root == null || apply == null) return;
+            var stack = new Stack<Control>();
+            stack.Push(root);
+            while (stack.Count > 0)
+            {
+                var c = stack.Pop();
+                apply(c);
+                foreach (Control child in c.Controls)
+                {
+                    stack.Push(child);
+                }
+            }
+        }
+
+        private static void TrySetBack(Control c, Color back)
+        {
+            if (c == null) return;
+            c.BackColor = back;
+        }
+
+        private static void RoundOnSize(Control c, int radius)
+        {
+            if (c == null) return;
+            c.SizeChanged -= Control_SizeChangedRound;
+            c.SizeChanged += Control_SizeChangedRound;
+            _roundInfo.Remove(c);
+            _roundInfo.Add(c, new RoundInfo(radius));
+            ApplyRoundedRegion(c, radius);
+        }
+
+        private static void Control_SizeChangedRound(object sender, EventArgs e)
+        {
+            var c = sender as Control;
+            if (c == null) return;
+            if (!_roundInfo.TryGetValue(c, out var info)) return;
+            ApplyRoundedRegion(c, info.Radius);
+        }
+
+        private static void ApplyRoundedRegion(Control c, int radius)
+        {
+            if (c == null) return;
+            if (c.Width <= 1 || c.Height <= 1) return;
+
+            IntPtr hrgn = IntPtr.Zero;
+            try
+            {
+                hrgn = NativeMethods.CreateRoundRectRgn(0, 0, c.Width + 1, c.Height + 1, radius, radius);
+                if (hrgn != IntPtr.Zero)
+                {
+                    c.Region = Region.FromHrgn(hrgn);
+                }
+            }
+            finally
+            {
+                if (hrgn != IntPtr.Zero)
+                {
+                    NativeMethods.DeleteObject(hrgn);
+                }
+            }
+        }
+
+        private static void SetDoubleBuffered(Control c, bool enabled)
+        {
+            if (c == null) return;
+            try
+            {
+                var pi = typeof(Control).GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+                pi?.SetValue(c, enabled, null);
+            }
+            catch
+            {
+                // ignore
+            }
+        }
+
+        private sealed class DarkToolStripRenderer : ToolStripProfessionalRenderer
+        {
+            public DarkToolStripRenderer() : base(new DarkColorTable()) { }
+        }
+
+        private sealed class DarkColorTable : ProfessionalColorTable
+        {
+            public override Color ToolStripDropDownBackground => UiCard2;
+            public override Color ImageMarginGradientBegin => UiCard2;
+            public override Color ImageMarginGradientMiddle => UiCard2;
+            public override Color ImageMarginGradientEnd => UiCard2;
+            public override Color MenuItemSelected => Color.FromArgb(60, UiAccent);
+            public override Color MenuItemSelectedGradientBegin => Color.FromArgb(60, UiAccent);
+            public override Color MenuItemSelectedGradientEnd => Color.FromArgb(60, UiAccent);
+            public override Color MenuItemBorder => UiBorder;
+            public override Color SeparatorDark => UiBorder;
+            public override Color SeparatorLight => UiBorder;
+            public override Color ToolStripGradientBegin => UiCard2;
+            public override Color ToolStripGradientMiddle => UiCard2;
+            public override Color ToolStripGradientEnd => UiCard2;
+        }
+
+        private static class NativeMethods
+        {
+            [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+            internal static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, string lParam);
+
+            [DllImport("gdi32.dll", SetLastError = true)]
+            internal static extern bool DeleteObject(IntPtr hObject);
+
+            [DllImport("gdi32.dll", SetLastError = true)]
+            internal static extern IntPtr CreateRoundRectRgn(
+                int nLeftRect,
+                int nTopRect,
+                int nRightRect,
+                int nBottomRect,
+                int nWidthEllipse,
+                int nHeightEllipse);
+        }
+
         private void Init()
         {
             //Load data vào Object cục bộ
