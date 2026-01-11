@@ -354,11 +354,7 @@ namespace ReviewMovie
             // DataGridView (timeline)
             StyleTimelineGrid(dgvMainView);
 
-            // Scrollable settings like screenshot (stack of cards)
-            if (grboxSetting != null)
-            {
-                grboxSetting.AutoScroll = true;
-            }
+            // Note: GroupBox doesn't support AutoScroll (only ScrollableControl does).
 
             // Rounded corners after sizing
             RoundOnSize(grViewHeader, 16);
