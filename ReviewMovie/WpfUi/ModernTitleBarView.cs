@@ -10,6 +10,7 @@ namespace ReviewMovie.WpfUi
     public sealed class ModernTitleBarView : UserControl
     {
         public event EventHandler MinimizeClicked;
+        public event EventHandler MaximizeClicked;
         public event EventHandler CloseClicked;
         public event EventHandler DragRequested;
 
@@ -20,14 +21,22 @@ namespace ReviewMovie.WpfUi
             Content = root.Content;
 
             var btnMin = (Button)root.FindName("BtnMinimize");
+            var btnMax = (Button)root.FindName("BtnMaximize");
             var btnClose = (Button)root.FindName("BtnClose");
             var dragArea = (Grid)root.FindName("DragArea");
 
             btnMin.Click += (_, __) => MinimizeClicked?.Invoke(this, EventArgs.Empty);
+            btnMax.Click += (_, __) => MaximizeClicked?.Invoke(this, EventArgs.Empty);
             btnClose.Click += (_, __) => CloseClicked?.Invoke(this, EventArgs.Empty);
 
             dragArea.MouseLeftButtonDown += (_, e) =>
             {
+                if (e.ClickCount == 2)
+                {
+                    MaximizeClicked?.Invoke(this, EventArgs.Empty);
+                    return;
+                }
+
                 if (e.ClickCount == 1)
                 {
                     DragRequested?.Invoke(this, EventArgs.Empty);

@@ -205,10 +205,11 @@ namespace ReviewMovie
             FormBorderStyle = FormBorderStyle.None;
             ControlBox = false;
             MinimizeBox = true;
-            MaximizeBox = false;
+            MaximizeBox = true;
 
             _modernTitleBarView = new ModernTitleBarView();
             _modernTitleBarView.MinimizeClicked += (_, __) => WindowState = FormWindowState.Minimized;
+            _modernTitleBarView.MaximizeClicked += (_, __) => ToggleMaximize();
             _modernTitleBarView.CloseClicked += (_, __) => Close();
             _modernTitleBarView.DragRequested += (_, __) => BeginWindowDragMove();
 
@@ -252,11 +253,32 @@ namespace ReviewMovie
             _chromeLayout.RowStyles[0].Height = 64F;
         }
 
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            // Borderless maximize should respect taskbar
+            try
+            {
+                MaximizedBounds = Screen.FromHandle(Handle).WorkingArea;
+            }
+            catch
+            {
+                // ignore
+            }
+        }
+
         private void BeginWindowDragMove()
         {
             // Simulate dragging the native caption area
             ReleaseCapture();
             SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+        }
+
+        private void ToggleMaximize()
+        {
+            WindowState = (WindowState == FormWindowState.Maximized)
+                ? FormWindowState.Normal
+                : FormWindowState.Maximized;
         }
 
         private void ApplyResponsiveUiScaling()

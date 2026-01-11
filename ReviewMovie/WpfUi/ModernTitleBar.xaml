@@ -70,6 +70,7 @@
       <!-- Window buttons -->
       <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
         <Button x:Name="BtnMinimize" Style="{StaticResource WinBtn}" Content="—" />
+        <Button x:Name="BtnMaximize" Style="{StaticResource WinBtn}" Content="▢" />
         <Button x:Name="BtnClose" Style="{StaticResource CloseBtn}" Content="✕" />
       </StackPanel>
     </Grid>
