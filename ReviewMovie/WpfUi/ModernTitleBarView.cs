@@ -12,6 +12,8 @@ namespace ReviewMovie.WpfUi
         public event EventHandler MinimizeClicked;
         public event EventHandler MaximizeClicked;
         public event EventHandler CloseClicked;
+        public event EventHandler HelpClicked;
+        public event EventHandler SettingsClicked;
         public event EventHandler DragRequested;
 
         public ModernTitleBarView()
@@ -23,11 +25,15 @@ namespace ReviewMovie.WpfUi
             var btnMin = (Button)root.FindName("BtnMinimize");
             var btnMax = (Button)root.FindName("BtnMaximize");
             var btnClose = (Button)root.FindName("BtnClose");
+            var btnHelp = root.FindName("BtnHelp") as Button;
+            var btnSettings = root.FindName("BtnSettings") as Button;
             var dragArea = (Grid)root.FindName("DragArea");
 
             btnMin.Click += (_, __) => MinimizeClicked?.Invoke(this, EventArgs.Empty);
             btnMax.Click += (_, __) => MaximizeClicked?.Invoke(this, EventArgs.Empty);
             btnClose.Click += (_, __) => CloseClicked?.Invoke(this, EventArgs.Empty);
+            if (btnHelp != null) btnHelp.Click += (_, __) => HelpClicked?.Invoke(this, EventArgs.Empty);
+            if (btnSettings != null) btnSettings.Click += (_, __) => SettingsClicked?.Invoke(this, EventArgs.Empty);
 
             dragArea.MouseLeftButtonDown += (_, e) =>
             {
