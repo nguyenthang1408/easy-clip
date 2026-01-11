@@ -1,4 +1,4 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Model;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
@@ -39,6 +39,301 @@ namespace ReviewMovie
 {
     public partial class FormMain : Form
     {
+        #region UI_Theme
+        // Theme colors (desktop)
+        private static readonly Color UiBg = Color.FromArgb(245, 246, 250);
+        private static readonly Color UiCard = Color.FromArgb(255, 255, 255);
+        private static readonly Color UiBorder = Color.FromArgb(229, 231, 235);
+        private static readonly Color UiText = Color.FromArgb(17, 24, 39);
+        private static readonly Color UiMutedText = Color.FromArgb(107, 114, 128);
+        private static readonly Color UiPrimary = Color.FromArgb(79, 70, 229);     // Indigo
+        private static readonly Color UiPrimaryHover = Color.FromArgb(67, 56, 202);
+
+        private void ApplyDesktopTheme()
+        {
+            // Keep this defensive: UI should never block core logic.
+            try
+            {
+                SuspendLayout();
+
+                // Form
+                BackColor = UiBg;
+                ForeColor = UiText;
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+                FormBorderStyle = FormBorderStyle.Sizable;
+                MaximizeBox = true;
+                MinimizeBox = true;
+                MinimumSize = new Size(1200, 720);
+
+                // Split containers / root panels
+                scMain.BorderStyle = BorderStyle.None;
+                scView.BorderStyle = BorderStyle.None;
+                scSetting.BorderStyle = BorderStyle.None;
+
+                // Make the toggle buttons look like a slim handle
+                ThemeHandleButton(btnCollapse);
+                ThemeHandleButton(btnExpand);
+
+                // Right settings card
+                ThemeGroupBoxAsCard(grboxSetting);
+                ThemeGroupBoxAsCard(grbConfigVoice);
+                ThemeGroupBoxAsCard(grbConfigRender);
+                ThemeGroupBoxAsCard(grbActionRender);
+
+                // Left side (header + toolbar + grid)
+                ThemeGroupBoxAsCard(grViewHeader);
+                ThemeToolStrip(tsMenuView);
+                ThemeDataGridView(dgvMainView);
+
+                // Header labels (chip-like)
+                ThemeHeaderLabel(lbHeaderText);
+                ThemeHeaderLabel(lbHeaderInputMedia);
+
+                // Inputs
+                ThemeTextBox(txtTextInput, allowMultiline: true);
+                ThemeTextBox(txtImPortMedia, allowMultiline: true);
+                ThemeTextBox(txtAppID, allowMultiline: true);
+                ThemeTextBox(txtToken, allowMultiline: true);
+
+                // Buttons
+                ThemePrimaryButton(btnAddAll);
+                ThemePrimaryButton(btnConvertAudio);
+                ThemePrimaryButton(btnSaveAudio);
+                ThemePrimaryButton(btnRenderVideoPart);
+
+                ThemeSecondaryButton(btnRecord);
+                ThemeSecondaryButton(btnOpenProject);
+                ThemeSecondaryButton(btnSaveVoiceSource);
+                ThemeSecondaryButton(btnSaveEffectSetting);
+
+                // Combos / numeric
+                ThemeComboBox(cbProjectName);
+                ThemeComboBox(cboSiteNguon);
+                ThemeComboBox(cbxVideoQuality);
+                ThemeComboBox(cbEffectType);
+                ThemeComboBox(cbMode);
+                ThemeComboBox(cbZoomRatio);
+                ThemeComboBox(cbZoomQuality);
+                ThemeComboBox(cbLanguageSelect);
+                ThemeComboBox(cbxSpeechType);
+                ThemeComboBox(cbSettingTemplate);
+
+                ThemeNumericUpDown(nbThread);
+                ThemeNumericUpDown(nFPS);
+                ThemeNumericUpDown(nbVolumnOrigin);
+                ThemeNumericUpDown(nScaleAudioRangeStart);
+                ThemeNumericUpDown(nScaleAudioRangeEnd);
+                ThemeNumericUpDown(nbSpeechRatio);
+
+                // Minor labels (reduce the old high-contrast look)
+                ThemeLabelMuted(lblapi);
+                ThemeLabelMuted(lblToken);
+                ThemeLabelMuted(label1);
+                ThemeLabelMuted(label3);
+                ThemeLabelMuted(label4);
+                ThemeLabelMuted(label5);
+                ThemeLabelMuted(label6);
+                ThemeLabelMuted(label7);
+                ThemeLabelMuted(label8);
+                ThemeLabelMuted(label9);
+                ThemeLabelMuted(label10);
+                ThemeLabelMuted(label11);
+                ThemeLabelMuted(label12);
+                ThemeLabelMuted(label13);
+                ThemeLabelMuted(label14);
+                ThemeLabelMuted(label15);
+                ThemeLabelMuted(label16);
+                ThemeLabelMuted(label17);
+
+                // Context menu
+                if (ctMenu != null)
+                {
+                    ctMenu.BackColor = UiCard;
+                    ctMenu.ForeColor = UiText;
+                    ctMenu.RenderMode = ToolStripRenderMode.System;
+                }
+            }
+            finally
+            {
+                ResumeLayout(true);
+            }
+        }
+
+        private static void ThemeGroupBoxAsCard(Control groupBox)
+        {
+            if (groupBox == null) return;
+            groupBox.BackColor = UiCard;
+            groupBox.ForeColor = UiText;
+            groupBox.Padding = new Padding(10);
+        }
+
+        private static void ThemeHeaderLabel(Label label)
+        {
+            if (label == null) return;
+            label.BackColor = UiPrimary;
+            label.ForeColor = Color.White;
+            label.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+        }
+
+        private static void ThemeLabelMuted(Label label)
+        {
+            if (label == null) return;
+            label.ForeColor = UiMutedText;
+            label.Font = new Font("Segoe UI", 8.5F, FontStyle.Regular, GraphicsUnit.Point);
+        }
+
+        private static void ThemeTextBox(TextBox tb, bool allowMultiline)
+        {
+            if (tb == null) return;
+            tb.BorderStyle = BorderStyle.FixedSingle;
+            tb.BackColor = Color.White;
+            tb.ForeColor = UiText;
+            tb.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            if (allowMultiline && tb.Multiline)
+            {
+                tb.ScrollBars = tb.ScrollBars == ScrollBars.None ? ScrollBars.Vertical : tb.ScrollBars;
+            }
+        }
+
+        private static void ThemeComboBox(ComboBox cb)
+        {
+            if (cb == null) return;
+            cb.BackColor = Color.White;
+            cb.ForeColor = UiText;
+            cb.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            // Do NOT touch DrawMode/OwnerDraw settings on cbProjectName.
+            if (cb != null && cb.DrawMode == DrawMode.Normal)
+                cb.FlatStyle = FlatStyle.Flat;
+        }
+
+        private static void ThemeNumericUpDown(NumericUpDown nud)
+        {
+            if (nud == null) return;
+            nud.BackColor = Color.White;
+            nud.ForeColor = UiText;
+            nud.BorderStyle = BorderStyle.FixedSingle;
+            nud.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+        }
+
+        private static void ThemePrimaryButton(Button btn)
+        {
+            if (btn == null) return;
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
+            btn.BackColor = UiPrimary;
+            btn.ForeColor = Color.White;
+            btn.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point);
+            btn.Cursor = Cursors.Hand;
+            btn.Padding = new Padding(6, 0, 6, 0);
+
+            btn.MouseEnter -= PrimaryButton_MouseEnter;
+            btn.MouseLeave -= PrimaryButton_MouseLeave;
+            btn.MouseEnter += PrimaryButton_MouseEnter;
+            btn.MouseLeave += PrimaryButton_MouseLeave;
+        }
+
+        private static void PrimaryButton_MouseEnter(object sender, EventArgs e)
+        {
+            if (sender is Button b) b.BackColor = UiPrimaryHover;
+        }
+
+        private static void PrimaryButton_MouseLeave(object sender, EventArgs e)
+        {
+            if (sender is Button b) b.BackColor = UiPrimary;
+        }
+
+        private static void ThemeSecondaryButton(Button btn)
+        {
+            if (btn == null) return;
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderColor = UiBorder;
+            btn.FlatAppearance.BorderSize = 1;
+            btn.BackColor = Color.White;
+            btn.ForeColor = UiText;
+            btn.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btn.Cursor = Cursors.Hand;
+            btn.Padding = new Padding(6, 0, 6, 0);
+        }
+
+        private static void ThemeHandleButton(Button btn)
+        {
+            if (btn == null) return;
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
+            btn.BackColor = UiBg;
+            btn.ForeColor = UiMutedText;
+            btn.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            btn.Cursor = Cursors.Hand;
+        }
+
+        private static void ThemeToolStrip(ToolStrip ts)
+        {
+            if (ts == null) return;
+
+            ts.GripStyle = ToolStripGripStyle.Hidden;
+            ts.BackColor = UiCard;
+            ts.ForeColor = UiText;
+            ts.Renderer = new ToolStripProfessionalRenderer(new ModernColorTable());
+
+            foreach (ToolStripItem item in ts.Items)
+            {
+                item.ForeColor = UiText;
+                if (item is ToolStripTextBox tb)
+                {
+                    tb.BorderStyle = BorderStyle.FixedSingle;
+                    tb.BackColor = Color.White;
+                    tb.ForeColor = UiText;
+                    tb.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+                }
+                else
+                {
+                    item.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+                }
+            }
+        }
+
+        private sealed class ModernColorTable : ProfessionalColorTable
+        {
+            public override Color ToolStripBorder => UiBorder;
+            public override Color ToolStripGradientBegin => UiCard;
+            public override Color ToolStripGradientMiddle => UiCard;
+            public override Color ToolStripGradientEnd => UiCard;
+            public override Color ImageMarginGradientBegin => UiCard;
+            public override Color ImageMarginGradientMiddle => UiCard;
+            public override Color ImageMarginGradientEnd => UiCard;
+            public override Color SeparatorDark => UiBorder;
+            public override Color SeparatorLight => UiBorder;
+            public override Color MenuItemSelected => Color.FromArgb(243, 244, 246);
+            public override Color MenuItemBorder => UiBorder;
+        }
+
+        private static void ThemeDataGridView(DataGridView dgv)
+        {
+            if (dgv == null) return;
+            dgv.BackgroundColor = UiCard;
+            dgv.BorderStyle = BorderStyle.None;
+            dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgv.GridColor = UiBorder;
+            dgv.EnableHeadersVisualStyles = false;
+            dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(249, 250, 251);
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = UiMutedText;
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            dgv.ColumnHeadersDefaultCellStyle.SelectionBackColor = dgv.ColumnHeadersDefaultCellStyle.BackColor;
+            dgv.ColumnHeadersDefaultCellStyle.SelectionForeColor = dgv.ColumnHeadersDefaultCellStyle.ForeColor;
+
+            dgv.DefaultCellStyle.BackColor = UiCard;
+            dgv.DefaultCellStyle.ForeColor = UiText;
+            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(238, 242, 255);
+            dgv.DefaultCellStyle.SelectionForeColor = UiText;
+            dgv.DefaultCellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dgv.DefaultCellStyle.Padding = new Padding(4, 2, 4, 2);
+
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 252);
+            dgv.RowTemplate.Height = 30;
+        }
+        #endregion
+
         private readonly IClipPlayerService _clipPlayerService = new ClipPlayerService();
 
         private readonly IProjectDataService _projectService;
@@ -137,6 +432,9 @@ namespace ReviewMovie
             this.toolTipPL = new ToolTip();
             this.Text = "EasyClip || " + "TPMEDIA";
 
+            // Apply desktop UI theme (colors/typography/spacing)
+            ApplyDesktopTheme();
+
             _appcode = appcode;
             _apikey = apikey;
 
@@ -167,6 +465,9 @@ namespace ReviewMovie
             dgvMainView.AutoGenerateColumns = false;    // tạo các cột tùy chỉnh cho DataGridView  => ko có là lỗi
             _statusZoom = true; // Khai báo cờ check
             _statusOpenPlayer = true;
+
+            // Ensure theme after WinForms finished layout.
+            ApplyDesktopTheme();
         }
         private void Init()
         {
