@@ -140,6 +140,9 @@ namespace ReviewMovie
         private ElementHost _modernSettingsHost;
         private ModernSettingsView _modernSettingsView;
         private bool _syncModernSettings;
+
+        private ElementHost _modernTitleBarHost;
+        private ModernTitleBarView _modernTitleBarView;
         #endregion
 
         #region Main_Init
@@ -148,6 +151,9 @@ namespace ReviewMovie
             InitializeComponent();
             this.toolTipPL = new ToolTip();
             this.Text = "EasyClip || " + "TPMEDIA";
+
+            // Custom title bar like screenshot #2
+            InitModernTitleBarUi();
 
             _appcode = appcode;
             _apikey = apikey;
@@ -173,6 +179,52 @@ namespace ReviewMovie
             // UI makeover: replace header block with WPF (XAML) like design
             InitModernHeaderUi();
             InitModernSettingsUi();
+        }
+
+        // ===== Custom window chrome (WinForms borderless + WPF title bar) =====
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HTCAPTION = 0x2;
+
+        [DllImport("user32.dll")]
+        private static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+
+        private void InitModernTitleBarUi()
+        {
+            if (_modernTitleBarHost != null) return;
+
+            // Remove Windows title bar
+            FormBorderStyle = FormBorderStyle.None;
+            ControlBox = false;
+            MinimizeBox = true;
+            MaximizeBox = false;
+
+            _modernTitleBarView = new ModernTitleBarView();
+            _modernTitleBarView.MinimizeClicked += (_, __) => WindowState = FormWindowState.Minimized;
+            _modernTitleBarView.CloseClicked += (_, __) => Close();
+            _modernTitleBarView.DragRequested += (_, __) => BeginWindowDragMove();
+
+            _modernTitleBarHost = new ElementHost
+            {
+                Dock = DockStyle.Top,
+                Height = 44,
+                Margin = new Padding(0),
+                Child = _modernTitleBarView
+            };
+
+            // Ensure layout: title bar on top, main content fills remaining
+            Controls.Add(_modernTitleBarHost);
+            _modernTitleBarHost.BringToFront();
+            scMain.Dock = DockStyle.Fill;
+        }
+
+        private void BeginWindowDragMove()
+        {
+            // Simulate dragging the native caption area
+            ReleaseCapture();
+            SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
