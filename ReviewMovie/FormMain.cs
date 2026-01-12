@@ -152,6 +152,9 @@ namespace ReviewMovie
 
         // DataGridView hover row
         private int _hoverRowIndex = -1;
+
+        // Window sizing (near fullscreen)
+        private bool _initialNearFullscreenApplied = false;
         #endregion
 
         #region Main_Init
@@ -272,6 +275,41 @@ namespace ReviewMovie
             catch
             {
                 // ignore
+            }
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+
+            // Fix window size near fullscreen on first show (does not cover taskbar)
+            if (!_initialNearFullscreenApplied)
+            {
+                _initialNearFullscreenApplied = true;
+                ApplyNearFullscreenBounds();
+            }
+        }
+
+        private void ApplyNearFullscreenBounds()
+        {
+            try
+            {
+                var wa = Screen.FromHandle(Handle).WorkingArea;
+                var margin = 6; // small inset so it feels "almost full"
+
+                var w = Math.Max(wa.Width - margin * 2, 800);
+                var h = Math.Max(wa.Height - margin * 2, 600);
+
+                // Ensure we are in normal state so Bounds applies
+                if (WindowState != FormWindowState.Normal)
+                    WindowState = FormWindowState.Normal;
+
+                StartPosition = FormStartPosition.Manual;
+                Bounds = new Rectangle(wa.X + margin, wa.Y + margin, w, h);
+            }
+            catch
+            {
+                // ignore if screen info is unavailable
             }
         }
 
