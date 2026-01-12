@@ -151,10 +151,6 @@
     <Compile Include="View\DialogMessage\FormLoadingCancel.Designer.cs">
       <DependentUpon>FormLoadingCancel.cs</DependentUpon>
     </Compile>
-    <Compile Include="WpfUi\ModernHeaderView.cs" />
-    <Compile Include="WpfUi\ModernSettingsView.cs" />
-    <Compile Include="WpfUi\ModernTitleBarView.cs" />
-    <Compile Include="WpfUi\ModernActionBarView.cs" />
     <Compile Include="WpfUi\MainView.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
@@ -175,10 +171,6 @@
     <EmbeddedResource Include="View\DialogMessage\FormLoadingCancel.resx">
       <DependentUpon>FormLoadingCancel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WpfUi\ModernHeader.xaml" />
-    <EmbeddedResource Include="WpfUi\ModernSettings.xaml" />
-    <EmbeddedResource Include="WpfUi\ModernTitleBar.xaml" />
-    <EmbeddedResource Include="WpfUi\ModernActionBar.xaml" />
     <EmbeddedResource Include="WpfUi\Theme.xaml" />
     <EmbeddedResource Include="WpfUi\MainView.xaml" />
     <None Include="easyclip.exe.manifest" />
