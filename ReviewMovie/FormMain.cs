@@ -204,7 +204,7 @@ namespace ReviewMovie
                 try
                 {
                     txtTextInput.Text = string.Empty;
-                    _mainView.TextInput = string.Empty;
+                    _mainView.InputText = string.Empty;
                 }
                 finally
                 {
@@ -217,7 +217,7 @@ namespace ReviewMovie
                 _syncMainText = true;
                 try
                 {
-                    txtTextInput.Text = _mainView.TextInput;
+                    txtTextInput.Text = _mainView.InputText;
                 }
                 finally
                 {
@@ -230,7 +230,7 @@ namespace ReviewMovie
                 _syncMainText = true;
                 try
                 {
-                    _mainView.TextInput = txtTextInput.Text;
+                    _mainView.InputText = txtTextInput.Text;
                 }
                 finally
                 {

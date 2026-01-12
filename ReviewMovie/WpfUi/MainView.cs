@@ -114,7 +114,7 @@ namespace ReviewMovie.WpfUi
             btnMerge.Click += (_, __) => MergeSegmentsClicked?.Invoke(this, EventArgs.Empty);
         }
 
-        public string TextInput
+        public string InputText
         {
             get => _txtInput.Text ?? string.Empty;
             set
@@ -127,7 +127,7 @@ namespace ReviewMovie.WpfUi
         public void SetToolStrip(WinForms.Control toolStrip)
         {
             if (toolStrip == null) return;
-            toolStrip.Dock = DockStyle.Fill;
+            toolStrip.Dock = WinForms.DockStyle.Fill;
             if (toolStrip.Parent != null) toolStrip.Parent.Controls.Remove(toolStrip);
             _hostToolStrip.Child = toolStrip;
         }
@@ -135,7 +135,7 @@ namespace ReviewMovie.WpfUi
         public void SetDataGrid(WinForms.Control grid)
         {
             if (grid == null) return;
-            grid.Dock = DockStyle.Fill;
+            grid.Dock = WinForms.DockStyle.Fill;
             if (grid.Parent != null) grid.Parent.Controls.Remove(grid);
             _hostDataGrid.Child = grid;
         }
