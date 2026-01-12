@@ -1,0 +1,224 @@
+<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+             mc:Ignorable="d"
+             Background="{DynamicResource AppBg}"
+             d:DesignHeight="760" d:DesignWidth="1300">
+
+  <Grid Background="{DynamicResource AppBg}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="64"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!-- Title bar -->
+    <Border Grid.Row="0" Background="White" BorderBrush="{DynamicResource Border}" BorderThickness="0,0,0,1">
+      <Grid Height="64">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="DragArea" Background="Transparent" Margin="10,0,0,0">
+          <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <Border Width="30" Height="30" CornerRadius="8" Background="{DynamicResource Accent}">
+              <TextBlock Text="E" Foreground="White" FontWeight="Bold" FontSize="16"
+                         HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel Margin="12,0,0,0">
+              <TextBlock Text="EasyClip Studio" FontWeight="SemiBold" FontSize="16" Foreground="{DynamicResource Text}" />
+              <TextBlock Text="TPMEDIA PREMIUM" FontSize="12" Foreground="{DynamicResource Muted}" />
+            </StackPanel>
+          </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
+          <Border Background="#ECFDF3" CornerRadius="10" Height="30" Padding="10,0" Margin="0,0,10,0">
+            <TextBlock Text="Active" Foreground="#16A34A" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center"/>
+          </Border>
+          <TextBlock Text="1 Day Remaining" Foreground="{DynamicResource Muted}" FontSize="12"
+                     VerticalAlignment="Center" Margin="0,0,14,0"/>
+
+          <Button x:Name="BtnHelp" Style="{DynamicResource GhostButton}" MinWidth="44" Width="44" Height="40" Content="?" Margin="0,0,6,0"/>
+          <Button x:Name="BtnSettings" Style="{DynamicResource GhostButton}" MinWidth="44" Width="44" Height="40" Content="⚙" Margin="0,0,10,0"/>
+
+          <Border Width="34" Height="34" CornerRadius="17" Background="{DynamicResource Accent}" Margin="0,0,10,0">
+            <TextBlock Text="TN" Foreground="White" FontWeight="Bold" FontSize="12"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+
+          <Button x:Name="BtnMinimize" Style="{DynamicResource GhostButton}" MinWidth="44" Width="44" Height="40" Content="—" />
+          <Button x:Name="BtnMaximize" Style="{DynamicResource GhostButton}" MinWidth="44" Width="44" Height="40" Content="▢" />
+          <Button x:Name="BtnClose" Style="{DynamicResource GhostButton}" MinWidth="44" Width="44" Height="40" Content="✕" />
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- Main -->
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="360" />
+      </Grid.ColumnDefinitions>
+
+      <!-- Left content -->
+      <Grid Grid.Column="0">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="48"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header (WPF) -->
+        <Border Grid.Row="0" Style="{DynamicResource CardStyle}">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="1.1*" MinWidth="200" />
+              <ColumnDefinition Width="3.0*" MinWidth="420" />
+              <ColumnDefinition Width="1.6*" MinWidth="260" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Record -->
+            <Border Grid.Column="0" Background="White" CornerRadius="14" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="16" Margin="0">
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                  <Border Width="72" Height="72" Background="#F3F4F6" CornerRadius="36" BorderThickness="1" BorderBrush="{DynamicResource Border}">
+                    <TextBlock Text="🎙" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                  </Border>
+                  <TextBlock Margin="0,10,0,2" Text="Record" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Center" />
+                  <TextBlock Text="Click to start mic" Foreground="{DynamicResource Muted}" FontSize="12" HorizontalAlignment="Center" />
+                </StackPanel>
+                <Button x:Name="BtnStartRecord" Grid.Row="1" Margin="0,12,0,0" Style="{DynamicResource PrimaryButton}" Content="Start" />
+              </Grid>
+            </Border>
+
+            <!-- Text input -->
+            <Border Grid.Column="1" Background="White" CornerRadius="14" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="16" Margin="10,0">
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
+                  <TextBlock Text="TEXT INPUT" FontSize="12" FontWeight="Bold" Foreground="#374151" VerticalAlignment="Center" />
+                  <Button x:Name="BtnClearText" Grid.Column="1" Style="{DynamicResource GhostButton}" Content="Clear" Height="32" />
+                </Grid>
+                <Grid Grid.Row="1" Margin="0,10,0,0">
+                  <TextBox x:Name="TxtInput" Style="{DynamicResource ModernTextBox}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+                  <TextBlock x:Name="TxtPlaceholder"
+                             Text="Type text to synthesize or drag audio files here..."
+                             Foreground="#9CA3AF"
+                             Margin="14,12,14,12"
+                             IsHitTestVisible="False"
+                             TextWrapping="Wrap" />
+                </Grid>
+              </Grid>
+            </Border>
+
+            <!-- Visuals -->
+            <Border Grid.Column="2" Background="White" CornerRadius="14" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="16" Margin="0">
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="VISUALS" FontSize="12" FontWeight="Bold" Foreground="#374151" VerticalAlignment="Center" />
+                <Border Grid.Row="1" Margin="0,10,0,10" CornerRadius="12" BorderThickness="2" BorderBrush="#CBD5E1" Background="#F8FAFC">
+                  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="🖼" FontSize="22" HorizontalAlignment="Center" />
+                    <TextBlock Margin="0,8,0,2" Text="Drop Visuals Here" FontWeight="SemiBold" HorizontalAlignment="Center" />
+                    <TextBlock Text="Images or Videos" Foreground="{DynamicResource Muted}" FontSize="12" HorizontalAlignment="Center" />
+                  </StackPanel>
+                </Border>
+                <Grid Grid.Row="2">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+                  <Button x:Name="BtnConvert" Grid.Column="0" Margin="0,0,8,0" Style="{DynamicResource GhostButton}" Content="Convert" />
+                  <Button x:Name="BtnSave" Grid.Column="1" Margin="0,0,8,0" Style="{DynamicResource GhostButton}" Content="Save" />
+                  <Button x:Name="BtnRender" Grid.Column="2" Style="{DynamicResource GhostButton}" Content="Render" />
+                </Grid>
+              </Grid>
+            </Border>
+          </Grid>
+        </Border>
+
+        <!-- Action bar (host WinForms ToolStrip) -->
+        <Border Grid.Row="1" Background="Transparent" Padding="0,4,0,4">
+          <wfi:WindowsFormsHost x:Name="HostToolStrip" />
+        </Border>
+
+        <!-- Grid (host WinForms DataGridView) -->
+        <Border Grid.Row="2" Background="White" CornerRadius="14" BorderBrush="{DynamicResource Border}" BorderThickness="1" Margin="8,0,8,8">
+          <wfi:WindowsFormsHost x:Name="HostDataGrid" />
+        </Border>
+      </Grid>
+
+      <!-- Right settings (WPF) -->
+      <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel>
+          <Border Style="{DynamicResource CardStyle}">
+            <StackPanel>
+              <TextBlock Style="{DynamicResource SectionTitle}" Text="Cài đặt / Dự án" />
+              <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="10" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="CbProject" Style="{DynamicResource ModernComboBox}" />
+                <Button x:Name="BtnCreateProject" Grid.Column="2" Style="{DynamicResource GhostButton}" Content="Create" />
+              </Grid>
+            </StackPanel>
+          </Border>
+
+          <Border Style="{DynamicResource CardStyle}">
+            <StackPanel>
+              <TextBlock Style="{DynamicResource SectionTitle}" Text="Cài đặt Voice" />
+              <TextBlock Margin="0,2,0,0" Foreground="{DynamicResource Muted}" FontSize="11" Text="Nguồn voice, ApiKey/Token." />
+
+              <TextBlock Margin="0,10,0,0" Style="{DynamicResource FieldLabel}" Text="Nguồn Voice" />
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="10" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="CbVoiceSource" Style="{DynamicResource ModernComboBox}" />
+                <Button x:Name="BtnSaveVoice" Grid.Column="2" Style="{DynamicResource GhostButton}" Content="Save" />
+              </Grid>
+
+              <TextBlock Margin="0,10,0,0" Style="{DynamicResource FieldLabel}" Text="ApiKey / AppID" />
+              <TextBox x:Name="TxtApiKey" Style="{DynamicResource ModernTextBox}" />
+
+              <TextBlock Margin="0,10,0,0" Style="{DynamicResource FieldLabel}" Text="Token (nếu có)" />
+              <TextBox x:Name="TxtToken" Style="{DynamicResource ModernTextBox}" />
+            </StackPanel>
+          </Border>
+
+          <Border Style="{DynamicResource CardStyle}">
+            <StackPanel>
+              <TextBlock Style="{DynamicResource SectionTitle}" Text="Xuất bản video" />
+              <Button x:Name="BtnMergeSegments" Margin="0,12,0,0" Style="{DynamicResource PrimaryButton}" Content="GHÉP CÁC ĐOẠN" />
+              <TextBlock x:Name="TxtStatus" Margin="0,10,0,0" Foreground="{DynamicResource Muted}" FontSize="11" Text="..." />
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+  </Grid>
+</UserControl>
+

@@ -133,22 +133,10 @@ namespace ReviewMovie
         private string _videoMerge;
         private bool _sessionMerge;
 
-        // Modern UI (WPF hosted in WinForms)
-        private ElementHost _modernHeaderHost;
-        private ModernHeaderView _modernHeaderView;
-        private bool _syncModernHeaderText;
-
-        private ElementHost _modernSettingsHost;
-        private ModernSettingsView _modernSettingsView;
-        private bool _syncModernSettings;
-
-        private ElementHost _modernTitleBarHost;
-        private ModernTitleBarView _modernTitleBarView;
-
-        private ElementHost _modernActionBarHost;
-        private ModernActionBarView _modernActionBarView;
-
-        private TableLayoutPanel _chromeLayout;
+        // One UI: WPF MainView hosted in WinForms
+        private ElementHost _mainViewHost;
+        private MainView _mainView;
+        private bool _syncMainText;
 
         // DataGridView hover row
         private int _hoverRowIndex = -1;
@@ -163,9 +151,6 @@ namespace ReviewMovie
             InitializeComponent();
             this.toolTipPL = new ToolTip();
             this.Text = "EasyClip || " + "TPMEDIA";
-
-            // Custom title bar like screenshot #2
-            InitModernTitleBarUi();
 
             _appcode = appcode;
             _apikey = apikey;
@@ -187,15 +172,96 @@ namespace ReviewMovie
             _loadConfig.InitOrUpdateBaseConfig(_apikey, txtAppID.Text, txtAppID.Text, txtToken.Text);
             
             Init();
+            InitMainViewUi();
+        }
 
-            // UI makeover: replace header block with WPF (XAML) like design
-            InitModernHeaderUi();
+        private void InitMainViewUi()
+        {
+            if (_mainViewHost != null) return;
+
+            // Borderless window + respect taskbar on maximize
+            FormBorderStyle = FormBorderStyle.None;
+            ControlBox = false;
+            MinimizeBox = true;
+            MaximizeBox = true;
+
+            // Host one WPF view for the whole screen
+            _mainView = new MainView();
+
+            _mainView.MinimizeClicked += (_, __) => WindowState = FormWindowState.Minimized;
+            _mainView.MaximizeClicked += (_, __) => ToggleMaximize();
+            _mainView.CloseClicked += (_, __) => Close();
+            _mainView.DragRequested += (_, __) => BeginWindowDragMove();
+
+            // Header mapping
+            _mainView.StartRecordClicked += (_, __) => btnRecord.PerformClick();
+            _mainView.ConvertClicked += (_, __) => btnConvertAudio.PerformClick();
+            _mainView.SaveClicked += (_, __) => btnSaveAudio.PerformClick();
+            _mainView.RenderClicked += (_, __) => btnRenderVideoPart.PerformClick();
+            _mainView.ClearClicked += (_, __) =>
+            {
+                _syncMainText = true;
+                try
+                {
+                    txtTextInput.Text = string.Empty;
+                    _mainView.TextInput = string.Empty;
+                }
+                finally
+                {
+                    _syncMainText = false;
+                }
+            };
+            _mainView.TextChanged += (_, __) =>
+            {
+                if (_syncMainText) return;
+                _syncMainText = true;
+                try
+                {
+                    txtTextInput.Text = _mainView.TextInput;
+                }
+                finally
+                {
+                    _syncMainText = false;
+                }
+            };
+            txtTextInput.TextChanged += (_, __) =>
+            {
+                if (_mainView == null || _syncMainText) return;
+                _syncMainText = true;
+                try
+                {
+                    _mainView.TextInput = txtTextInput.Text;
+                }
+                finally
+                {
+                    _syncMainText = false;
+                }
+            };
+
+            // Right actions mapping (minimal)
+            _mainView.CreateProjectClicked += (_, __) => btnOpenProject.PerformClick();
+            _mainView.SaveVoiceClicked += (_, __) => btnSaveVoiceSource.PerformClick();
+            _mainView.MergeSegmentsClicked += (_, __) => btnAddAll.PerformClick();
+
+            // Keep status mirrored
+            lblstatus.TextChanged += (_, __) => _mainView?.SetStatus(lblstatus.Text);
+            _mainView.SetStatus(lblstatus.Text);
+
+            // Keep using WinForms ToolStrip + DataGridView, but place them inside MainView
             RestoreClassicToolStripUi();
-            InitModernSettingsUi();
+            _mainView.SetToolStrip(tsMenuView);
+            _mainView.SetDataGrid(dgvMainView);
 
-            // Responsive for laptop/small screens
-            Resize += (_, __) => ApplyResponsiveUiScaling();
-            ApplyResponsiveUiScaling();
+            // Hide old layout container
+            scMain.Visible = false;
+
+            _mainViewHost = new ElementHost
+            {
+                Dock = DockStyle.Fill,
+                Child = _mainView
+            };
+            Controls.Add(_mainViewHost);
+            _mainViewHost.BringToFront();
         }
 
         // ===== Custom window chrome (WinForms borderless + WPF title bar) =====

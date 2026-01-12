@@ -155,6 +155,7 @@
     <Compile Include="WpfUi\ModernSettingsView.cs" />
     <Compile Include="WpfUi\ModernTitleBarView.cs" />
     <Compile Include="WpfUi\ModernActionBarView.cs" />
+    <Compile Include="WpfUi\MainView.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -178,6 +179,8 @@
     <EmbeddedResource Include="WpfUi\ModernSettings.xaml" />
     <EmbeddedResource Include="WpfUi\ModernTitleBar.xaml" />
     <EmbeddedResource Include="WpfUi\ModernActionBar.xaml" />
+    <EmbeddedResource Include="WpfUi\Theme.xaml" />
+    <EmbeddedResource Include="WpfUi\MainView.xaml" />
     <None Include="easyclip.exe.manifest" />
     <None Include="MediaInfoDotNet.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
