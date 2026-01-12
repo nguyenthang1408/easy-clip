@@ -28,6 +28,7 @@ namespace ReviewMovie.WpfUi
         // Right actions
         public event EventHandler CreateProjectClicked;
         public event EventHandler SaveVoiceClicked;
+        public event EventHandler SaveEffectClicked;
         public event EventHandler MergeSegmentsClicked;
 
         private readonly WpfControls.TextBox _txtInput;
@@ -40,6 +41,32 @@ namespace ReviewMovie.WpfUi
         public WpfControls.TextBox TxtApiKey { get; }
         public WpfControls.TextBox TxtToken { get; }
         public WpfControls.TextBlock TxtStatus { get; }
+
+        // Restored settings controls
+        public WpfControls.ComboBox CbZoomUp { get; }
+        public WpfControls.ComboBox CbZQuality { get; }
+        public WpfControls.TextBox TxtFps { get; }
+        public WpfControls.TextBox TxtThread { get; }
+        public WpfControls.ComboBox CbQuality { get; }
+        public WpfControls.ComboBox CbMode { get; }
+        public WpfControls.ComboBox CbEffect { get; }
+
+        public WpfControls.CheckBox ChkZoom { get; }
+        public WpfControls.CheckBox ChkRotate { get; }
+        public WpfControls.CheckBox ChkFlip { get; }
+        public WpfControls.CheckBox ChkFlipRandom { get; }
+        public WpfControls.CheckBox ChkMoveLR { get; }
+        public WpfControls.CheckBox ChkOpenPlayer { get; }
+        public WpfControls.CheckBox ChkMuted { get; }
+
+        public WpfControls.TextBox TxtVolume { get; }
+        public WpfControls.TextBox TxtSpeechSpeed { get; }
+        public WpfControls.TextBox TxtAudioScaleFrom { get; }
+        public WpfControls.TextBox TxtAudioScaleTo { get; }
+
+        public WpfControls.ComboBox CbLanguage { get; }
+        public WpfControls.ComboBox CbVoice { get; }
+        public WpfControls.ComboBox CbTemplate { get; }
 
         public MainView()
         {
@@ -108,10 +135,38 @@ namespace ReviewMovie.WpfUi
             var btnCreateProject = (WpfControls.Button)root.FindName("BtnCreateProject");
             var btnSaveVoice = (WpfControls.Button)root.FindName("BtnSaveVoice");
             var btnMerge = (WpfControls.Button)root.FindName("BtnMergeSegments");
+            var btnSaveEffect = root.FindName("BtnSaveEffect") as WpfControls.Button;
 
             btnCreateProject.Click += (_, __) => CreateProjectClicked?.Invoke(this, EventArgs.Empty);
             btnSaveVoice.Click += (_, __) => SaveVoiceClicked?.Invoke(this, EventArgs.Empty);
             btnMerge.Click += (_, __) => MergeSegmentsClicked?.Invoke(this, EventArgs.Empty);
+            if (btnSaveEffect != null) btnSaveEffect.Click += (_, __) => SaveEffectClicked?.Invoke(this, EventArgs.Empty);
+
+            // Restored settings controls
+            CbZoomUp = root.FindName("CbZoomUp") as WpfControls.ComboBox;
+            CbZQuality = root.FindName("CbZQuality") as WpfControls.ComboBox;
+            TxtFps = root.FindName("TxtFps") as WpfControls.TextBox;
+            TxtThread = root.FindName("TxtThread") as WpfControls.TextBox;
+            CbQuality = root.FindName("CbQuality") as WpfControls.ComboBox;
+            CbMode = root.FindName("CbMode") as WpfControls.ComboBox;
+            CbEffect = root.FindName("CbEffect") as WpfControls.ComboBox;
+
+            ChkZoom = root.FindName("ChkZoom") as WpfControls.CheckBox;
+            ChkRotate = root.FindName("ChkRotate") as WpfControls.CheckBox;
+            ChkFlip = root.FindName("ChkFlip") as WpfControls.CheckBox;
+            ChkFlipRandom = root.FindName("ChkFlipRandom") as WpfControls.CheckBox;
+            ChkMoveLR = root.FindName("ChkMoveLR") as WpfControls.CheckBox;
+            ChkOpenPlayer = root.FindName("ChkOpenPlayer") as WpfControls.CheckBox;
+            ChkMuted = root.FindName("ChkMuted") as WpfControls.CheckBox;
+
+            TxtVolume = root.FindName("TxtVolume") as WpfControls.TextBox;
+            TxtSpeechSpeed = root.FindName("TxtSpeechSpeed") as WpfControls.TextBox;
+            TxtAudioScaleFrom = root.FindName("TxtAudioScaleFrom") as WpfControls.TextBox;
+            TxtAudioScaleTo = root.FindName("TxtAudioScaleTo") as WpfControls.TextBox;
+
+            CbLanguage = root.FindName("CbLanguage") as WpfControls.ComboBox;
+            CbVoice = root.FindName("CbVoice") as WpfControls.ComboBox;
+            CbTemplate = root.FindName("CbTemplate") as WpfControls.ComboBox;
         }
 
         public string InputText

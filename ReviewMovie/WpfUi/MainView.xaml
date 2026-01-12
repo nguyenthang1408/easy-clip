@@ -209,6 +209,116 @@
             </StackPanel>
           </Border>
 
+          <!-- Effects / Settings (restored items) -->
+          <Border Style="{DynamicResource CardStyle}">
+            <StackPanel>
+              <TextBlock Style="{DynamicResource SectionTitle}" Text="Lựa chọn hiệu ứng" />
+
+              <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="10" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                  <TextBlock Style="{DynamicResource FieldLabel}" Text="% ZoomUp" />
+                  <ComboBox x:Name="CbZoomUp" Style="{DynamicResource ModernComboBox}" />
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                  <TextBlock Style="{DynamicResource FieldLabel}" Text="% ZQuality" />
+                  <ComboBox x:Name="CbZQuality" Style="{DynamicResource ModernComboBox}" />
+                </StackPanel>
+              </Grid>
+
+              <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="10" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                  <TextBlock Style="{DynamicResource FieldLabel}" Text="FPS (Input)" />
+                  <TextBox x:Name="TxtFps" Style="{DynamicResource ModernTextBox}" />
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                  <TextBlock Style="{DynamicResource FieldLabel}" Text="Thread" />
+                  <TextBox x:Name="TxtThread" Style="{DynamicResource ModernTextBox}" />
+                </StackPanel>
+              </Grid>
+
+              <TextBlock Margin="0,10,0,0" Style="{DynamicResource FieldLabel}" Text="Chất lượng" />
+              <ComboBox x:Name="CbQuality" Style="{DynamicResource ModernComboBox}" />
+
+              <TextBlock Margin="0,10,0,0" Style="{DynamicResource FieldLabel}" Text="Lựa chọn" />
+              <ComboBox x:Name="CbMode" Style="{DynamicResource ModernComboBox}" />
+
+              <TextBlock Margin="0,10,0,0" Style="{DynamicResource FieldLabel}" Text="Hiệu ứng" />
+              <ComboBox x:Name="CbEffect" Style="{DynamicResource ModernComboBox}" />
+
+              <WrapPanel Margin="0,10,0,0">
+                <CheckBox x:Name="ChkZoom" Style="{DynamicResource ModernCheckBox}" Margin="0,0,14,8" Content="Zoom" />
+                <CheckBox x:Name="ChkRotate" Style="{DynamicResource ModernCheckBox}" Margin="0,0,14,8" Content="Xoay" />
+                <CheckBox x:Name="ChkFlip" Style="{DynamicResource ModernCheckBox}" Margin="0,0,14,8" Content="Lật" />
+                <CheckBox x:Name="ChkFlipRandom" Style="{DynamicResource ModernCheckBox}" Margin="0,0,14,8" Content="Lật random" />
+                <CheckBox x:Name="ChkMoveLR" Style="{DynamicResource ModernCheckBox}" Margin="0,0,14,8" Content="Di chuyển trái↔phải" />
+                <CheckBox x:Name="ChkOpenPlayer" Style="{DynamicResource ModernCheckBox}" Margin="0,0,14,8" Content="Tự động mở player" />
+              </WrapPanel>
+
+              <Grid Margin="0,6,0,0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="10" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                  <TextBlock Style="{DynamicResource FieldLabel}" Text="Volumn gốc" />
+                  <TextBox x:Name="TxtVolume" Style="{DynamicResource ModernTextBox}" />
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                  <TextBlock Style="{DynamicResource FieldLabel}" Text="Tốc độ đọc" />
+                  <TextBox x:Name="TxtSpeechSpeed" Style="{DynamicResource ModernTextBox}" />
+                </StackPanel>
+              </Grid>
+
+              <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="10" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                  <TextBlock Style="{DynamicResource FieldLabel}" Text="Audio Scale (from)" />
+                  <TextBox x:Name="TxtAudioScaleFrom" Style="{DynamicResource ModernTextBox}" />
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                  <TextBlock Style="{DynamicResource FieldLabel}" Text="Audio Scale (to)" />
+                  <TextBox x:Name="TxtAudioScaleTo" Style="{DynamicResource ModernTextBox}" />
+                </StackPanel>
+              </Grid>
+
+              <CheckBox x:Name="ChkMuted" Style="{DynamicResource ModernCheckBox}" Margin="0,10,0,0" Content="Ko dùng Audio" />
+
+              <TextBlock Margin="0,10,0,0" Style="{DynamicResource FieldLabel}" Text="Ngôn ngữ" />
+              <ComboBox x:Name="CbLanguage" Style="{DynamicResource ModernComboBox}" />
+
+              <TextBlock Margin="0,10,0,0" Style="{DynamicResource FieldLabel}" Text="Giọng đọc" />
+              <ComboBox x:Name="CbVoice" Style="{DynamicResource ModernComboBox}" />
+
+              <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="10" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                  <TextBlock Style="{DynamicResource FieldLabel}" Text="Cấu hình" />
+                  <ComboBox x:Name="CbTemplate" Style="{DynamicResource ModernComboBox}" />
+                </StackPanel>
+                <Button x:Name="BtnSaveEffect" Grid.Column="2" Style="{DynamicResource GhostButton}" Content="Save" VerticalAlignment="Bottom" />
+              </Grid>
+            </StackPanel>
+          </Border>
+
           <Border Style="{DynamicResource CardStyle}">
             <StackPanel>
               <TextBlock Style="{DynamicResource SectionTitle}" Text="Xuất bản video" />

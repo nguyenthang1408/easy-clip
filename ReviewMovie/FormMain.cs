@@ -38,6 +38,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using ReviewMovie.WpfUi;
+using WpfControls = System.Windows.Controls;
 
 namespace ReviewMovie
 {
@@ -137,6 +138,7 @@ namespace ReviewMovie
         private ElementHost _mainViewHost;
         private MainView _mainView;
         private bool _syncMainText;
+        private bool _syncMainSettings;
 
         // DataGridView hover row
         private int _hoverRowIndex = -1;
@@ -241,6 +243,7 @@ namespace ReviewMovie
             // Right actions mapping (minimal)
             _mainView.CreateProjectClicked += (_, __) => btnOpenProject.PerformClick();
             _mainView.SaveVoiceClicked += (_, __) => btnSaveVoiceSource.PerformClick();
+            _mainView.SaveEffectClicked += (_, __) => btnSaveEffectSetting.PerformClick();
             _mainView.MergeSegmentsClicked += (_, __) => btnAddAll.PerformClick();
 
             // Keep status mirrored
@@ -262,6 +265,214 @@ namespace ReviewMovie
             };
             Controls.Add(_mainViewHost);
             _mainViewHost.BringToFront();
+
+            WireMainSettingsEvents();
+            SyncMainSettingsFromWinForms();
+        }
+
+        private void WireMainSettingsEvents()
+        {
+            if (_mainView == null) return;
+
+            // Combos (map by SelectedIndex)
+            if (_mainView.CbProject != null)
+            {
+                _mainView.CbProject.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbProject.SelectedIndex;
+                    if (idx >= 0 && idx < cbProjectName.Items.Count) cbProjectName.SelectedIndex = idx;
+                };
+            }
+
+            if (_mainView.CbVoiceSource != null)
+            {
+                _mainView.CbVoiceSource.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbVoiceSource.SelectedIndex;
+                    if (idx >= 0 && idx < cboSiteNguon.Items.Count) cboSiteNguon.SelectedIndex = idx;
+                };
+            }
+
+            if (_mainView.CbZoomUp != null)
+            {
+                _mainView.CbZoomUp.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbZoomUp.SelectedIndex;
+                    if (idx >= 0 && idx < cbZoomRatio.Items.Count) cbZoomRatio.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbZQuality != null)
+            {
+                _mainView.CbZQuality.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbZQuality.SelectedIndex;
+                    if (idx >= 0 && idx < cbZoomQuality.Items.Count) cbZoomQuality.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbQuality != null)
+            {
+                _mainView.CbQuality.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbQuality.SelectedIndex;
+                    if (idx >= 0 && idx < cbxVideoQuality.Items.Count) cbxVideoQuality.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbMode != null)
+            {
+                _mainView.CbMode.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbMode.SelectedIndex;
+                    if (idx >= 0 && idx < cbMode.Items.Count) cbMode.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbEffect != null)
+            {
+                _mainView.CbEffect.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbEffect.SelectedIndex;
+                    if (idx >= 0 && idx < cbEffectType.Items.Count) cbEffectType.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbLanguage != null)
+            {
+                _mainView.CbLanguage.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbLanguage.SelectedIndex;
+                    if (idx >= 0 && idx < cbLanguageSelect.Items.Count) cbLanguageSelect.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbVoice != null)
+            {
+                _mainView.CbVoice.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbVoice.SelectedIndex;
+                    if (idx >= 0 && idx < cbxSpeechType.Items.Count) cbxSpeechType.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbTemplate != null)
+            {
+                _mainView.CbTemplate.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbTemplate.SelectedIndex;
+                    if (idx >= 0 && idx < cbSettingTemplate.Items.Count) cbSettingTemplate.SelectedIndex = idx;
+                };
+            }
+
+            // Text fields -> push on LostFocus
+            if (_mainView.TxtApiKey != null)
+                _mainView.TxtApiKey.LostFocus += (_, __) => txtAppID.Text = _mainView.TxtApiKey.Text;
+            if (_mainView.TxtToken != null)
+                _mainView.TxtToken.LostFocus += (_, __) => txtToken.Text = _mainView.TxtToken.Text;
+
+            if (_mainView.TxtFps != null)
+                _mainView.TxtFps.LostFocus += (_, __) => TrySetNumeric(nFPS, _mainView.TxtFps.Text, isDecimal: false);
+            if (_mainView.TxtThread != null)
+                _mainView.TxtThread.LostFocus += (_, __) => TrySetNumeric(nbThread, _mainView.TxtThread.Text, isDecimal: false);
+            if (_mainView.TxtVolume != null)
+                _mainView.TxtVolume.LostFocus += (_, __) => TrySetNumeric(nbVolumnOrigin, _mainView.TxtVolume.Text, isDecimal: true);
+            if (_mainView.TxtSpeechSpeed != null)
+                _mainView.TxtSpeechSpeed.LostFocus += (_, __) => TrySetNumeric(nbSpeechRatio, _mainView.TxtSpeechSpeed.Text, isDecimal: true);
+            if (_mainView.TxtAudioScaleFrom != null)
+                _mainView.TxtAudioScaleFrom.LostFocus += (_, __) => TrySetNumeric(nScaleAudioRangeStart, _mainView.TxtAudioScaleFrom.Text, isDecimal: true);
+            if (_mainView.TxtAudioScaleTo != null)
+                _mainView.TxtAudioScaleTo.LostFocus += (_, __) => TrySetNumeric(nScaleAudioRangeEnd, _mainView.TxtAudioScaleTo.Text, isDecimal: true);
+
+            // Checkboxes
+            WireCheckBox(_mainView.ChkZoom, CkZoom);
+            WireCheckBox(_mainView.ChkRotate, ckRotate);
+            WireCheckBox(_mainView.ChkFlip, ckHflip);
+            WireCheckBox(_mainView.ChkFlipRandom, ckHflipRandom);
+            WireCheckBox(_mainView.ChkMoveLR, ckRandomMoveLeftRight);
+            WireCheckBox(_mainView.ChkOpenPlayer, ckOpenPlayer);
+            WireCheckBox(_mainView.ChkMuted, ckNotUseAudio);
+
+            // WinForms -> WPF resync when project/voice changes
+            cbProjectName.SelectedIndexChanged += (_, __) => SyncMainSettingsFromWinForms();
+            cboSiteNguon.SelectedIndexChanged += (_, __) => SyncMainSettingsFromWinForms();
+        }
+
+        private void WireCheckBox(WpfControls.CheckBox wpf, CheckBox win)
+        {
+            if (wpf == null || win == null) return;
+            wpf.Checked += (_, __) => win.Checked = true;
+            wpf.Unchecked += (_, __) => win.Checked = false;
+        }
+
+        private void SyncMainSettingsFromWinForms()
+        {
+            if (_mainView == null) return;
+            if (_syncMainSettings) return;
+
+            _syncMainSettings = true;
+            try
+            {
+                SetWpfComboFromWinForms(cbProjectName, _mainView.CbProject);
+                SetWpfComboFromWinForms(cboSiteNguon, _mainView.CbVoiceSource);
+                if (_mainView.TxtApiKey != null) _mainView.TxtApiKey.Text = txtAppID.Text ?? string.Empty;
+                if (_mainView.TxtToken != null) _mainView.TxtToken.Text = txtToken.Text ?? string.Empty;
+
+                SetWpfComboFromWinForms(cbZoomRatio, _mainView.CbZoomUp);
+                SetWpfComboFromWinForms(cbZoomQuality, _mainView.CbZQuality);
+                if (_mainView.TxtFps != null) _mainView.TxtFps.Text = nFPS.Value.ToString(CultureInfo.InvariantCulture);
+                if (_mainView.TxtThread != null) _mainView.TxtThread.Text = nbThread.Value.ToString(CultureInfo.InvariantCulture);
+
+                SetWpfComboFromWinForms(cbxVideoQuality, _mainView.CbQuality);
+                SetWpfComboFromWinForms(cbMode, _mainView.CbMode);
+                SetWpfComboFromWinForms(cbEffectType, _mainView.CbEffect);
+
+                if (_mainView.ChkZoom != null) _mainView.ChkZoom.IsChecked = CkZoom.Checked;
+                if (_mainView.ChkRotate != null) _mainView.ChkRotate.IsChecked = ckRotate.Checked;
+                if (_mainView.ChkFlip != null) _mainView.ChkFlip.IsChecked = ckHflip.Checked;
+                if (_mainView.ChkFlipRandom != null) _mainView.ChkFlipRandom.IsChecked = ckHflipRandom.Checked;
+                if (_mainView.ChkMoveLR != null) _mainView.ChkMoveLR.IsChecked = ckRandomMoveLeftRight.Checked;
+                if (_mainView.ChkOpenPlayer != null) _mainView.ChkOpenPlayer.IsChecked = ckOpenPlayer.Checked;
+                if (_mainView.ChkMuted != null) _mainView.ChkMuted.IsChecked = ckNotUseAudio.Checked;
+
+                if (_mainView.TxtVolume != null) _mainView.TxtVolume.Text = nbVolumnOrigin.Value.ToString(CultureInfo.InvariantCulture);
+                if (_mainView.TxtSpeechSpeed != null) _mainView.TxtSpeechSpeed.Text = nbSpeechRatio.Value.ToString(CultureInfo.InvariantCulture);
+                if (_mainView.TxtAudioScaleFrom != null) _mainView.TxtAudioScaleFrom.Text = nScaleAudioRangeStart.Value.ToString(CultureInfo.InvariantCulture);
+                if (_mainView.TxtAudioScaleTo != null) _mainView.TxtAudioScaleTo.Text = nScaleAudioRangeEnd.Value.ToString(CultureInfo.InvariantCulture);
+
+                SetWpfComboFromWinForms(cbLanguageSelect, _mainView.CbLanguage);
+                SetWpfComboFromWinForms(cbxSpeechType, _mainView.CbVoice);
+                SetWpfComboFromWinForms(cbSettingTemplate, _mainView.CbTemplate);
+            }
+            finally
+            {
+                _syncMainSettings = false;
+            }
+        }
+
+        private static void SetWpfComboFromWinForms(System.Windows.Forms.ComboBox winFormsCombo, WpfControls.ComboBox wpfCombo)
+        {
+            if (wpfCombo == null) return;
+            wpfCombo.Items.Clear();
+            for (int i = 0; i < winFormsCombo.Items.Count; i++)
+                wpfCombo.Items.Add(winFormsCombo.GetItemText(winFormsCombo.Items[i]));
+            wpfCombo.SelectedIndex = winFormsCombo.SelectedIndex;
+        }
+
+        private static void TrySetNumeric(NumericUpDown nud, string input, bool isDecimal)
+        {
+            if (nud == null) return;
+            if (string.IsNullOrWhiteSpace(input)) return;
+            var normalized = input.Trim().Replace(',', '.');
+            if (!decimal.TryParse(normalized, NumberStyles.Number, CultureInfo.InvariantCulture, out var value))
+                return;
+            if (!isDecimal) value = Math.Round(value, 0);
+            if (value < nud.Minimum) value = nud.Minimum;
+            if (value > nud.Maximum) value = nud.Maximum;
+            nud.Value = value;
         }
 
         // ===== Custom window chrome (WinForms borderless + WPF title bar) =====
