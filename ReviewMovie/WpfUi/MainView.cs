@@ -1,6 +1,5 @@
 using System;
 using System.Reflection;
-using System.Windows.Forms.Integration;
 using System.Windows.Markup;
 using System.Windows;
 using System.Xml;
@@ -30,11 +29,14 @@ namespace ReviewMovie.WpfUi
         public event EventHandler SaveVoiceClicked;
         public event EventHandler SaveEffectClicked;
         public event EventHandler MergeSegmentsClicked;
+        public event EventHandler NewLineClicked;
+        public event EventHandler AutoSubtitleClicked;
+        public event EventHandler CancelClicked;
+        public event EventHandler<int> RowSelected;
 
         private readonly WpfControls.TextBox _txtInput;
         private readonly WpfControls.TextBlock _txtPlaceholder;
-        private readonly WindowsFormsHost _hostToolStrip;
-        private readonly WindowsFormsHost _hostDataGrid;
+        private readonly WpfControls.DataGrid _mainGrid;
 
         public WpfControls.ComboBox CbProject { get; }
         public WpfControls.ComboBox CbVoiceSource { get; }
@@ -122,8 +124,22 @@ namespace ReviewMovie.WpfUi
             UpdatePlaceholder();
 
             // Hosts
-            _hostToolStrip = (WindowsFormsHost)root.FindName("HostToolStrip");
-            _hostDataGrid = (WindowsFormsHost)root.FindName("HostDataGrid");
+            _mainGrid = (WpfControls.DataGrid)root.FindName("MainGrid");
+            if (_mainGrid != null)
+            {
+                _mainGrid.SelectionChanged += (_, __) =>
+                {
+                    if (_mainGrid.SelectedIndex >= 0)
+                        RowSelected?.Invoke(this, _mainGrid.SelectedIndex);
+                };
+            }
+
+            var btnNewLine = root.FindName("BtnNewLine") as WpfControls.Button;
+            var btnAutoSubtitle = root.FindName("BtnAutoSubtitle") as WpfControls.Button;
+            var btnCancel = root.FindName("BtnCancel") as WpfControls.Button;
+            if (btnNewLine != null) btnNewLine.Click += (_, __) => NewLineClicked?.Invoke(this, EventArgs.Empty);
+            if (btnAutoSubtitle != null) btnAutoSubtitle.Click += (_, __) => AutoSubtitleClicked?.Invoke(this, EventArgs.Empty);
+            if (btnCancel != null) btnCancel.Click += (_, __) => CancelClicked?.Invoke(this, EventArgs.Empty);
 
             // Right settings minimal
             CbProject = (WpfControls.ComboBox)root.FindName("CbProject");
@@ -179,20 +195,18 @@ namespace ReviewMovie.WpfUi
             }
         }
 
-        public void SetToolStrip(WinForms.Control toolStrip)
+        public void SetItemsSource(object itemsSource)
         {
-            if (toolStrip == null) return;
-            toolStrip.Dock = WinForms.DockStyle.Fill;
-            if (toolStrip.Parent != null) toolStrip.Parent.Controls.Remove(toolStrip);
-            _hostToolStrip.Child = toolStrip;
+            if (_mainGrid == null) return;
+            _mainGrid.ItemsSource = itemsSource as System.Collections.IEnumerable;
         }
 
-        public void SetDataGrid(WinForms.Control grid)
+        public void SelectRow(int index)
         {
-            if (grid == null) return;
-            grid.Dock = WinForms.DockStyle.Fill;
-            if (grid.Parent != null) grid.Parent.Controls.Remove(grid);
-            _hostDataGrid.Child = grid;
+            if (_mainGrid == null) return;
+            if (index < 0 || index >= _mainGrid.Items.Count) return;
+            _mainGrid.SelectedIndex = index;
+            _mainGrid.ScrollIntoView(_mainGrid.SelectedItem);
         }
 
         public void SetStatus(string text) => TxtStatus.Text = text ?? string.Empty;

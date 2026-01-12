@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
              mc:Ignorable="d"
              Background="{DynamicResource AppBg}"
              d:DesignHeight="760" d:DesignWidth="1300">
@@ -156,14 +155,97 @@
           </Grid>
         </Border>
 
-        <!-- Action bar (host WinForms ToolStrip) -->
-        <Border Grid.Row="1" Background="Transparent" Padding="0,4,0,4">
-          <wfi:WindowsFormsHost x:Name="HostToolStrip" />
+        <!-- Action bar (WPF) -->
+        <Border Grid.Row="1" Background="Transparent" Padding="8,6,8,6">
+          <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock Text="Chọn tác vụ" Foreground="{DynamicResource Muted}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <Button x:Name="BtnNewLine" Style="{DynamicResource PrimaryButton}" Content="New Line" Height="36" MinWidth="110" Margin="0,0,10,0"/>
+            <Button x:Name="BtnAutoSubtitle" Style="{DynamicResource GhostButton}" Content="Auto Subtitle" Height="36" MinWidth="130" Margin="0,0,10,0"/>
+            <Button x:Name="BtnCancel" Style="{DynamicResource GhostButton}" Content="Cancel" Height="36" MinWidth="90"/>
+          </StackPanel>
         </Border>
 
-        <!-- Grid (host WinForms DataGridView) -->
+        <!-- Grid (WPF DataGrid) -->
         <Border Grid.Row="2" Background="White" CornerRadius="14" BorderBrush="{DynamicResource Border}" BorderThickness="1" Margin="8,0,8,8">
-          <wfi:WindowsFormsHost x:Name="HostDataGrid" />
+          <DataGrid x:Name="MainGrid"
+                    AutoGenerateColumns="False"
+                    HeadersVisibility="Column"
+                    GridLinesVisibility="None"
+                    RowHeaderWidth="0"
+                    CanUserAddRows="False"
+                    CanUserDeleteRows="False"
+                    CanUserReorderColumns="False"
+                    CanUserResizeRows="False"
+                    SelectionMode="Single"
+                    SelectionUnit="FullRow"
+                    FontSize="13"
+                    Background="White"
+                    BorderThickness="0">
+            <DataGrid.Resources>
+              <Style TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="Background" Value="#F9FAFB"/>
+                <Setter Property="Foreground" Value="#6B7280"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Padding" Value="10,0,10,0"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="BorderThickness" Value="0"/>
+              </Style>
+              <Style TargetType="{x:Type DataGridRow}">
+                <Setter Property="Height" Value="46"/>
+              </Style>
+              <Style TargetType="{x:Type DataGridCell}">
+                <Setter Property="Padding" Value="10,0,10,0"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="#111827"/>
+              </Style>
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+              <DataGridCheckBoxColumn Header="CHK" Binding="{Binding check}" Width="60" />
+              <DataGridTextColumn Header="NO." Binding="{Binding idxnumber}" Width="70" />
+              <DataGridTextColumn Header="LENGTH" Binding="{Binding textlength}" Width="90" />
+              <DataGridTextColumn Header="AUDIO LINK" Binding="{Binding audiolink}" Width="160" />
+              <DataGridTextColumn Header="AUDIO TIME" Binding="{Binding audiotime}" Width="120" />
+
+              <!-- Audio status pill -->
+              <DataGridTemplateColumn Header="STATUS" Width="120">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <Border CornerRadius="12"
+                            Padding="10,4"
+                            HorizontalAlignment="Center"
+                            Background="{Binding audiostatus, Converter={StaticResource StatusPillBg}}">
+                      <TextBlock Text="{Binding audiostatus}"
+                                 FontWeight="Bold"
+                                 Foreground="{Binding audiostatus, Converter={StaticResource StatusPillFg}}"/>
+                    </Border>
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+
+              <DataGridTextColumn Header="FILE MEDIA" Binding="{Binding filemediapath}" Width="200" />
+              <DataGridTextColumn Header="TIME" Binding="{Binding timevideo}" Width="100" />
+
+              <!-- Render status pill -->
+              <DataGridTemplateColumn Header="RENDER" Width="120">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <Border CornerRadius="12"
+                            Padding="10,4"
+                            HorizontalAlignment="Center"
+                            Background="{Binding renderstatus, Converter={StaticResource StatusPillBg}}">
+                      <TextBlock Text="{Binding renderstatus}"
+                                 FontWeight="Bold"
+                                 Foreground="{Binding renderstatus, Converter={StaticResource StatusPillFg}}"/>
+                    </Border>
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+
+              <DataGridTextColumn Header="INPUT TEXT" Binding="{Binding inputtext}" Width="*" />
+            </DataGrid.Columns>
+          </DataGrid>
         </Border>
       </Grid>
 

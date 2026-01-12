@@ -152,6 +152,8 @@
       <DependentUpon>FormLoadingCancel.cs</DependentUpon>
     </Compile>
     <Compile Include="WpfUi\MainView.cs" />
+    <Compile Include="WpfUi\Converters\StatusPillBackgroundConverter.cs" />
+    <Compile Include="WpfUi\Converters\StatusPillForegroundConverter.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

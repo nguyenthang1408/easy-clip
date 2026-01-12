@@ -247,6 +247,25 @@ namespace ReviewMovie
             _mainView.SaveVoiceClicked += (_, __) => btnSaveVoiceSource_Click(btnSaveVoiceSource, EventArgs.Empty);
             _mainView.SaveEffectClicked += (_, __) => btnSaveEffectSetting_Click(btnSaveEffectSetting, EventArgs.Empty);
             _mainView.MergeSegmentsClicked += (_, __) => btnAddAll_Click(btnAddAll, EventArgs.Empty);
+            _mainView.NewLineClicked += (_, __) => btnAddRow_Click(btnAddRow, EventArgs.Empty);
+            _mainView.AutoSubtitleClicked += (_, __) => btnImportSubtitle_Click(btnImportSubtitle, EventArgs.Empty);
+            _mainView.CancelClicked += (_, __) => btnDestroyAction_Click(btnDestroyAction, EventArgs.Empty);
+
+            _mainView.RowSelected += (_, rowIndex) =>
+            {
+                // Keep legacy state in sync
+                _indexRowSelect = rowIndex;
+                try
+                {
+                    if (dgvMainView.Rows.Count > rowIndex && rowIndex >= 0)
+                    {
+                        dgvMainView.ClearSelection();
+                        dgvMainView.Rows[rowIndex].Selected = true;
+                        dgvMainView.CurrentCell = dgvMainView.Rows[rowIndex].Cells[0];
+                    }
+                }
+                catch { /* ignore */ }
+            };
 
             // Keep status mirrored
             lblstatus.TextChanged += (_, __) => _mainView?.SetStatus(lblstatus.Text);
@@ -254,8 +273,8 @@ namespace ReviewMovie
 
             // Keep using WinForms ToolStrip + DataGridView, but place them inside MainView
             RestoreClassicToolStripUi();
-            _mainView.SetToolStrip(tsMenuView);
-            _mainView.SetDataGrid(dgvMainView);
+            // WPF DataGrid uses the same source list
+            _mainView.SetItemsSource(_listdata);
 
             // Hide old layout container
             scMain.Visible = false;
@@ -811,6 +830,7 @@ namespace ReviewMovie
             _listdata = new BindingList<InfoMainView>();
             dgvMainView.DataSource = null;
             dgvMainView.Refresh();
+            _mainView?.SetItemsSource(_listdata);
         }
 
         private async Task LoadSubtitleAsync(CancellationToken token)
