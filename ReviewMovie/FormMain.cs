@@ -196,10 +196,12 @@ namespace ReviewMovie
             _mainView.DragRequested += (_, __) => BeginWindowDragMove();
 
             // Header mapping
-            _mainView.StartRecordClicked += (_, __) => btnRecord.PerformClick();
-            _mainView.ConvertClicked += (_, __) => btnConvertAudio.PerformClick();
-            _mainView.SaveClicked += (_, __) => btnSaveAudio.PerformClick();
-            _mainView.RenderClicked += (_, __) => btnRenderVideoPart.PerformClick();
+            // NOTE: WinForms controls are hidden (scMain.Visible=false) so PerformClick() may not fire.
+            // Call handlers directly to keep behavior.
+            _mainView.StartRecordClicked += (_, __) => btnRecord_Click(btnRecord, EventArgs.Empty);
+            _mainView.ConvertClicked += (_, __) => btnConvertAudio_Click(btnConvertAudio, EventArgs.Empty);
+            _mainView.SaveClicked += (_, __) => btnSaveAudio_Click(btnSaveAudio, EventArgs.Empty);
+            _mainView.RenderClicked += (_, __) => btnRenderVideoPart_Click(btnRenderVideoPart, EventArgs.Empty);
             _mainView.ClearClicked += (_, __) =>
             {
                 _syncMainText = true;
@@ -241,10 +243,10 @@ namespace ReviewMovie
             };
 
             // Right actions mapping (minimal)
-            _mainView.CreateProjectClicked += (_, __) => btnOpenProject.PerformClick();
-            _mainView.SaveVoiceClicked += (_, __) => btnSaveVoiceSource.PerformClick();
-            _mainView.SaveEffectClicked += (_, __) => btnSaveEffectSetting.PerformClick();
-            _mainView.MergeSegmentsClicked += (_, __) => btnAddAll.PerformClick();
+            _mainView.CreateProjectClicked += (_, __) => btnOpenProject_Click(btnOpenProject, EventArgs.Empty);
+            _mainView.SaveVoiceClicked += (_, __) => btnSaveVoiceSource_Click(btnSaveVoiceSource, EventArgs.Empty);
+            _mainView.SaveEffectClicked += (_, __) => btnSaveEffectSetting_Click(btnSaveEffectSetting, EventArgs.Empty);
+            _mainView.MergeSegmentsClicked += (_, __) => btnAddAll_Click(btnAddAll, EventArgs.Empty);
 
             // Keep status mirrored
             lblstatus.TextChanged += (_, __) => _mainView?.SetStatus(lblstatus.Text);
