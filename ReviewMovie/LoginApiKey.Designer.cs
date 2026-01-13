@@ -95,25 +95,25 @@ namespace ReviewMovie
             // 
             // lblTitle
             // 
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(35)))));
-            this.lblTitle.Location = new System.Drawing.Point(20, 74);
+            this.lblTitle.Location = new System.Drawing.Point(20, 78);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(332, 34);
+            this.lblTitle.Size = new System.Drawing.Size(332, 38);
             this.lblTitle.TabIndex = 2;
-            this.lblTitle.Text = "Studio Access";
+            this.lblTitle.Text = "Review Movie";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
             // lblSubtitle
             // 
-            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(150)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(20, 110);
+            this.lblSubtitle.Location = new System.Drawing.Point(20, 118);
             this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(332, 38);
+            this.lblSubtitle.Size = new System.Drawing.Size(332, 28);
             this.lblSubtitle.TabIndex = 3;
-            this.lblSubtitle.Text = "Log in to your editing workspace";
+            this.lblSubtitle.Text = "";
             this.lblSubtitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lblSubtitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
@@ -147,9 +147,9 @@ namespace ReviewMovie
             // materialLabel1
             // 
             this.materialLabel1.AutoSize = true;
-            this.materialLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.materialLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(150)))), ((int)(((byte)(175)))));
-            this.materialLabel1.Location = new System.Drawing.Point(26, 40);
+            this.materialLabel1.Location = new System.Drawing.Point(26, 44);
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(70, 15);
             this.materialLabel1.TabIndex = 4;
@@ -160,9 +160,9 @@ namespace ReviewMovie
             this.pnlAppCode.BackColor = System.Drawing.Color.White;
             this.pnlAppCode.Controls.Add(this.txAppCodeShow);
             this.pnlAppCode.Controls.Add(this.lblAppCodeIcon);
-            this.pnlAppCode.Location = new System.Drawing.Point(24, 60);
+            this.pnlAppCode.Location = new System.Drawing.Point(24, 66);
             this.pnlAppCode.Name = "pnlAppCode";
-            this.pnlAppCode.Size = new System.Drawing.Size(312, 46);
+            this.pnlAppCode.Size = new System.Drawing.Size(312, 52);
             this.pnlAppCode.TabIndex = 5;
             this.pnlAppCode.Paint += new System.Windows.Forms.PaintEventHandler(this.pillPanel_Paint);
             // 
@@ -181,9 +181,9 @@ namespace ReviewMovie
             // 
             this.txAppCodeShow.BackColor = System.Drawing.Color.White;
             this.txAppCodeShow.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txAppCodeShow.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txAppCodeShow.Font = new System.Drawing.Font("Segoe UI", 11.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txAppCodeShow.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
-            this.txAppCodeShow.Location = new System.Drawing.Point(42, 13);
+            this.txAppCodeShow.Location = new System.Drawing.Point(42, 16);
             this.txAppCodeShow.Name = "txAppCodeShow";
             this.txAppCodeShow.ReadOnly = true;
             this.txAppCodeShow.Size = new System.Drawing.Size(256, 18);
@@ -192,9 +192,9 @@ namespace ReviewMovie
             // materialLabel2
             // 
             this.materialLabel2.AutoSize = true;
-            this.materialLabel2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.materialLabel2.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(150)))), ((int)(((byte)(175)))));
-            this.materialLabel2.Location = new System.Drawing.Point(26, 118);
+            this.materialLabel2.Location = new System.Drawing.Point(26, 130);
             this.materialLabel2.Name = "materialLabel2";
             this.materialLabel2.Size = new System.Drawing.Size(51, 15);
             this.materialLabel2.TabIndex = 6;
@@ -206,9 +206,9 @@ namespace ReviewMovie
             this.pnlApiKey.Controls.Add(this.btnToggleApiKey);
             this.pnlApiKey.Controls.Add(this.txInsertApiKey);
             this.pnlApiKey.Controls.Add(this.lblApiKeyIcon);
-            this.pnlApiKey.Location = new System.Drawing.Point(24, 138);
+            this.pnlApiKey.Location = new System.Drawing.Point(24, 152);
             this.pnlApiKey.Name = "pnlApiKey";
-            this.pnlApiKey.Size = new System.Drawing.Size(312, 46);
+            this.pnlApiKey.Size = new System.Drawing.Size(312, 52);
             this.pnlApiKey.TabIndex = 7;
             this.pnlApiKey.Paint += new System.Windows.Forms.PaintEventHandler(this.pillPanel_Paint);
             // 
@@ -219,7 +219,7 @@ namespace ReviewMovie
             this.btnToggleApiKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnToggleApiKey.Font = new System.Drawing.Font("Segoe MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnToggleApiKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
-            this.btnToggleApiKey.Location = new System.Drawing.Point(280, 8);
+            this.btnToggleApiKey.Location = new System.Drawing.Point(280, 11);
             this.btnToggleApiKey.Name = "btnToggleApiKey";
             this.btnToggleApiKey.Size = new System.Drawing.Size(26, 30);
             this.btnToggleApiKey.TabIndex = 2;
@@ -242,9 +242,9 @@ namespace ReviewMovie
             // 
             this.txInsertApiKey.BackColor = System.Drawing.Color.White;
             this.txInsertApiKey.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txInsertApiKey.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txInsertApiKey.Font = new System.Drawing.Font("Segoe UI", 11.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txInsertApiKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
-            this.txInsertApiKey.Location = new System.Drawing.Point(42, 13);
+            this.txInsertApiKey.Location = new System.Drawing.Point(42, 16);
             this.txInsertApiKey.Name = "txInsertApiKey";
             this.txInsertApiKey.Size = new System.Drawing.Size(232, 18);
             this.txInsertApiKey.TabIndex = 1;
@@ -253,7 +253,7 @@ namespace ReviewMovie
             // 
             this.lbstatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbstatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.lbstatus.Location = new System.Drawing.Point(24, 190);
+            this.lbstatus.Location = new System.Drawing.Point(24, 210);
             this.lbstatus.Name = "lbstatus";
             this.lbstatus.Size = new System.Drawing.Size(312, 30);
             this.lbstatus.TabIndex = 8;
@@ -264,11 +264,11 @@ namespace ReviewMovie
             this.btnLoginApiKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(22)))), ((int)(((byte)(35)))));
             this.btnLoginApiKey.FlatAppearance.BorderSize = 0;
             this.btnLoginApiKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoginApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLoginApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 11.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoginApiKey.ForeColor = System.Drawing.Color.White;
-            this.btnLoginApiKey.Location = new System.Drawing.Point(24, 236);
+            this.btnLoginApiKey.Location = new System.Drawing.Point(24, 258);
             this.btnLoginApiKey.Name = "btnLoginApiKey";
-            this.btnLoginApiKey.Size = new System.Drawing.Size(312, 46);
+            this.btnLoginApiKey.Size = new System.Drawing.Size(312, 52);
             this.btnLoginApiKey.TabIndex = 9;
             this.btnLoginApiKey.Text = "Login to Dashboard  ➜";
             this.btnLoginApiKey.UseVisualStyleBackColor = false;
