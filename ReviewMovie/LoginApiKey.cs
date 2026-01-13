@@ -22,10 +22,14 @@ namespace ReviewMovie
         private static readonly Color ColorPillBorder = Color.FromArgb(232, 236, 255);
         private static readonly Color ColorCloseHover = Color.FromArgb(246, 247, 252);
         private static readonly Color ColorClosePressed = Color.FromArgb(235, 236, 245);
+        private static readonly Color ColorDarkBtn = Color.FromArgb(15, 22, 35);
+        private static readonly Color ColorDarkBtnHover = Color.FromArgb(22, 31, 48);
+        private static readonly Color ColorDarkBtnPressed = Color.FromArgb(10, 15, 26);
 
         private string AppVersion { get; } = "2.0.0"; // Định nghĩa phiên bản ứng dụng
         private readonly AppCodeService appCodeService;
         private readonly IConfigDataService _configService;
+        private bool _apiKeyVisible;
 
         public LoginApiKey()
         {
@@ -79,14 +83,39 @@ namespace ReviewMovie
         private void CenterCard()
         {
             if (cardPanel == null) return;
-            if (cardPanel.Dock == DockStyle.Fill)
+            // New layout: center header + card
+            if (pnlHeader != null)
             {
-                ApplyRoundedRegions();
-                return;
+                int gap = 12;
+                int totalHeight = pnlHeader.Height + gap + cardPanel.Height + 34;
+                int startY = Math.Max(16, (ClientSize.Height - totalHeight) / 2);
+
+                pnlHeader.Left = (ClientSize.Width - pnlHeader.Width) / 2;
+                pnlHeader.Top = startY;
+
+                cardPanel.Left = (ClientSize.Width - cardPanel.Width) / 2;
+                cardPanel.Top = pnlHeader.Bottom + gap;
+
+                if (lblVersion != null)
+                {
+                    lblVersion.Width = ClientSize.Width;
+                    lblVersion.Left = 0;
+                    lblVersion.Top = Math.Min(ClientSize.Height - 26, cardPanel.Bottom + 18);
+                }
             }
-            int x = (ClientSize.Width - cardPanel.Width) / 2;
-            int y = (ClientSize.Height - cardPanel.Height) / 2;
-            cardPanel.Location = new Point(Math.Max(0, x), Math.Max(0, y));
+            else
+            {
+                int x = (ClientSize.Width - cardPanel.Width) / 2;
+                int y = (ClientSize.Height - cardPanel.Height) / 2;
+                cardPanel.Location = new Point(Math.Max(0, x), Math.Max(0, y));
+            }
+
+            if (btnClose != null)
+            {
+                btnClose.Left = ClientSize.Width - btnClose.Width - 12;
+                btnClose.Top = 12;
+            }
+
             ApplyRoundedRegions();
             Invalidate();
         }
@@ -99,8 +128,15 @@ namespace ReviewMovie
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            // Pure white background like screenshot #2
-            e.Graphics.Clear(Color.White);
+            // Gradient background like screenshot (purple/grey)
+            using (var brush = new LinearGradientBrush(
+                ClientRectangle,
+                Color.FromArgb(246, 246, 250),
+                Color.FromArgb(226, 211, 255),
+                LinearGradientMode.Horizontal))
+            {
+                e.Graphics.FillRectangle(brush, ClientRectangle);
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -109,12 +145,16 @@ namespace ReviewMovie
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            // Subtle border for rounded window
-            var rect = new Rectangle(0, 0, Width - 1, Height - 1);
-            using (var path = CreateRoundedRectPath(rect, 18))
-            using (var pen = new Pen(Color.FromArgb(235, 238, 245), 1f))
+            // Soft shadow behind the white card
+            if (cardPanel != null)
             {
-                e.Graphics.DrawPath(pen, path);
+                var shadowRect = new Rectangle(
+                    cardPanel.Left - 6,
+                    cardPanel.Top - 4,
+                    cardPanel.Width + 12,
+                    cardPanel.Height + 14);
+
+                DrawShadow(e.Graphics, shadowRect, 24, 16);
             }
         }
 
@@ -170,20 +210,28 @@ namespace ReviewMovie
         private void ApplyRoundedRegions()
         {
             // Rounded window (requested)
-            ApplyRoundRegion(this, 18);
+            ApplyRoundRegion(this, 26);
 
             // Card + logo + pills + button
+            ApplyRoundRegion(cardPanel, 22);
             ApplyRoundRegion(pnlLogo, 14);
             ApplyRoundRegion(pnlAppCode, 16);
             ApplyRoundRegion(pnlApiKey, 16);
-            ApplyRoundRegion(btnLoginApiKey, 16);
+            ApplyRoundRegion(btnLoginApiKey, 14);
             ApplyRoundRegion(btnClose, 15);
+            ApplyRoundRegion(pnlHandle, 3);
         }
 
         // Paint borders for card + pill panels (Designer-safe: standard Panels)
         private void cardPanel_Paint(object sender, PaintEventArgs e)
         {
-            // Intentionally empty: we only round the window (1 layer)
+            var rect = new Rectangle(0, 0, cardPanel.Width - 1, cardPanel.Height - 1);
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            using (var path = CreateRoundedRectPath(rect, 22))
+            using (var pen = new Pen(Color.FromArgb(235, 238, 245), 1f))
+            {
+                e.Graphics.DrawPath(pen, path);
+            }
         }
 
         private void pillPanel_Paint(object sender, PaintEventArgs e)
@@ -192,7 +240,7 @@ namespace ReviewMovie
             var rect = new Rectangle(0, 0, p.Width - 1, p.Height - 1);
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             using (var path = CreateRoundedRectPath(rect, 16))
-            using (var pen = new Pen(ColorPillBorder, 1f))
+            using (var pen = new Pen(Color.FromArgb(230, 232, 240), 1f))
             {
                 e.Graphics.DrawPath(pen, path);
             }
@@ -200,23 +248,30 @@ namespace ReviewMovie
 
         private void btnLoginApiKey_MouseEnter(object sender, EventArgs e)
         {
-            if (btnLoginApiKey.Enabled) btnLoginApiKey.BackColor = ColorAccentHover;
+            if (btnLoginApiKey.Enabled) btnLoginApiKey.BackColor = ColorDarkBtnHover;
         }
 
         private void btnLoginApiKey_MouseLeave(object sender, EventArgs e)
         {
-            if (btnLoginApiKey.Enabled) btnLoginApiKey.BackColor = ColorAccent;
+            if (btnLoginApiKey.Enabled) btnLoginApiKey.BackColor = ColorDarkBtn;
         }
 
         private void btnLoginApiKey_MouseDown(object sender, MouseEventArgs e)
         {
-            if (btnLoginApiKey.Enabled && e.Button == MouseButtons.Left) btnLoginApiKey.BackColor = ColorAccentPressed;
+            if (btnLoginApiKey.Enabled && e.Button == MouseButtons.Left) btnLoginApiKey.BackColor = ColorDarkBtnPressed;
         }
 
         private void btnLoginApiKey_MouseUp(object sender, MouseEventArgs e)
         {
             if (!btnLoginApiKey.Enabled) return;
-            btnLoginApiKey.BackColor = btnLoginApiKey.ClientRectangle.Contains(e.Location) ? ColorAccentHover : ColorAccent;
+            btnLoginApiKey.BackColor = btnLoginApiKey.ClientRectangle.Contains(e.Location) ? ColorDarkBtnHover : ColorDarkBtn;
+        }
+
+        private void btnToggleApiKey_Click(object sender, EventArgs e)
+        {
+            _apiKeyVisible = !_apiKeyVisible;
+            txInsertApiKey.UseSystemPasswordChar = !_apiKeyVisible;
+            btnToggleApiKey.Text = _apiKeyVisible ? "" : ""; // eye open / eye
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -362,8 +417,13 @@ namespace ReviewMovie
         {
             CenterCard();
             // Ensure initial styles
-            btnLoginApiKey.BackColor = ColorAccent;
+            btnLoginApiKey.BackColor = ColorDarkBtn;
             btnClose.BackColor = Color.White;
+
+            // Mask api key by default like mock
+            _apiKeyVisible = false;
+            txInsertApiKey.UseSystemPasswordChar = true;
+            if (btnToggleApiKey != null) btnToggleApiKey.Text = "";
         }
     }
 }
