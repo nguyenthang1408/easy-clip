@@ -29,21 +29,21 @@ namespace ReviewMovie
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginApiKey));
-            this.cardPanel = new ReviewMovie.Base.RoundedPanel();
+            this.cardPanel = new System.Windows.Forms.Panel();
             this.pnlTopAccent = new System.Windows.Forms.Panel();
-            this.pnlLogo = new ReviewMovie.Base.RoundedPanel();
+            this.pnlLogo = new System.Windows.Forms.Panel();
             this.lblLogoIcon = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.materialLabel1 = new System.Windows.Forms.Label();
-            this.pnlAppCode = new ReviewMovie.Base.RoundedPanel();
+            this.pnlAppCode = new System.Windows.Forms.Panel();
             this.lblAppCodeIcon = new System.Windows.Forms.Label();
             this.txAppCodeShow = new System.Windows.Forms.TextBox();
             this.materialLabel2 = new System.Windows.Forms.Label();
-            this.pnlApiKey = new ReviewMovie.Base.RoundedPanel();
+            this.pnlApiKey = new System.Windows.Forms.Panel();
             this.lblApiKeyIcon = new System.Windows.Forms.Label();
             this.txInsertApiKey = new System.Windows.Forms.TextBox();
-            this.btnLoginApiKey = new ReviewMovie.Base.RoundedButton();
+            this.btnLoginApiKey = new System.Windows.Forms.Button();
             this.lkHelp = new System.Windows.Forms.LinkLabel();
             this.lbstatus = new System.Windows.Forms.Label();
             this.linklbRegister = new System.Windows.Forms.LinkLabel();
@@ -55,11 +55,7 @@ namespace ReviewMovie
             // 
             // cardPanel
             // 
-            this.cardPanel.BackColor = System.Drawing.Color.Transparent;
-            this.cardPanel.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(238)))), ((int)(((byte)(255)))));
-            this.cardPanel.BorderThickness = 1;
-            this.cardPanel.CornerRadius = 22;
-            this.cardPanel.FillColor = System.Drawing.Color.White;
+            this.cardPanel.BackColor = System.Drawing.Color.White;
             this.cardPanel.Controls.Add(this.linklbRegister);
             this.cardPanel.Controls.Add(this.lkHelp);
             this.cardPanel.Controls.Add(this.btnLoginApiKey);
@@ -77,6 +73,7 @@ namespace ReviewMovie
             this.cardPanel.Size = new System.Drawing.Size(360, 520);
             this.cardPanel.TabIndex = 0;
             this.cardPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
+            this.cardPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.cardPanel_Paint);
             // 
             // pnlTopAccent
             // 
@@ -90,11 +87,7 @@ namespace ReviewMovie
             // 
             // pnlLogo
             // 
-            this.pnlLogo.BackColor = System.Drawing.Color.Transparent;
-            this.pnlLogo.BorderColor = System.Drawing.Color.Transparent;
-            this.pnlLogo.BorderThickness = 0;
-            this.pnlLogo.CornerRadius = 14;
-            this.pnlLogo.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(241)))), ((int)(((byte)(255)))));
+            this.pnlLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(241)))), ((int)(((byte)(255)))));
             this.pnlLogo.Controls.Add(this.lblLogoIcon);
             this.pnlLogo.Location = new System.Drawing.Point(152, 34);
             this.pnlLogo.Name = "pnlLogo";
@@ -152,17 +145,14 @@ namespace ReviewMovie
             // 
             // pnlAppCode
             // 
-            this.pnlAppCode.BackColor = System.Drawing.Color.Transparent;
-            this.pnlAppCode.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(236)))), ((int)(((byte)(255)))));
-            this.pnlAppCode.BorderThickness = 1;
-            this.pnlAppCode.CornerRadius = 14;
-            this.pnlAppCode.FillColor = System.Drawing.Color.White;
+            this.pnlAppCode.BackColor = System.Drawing.Color.White;
             this.pnlAppCode.Controls.Add(this.txAppCodeShow);
             this.pnlAppCode.Controls.Add(this.lblAppCodeIcon);
             this.pnlAppCode.Location = new System.Drawing.Point(44, 206);
             this.pnlAppCode.Name = "pnlAppCode";
             this.pnlAppCode.Size = new System.Drawing.Size(272, 46);
             this.pnlAppCode.TabIndex = 5;
+            this.pnlAppCode.Paint += new System.Windows.Forms.PaintEventHandler(this.pillPanel_Paint);
             // 
             // lblAppCodeIcon
             // 
@@ -200,17 +190,14 @@ namespace ReviewMovie
             // 
             // pnlApiKey
             // 
-            this.pnlApiKey.BackColor = System.Drawing.Color.Transparent;
-            this.pnlApiKey.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(236)))), ((int)(((byte)(255)))));
-            this.pnlApiKey.BorderThickness = 1;
-            this.pnlApiKey.CornerRadius = 14;
-            this.pnlApiKey.FillColor = System.Drawing.Color.White;
+            this.pnlApiKey.BackColor = System.Drawing.Color.White;
             this.pnlApiKey.Controls.Add(this.txInsertApiKey);
             this.pnlApiKey.Controls.Add(this.lblApiKeyIcon);
             this.pnlApiKey.Location = new System.Drawing.Point(44, 282);
             this.pnlApiKey.Name = "pnlApiKey";
             this.pnlApiKey.Size = new System.Drawing.Size(272, 46);
             this.pnlApiKey.TabIndex = 7;
+            this.pnlApiKey.Paint += new System.Windows.Forms.PaintEventHandler(this.pillPanel_Paint);
             // 
             // lblApiKeyIcon
             // 
@@ -246,19 +233,22 @@ namespace ReviewMovie
             // 
             // btnLoginApiKey
             // 
-            this.btnLoginApiKey.CornerRadius = 16;
-            this.btnLoginApiKey.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(94)))), ((int)(((byte)(255)))));
+            this.btnLoginApiKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(94)))), ((int)(((byte)(255)))));
+            this.btnLoginApiKey.FlatAppearance.BorderSize = 0;
+            this.btnLoginApiKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoginApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoginApiKey.ForeColor = System.Drawing.Color.White;
-            this.btnLoginApiKey.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(86)))), ((int)(((byte)(245)))));
             this.btnLoginApiKey.Location = new System.Drawing.Point(44, 372);
             this.btnLoginApiKey.Name = "btnLoginApiKey";
-            this.btnLoginApiKey.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(76)))), ((int)(((byte)(232)))));
             this.btnLoginApiKey.Size = new System.Drawing.Size(272, 48);
             this.btnLoginApiKey.TabIndex = 9;
             this.btnLoginApiKey.Text = "ĐĂNG NHẬP  ➜";
-            this.btnLoginApiKey.UseVisualStyleBackColor = true;
+            this.btnLoginApiKey.UseVisualStyleBackColor = false;
             this.btnLoginApiKey.Click += new System.EventHandler(this.btnLoginApiKey_Click);
+            this.btnLoginApiKey.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnLoginApiKey_MouseDown);
+            this.btnLoginApiKey.MouseEnter += new System.EventHandler(this.btnLoginApiKey_MouseEnter);
+            this.btnLoginApiKey.MouseLeave += new System.EventHandler(this.btnLoginApiKey_MouseLeave);
+            this.btnLoginApiKey.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnLoginApiKey_MouseUp);
             // 
             // linklbRegister
             // 
@@ -316,21 +306,21 @@ namespace ReviewMovie
         }
 
         #endregion
-        private ReviewMovie.Base.RoundedPanel cardPanel;
+        private System.Windows.Forms.Panel cardPanel;
         private System.Windows.Forms.Panel pnlTopAccent;
-        private ReviewMovie.Base.RoundedPanel pnlLogo;
+        private System.Windows.Forms.Panel pnlLogo;
         private System.Windows.Forms.Label lblLogoIcon;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblSubtitle;
         private System.Windows.Forms.Label materialLabel1;
-        private ReviewMovie.Base.RoundedPanel pnlAppCode;
+        private System.Windows.Forms.Panel pnlAppCode;
         private System.Windows.Forms.Label lblAppCodeIcon;
         private System.Windows.Forms.TextBox txAppCodeShow;
         private System.Windows.Forms.Label materialLabel2;
-        private ReviewMovie.Base.RoundedPanel pnlApiKey;
+        private System.Windows.Forms.Panel pnlApiKey;
         private System.Windows.Forms.Label lblApiKeyIcon;
         private System.Windows.Forms.TextBox txInsertApiKey;
-        private ReviewMovie.Base.RoundedButton btnLoginApiKey;
+        private System.Windows.Forms.Button btnLoginApiKey;
         private System.Windows.Forms.LinkLabel lkHelp;
         private System.Windows.Forms.Label lbstatus;
         private System.Windows.Forms.LinkLabel linklbRegister;

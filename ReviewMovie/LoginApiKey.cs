@@ -15,6 +15,12 @@ namespace ReviewMovie
 {
     public partial class LoginApiKey : Form
     {
+        private static readonly Color ColorAccent = Color.FromArgb(120, 94, 255);
+        private static readonly Color ColorAccentHover = Color.FromArgb(110, 86, 245);
+        private static readonly Color ColorAccentPressed = Color.FromArgb(98, 76, 232);
+        private static readonly Color ColorBorder = Color.FromArgb(235, 238, 255);
+        private static readonly Color ColorPillBorder = Color.FromArgb(232, 236, 255);
+
         private string AppVersion { get; } = "2.0.0"; // Định nghĩa phiên bản ứng dụng
         private readonly AppCodeService appCodeService;
         private readonly IConfigDataService _configService;
@@ -74,6 +80,7 @@ namespace ReviewMovie
             int x = (ClientSize.Width - cardPanel.Width) / 2;
             int y = (ClientSize.Height - cardPanel.Height) / 2;
             cardPanel.Location = new Point(Math.Max(0, x), Math.Max(0, y));
+            ApplyRoundedRegions();
             Invalidate();
         }
 
@@ -121,13 +128,101 @@ namespace ReviewMovie
             {
                 int alpha = (int)(18f * (i / (float)depth)); // outer lighter
                 using (var pen = new Pen(Color.FromArgb(alpha, 0, 0, 0), 1f))
-                using (var path = ReviewMovie.Base.RoundedPanel.CreateRoundedRectPath(
+                using (var path = CreateRoundedRectPath(
                     Rectangle.Inflate(rect, i, i),
                     radius + i))
                 {
                     g.DrawPath(pen, path);
                 }
             }
+        }
+
+        private static GraphicsPath CreateRoundedRectPath(Rectangle rect, int radius)
+        {
+            var path = new GraphicsPath();
+            if (radius <= 0)
+            {
+                path.AddRectangle(rect);
+                path.CloseFigure();
+                return path;
+            }
+
+            int d = radius * 2;
+            var arc = new Rectangle(rect.X, rect.Y, d, d);
+
+            path.AddArc(arc, 180, 90);
+            arc.X = rect.Right - d;
+            path.AddArc(arc, 270, 90);
+            arc.Y = rect.Bottom - d;
+            path.AddArc(arc, 0, 90);
+            arc.X = rect.X;
+            path.AddArc(arc, 90, 90);
+            path.CloseFigure();
+            return path;
+        }
+
+        private static void ApplyRoundRegion(Control control, int radius)
+        {
+            if (control == null || control.Width <= 0 || control.Height <= 0) return;
+            using (var path = CreateRoundedRectPath(new Rectangle(0, 0, control.Width, control.Height), radius))
+            {
+                control.Region = new Region(path);
+            }
+        }
+
+        private void ApplyRoundedRegions()
+        {
+            // Card + logo + pills + button
+            ApplyRoundRegion(cardPanel, 22);
+            ApplyRoundRegion(pnlLogo, 14);
+            ApplyRoundRegion(pnlAppCode, 14);
+            ApplyRoundRegion(pnlApiKey, 14);
+            ApplyRoundRegion(btnLoginApiKey, 16);
+        }
+
+        // Paint borders for card + pill panels (Designer-safe: standard Panels)
+        private void cardPanel_Paint(object sender, PaintEventArgs e)
+        {
+            var rect = new Rectangle(0, 0, cardPanel.Width - 1, cardPanel.Height - 1);
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            using (var path = CreateRoundedRectPath(rect, 22))
+            using (var pen = new Pen(ColorBorder, 1f))
+            {
+                e.Graphics.DrawPath(pen, path);
+            }
+        }
+
+        private void pillPanel_Paint(object sender, PaintEventArgs e)
+        {
+            if (!(sender is Panel p)) return;
+            var rect = new Rectangle(0, 0, p.Width - 1, p.Height - 1);
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            using (var path = CreateRoundedRectPath(rect, 14))
+            using (var pen = new Pen(ColorPillBorder, 1f))
+            {
+                e.Graphics.DrawPath(pen, path);
+            }
+        }
+
+        private void btnLoginApiKey_MouseEnter(object sender, EventArgs e)
+        {
+            if (btnLoginApiKey.Enabled) btnLoginApiKey.BackColor = ColorAccentHover;
+        }
+
+        private void btnLoginApiKey_MouseLeave(object sender, EventArgs e)
+        {
+            if (btnLoginApiKey.Enabled) btnLoginApiKey.BackColor = ColorAccent;
+        }
+
+        private void btnLoginApiKey_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (btnLoginApiKey.Enabled && e.Button == MouseButtons.Left) btnLoginApiKey.BackColor = ColorAccentPressed;
+        }
+
+        private void btnLoginApiKey_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!btnLoginApiKey.Enabled) return;
+            btnLoginApiKey.BackColor = btnLoginApiKey.ClientRectangle.Contains(e.Location) ? ColorAccentHover : ColorAccent;
         }
 
         private void DisplayAppCode()
@@ -245,6 +340,8 @@ namespace ReviewMovie
         private void LoginApiKey_Load(object sender, EventArgs e)
         {
             CenterCard();
+            // Ensure initial styles
+            btnLoginApiKey.BackColor = ColorAccent;
         }
     }
 }
