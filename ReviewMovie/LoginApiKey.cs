@@ -79,6 +79,11 @@ namespace ReviewMovie
         private void CenterCard()
         {
             if (cardPanel == null) return;
+            if (cardPanel.Dock == DockStyle.Fill)
+            {
+                ApplyRoundedRegions();
+                return;
+            }
             int x = (ClientSize.Width - cardPanel.Width) / 2;
             int y = (ClientSize.Height - cardPanel.Height) / 2;
             cardPanel.Location = new Point(Math.Max(0, x), Math.Max(0, y));
@@ -94,33 +99,23 @@ namespace ReviewMovie
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            // Gradient background like screenshot
-            using (var brush = new LinearGradientBrush(
-                ClientRectangle,
-                Color.FromArgb(242, 248, 255),
-                Color.FromArgb(238, 240, 255),
-                LinearGradientMode.Vertical))
-            {
-                e.Graphics.FillRectangle(brush, ClientRectangle);
-            }
+            // Pure white background like screenshot #2
+            e.Graphics.Clear(Color.White);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
 
-            if (cardPanel == null) return;
-
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            // Soft shadow behind card
-            var shadowRect = new Rectangle(
-                cardPanel.Left - 4,
-                cardPanel.Top - 2,
-                cardPanel.Width + 8,
-                cardPanel.Height + 10);
-
-            DrawShadow(e.Graphics, shadowRect, 22, 14);
+            // Subtle border for rounded window
+            var rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            using (var path = CreateRoundedRectPath(rect, 18))
+            using (var pen = new Pen(Color.FromArgb(235, 238, 245), 1f))
+            {
+                e.Graphics.DrawPath(pen, path);
+            }
         }
 
         private static void DrawShadow(Graphics g, Rectangle rect, int radius, int depth)
@@ -178,7 +173,6 @@ namespace ReviewMovie
             ApplyRoundRegion(this, 18);
 
             // Card + logo + pills + button
-            ApplyRoundRegion(cardPanel, 22);
             ApplyRoundRegion(pnlLogo, 14);
             ApplyRoundRegion(pnlAppCode, 16);
             ApplyRoundRegion(pnlApiKey, 16);
@@ -189,13 +183,7 @@ namespace ReviewMovie
         // Paint borders for card + pill panels (Designer-safe: standard Panels)
         private void cardPanel_Paint(object sender, PaintEventArgs e)
         {
-            var rect = new Rectangle(0, 0, cardPanel.Width - 1, cardPanel.Height - 1);
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            using (var path = CreateRoundedRectPath(rect, 22))
-            using (var pen = new Pen(ColorBorder, 1f))
-            {
-                e.Graphics.DrawPath(pen, path);
-            }
+            // Intentionally empty: we only round the window (1 layer)
         }
 
         private void pillPanel_Paint(object sender, PaintEventArgs e)
