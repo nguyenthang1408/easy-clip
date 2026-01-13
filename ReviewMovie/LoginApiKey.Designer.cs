@@ -107,7 +107,7 @@ namespace ReviewMovie
             this.lblLogoIcon.Name = "lblLogoIcon";
             this.lblLogoIcon.Size = new System.Drawing.Size(48, 48);
             this.lblLogoIcon.TabIndex = 0;
-            this.lblLogoIcon.Text = "";
+            this.lblLogoIcon.Text = "\uE70F";
             this.lblLogoIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblLogoIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
@@ -161,7 +161,7 @@ namespace ReviewMovie
             // 
             this.lblAppCodeIcon.Font = new System.Drawing.Font("Segoe MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAppCodeIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
-            this.lblAppCodeIcon.Location = new System.Drawing.Point(12, 10);
+            this.lblAppCodeIcon.Location = new System.Drawing.Point(12, 15);
             this.lblAppCodeIcon.Name = "lblAppCodeIcon";
             this.lblAppCodeIcon.Size = new System.Drawing.Size(22, 22);
             this.lblAppCodeIcon.TabIndex = 0;
@@ -206,7 +206,7 @@ namespace ReviewMovie
             // 
             this.lblApiKeyIcon.Font = new System.Drawing.Font("Segoe MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblApiKeyIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
-            this.lblApiKeyIcon.Location = new System.Drawing.Point(12, 10);
+            this.lblApiKeyIcon.Location = new System.Drawing.Point(12, 15);
             this.lblApiKeyIcon.Name = "lblApiKeyIcon";
             this.lblApiKeyIcon.Size = new System.Drawing.Size(22, 22);
             this.lblApiKeyIcon.TabIndex = 0;
