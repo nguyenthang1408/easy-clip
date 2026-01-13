@@ -1,4 +1,4 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Model;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
@@ -23,17 +23,22 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.IO.Pipes;
 using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
+using ReviewMovie.WpfUi;
+using WpfControls = System.Windows.Controls;
 
 namespace ReviewMovie
 {
@@ -128,6 +133,18 @@ namespace ReviewMovie
 
         private string _videoMerge;
         private bool _sessionMerge;
+
+        // One UI: WPF MainView hosted in WinForms
+        private ElementHost _mainViewHost;
+        private MainView _mainView;
+        private bool _syncMainText;
+        private bool _syncMainSettings;
+
+        // DataGridView hover row
+        private int _hoverRowIndex = -1;
+
+        // Window sizing (near fullscreen)
+        private bool _initialNearFullscreenApplied = false;
         #endregion
 
         #region Main_Init
@@ -157,6 +174,589 @@ namespace ReviewMovie
             _loadConfig.InitOrUpdateBaseConfig(_apikey, txtAppID.Text, txtAppID.Text, txtToken.Text);
             
             Init();
+            InitMainViewUi();
+        }
+
+        private void InitMainViewUi()
+        {
+            if (_mainViewHost != null) return;
+
+            // Borderless window + respect taskbar on maximize
+            FormBorderStyle = FormBorderStyle.None;
+            ControlBox = false;
+            MinimizeBox = true;
+            MaximizeBox = true;
+
+            // Host one WPF view for the whole screen
+            _mainView = new MainView();
+
+            _mainView.MinimizeClicked += (_, __) => WindowState = FormWindowState.Minimized;
+            _mainView.MaximizeClicked += (_, __) => ToggleMaximize();
+            _mainView.CloseClicked += (_, __) => Close();
+            _mainView.DragRequested += (_, __) => BeginWindowDragMove();
+
+            // Header mapping
+            // NOTE: WinForms controls are hidden (scMain.Visible=false) so PerformClick() may not fire.
+            // Call handlers directly to keep behavior.
+            _mainView.StartRecordClicked += (_, __) => btnRecord_Click(btnRecord, EventArgs.Empty);
+            _mainView.ConvertClicked += (_, __) => btnConvertAudio_Click(btnConvertAudio, EventArgs.Empty);
+            _mainView.SaveClicked += (_, __) => btnSaveAudio_Click(btnSaveAudio, EventArgs.Empty);
+            _mainView.RenderClicked += (_, __) => btnRenderVideoPart_Click(btnRenderVideoPart, EventArgs.Empty);
+            _mainView.ClearClicked += (_, __) =>
+            {
+                _syncMainText = true;
+                try
+                {
+                    txtTextInput.Text = string.Empty;
+                    _mainView.InputText = string.Empty;
+                }
+                finally
+                {
+                    _syncMainText = false;
+                }
+            };
+            _mainView.TextChanged += (_, __) =>
+            {
+                if (_syncMainText) return;
+                _syncMainText = true;
+                try
+                {
+                    txtTextInput.Text = _mainView.InputText;
+                }
+                finally
+                {
+                    _syncMainText = false;
+                }
+            };
+            txtTextInput.TextChanged += (_, __) =>
+            {
+                if (_mainView == null || _syncMainText) return;
+                _syncMainText = true;
+                try
+                {
+                    _mainView.InputText = txtTextInput.Text;
+                }
+                finally
+                {
+                    _syncMainText = false;
+                }
+            };
+
+            // Right actions mapping (minimal)
+            _mainView.CreateProjectClicked += (_, __) => btnOpenProject_Click(btnOpenProject, EventArgs.Empty);
+            _mainView.SaveVoiceClicked += (_, __) => btnSaveVoiceSource_Click(btnSaveVoiceSource, EventArgs.Empty);
+            _mainView.SaveEffectClicked += (_, __) => btnSaveEffectSetting_Click(btnSaveEffectSetting, EventArgs.Empty);
+            _mainView.MergeSegmentsClicked += (_, __) => btnAddAll_Click(btnAddAll, EventArgs.Empty);
+            _mainView.NewLineClicked += (_, __) => btnAddRow_Click(btnAddRow, EventArgs.Empty);
+            _mainView.AutoSubtitleClicked += (_, __) => btnImportSubtitle_Click(btnImportSubtitle, EventArgs.Empty);
+            _mainView.CancelClicked += (_, __) => btnDestroyAction_Click(btnDestroyAction, EventArgs.Empty);
+
+            _mainView.RowSelected += (_, rowIndex) =>
+            {
+                // Keep legacy state in sync
+                _indexRowSelect = rowIndex;
+                try
+                {
+                    if (dgvMainView.Rows.Count > rowIndex && rowIndex >= 0)
+                    {
+                        dgvMainView.ClearSelection();
+                        dgvMainView.Rows[rowIndex].Selected = true;
+                        dgvMainView.CurrentCell = dgvMainView.Rows[rowIndex].Cells[0];
+                    }
+                }
+                catch { /* ignore */ }
+            };
+
+            // Keep status mirrored
+            lblstatus.TextChanged += (_, __) => _mainView?.SetStatus(lblstatus.Text);
+            _mainView.SetStatus(lblstatus.Text);
+
+            // Keep using WinForms ToolStrip + DataGridView, but place them inside MainView
+            RestoreClassicToolStripUi();
+            // WPF DataGrid uses the same source list
+            _mainView.SetItemsSource(_listdata);
+
+            // Hide old layout container
+            scMain.Visible = false;
+
+            _mainViewHost = new ElementHost
+            {
+                Dock = DockStyle.Fill,
+                Child = _mainView
+            };
+            Controls.Add(_mainViewHost);
+            _mainViewHost.BringToFront();
+
+            WireMainSettingsEvents();
+            SyncMainSettingsFromWinForms();
+        }
+
+        private void WireMainSettingsEvents()
+        {
+            if (_mainView == null) return;
+
+            // Combos (map by SelectedIndex)
+            if (_mainView.CbProject != null)
+            {
+                _mainView.CbProject.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbProject.SelectedIndex;
+                    if (idx >= 0 && idx < cbProjectName.Items.Count) cbProjectName.SelectedIndex = idx;
+                };
+            }
+
+            if (_mainView.CbVoiceSource != null)
+            {
+                _mainView.CbVoiceSource.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbVoiceSource.SelectedIndex;
+                    if (idx >= 0 && idx < cboSiteNguon.Items.Count) cboSiteNguon.SelectedIndex = idx;
+                };
+            }
+
+            if (_mainView.CbZoomUp != null)
+            {
+                _mainView.CbZoomUp.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbZoomUp.SelectedIndex;
+                    if (idx >= 0 && idx < cbZoomRatio.Items.Count) cbZoomRatio.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbZQuality != null)
+            {
+                _mainView.CbZQuality.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbZQuality.SelectedIndex;
+                    if (idx >= 0 && idx < cbZoomQuality.Items.Count) cbZoomQuality.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbQuality != null)
+            {
+                _mainView.CbQuality.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbQuality.SelectedIndex;
+                    if (idx >= 0 && idx < cbxVideoQuality.Items.Count) cbxVideoQuality.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbMode != null)
+            {
+                _mainView.CbMode.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbMode.SelectedIndex;
+                    if (idx >= 0 && idx < cbMode.Items.Count) cbMode.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbEffect != null)
+            {
+                _mainView.CbEffect.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbEffect.SelectedIndex;
+                    if (idx >= 0 && idx < cbEffectType.Items.Count) cbEffectType.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbLanguage != null)
+            {
+                _mainView.CbLanguage.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbLanguage.SelectedIndex;
+                    if (idx >= 0 && idx < cbLanguageSelect.Items.Count) cbLanguageSelect.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbVoice != null)
+            {
+                _mainView.CbVoice.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbVoice.SelectedIndex;
+                    if (idx >= 0 && idx < cbxSpeechType.Items.Count) cbxSpeechType.SelectedIndex = idx;
+                };
+            }
+            if (_mainView.CbTemplate != null)
+            {
+                _mainView.CbTemplate.SelectionChanged += (_, __) =>
+                {
+                    if (_syncMainSettings) return;
+                    var idx = _mainView.CbTemplate.SelectedIndex;
+                    if (idx >= 0 && idx < cbSettingTemplate.Items.Count) cbSettingTemplate.SelectedIndex = idx;
+                };
+            }
+
+            // Text fields -> push on LostFocus
+            if (_mainView.TxtApiKey != null)
+                _mainView.TxtApiKey.LostFocus += (_, __) => txtAppID.Text = _mainView.TxtApiKey.Text;
+            if (_mainView.TxtToken != null)
+                _mainView.TxtToken.LostFocus += (_, __) => txtToken.Text = _mainView.TxtToken.Text;
+
+            if (_mainView.TxtFps != null)
+                _mainView.TxtFps.LostFocus += (_, __) => TrySetNumeric(nFPS, _mainView.TxtFps.Text, isDecimal: false);
+            if (_mainView.TxtThread != null)
+                _mainView.TxtThread.LostFocus += (_, __) => TrySetNumeric(nbThread, _mainView.TxtThread.Text, isDecimal: false);
+            if (_mainView.TxtVolume != null)
+                _mainView.TxtVolume.LostFocus += (_, __) => TrySetNumeric(nbVolumnOrigin, _mainView.TxtVolume.Text, isDecimal: true);
+            if (_mainView.TxtSpeechSpeed != null)
+                _mainView.TxtSpeechSpeed.LostFocus += (_, __) => TrySetNumeric(nbSpeechRatio, _mainView.TxtSpeechSpeed.Text, isDecimal: true);
+            if (_mainView.TxtAudioScaleFrom != null)
+                _mainView.TxtAudioScaleFrom.LostFocus += (_, __) => TrySetNumeric(nScaleAudioRangeStart, _mainView.TxtAudioScaleFrom.Text, isDecimal: true);
+            if (_mainView.TxtAudioScaleTo != null)
+                _mainView.TxtAudioScaleTo.LostFocus += (_, __) => TrySetNumeric(nScaleAudioRangeEnd, _mainView.TxtAudioScaleTo.Text, isDecimal: true);
+
+            // Checkboxes
+            WireCheckBox(_mainView.ChkZoom, CkZoom);
+            WireCheckBox(_mainView.ChkRotate, ckRotate);
+            WireCheckBox(_mainView.ChkFlip, ckHflip);
+            WireCheckBox(_mainView.ChkFlipRandom, ckHflipRandom);
+            WireCheckBox(_mainView.ChkMoveLR, ckRandomMoveLeftRight);
+            WireCheckBox(_mainView.ChkOpenPlayer, ckOpenPlayer);
+            WireCheckBox(_mainView.ChkMuted, ckNotUseAudio);
+
+            // WinForms -> WPF resync when project/voice changes
+            cbProjectName.SelectedIndexChanged += (_, __) => SyncMainSettingsFromWinForms();
+            cboSiteNguon.SelectedIndexChanged += (_, __) => SyncMainSettingsFromWinForms();
+        }
+
+        private void WireCheckBox(WpfControls.CheckBox wpf, CheckBox win)
+        {
+            if (wpf == null || win == null) return;
+            wpf.Checked += (_, __) => win.Checked = true;
+            wpf.Unchecked += (_, __) => win.Checked = false;
+        }
+
+        private void SyncMainSettingsFromWinForms()
+        {
+            if (_mainView == null) return;
+            if (_syncMainSettings) return;
+
+            _syncMainSettings = true;
+            try
+            {
+                SetWpfComboFromWinForms(cbProjectName, _mainView.CbProject);
+                SetWpfComboFromWinForms(cboSiteNguon, _mainView.CbVoiceSource);
+                if (_mainView.TxtApiKey != null) _mainView.TxtApiKey.Text = txtAppID.Text ?? string.Empty;
+                if (_mainView.TxtToken != null) _mainView.TxtToken.Text = txtToken.Text ?? string.Empty;
+
+                SetWpfComboFromWinForms(cbZoomRatio, _mainView.CbZoomUp);
+                SetWpfComboFromWinForms(cbZoomQuality, _mainView.CbZQuality);
+                if (_mainView.TxtFps != null) _mainView.TxtFps.Text = nFPS.Value.ToString(CultureInfo.InvariantCulture);
+                if (_mainView.TxtThread != null) _mainView.TxtThread.Text = nbThread.Value.ToString(CultureInfo.InvariantCulture);
+
+                SetWpfComboFromWinForms(cbxVideoQuality, _mainView.CbQuality);
+                SetWpfComboFromWinForms(cbMode, _mainView.CbMode);
+                SetWpfComboFromWinForms(cbEffectType, _mainView.CbEffect);
+
+                if (_mainView.ChkZoom != null) _mainView.ChkZoom.IsChecked = CkZoom.Checked;
+                if (_mainView.ChkRotate != null) _mainView.ChkRotate.IsChecked = ckRotate.Checked;
+                if (_mainView.ChkFlip != null) _mainView.ChkFlip.IsChecked = ckHflip.Checked;
+                if (_mainView.ChkFlipRandom != null) _mainView.ChkFlipRandom.IsChecked = ckHflipRandom.Checked;
+                if (_mainView.ChkMoveLR != null) _mainView.ChkMoveLR.IsChecked = ckRandomMoveLeftRight.Checked;
+                if (_mainView.ChkOpenPlayer != null) _mainView.ChkOpenPlayer.IsChecked = ckOpenPlayer.Checked;
+                if (_mainView.ChkMuted != null) _mainView.ChkMuted.IsChecked = ckNotUseAudio.Checked;
+
+                if (_mainView.TxtVolume != null) _mainView.TxtVolume.Text = nbVolumnOrigin.Value.ToString(CultureInfo.InvariantCulture);
+                if (_mainView.TxtSpeechSpeed != null) _mainView.TxtSpeechSpeed.Text = nbSpeechRatio.Value.ToString(CultureInfo.InvariantCulture);
+                if (_mainView.TxtAudioScaleFrom != null) _mainView.TxtAudioScaleFrom.Text = nScaleAudioRangeStart.Value.ToString(CultureInfo.InvariantCulture);
+                if (_mainView.TxtAudioScaleTo != null) _mainView.TxtAudioScaleTo.Text = nScaleAudioRangeEnd.Value.ToString(CultureInfo.InvariantCulture);
+
+                SetWpfComboFromWinForms(cbLanguageSelect, _mainView.CbLanguage);
+                SetWpfComboFromWinForms(cbxSpeechType, _mainView.CbVoice);
+                SetWpfComboFromWinForms(cbSettingTemplate, _mainView.CbTemplate);
+            }
+            finally
+            {
+                _syncMainSettings = false;
+            }
+        }
+
+        private static void SetWpfComboFromWinForms(System.Windows.Forms.ComboBox winFormsCombo, WpfControls.ComboBox wpfCombo)
+        {
+            if (wpfCombo == null) return;
+            wpfCombo.Items.Clear();
+            for (int i = 0; i < winFormsCombo.Items.Count; i++)
+                wpfCombo.Items.Add(winFormsCombo.GetItemText(winFormsCombo.Items[i]));
+            wpfCombo.SelectedIndex = winFormsCombo.SelectedIndex;
+        }
+
+        private static void TrySetNumeric(NumericUpDown nud, string input, bool isDecimal)
+        {
+            if (nud == null) return;
+            if (string.IsNullOrWhiteSpace(input)) return;
+            var normalized = input.Trim().Replace(',', '.');
+            if (!decimal.TryParse(normalized, NumberStyles.Number, CultureInfo.InvariantCulture, out var value))
+                return;
+            if (!isDecimal) value = Math.Round(value, 0);
+            if (value < nud.Minimum) value = nud.Minimum;
+            if (value > nud.Maximum) value = nud.Maximum;
+            nud.Value = value;
+        }
+
+        // ===== Custom window chrome (WinForms borderless + WPF title bar) =====
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HTCAPTION = 0x2;
+
+        [DllImport("user32.dll")]
+        private static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            // Borderless maximize should respect taskbar
+            try
+            {
+                MaximizedBounds = Screen.FromHandle(Handle).WorkingArea;
+            }
+            catch
+            {
+                // ignore
+            }
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+
+            // Fix window size near fullscreen on first show (does not cover taskbar)
+            if (!_initialNearFullscreenApplied)
+            {
+                _initialNearFullscreenApplied = true;
+                ApplyNearFullscreenBounds();
+            }
+        }
+
+        private void ApplyNearFullscreenBounds()
+        {
+            try
+            {
+                var wa = Screen.FromHandle(Handle).WorkingArea;
+                var margin = 6; // small inset so it feels "almost full"
+
+                var w = Math.Max(wa.Width - margin * 2, 800);
+                var h = Math.Max(wa.Height - margin * 2, 600);
+
+                // Ensure we are in normal state so Bounds applies
+                if (WindowState != FormWindowState.Normal)
+                    WindowState = FormWindowState.Normal;
+
+                StartPosition = FormStartPosition.Manual;
+                Bounds = new Rectangle(wa.X + margin, wa.Y + margin, w, h);
+            }
+            catch
+            {
+                // ignore if screen info is unavailable
+            }
+        }
+
+        private void BeginWindowDragMove()
+        {
+            // Simulate dragging the native caption area
+            ReleaseCapture();
+            SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+        }
+
+        private void ToggleMaximize()
+        {
+            WindowState = (WindowState == FormWindowState.Maximized)
+                ? FormWindowState.Normal
+                : FormWindowState.Maximized;
+        }
+
+        private void ApplyModernDataGridViewStyle()
+        {
+            if (dgvMainView == null) return;
+
+            dgvMainView.BackgroundColor = Color.White;
+            dgvMainView.BorderStyle = BorderStyle.None;
+            dgvMainView.GridColor = Color.White;
+            dgvMainView.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dgvMainView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvMainView.EnableHeadersVisualStyles = false;
+            dgvMainView.RowHeadersVisible = false;
+            dgvMainView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvMainView.MultiSelect = false;
+            dgvMainView.RowTemplate.Height = 50;
+            dgvMainView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+
+            // Header: bigger text + allow wrapping (no "...")
+            dgvMainView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvMainView.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.FromArgb(249, 250, 251),
+                ForeColor = Color.FromArgb(107, 114, 128),
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                Alignment = DataGridViewContentAlignment.MiddleLeft,
+                Padding = new Padding(10, 0, 10, 0),
+                WrapMode = DataGridViewTriState.True
+            };
+
+            dgvMainView.DefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.White,
+                ForeColor = Color.FromArgb(17, 24, 39),
+                SelectionBackColor = Color.FromArgb(224, 242, 254),
+                SelectionForeColor = Color.FromArgb(15, 23, 42),
+                Font = new Font("Segoe UI", 10F, FontStyle.Regular),
+                Alignment = DataGridViewContentAlignment.MiddleLeft,
+                Padding = new Padding(10, 0, 10, 0),
+                WrapMode = DataGridViewTriState.False
+            };
+
+            dgvMainView.AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.FromArgb(252, 252, 253)
+            };
+
+            dgvMainView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            if (dgvMainView.Columns.Contains("Column_check"))
+            {
+                var c = dgvMainView.Columns["Column_check"];
+                c.Width = 52;
+                c.MinimumWidth = 52;
+                c.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                c.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+
+            if (dgvMainView.Columns.Contains("Column_index"))
+            {
+                var c = dgvMainView.Columns["Column_index"];
+                c.Width = 54;
+                c.MinimumWidth = 54;
+                c.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                c.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+
+            dgvMainView.CellPainting -= DgvMainView_CellPainting;
+            dgvMainView.CellPainting += DgvMainView_CellPainting;
+
+            dgvMainView.CellMouseEnter -= DgvMainView_CellMouseEnter;
+            dgvMainView.CellMouseEnter += DgvMainView_CellMouseEnter;
+            dgvMainView.CellMouseLeave -= DgvMainView_CellMouseLeave;
+            dgvMainView.CellMouseLeave += DgvMainView_CellMouseLeave;
+            dgvMainView.RowPrePaint -= DgvMainView_RowPrePaint;
+            dgvMainView.RowPrePaint += DgvMainView_RowPrePaint;
+        }
+
+        private void DgvMainView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            if (_hoverRowIndex == e.RowIndex) return;
+            var old = _hoverRowIndex;
+            _hoverRowIndex = e.RowIndex;
+            if (old >= 0 && old < dgvMainView.Rows.Count) dgvMainView.InvalidateRow(old);
+            dgvMainView.InvalidateRow(_hoverRowIndex);
+        }
+
+        private void DgvMainView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            var old = _hoverRowIndex;
+            _hoverRowIndex = -1;
+            if (old >= 0 && old < dgvMainView.Rows.Count) dgvMainView.InvalidateRow(old);
+        }
+
+        private void DgvMainView_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= dgvMainView.Rows.Count) return;
+            var row = dgvMainView.Rows[e.RowIndex];
+            if (!row.Selected && e.RowIndex == _hoverRowIndex)
+            {
+                row.DefaultCellStyle.BackColor = Color.FromArgb(248, 250, 252);
+            }
+            else
+            {
+                row.DefaultCellStyle.BackColor = Color.Empty;
+            }
+        }
+
+        private void DgvMainView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            var colName = dgvMainView.Columns[e.ColumnIndex].Name;
+            if (colName != "Column_audiostatus" && colName != "Column_renderstatus") return;
+
+            var raw = e.Value?.ToString()?.Trim();
+            if (string.IsNullOrEmpty(raw)) return;
+
+            GetStatusPillStyle(raw, out var bg, out var fg);
+
+            e.Handled = true;
+            e.PaintBackground(e.CellBounds, true);
+
+            var g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            var text = raw;
+            using (var font = new Font("Segoe UI", 9.5F, FontStyle.Bold))
+            using (var textBrush = new SolidBrush(fg))
+            using (var fillBrush = new SolidBrush(bg))
+            {
+                var textSize = g.MeasureString(text, font);
+                var pillW = (int)Math.Ceiling(textSize.Width) + 18;
+                var pillH = 26;
+
+                var x = e.CellBounds.X + (e.CellBounds.Width - pillW) / 2;
+                var y = e.CellBounds.Y + (e.CellBounds.Height - pillH) / 2;
+
+                var pillRect = new Rectangle(x, y, pillW, pillH);
+                using (var path = CreateRoundRectPath(pillRect, 12))
+                {
+                    g.FillPath(fillBrush, path);
+                }
+
+                var tx = pillRect.X + (pillRect.Width - textSize.Width) / 2;
+                var ty = pillRect.Y + (pillRect.Height - textSize.Height) / 2;
+                g.DrawString(text, font, textBrush, (float)tx, (float)ty);
+            }
+        }
+
+        private static void GetStatusPillStyle(string status, out Color bg, out Color fg)
+        {
+            var s = status.ToLowerInvariant();
+
+            if (s.Contains("ready") || s.Contains("converted") || s.Contains("done") || s.Contains("xong"))
+            {
+                bg = Color.FromArgb(220, 252, 231);
+                fg = Color.FromArgb(22, 163, 74);
+                return;
+            }
+
+            if (s.Contains("pending") || s.Contains("wait") || s.Contains("đợi") || s.Contains("dang") || s.Contains("đang"))
+            {
+                bg = Color.FromArgb(255, 237, 213);
+                fg = Color.FromArgb(234, 88, 12);
+                return;
+            }
+
+            if (s.Contains("error") || s.Contains("fail") || s.Contains("lỗi") || s.Contains("không"))
+            {
+                bg = Color.FromArgb(254, 226, 226);
+                fg = Color.FromArgb(185, 28, 28);
+                return;
+            }
+
+            bg = Color.FromArgb(243, 244, 246);
+            fg = Color.FromArgb(75, 85, 99);
+        }
+
+        private static GraphicsPath CreateRoundRectPath(Rectangle rect, int radius)
+        {
+            var path = new GraphicsPath();
+            var d = radius * 2;
+            path.AddArc(rect.X, rect.Y, d, d, 180, 90);
+            path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
+            path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
+            path.CloseFigure();
+            return path;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -167,6 +767,8 @@ namespace ReviewMovie
             dgvMainView.AutoGenerateColumns = false;    // tạo các cột tùy chỉnh cho DataGridView  => ko có là lỗi
             _statusZoom = true; // Khai báo cờ check
             _statusOpenPlayer = true;
+
+            ApplyModernDataGridViewStyle();
         }
         private void Init()
         {
@@ -174,6 +776,17 @@ namespace ReviewMovie
             LoadProjectListData();
             DisplayItemDefault();
             loadApiKey();
+        }
+
+        private void RestoreClassicToolStripUi()
+        {
+            // Bring back original ToolStrip and style it (rounded + nicer colors)
+            tsMenuView.Visible = true;
+            tsMenuView.GripStyle = ToolStripGripStyle.Hidden;
+            tsMenuView.Padding = new Padding(10, 8, 10, 8);
+            tsMenuView.AutoSize = false;
+            tsMenuView.Height = 48;
+            tsMenuView.Renderer = new ReviewMovie.Base.RoundedToolStripRenderer();
         }
         private void LoadProjectListData()
         {
@@ -217,6 +830,7 @@ namespace ReviewMovie
             _listdata = new BindingList<InfoMainView>();
             dgvMainView.DataSource = null;
             dgvMainView.Refresh();
+            _mainView?.SetItemsSource(_listdata);
         }
 
         private async Task LoadSubtitleAsync(CancellationToken token)
