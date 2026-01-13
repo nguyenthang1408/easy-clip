@@ -20,6 +20,8 @@ namespace ReviewMovie
         private static readonly Color ColorAccentPressed = Color.FromArgb(98, 76, 232);
         private static readonly Color ColorBorder = Color.FromArgb(235, 238, 255);
         private static readonly Color ColorPillBorder = Color.FromArgb(232, 236, 255);
+        private static readonly Color ColorCloseHover = Color.FromArgb(246, 247, 252);
+        private static readonly Color ColorClosePressed = Color.FromArgb(235, 236, 245);
 
         private string AppVersion { get; } = "2.0.0"; // Định nghĩa phiên bản ứng dụng
         private readonly AppCodeService appCodeService;
@@ -172,12 +174,16 @@ namespace ReviewMovie
 
         private void ApplyRoundedRegions()
         {
+            // Rounded window (requested)
+            ApplyRoundRegion(this, 18);
+
             // Card + logo + pills + button
             ApplyRoundRegion(cardPanel, 22);
             ApplyRoundRegion(pnlLogo, 14);
-            ApplyRoundRegion(pnlAppCode, 14);
-            ApplyRoundRegion(pnlApiKey, 14);
+            ApplyRoundRegion(pnlAppCode, 16);
+            ApplyRoundRegion(pnlApiKey, 16);
             ApplyRoundRegion(btnLoginApiKey, 16);
+            ApplyRoundRegion(btnClose, 15);
         }
 
         // Paint borders for card + pill panels (Designer-safe: standard Panels)
@@ -197,7 +203,7 @@ namespace ReviewMovie
             if (!(sender is Panel p)) return;
             var rect = new Rectangle(0, 0, p.Width - 1, p.Height - 1);
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            using (var path = CreateRoundedRectPath(rect, 14))
+            using (var path = CreateRoundedRectPath(rect, 16))
             using (var pen = new Pen(ColorPillBorder, 1f))
             {
                 e.Graphics.DrawPath(pen, path);
@@ -223,6 +229,33 @@ namespace ReviewMovie
         {
             if (!btnLoginApiKey.Enabled) return;
             btnLoginApiKey.BackColor = btnLoginApiKey.ClientRectangle.Contains(e.Location) ? ColorAccentHover : ColorAccent;
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void btnClose_MouseEnter(object sender, EventArgs e)
+        {
+            btnClose.BackColor = ColorCloseHover;
+            btnClose.ForeColor = Color.FromArgb(90, 95, 110);
+        }
+
+        private void btnClose_MouseLeave(object sender, EventArgs e)
+        {
+            btnClose.BackColor = Color.White;
+            btnClose.ForeColor = Color.FromArgb(140, 145, 165);
+        }
+
+        private void btnClose_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left) btnClose.BackColor = ColorClosePressed;
+        }
+
+        private void btnClose_MouseUp(object sender, MouseEventArgs e)
+        {
+            btnClose.BackColor = btnClose.ClientRectangle.Contains(e.Location) ? ColorCloseHover : Color.White;
         }
 
         private void DisplayAppCode()
@@ -342,6 +375,7 @@ namespace ReviewMovie
             CenterCard();
             // Ensure initial styles
             btnLoginApiKey.BackColor = ColorAccent;
+            btnClose.BackColor = Color.White;
         }
     }
 }

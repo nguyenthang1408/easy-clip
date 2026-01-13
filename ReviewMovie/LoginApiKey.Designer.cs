@@ -44,6 +44,7 @@ namespace ReviewMovie
             this.lblApiKeyIcon = new System.Windows.Forms.Label();
             this.txInsertApiKey = new System.Windows.Forms.TextBox();
             this.btnLoginApiKey = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.lkHelp = new System.Windows.Forms.LinkLabel();
             this.lbstatus = new System.Windows.Forms.Label();
             this.linklbRegister = new System.Windows.Forms.LinkLabel();
@@ -59,6 +60,7 @@ namespace ReviewMovie
             this.cardPanel.Controls.Add(this.linklbRegister);
             this.cardPanel.Controls.Add(this.lkHelp);
             this.cardPanel.Controls.Add(this.btnLoginApiKey);
+            this.cardPanel.Controls.Add(this.btnClose);
             this.cardPanel.Controls.Add(this.lbstatus);
             this.cardPanel.Controls.Add(this.pnlApiKey);
             this.cardPanel.Controls.Add(this.materialLabel2);
@@ -250,6 +252,25 @@ namespace ReviewMovie
             this.btnLoginApiKey.MouseLeave += new System.EventHandler(this.btnLoginApiKey_MouseLeave);
             this.btnLoginApiKey.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnLoginApiKey_MouseUp);
             // 
+            // btnClose
+            // 
+            this.btnClose.BackColor = System.Drawing.Color.White;
+            this.btnClose.FlatAppearance.BorderSize = 0;
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(145)))), ((int)(((byte)(165)))));
+            this.btnClose.Location = new System.Drawing.Point(318, 12);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(30, 30);
+            this.btnClose.TabIndex = 12;
+            this.btnClose.Text = "✕";
+            this.btnClose.UseVisualStyleBackColor = false;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.btnClose.MouseEnter += new System.EventHandler(this.btnClose_MouseEnter);
+            this.btnClose.MouseLeave += new System.EventHandler(this.btnClose_MouseLeave);
+            this.btnClose.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnClose_MouseDown);
+            this.btnClose.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnClose_MouseUp);
+            // 
             // linklbRegister
             // 
             this.linklbRegister.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
@@ -321,6 +342,7 @@ namespace ReviewMovie
         private System.Windows.Forms.Label lblApiKeyIcon;
         private System.Windows.Forms.TextBox txInsertApiKey;
         private System.Windows.Forms.Button btnLoginApiKey;
+        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.LinkLabel lkHelp;
         private System.Windows.Forms.Label lbstatus;
         private System.Windows.Forms.LinkLabel linklbRegister;
