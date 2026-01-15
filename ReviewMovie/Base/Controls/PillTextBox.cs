@@ -44,6 +44,10 @@ namespace ReviewMovie.Base.Controls
 
             UiHelpers.EnableSmoothPainting(this);
 
+            // Ensure initial layout is safe for designer/runtime
+            ApplyRound();
+            LayoutChildren();
+
             _textBox.TextChanged += (s, e) => OnTextChanged(e);
             _textBox.KeyDown += (s, e) => OnKeyDown(e);
             _textBox.KeyPress += (s, e) => OnKeyPress(e);
@@ -140,6 +144,8 @@ namespace ReviewMovie.Base.Controls
 
         private void LayoutChildren()
         {
+            if (_icon == null || _textBox == null) return;
+
             // Vertically center icon and textbox for current height.
             _icon.Location = new Point(_icon.Left, Math.Max(0, (Height - _icon.Height) / 2));
 
@@ -155,14 +161,18 @@ namespace ReviewMovie.Base.Controls
             UiHelpers.ApplyRoundRegion(this, _cornerRadius);
         }
 
-        protected override void OnPaint(PaintEventArgs e)
+        protected override void OnPaintBackground(PaintEventArgs e)
         {
-            base.OnPaint(e);
-
+            if (e == null) return;
             using (var brush = new SolidBrush(_fillColor))
             {
                 e.Graphics.FillRectangle(brush, ClientRectangle);
             }
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
 
             UiBorder.DrawRounded(
                 e.Graphics,
