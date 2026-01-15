@@ -136,10 +136,16 @@ namespace ReviewMovie
             this.cardDropVisual = new ReviewMovie.Base.Controls.CardPanel();
             this.cardHeaderActions = new ReviewMovie.Base.Controls.CardPanel();
             this.tlpImportMedia = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlDropHeader = new System.Windows.Forms.Panel();
+            this.lblDropTitle = new System.Windows.Forms.Label();
+            this.lblDropSub = new System.Windows.Forms.Label();
+            this.lblDropIcon = new System.Windows.Forms.Label();
             this.txtImPortMedia = new System.Windows.Forms.TextBox();
             this.lbHeaderInputMedia = new System.Windows.Forms.Label();
             this.btnRecord = new System.Windows.Forms.Button();
             this.tlpText = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlTextHeader = new System.Windows.Forms.Panel();
+            this.lnkClearText = new System.Windows.Forms.LinkLabel();
             this.lbHeaderText = new System.Windows.Forms.Label();
             this.txtTextInput = new System.Windows.Forms.TextBox();
             this.tlpHeaderButton = new System.Windows.Forms.TableLayoutPanel();
@@ -172,7 +178,9 @@ namespace ReviewMovie
             this.cardDropVisual.SuspendLayout();
             this.cardHeaderActions.SuspendLayout();
             this.tlpImportMedia.SuspendLayout();
+            this.pnlDropHeader.SuspendLayout();
             this.tlpText.SuspendLayout();
+            this.pnlTextHeader.SuspendLayout();
             this.tlpHeaderButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
             this.scMain.Panel1.SuspendLayout();
@@ -1321,7 +1329,7 @@ namespace ReviewMovie
             this.grViewHeader.Size = new System.Drawing.Size(871, 172);
             this.grViewHeader.TabIndex = 0;
             this.grViewHeader.TabStop = false;
-            this.grViewHeader.Text = "Mic In";
+            this.grViewHeader.Text = "";
             // 
             // tlpViewHeader
             // 
@@ -1396,7 +1404,7 @@ namespace ReviewMovie
             this.tlpImportMedia.ColumnCount = 1;
             this.tlpImportMedia.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpImportMedia.Controls.Add(this.txtImPortMedia, 0, 1);
-            this.tlpImportMedia.Controls.Add(this.lbHeaderInputMedia, 0, 0);
+            this.tlpImportMedia.Controls.Add(this.pnlDropHeader, 0, 0);
             this.tlpImportMedia.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpImportMedia.Location = new System.Drawing.Point(10, 10);
             this.tlpImportMedia.Name = "tlpImportMedia";
@@ -1405,6 +1413,58 @@ namespace ReviewMovie
             this.tlpImportMedia.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tlpImportMedia.Size = new System.Drawing.Size(130, 127);
             this.tlpImportMedia.TabIndex = 2;
+            // 
+            // pnlDropHeader
+            // 
+            this.pnlDropHeader.BackColor = System.Drawing.Color.Transparent;
+            this.pnlDropHeader.Controls.Add(this.lblDropSub);
+            this.pnlDropHeader.Controls.Add(this.lblDropTitle);
+            this.pnlDropHeader.Controls.Add(this.lblDropIcon);
+            this.pnlDropHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlDropHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlDropHeader.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlDropHeader.Name = "pnlDropHeader";
+            this.pnlDropHeader.Size = new System.Drawing.Size(130, 19);
+            this.pnlDropHeader.TabIndex = 3;
+            // 
+            // lblDropTitle
+            // 
+            this.lblDropTitle.AutoSize = false;
+            this.lblDropTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblDropTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblDropTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(95)))), ((int)(((byte)(115)))));
+            this.lblDropTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblDropTitle.Name = "lblDropTitle";
+            this.lblDropTitle.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lblDropTitle.Size = new System.Drawing.Size(130, 14);
+            this.lblDropTitle.TabIndex = 0;
+            this.lblDropTitle.Text = "Drop Visuals Here";
+            this.lblDropTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lblDropSub
+            // 
+            this.lblDropSub.AutoSize = false;
+            this.lblDropSub.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblDropSub.Font = new System.Drawing.Font("Segoe UI", 7.25F);
+            this.lblDropSub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(155)))));
+            this.lblDropSub.Location = new System.Drawing.Point(0, 10);
+            this.lblDropSub.Name = "lblDropSub";
+            this.lblDropSub.Size = new System.Drawing.Size(130, 9);
+            this.lblDropSub.TabIndex = 1;
+            this.lblDropSub.Text = "Images or Videos";
+            this.lblDropSub.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // lblDropIcon
+            // 
+            this.lblDropIcon.AutoSize = false;
+            this.lblDropIcon.Font = new System.Drawing.Font("Segoe MDL2 Assets", 12F);
+            this.lblDropIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
+            this.lblDropIcon.Location = new System.Drawing.Point(54, 1);
+            this.lblDropIcon.Name = "lblDropIcon";
+            this.lblDropIcon.Size = new System.Drawing.Size(22, 18);
+            this.lblDropIcon.TabIndex = 2;
+            this.lblDropIcon.Text = "";
+            this.lblDropIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtImPortMedia
             // 
@@ -1436,6 +1496,7 @@ namespace ReviewMovie
             this.lbHeaderInputMedia.TabIndex = 1;
             this.lbHeaderInputMedia.Text = "Kéo Thả (Ảnh , Video)";
             this.lbHeaderInputMedia.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbHeaderInputMedia.Visible = false;
             // 
             // btnRecord
             // 
@@ -1458,7 +1519,7 @@ namespace ReviewMovie
             // 
             this.tlpText.ColumnCount = 1;
             this.tlpText.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpText.Controls.Add(this.lbHeaderText, 0, 0);
+            this.tlpText.Controls.Add(this.pnlTextHeader, 0, 0);
             this.tlpText.Controls.Add(this.txtTextInput, 0, 1);
             this.tlpText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpText.Location = new System.Drawing.Point(10, 10);
@@ -1469,27 +1530,52 @@ namespace ReviewMovie
             this.tlpText.Size = new System.Drawing.Size(409, 127);
             this.tlpText.TabIndex = 1;
             // 
+            // pnlTextHeader
+            // 
+            this.pnlTextHeader.BackColor = System.Drawing.Color.Transparent;
+            this.pnlTextHeader.Controls.Add(this.lnkClearText);
+            this.pnlTextHeader.Controls.Add(this.lbHeaderText);
+            this.pnlTextHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTextHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlTextHeader.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlTextHeader.Name = "pnlTextHeader";
+            this.pnlTextHeader.Size = new System.Drawing.Size(409, 19);
+            this.pnlTextHeader.TabIndex = 10;
+            // 
+            // lnkClearText
+            // 
+            this.lnkClearText.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(94)))), ((int)(((byte)(255)))));
+            this.lnkClearText.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lnkClearText.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.lnkClearText.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkClearText.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(155)))));
+            this.lnkClearText.Location = new System.Drawing.Point(359, 0);
+            this.lnkClearText.Name = "lnkClearText";
+            this.lnkClearText.Size = new System.Drawing.Size(50, 19);
+            this.lnkClearText.TabIndex = 1;
+            this.lnkClearText.TabStop = true;
+            this.lnkClearText.Text = "Clear";
+            this.lnkClearText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lnkClearText.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkClearText_LinkClicked);
+            // 
             // lbHeaderText
             // 
-            this.lbHeaderText.AutoSize = true;
-            this.lbHeaderText.BackColor = System.Drawing.Color.SteelBlue;
             this.lbHeaderText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbHeaderText.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.lbHeaderText.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeaderText.ForeColor = System.Drawing.Color.White;
-            this.lbHeaderText.Location = new System.Drawing.Point(1, 1);
-            this.lbHeaderText.Margin = new System.Windows.Forms.Padding(1);
+            this.lbHeaderText.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lbHeaderText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(95)))), ((int)(((byte)(115)))));
+            this.lbHeaderText.Location = new System.Drawing.Point(0, 0);
+            this.lbHeaderText.Margin = new System.Windows.Forms.Padding(0);
             this.lbHeaderText.Name = "lbHeaderText";
-            this.lbHeaderText.Size = new System.Drawing.Size(427, 20);
+            this.lbHeaderText.Size = new System.Drawing.Size(359, 19);
             this.lbHeaderText.TabIndex = 0;
-            this.lbHeaderText.Text = "Nhập Text | Hoặc Kéo Audio File Vào !";
-            this.lbHeaderText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbHeaderText.Text = "TEXT INPUT";
+            this.lbHeaderText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // txtTextInput
             // 
             this.txtTextInput.AllowDrop = true;
             this.txtTextInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtTextInput.Location = new System.Drawing.Point(3, 25);
+            this.txtTextInput.Location = new System.Drawing.Point(3, 22);
             this.txtTextInput.Multiline = true;
             this.txtTextInput.Name = "txtTextInput";
             this.txtTextInput.Size = new System.Drawing.Size(423, 119);
@@ -1688,8 +1774,10 @@ namespace ReviewMovie
             this.tlpViewHeader.ResumeLayout(false);
             this.tlpImportMedia.ResumeLayout(false);
             this.tlpImportMedia.PerformLayout();
+            this.pnlDropHeader.ResumeLayout(false);
             this.tlpText.ResumeLayout(false);
             this.tlpText.PerformLayout();
+            this.pnlTextHeader.ResumeLayout(false);
             this.tlpHeaderButton.ResumeLayout(false);
             this.scMain.Panel1.ResumeLayout(false);
             this.scMain.Panel2.ResumeLayout(false);
