@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace ReviewMovie.Base
@@ -11,12 +12,31 @@ namespace ReviewMovie.Base
         {
             if (control == null) return;
 
-            control.SetStyle(
-                ControlStyles.AllPaintingInWmPaint |
-                ControlStyles.OptimizedDoubleBuffer |
-                ControlStyles.ResizeRedraw |
-                ControlStyles.UserPaint,
-                true);
+            // Control.SetStyle is protected, so invoke via reflection (Designer-safe).
+            var setStyle = typeof(Control).GetMethod(
+                "SetStyle",
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                null,
+                new[] { typeof(ControlStyles), typeof(bool) },
+                null);
+
+            if (setStyle != null)
+            {
+                setStyle.Invoke(
+                    control,
+                    new object[]
+                    {
+                        ControlStyles.AllPaintingInWmPaint |
+                        ControlStyles.OptimizedDoubleBuffer |
+                        ControlStyles.ResizeRedraw |
+                        ControlStyles.UserPaint,
+                        true
+                    });
+            }
+
+            // Apply immediately
+            var updateStyles = typeof(Control).GetMethod("UpdateStyles", BindingFlags.Instance | BindingFlags.NonPublic);
+            updateStyles?.Invoke(control, null);
         }
 
         internal static GraphicsPath CreateRoundedRectPath(Rectangle rect, int radius)
