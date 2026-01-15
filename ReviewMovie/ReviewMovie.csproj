@@ -98,9 +98,15 @@
     <Compile Include="Base\Constant.cs" />
     <Compile Include="Base\RoundedButton.cs" />
     <Compile Include="Base\RoundedPanel.cs" />
+    <Compile Include="Base\UiBorder.cs" />
     <Compile Include="Base\UiHelpers.cs" />
     <Compile Include="Base\UiTheme.cs" />
     <Compile Include="Base\Win32.cs" />
+    <Compile Include="Base\Controls\IconCircleButton.cs" />
+    <Compile Include="Base\Controls\PillTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Base\Controls\PrimaryButton.cs" />
     <Compile Include="Base\CustomTextBox.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -10,6 +10,7 @@ using System.IO;
 using System.Net.Http;
 using System.Windows.Forms;
 using ReviewMovie.Base;
+using ReviewMovie.Base.Controls;
 
 namespace ReviewMovie
 {
@@ -34,6 +35,39 @@ namespace ReviewMovie
             // Smooth painting (gradient + shadow)
             UiHelpers.EnableSmoothPainting(this);
             DoubleBuffered = true;
+
+            SetupLoginUi();
+        }
+
+        private void SetupLoginUi()
+        {
+            // Commonized UI setup (easy to maintain)
+            if (txAppCodeShow is PillTextBox appCode)
+            {
+                appCode.IconGlyph = "";
+                appCode.ReadOnly = true;
+            }
+
+            if (txInsertApiKey is PillTextBox apiKey)
+            {
+                apiKey.IconGlyph = "";
+            }
+
+            if (btnLoginApiKey is PrimaryButton primary)
+            {
+                primary.FillColor = UiTheme.Accent;
+                primary.HoverFillColor = UiTheme.AccentHover;
+                primary.PressedFillColor = UiTheme.AccentPressed;
+                primary.CornerRadius = UiTheme.ButtonRadius;
+            }
+
+            if (btnClose is IconCircleButton close)
+            {
+                close.CornerRadius = UiTheme.CloseRadius;
+                close.NormalBackColor = Color.White;
+                close.HoverBackColor = UiTheme.CloseHover;
+                close.PressedBackColor = UiTheme.ClosePressed;
+            }
         }
 
         private void DragArea_MouseDown(object sender, MouseEventArgs e)
@@ -91,16 +125,8 @@ namespace ReviewMovie
             // Rounded window (requested)
             UiHelpers.ApplyRoundRegion(this, UiTheme.WindowRadius);
 
-            // Card + logo + pills + button
+            // Card + logo (pills/buttons handle their own rounding)
             UiHelpers.ApplyRoundRegion(pnlLogo, 14);
-            UiHelpers.ApplyRoundRegion(pnlAppCode, UiTheme.PillRadius);
-            UiHelpers.ApplyRoundRegion(pnlApiKey, UiTheme.PillRadius);
-            UiHelpers.ApplyRoundRegion(btnLoginApiKey, UiTheme.ButtonRadius);
-            UiHelpers.ApplyRoundRegion(btnClose, UiTheme.CloseRadius);
-
-            // Auto-align pill icons for any pill height
-            UiHelpers.AlignIconLabelVertically(lblAppCodeIcon, pnlAppCode);
-            UiHelpers.AlignIconLabelVertically(lblApiKeyIcon, pnlApiKey);
         }
 
         // Paint borders for card + pill panels (Designer-safe: standard Panels)
@@ -109,58 +135,9 @@ namespace ReviewMovie
             // Intentionally empty: we only round the window (1 layer)
         }
 
-        private void pillPanel_Paint(object sender, PaintEventArgs e)
-        {
-            if (!(sender is Panel p)) return;
-            UiHelpers.DrawPillBorder(e.Graphics, p);
-        }
-
-        private void btnLoginApiKey_MouseEnter(object sender, EventArgs e)
-        {
-            if (btnLoginApiKey.Enabled) btnLoginApiKey.BackColor = UiTheme.AccentHover;
-        }
-
-        private void btnLoginApiKey_MouseLeave(object sender, EventArgs e)
-        {
-            if (btnLoginApiKey.Enabled) btnLoginApiKey.BackColor = UiTheme.Accent;
-        }
-
-        private void btnLoginApiKey_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (btnLoginApiKey.Enabled && e.Button == MouseButtons.Left) btnLoginApiKey.BackColor = UiTheme.AccentPressed;
-        }
-
-        private void btnLoginApiKey_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (!btnLoginApiKey.Enabled) return;
-            btnLoginApiKey.BackColor = btnLoginApiKey.ClientRectangle.Contains(e.Location) ? UiTheme.AccentHover : UiTheme.Accent;
-        }
-
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void btnClose_MouseEnter(object sender, EventArgs e)
-        {
-            btnClose.BackColor = UiTheme.CloseHover;
-            btnClose.ForeColor = Color.FromArgb(90, 95, 110);
-        }
-
-        private void btnClose_MouseLeave(object sender, EventArgs e)
-        {
-            btnClose.BackColor = Color.White;
-            btnClose.ForeColor = Color.FromArgb(140, 145, 165);
-        }
-
-        private void btnClose_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left) btnClose.BackColor = UiTheme.ClosePressed;
-        }
-
-        private void btnClose_MouseUp(object sender, MouseEventArgs e)
-        {
-            btnClose.BackColor = btnClose.ClientRectangle.Contains(e.Location) ? ColorCloseHover : Color.White;
         }
 
         private void DisplayAppCode()
@@ -278,9 +255,7 @@ namespace ReviewMovie
         private void LoginApiKey_Load(object sender, EventArgs e)
         {
             CenterCard();
-            // Ensure initial styles
-            btnLoginApiKey.BackColor = UiTheme.Accent;
-            btnClose.BackColor = Color.White;
+            SetupLoginUi();
         }
     }
 }

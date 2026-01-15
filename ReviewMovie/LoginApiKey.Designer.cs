@@ -36,22 +36,16 @@ namespace ReviewMovie
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.materialLabel1 = new System.Windows.Forms.Label();
-            this.pnlAppCode = new System.Windows.Forms.Panel();
-            this.lblAppCodeIcon = new System.Windows.Forms.Label();
-            this.txAppCodeShow = new System.Windows.Forms.TextBox();
+            this.txAppCodeShow = new ReviewMovie.Base.Controls.PillTextBox();
             this.materialLabel2 = new System.Windows.Forms.Label();
-            this.pnlApiKey = new System.Windows.Forms.Panel();
-            this.lblApiKeyIcon = new System.Windows.Forms.Label();
-            this.txInsertApiKey = new System.Windows.Forms.TextBox();
-            this.btnLoginApiKey = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
+            this.txInsertApiKey = new ReviewMovie.Base.Controls.PillTextBox();
+            this.btnLoginApiKey = new ReviewMovie.Base.Controls.PrimaryButton();
+            this.btnClose = new ReviewMovie.Base.Controls.IconCircleButton();
             this.lkHelp = new System.Windows.Forms.LinkLabel();
             this.lbstatus = new System.Windows.Forms.Label();
             this.linklbRegister = new System.Windows.Forms.LinkLabel();
             this.cardPanel.SuspendLayout();
             this.pnlLogo.SuspendLayout();
-            this.pnlAppCode.SuspendLayout();
-            this.pnlApiKey.SuspendLayout();
             this.SuspendLayout();
             // 
             // cardPanel
@@ -62,9 +56,9 @@ namespace ReviewMovie
             this.cardPanel.Controls.Add(this.btnLoginApiKey);
             this.cardPanel.Controls.Add(this.btnClose);
             this.cardPanel.Controls.Add(this.lbstatus);
-            this.cardPanel.Controls.Add(this.pnlApiKey);
+            this.cardPanel.Controls.Add(this.txInsertApiKey);
             this.cardPanel.Controls.Add(this.materialLabel2);
-            this.cardPanel.Controls.Add(this.pnlAppCode);
+            this.cardPanel.Controls.Add(this.txAppCodeShow);
             this.cardPanel.Controls.Add(this.materialLabel1);
             this.cardPanel.Controls.Add(this.lblSubtitle);
             this.cardPanel.Controls.Add(this.lblTitle);
@@ -146,40 +140,17 @@ namespace ReviewMovie
             this.materialLabel1.TabIndex = 4;
             this.materialLabel1.Text = "APP CODE";
             // 
-            // pnlAppCode
-            // 
-            this.pnlAppCode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
-            this.pnlAppCode.Controls.Add(this.txAppCodeShow);
-            this.pnlAppCode.Controls.Add(this.lblAppCodeIcon);
-            this.pnlAppCode.Location = new System.Drawing.Point(44, 234);
-            this.pnlAppCode.Name = "pnlAppCode";
-            this.pnlAppCode.Size = new System.Drawing.Size(332, 52);
-            this.pnlAppCode.TabIndex = 5;
-            this.pnlAppCode.Paint += new System.Windows.Forms.PaintEventHandler(this.pillPanel_Paint);
-            // 
-            // lblAppCodeIcon
-            // 
-            this.lblAppCodeIcon.Font = new System.Drawing.Font("Segoe MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAppCodeIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
-            this.lblAppCodeIcon.Location = new System.Drawing.Point(12, 15);
-            this.lblAppCodeIcon.Name = "lblAppCodeIcon";
-            this.lblAppCodeIcon.Size = new System.Drawing.Size(22, 22);
-            this.lblAppCodeIcon.TabIndex = 0;
-            this.lblAppCodeIcon.Text = "";
-            this.lblAppCodeIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // txAppCodeShow
             // 
-            this.txAppCodeShow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
-            this.txAppCodeShow.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txAppCodeShow.Font = new System.Drawing.Font("Segoe UI", 11.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txAppCodeShow.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
-            this.txAppCodeShow.Location = new System.Drawing.Point(42, 16);
+            this.txAppCodeShow.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(236)))), ((int)(((byte)(255)))));
+            this.txAppCodeShow.CornerRadius = 16;
+            this.txAppCodeShow.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
+            this.txAppCodeShow.IconGlyph = "";
+            this.txAppCodeShow.Location = new System.Drawing.Point(44, 234);
             this.txAppCodeShow.Name = "txAppCodeShow";
             this.txAppCodeShow.ReadOnly = true;
-            this.txAppCodeShow.Size = new System.Drawing.Size(276, 18);
+            this.txAppCodeShow.Size = new System.Drawing.Size(332, 52);
             this.txAppCodeShow.TabIndex = 1;
-            // 
             // materialLabel2
             // 
             this.materialLabel2.AutoSize = true;
@@ -191,38 +162,17 @@ namespace ReviewMovie
             this.materialLabel2.TabIndex = 6;
             this.materialLabel2.Text = "API KEY";
             // 
-            // pnlApiKey
-            // 
-            this.pnlApiKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
-            this.pnlApiKey.Controls.Add(this.txInsertApiKey);
-            this.pnlApiKey.Controls.Add(this.lblApiKeyIcon);
-            this.pnlApiKey.Location = new System.Drawing.Point(44, 316);
-            this.pnlApiKey.Name = "pnlApiKey";
-            this.pnlApiKey.Size = new System.Drawing.Size(332, 52);
-            this.pnlApiKey.TabIndex = 7;
-            this.pnlApiKey.Paint += new System.Windows.Forms.PaintEventHandler(this.pillPanel_Paint);
-            // 
-            // lblApiKeyIcon
-            // 
-            this.lblApiKeyIcon.Font = new System.Drawing.Font("Segoe MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblApiKeyIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
-            this.lblApiKeyIcon.Location = new System.Drawing.Point(12, 15);
-            this.lblApiKeyIcon.Name = "lblApiKeyIcon";
-            this.lblApiKeyIcon.Size = new System.Drawing.Size(22, 22);
-            this.lblApiKeyIcon.TabIndex = 0;
-            this.lblApiKeyIcon.Text = "";
-            this.lblApiKeyIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // txInsertApiKey
             // 
-            this.txInsertApiKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
-            this.txInsertApiKey.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txInsertApiKey.Font = new System.Drawing.Font("Segoe UI", 11.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txInsertApiKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
-            this.txInsertApiKey.Location = new System.Drawing.Point(42, 16);
+            this.txInsertApiKey.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(236)))), ((int)(((byte)(255)))));
+            this.txInsertApiKey.CornerRadius = 16;
+            this.txInsertApiKey.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
+            this.txInsertApiKey.IconGlyph = "";
+            this.txInsertApiKey.Location = new System.Drawing.Point(44, 316);
             this.txInsertApiKey.Name = "txInsertApiKey";
-            this.txInsertApiKey.Size = new System.Drawing.Size(276, 18);
-            this.txInsertApiKey.TabIndex = 1;
+            this.txInsertApiKey.ReadOnly = false;
+            this.txInsertApiKey.Size = new System.Drawing.Size(332, 52);
+            this.txInsertApiKey.TabIndex = 7;
             // 
             // lbstatus
             // 
@@ -236,9 +186,6 @@ namespace ReviewMovie
             // 
             // btnLoginApiKey
             // 
-            this.btnLoginApiKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(94)))), ((int)(((byte)(255)))));
-            this.btnLoginApiKey.FlatAppearance.BorderSize = 0;
-            this.btnLoginApiKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoginApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 11.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoginApiKey.ForeColor = System.Drawing.Color.White;
             this.btnLoginApiKey.Location = new System.Drawing.Point(44, 430);
@@ -246,18 +193,10 @@ namespace ReviewMovie
             this.btnLoginApiKey.Size = new System.Drawing.Size(332, 52);
             this.btnLoginApiKey.TabIndex = 9;
             this.btnLoginApiKey.Text = "Login  ➜";
-            this.btnLoginApiKey.UseVisualStyleBackColor = false;
             this.btnLoginApiKey.Click += new System.EventHandler(this.btnLoginApiKey_Click);
-            this.btnLoginApiKey.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnLoginApiKey_MouseDown);
-            this.btnLoginApiKey.MouseEnter += new System.EventHandler(this.btnLoginApiKey_MouseEnter);
-            this.btnLoginApiKey.MouseLeave += new System.EventHandler(this.btnLoginApiKey_MouseLeave);
-            this.btnLoginApiKey.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnLoginApiKey_MouseUp);
             // 
             // btnClose
             // 
-            this.btnClose.BackColor = System.Drawing.Color.White;
-            this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(145)))), ((int)(((byte)(165)))));
             this.btnClose.Location = new System.Drawing.Point(378, 12);
@@ -265,12 +204,7 @@ namespace ReviewMovie
             this.btnClose.Size = new System.Drawing.Size(30, 30);
             this.btnClose.TabIndex = 12;
             this.btnClose.Text = "✕";
-            this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            this.btnClose.MouseEnter += new System.EventHandler(this.btnClose_MouseEnter);
-            this.btnClose.MouseLeave += new System.EventHandler(this.btnClose_MouseLeave);
-            this.btnClose.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnClose_MouseDown);
-            this.btnClose.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnClose_MouseUp);
             // 
             // linklbRegister
             // 
@@ -320,10 +254,6 @@ namespace ReviewMovie
             this.cardPanel.ResumeLayout(false);
             this.cardPanel.PerformLayout();
             this.pnlLogo.ResumeLayout(false);
-            this.pnlAppCode.ResumeLayout(false);
-            this.pnlAppCode.PerformLayout();
-            this.pnlApiKey.ResumeLayout(false);
-            this.pnlApiKey.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -336,15 +266,11 @@ namespace ReviewMovie
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblSubtitle;
         private System.Windows.Forms.Label materialLabel1;
-        private System.Windows.Forms.Panel pnlAppCode;
-        private System.Windows.Forms.Label lblAppCodeIcon;
-        private System.Windows.Forms.TextBox txAppCodeShow;
+        private ReviewMovie.Base.Controls.PillTextBox txAppCodeShow;
         private System.Windows.Forms.Label materialLabel2;
-        private System.Windows.Forms.Panel pnlApiKey;
-        private System.Windows.Forms.Label lblApiKeyIcon;
-        private System.Windows.Forms.TextBox txInsertApiKey;
-        private System.Windows.Forms.Button btnLoginApiKey;
-        private System.Windows.Forms.Button btnClose;
+        private ReviewMovie.Base.Controls.PillTextBox txInsertApiKey;
+        private ReviewMovie.Base.Controls.PrimaryButton btnLoginApiKey;
+        private ReviewMovie.Base.Controls.IconCircleButton btnClose;
         private System.Windows.Forms.LinkLabel lkHelp;
         private System.Windows.Forms.Label lbstatus;
         private System.Windows.Forms.LinkLabel linklbRegister;
