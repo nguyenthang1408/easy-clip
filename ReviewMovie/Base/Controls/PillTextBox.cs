@@ -9,6 +9,7 @@ namespace ReviewMovie.Base.Controls
     {
         private readonly Label _icon;
         private readonly TextBox _textBox;
+        private bool _initialized;
 
         private int _cornerRadius = UiTheme.PillRadius;
         private Color _borderColor = UiTheme.PillBorder;
@@ -16,8 +17,8 @@ namespace ReviewMovie.Base.Controls
 
         public PillTextBox()
         {
+            _initialized = false;
             BackColor = Color.Transparent;
-            Size = new Size(332, 52);
 
             _icon = new Label
             {
@@ -44,9 +45,13 @@ namespace ReviewMovie.Base.Controls
 
             UiHelpers.EnableSmoothPainting(this);
 
+            // Apply a default size AFTER children exist (Designer-safe).
+            Size = new Size(332, 52);
+
             // Ensure initial layout is safe for designer/runtime
             ApplyRound();
             LayoutChildren();
+            _initialized = true;
 
             _textBox.TextChanged += (s, e) => OnTextChanged(e);
             _textBox.KeyDown += (s, e) => OnKeyDown(e);
@@ -138,6 +143,7 @@ namespace ReviewMovie.Base.Controls
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
+            if (!_initialized) return;
             ApplyRound();
             LayoutChildren();
         }
