@@ -7,22 +7,14 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Net.Http;
 using System.Windows.Forms;
+using ReviewMovie.Base;
 
 namespace ReviewMovie
 {
     public partial class LoginApiKey : Form
     {
-        private static readonly Color ColorAccent = Color.FromArgb(120, 94, 255);
-        private static readonly Color ColorAccentHover = Color.FromArgb(110, 86, 245);
-        private static readonly Color ColorAccentPressed = Color.FromArgb(98, 76, 232);
-        private static readonly Color ColorBorder = Color.FromArgb(235, 238, 255);
-        private static readonly Color ColorPillBorder = Color.FromArgb(232, 236, 255);
-        private static readonly Color ColorCloseHover = Color.FromArgb(246, 247, 252);
-        private static readonly Color ColorClosePressed = Color.FromArgb(235, 236, 245);
-
         private string AppVersion { get; } = "2.0.0"; // Định nghĩa phiên bản ứng dụng
         private readonly AppCodeService appCodeService;
         private readonly IConfigDataService _configService;
@@ -40,32 +32,14 @@ namespace ReviewMovie
             this.FormClosing += LoginApiKey_FormClosing;
 
             // Smooth painting (gradient + shadow)
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            UiHelpers.EnableSmoothPainting(this);
             DoubleBuffered = true;
         }
-
-        // --------- Borderless drag support ----------
-        [DllImport("user32.dll")]
-        private static extern bool ReleaseCapture();
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-
-        private const int WM_NCLBUTTONDOWN = 0xA1;
-        private const int HTCAPTION = 0x2;
 
         private void DragArea_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
-            try
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
-            }
-            catch
-            {
-                // Ignore - best effort for dragging on some environments
-            }
+            Win32.BeginDrag(this);
         }
 
         private void LoginApiKey_KeyDown(object sender, KeyEventArgs e)
@@ -107,77 +81,26 @@ namespace ReviewMovie
         {
             base.OnPaint(e);
 
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-
             // Subtle border for rounded window
             var rect = new Rectangle(0, 0, Width - 1, Height - 1);
-            using (var path = CreateRoundedRectPath(rect, 18))
-            using (var pen = new Pen(Color.FromArgb(235, 238, 245), 1f))
-            {
-                e.Graphics.DrawPath(pen, path);
-            }
-        }
-
-        private static void DrawShadow(Graphics g, Rectangle rect, int radius, int depth)
-        {
-            // Draw multiple blurred strokes with decreasing alpha
-            for (int i = depth; i >= 1; i--)
-            {
-                int alpha = (int)(18f * (i / (float)depth)); // outer lighter
-                using (var pen = new Pen(Color.FromArgb(alpha, 0, 0, 0), 1f))
-                using (var path = CreateRoundedRectPath(
-                    Rectangle.Inflate(rect, i, i),
-                    radius + i))
-                {
-                    g.DrawPath(pen, path);
-                }
-            }
-        }
-
-        private static GraphicsPath CreateRoundedRectPath(Rectangle rect, int radius)
-        {
-            var path = new GraphicsPath();
-            if (radius <= 0)
-            {
-                path.AddRectangle(rect);
-                path.CloseFigure();
-                return path;
-            }
-
-            int d = radius * 2;
-            var arc = new Rectangle(rect.X, rect.Y, d, d);
-
-            path.AddArc(arc, 180, 90);
-            arc.X = rect.Right - d;
-            path.AddArc(arc, 270, 90);
-            arc.Y = rect.Bottom - d;
-            path.AddArc(arc, 0, 90);
-            arc.X = rect.X;
-            path.AddArc(arc, 90, 90);
-            path.CloseFigure();
-            return path;
-        }
-
-        private static void ApplyRoundRegion(Control control, int radius)
-        {
-            if (control == null || control.Width <= 0 || control.Height <= 0) return;
-            using (var path = CreateRoundedRectPath(new Rectangle(0, 0, control.Width, control.Height), radius))
-            {
-                control.Region = new Region(path);
-            }
+            UiHelpers.DrawRoundedBorder(e.Graphics, rect, UiTheme.WindowRadius, UiTheme.WindowBorder);
         }
 
         private void ApplyRoundedRegions()
         {
             // Rounded window (requested)
-            ApplyRoundRegion(this, 18);
+            UiHelpers.ApplyRoundRegion(this, UiTheme.WindowRadius);
 
             // Card + logo + pills + button
-            ApplyRoundRegion(pnlLogo, 14);
-            ApplyRoundRegion(pnlAppCode, 16);
-            ApplyRoundRegion(pnlApiKey, 16);
-            ApplyRoundRegion(btnLoginApiKey, 16);
-            ApplyRoundRegion(btnClose, 15);
+            UiHelpers.ApplyRoundRegion(pnlLogo, 14);
+            UiHelpers.ApplyRoundRegion(pnlAppCode, UiTheme.PillRadius);
+            UiHelpers.ApplyRoundRegion(pnlApiKey, UiTheme.PillRadius);
+            UiHelpers.ApplyRoundRegion(btnLoginApiKey, UiTheme.ButtonRadius);
+            UiHelpers.ApplyRoundRegion(btnClose, UiTheme.CloseRadius);
+
+            // Auto-align pill icons for any pill height
+            UiHelpers.AlignIconLabelVertically(lblAppCodeIcon, pnlAppCode);
+            UiHelpers.AlignIconLabelVertically(lblApiKeyIcon, pnlApiKey);
         }
 
         // Paint borders for card + pill panels (Designer-safe: standard Panels)
@@ -189,34 +112,28 @@ namespace ReviewMovie
         private void pillPanel_Paint(object sender, PaintEventArgs e)
         {
             if (!(sender is Panel p)) return;
-            var rect = new Rectangle(0, 0, p.Width - 1, p.Height - 1);
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            using (var path = CreateRoundedRectPath(rect, 16))
-            using (var pen = new Pen(ColorPillBorder, 1f))
-            {
-                e.Graphics.DrawPath(pen, path);
-            }
+            UiHelpers.DrawPillBorder(e.Graphics, p);
         }
 
         private void btnLoginApiKey_MouseEnter(object sender, EventArgs e)
         {
-            if (btnLoginApiKey.Enabled) btnLoginApiKey.BackColor = ColorAccentHover;
+            if (btnLoginApiKey.Enabled) btnLoginApiKey.BackColor = UiTheme.AccentHover;
         }
 
         private void btnLoginApiKey_MouseLeave(object sender, EventArgs e)
         {
-            if (btnLoginApiKey.Enabled) btnLoginApiKey.BackColor = ColorAccent;
+            if (btnLoginApiKey.Enabled) btnLoginApiKey.BackColor = UiTheme.Accent;
         }
 
         private void btnLoginApiKey_MouseDown(object sender, MouseEventArgs e)
         {
-            if (btnLoginApiKey.Enabled && e.Button == MouseButtons.Left) btnLoginApiKey.BackColor = ColorAccentPressed;
+            if (btnLoginApiKey.Enabled && e.Button == MouseButtons.Left) btnLoginApiKey.BackColor = UiTheme.AccentPressed;
         }
 
         private void btnLoginApiKey_MouseUp(object sender, MouseEventArgs e)
         {
             if (!btnLoginApiKey.Enabled) return;
-            btnLoginApiKey.BackColor = btnLoginApiKey.ClientRectangle.Contains(e.Location) ? ColorAccentHover : ColorAccent;
+            btnLoginApiKey.BackColor = btnLoginApiKey.ClientRectangle.Contains(e.Location) ? UiTheme.AccentHover : UiTheme.Accent;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -226,7 +143,7 @@ namespace ReviewMovie
 
         private void btnClose_MouseEnter(object sender, EventArgs e)
         {
-            btnClose.BackColor = ColorCloseHover;
+            btnClose.BackColor = UiTheme.CloseHover;
             btnClose.ForeColor = Color.FromArgb(90, 95, 110);
         }
 
@@ -238,7 +155,7 @@ namespace ReviewMovie
 
         private void btnClose_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left) btnClose.BackColor = ColorClosePressed;
+            if (e.Button == MouseButtons.Left) btnClose.BackColor = UiTheme.ClosePressed;
         }
 
         private void btnClose_MouseUp(object sender, MouseEventArgs e)
@@ -362,7 +279,7 @@ namespace ReviewMovie
         {
             CenterCard();
             // Ensure initial styles
-            btnLoginApiKey.BackColor = ColorAccent;
+            btnLoginApiKey.BackColor = UiTheme.Accent;
             btnClose.BackColor = Color.White;
         }
     }
