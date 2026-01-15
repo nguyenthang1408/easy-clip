@@ -1844,13 +1844,7 @@ namespace ReviewMovie
         private ReviewMovie.Base.Controls.CardPanel cardHeaderActions;
         private System.Windows.Forms.Button btnRecord;
         private System.Windows.Forms.TableLayoutPanel tlpImportMedia;
-        private System.Windows.Forms.Panel pnlDropHeader;
-        private System.Windows.Forms.Label lblDropTitle;
-        private System.Windows.Forms.Label lblDropSub;
-        private System.Windows.Forms.Label lblDropIcon;
         private System.Windows.Forms.TableLayoutPanel tlpText;
-        private System.Windows.Forms.Panel pnlTextHeader;
-        private System.Windows.Forms.LinkLabel lnkClearText;
         private System.Windows.Forms.Label lbHeaderInputMedia;
         private System.Windows.Forms.Label lbHeaderText;
         private System.Windows.Forms.TextBox txtImPortMedia;
