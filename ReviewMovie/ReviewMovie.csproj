@@ -106,7 +106,6 @@
     <Compile Include="Base\Controls\CardPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Base\Controls\TagButton.cs" />
     <Compile Include="Base\Controls\PillComboBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
