@@ -1,4 +1,4 @@
-﻿
+
 namespace ReviewMovie
 {
     partial class FormMain
@@ -131,6 +131,10 @@ namespace ReviewMovie
             this.btnDestroyAction = new System.Windows.Forms.ToolStripButton();
             this.grViewHeader = new System.Windows.Forms.GroupBox();
             this.tlpViewHeader = new System.Windows.Forms.TableLayoutPanel();
+            this.cardRecord = new ReviewMovie.Base.Controls.CardPanel();
+            this.cardTextInput = new ReviewMovie.Base.Controls.CardPanel();
+            this.cardDropVisual = new ReviewMovie.Base.Controls.CardPanel();
+            this.cardHeaderActions = new ReviewMovie.Base.Controls.CardPanel();
             this.tlpImportMedia = new System.Windows.Forms.TableLayoutPanel();
             this.txtImPortMedia = new System.Windows.Forms.TextBox();
             this.lbHeaderInputMedia = new System.Windows.Forms.Label();
@@ -163,6 +167,10 @@ namespace ReviewMovie
             this.tsMenuView.SuspendLayout();
             this.grViewHeader.SuspendLayout();
             this.tlpViewHeader.SuspendLayout();
+            this.cardRecord.SuspendLayout();
+            this.cardTextInput.SuspendLayout();
+            this.cardDropVisual.SuspendLayout();
+            this.cardHeaderActions.SuspendLayout();
             this.tlpImportMedia.SuspendLayout();
             this.tlpText.SuspendLayout();
             this.tlpHeaderButton.SuspendLayout();
@@ -1322,10 +1330,10 @@ namespace ReviewMovie
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 81.23711F));
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 173F));
-            this.tlpViewHeader.Controls.Add(this.tlpImportMedia, 2, 0);
-            this.tlpViewHeader.Controls.Add(this.btnRecord, 0, 0);
-            this.tlpViewHeader.Controls.Add(this.tlpText, 1, 0);
-            this.tlpViewHeader.Controls.Add(this.tlpHeaderButton, 3, 0);
+            this.tlpViewHeader.Controls.Add(this.cardDropVisual, 2, 0);
+            this.tlpViewHeader.Controls.Add(this.cardRecord, 0, 0);
+            this.tlpViewHeader.Controls.Add(this.cardTextInput, 1, 0);
+            this.tlpViewHeader.Controls.Add(this.cardHeaderActions, 3, 0);
             this.tlpViewHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpViewHeader.Location = new System.Drawing.Point(3, 16);
             this.tlpViewHeader.Name = "tlpViewHeader";
@@ -1335,6 +1343,54 @@ namespace ReviewMovie
             this.tlpViewHeader.Size = new System.Drawing.Size(865, 153);
             this.tlpViewHeader.TabIndex = 0;
             // 
+            // cardRecord
+            // 
+            this.cardRecord.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.cardRecord.CornerRadius = 14;
+            this.cardRecord.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cardRecord.FillColor = System.Drawing.Color.White;
+            this.cardRecord.Location = new System.Drawing.Point(3, 3);
+            this.cardRecord.Name = "cardRecord";
+            this.cardRecord.Size = new System.Drawing.Size(94, 147);
+            this.cardRecord.TabIndex = 10;
+            this.cardRecord.Controls.Add(this.btnRecord);
+            // 
+            // cardTextInput
+            // 
+            this.cardTextInput.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.cardTextInput.CornerRadius = 14;
+            this.cardTextInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cardTextInput.FillColor = System.Drawing.Color.White;
+            this.cardTextInput.Location = new System.Drawing.Point(103, 3);
+            this.cardTextInput.Name = "cardTextInput";
+            this.cardTextInput.Size = new System.Drawing.Size(429, 147);
+            this.cardTextInput.TabIndex = 11;
+            this.cardTextInput.Controls.Add(this.tlpText);
+            // 
+            // cardDropVisual
+            // 
+            this.cardDropVisual.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.cardDropVisual.CornerRadius = 14;
+            this.cardDropVisual.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cardDropVisual.FillColor = System.Drawing.Color.White;
+            this.cardDropVisual.Location = new System.Drawing.Point(538, 3);
+            this.cardDropVisual.Name = "cardDropVisual";
+            this.cardDropVisual.Size = new System.Drawing.Size(150, 147);
+            this.cardDropVisual.TabIndex = 12;
+            this.cardDropVisual.Controls.Add(this.tlpImportMedia);
+            // 
+            // cardHeaderActions
+            // 
+            this.cardHeaderActions.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.cardHeaderActions.CornerRadius = 14;
+            this.cardHeaderActions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cardHeaderActions.FillColor = System.Drawing.Color.White;
+            this.cardHeaderActions.Location = new System.Drawing.Point(694, 3);
+            this.cardHeaderActions.Name = "cardHeaderActions";
+            this.cardHeaderActions.Size = new System.Drawing.Size(168, 147);
+            this.cardHeaderActions.TabIndex = 13;
+            this.cardHeaderActions.Controls.Add(this.tlpHeaderButton);
+            // 
             // tlpImportMedia
             // 
             this.tlpImportMedia.ColumnCount = 1;
@@ -1342,12 +1398,12 @@ namespace ReviewMovie
             this.tlpImportMedia.Controls.Add(this.txtImPortMedia, 0, 1);
             this.tlpImportMedia.Controls.Add(this.lbHeaderInputMedia, 0, 0);
             this.tlpImportMedia.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpImportMedia.Location = new System.Drawing.Point(538, 3);
+            this.tlpImportMedia.Location = new System.Drawing.Point(10, 10);
             this.tlpImportMedia.Name = "tlpImportMedia";
             this.tlpImportMedia.RowCount = 2;
             this.tlpImportMedia.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tlpImportMedia.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
-            this.tlpImportMedia.Size = new System.Drawing.Size(150, 147);
+            this.tlpImportMedia.Size = new System.Drawing.Size(130, 127);
             this.tlpImportMedia.TabIndex = 2;
             // 
             // txtImPortMedia
@@ -1405,12 +1461,12 @@ namespace ReviewMovie
             this.tlpText.Controls.Add(this.lbHeaderText, 0, 0);
             this.tlpText.Controls.Add(this.txtTextInput, 0, 1);
             this.tlpText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpText.Location = new System.Drawing.Point(103, 3);
+            this.tlpText.Location = new System.Drawing.Point(10, 10);
             this.tlpText.Name = "tlpText";
             this.tlpText.RowCount = 2;
             this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
-            this.tlpText.Size = new System.Drawing.Size(429, 147);
+            this.tlpText.Size = new System.Drawing.Size(409, 127);
             this.tlpText.TabIndex = 1;
             // 
             // lbHeaderText
@@ -1451,14 +1507,14 @@ namespace ReviewMovie
             this.tlpHeaderButton.Controls.Add(this.btnConvertAudio, 0, 0);
             this.tlpHeaderButton.Controls.Add(this.btnSaveAudio, 0, 1);
             this.tlpHeaderButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpHeaderButton.Location = new System.Drawing.Point(694, 3);
+            this.tlpHeaderButton.Location = new System.Drawing.Point(10, 10);
             this.tlpHeaderButton.Name = "tlpHeaderButton";
             this.tlpHeaderButton.RowCount = 3;
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpHeaderButton.Size = new System.Drawing.Size(168, 147);
+            this.tlpHeaderButton.Size = new System.Drawing.Size(148, 127);
             this.tlpHeaderButton.TabIndex = 3;
             // 
             // btnRenderVideoPart
@@ -1694,6 +1750,10 @@ namespace ReviewMovie
         private System.Windows.Forms.TableLayoutPanel tlpView;
         private System.Windows.Forms.GroupBox grViewHeader;
         private System.Windows.Forms.TableLayoutPanel tlpViewHeader;
+        private ReviewMovie.Base.Controls.CardPanel cardRecord;
+        private ReviewMovie.Base.Controls.CardPanel cardTextInput;
+        private ReviewMovie.Base.Controls.CardPanel cardDropVisual;
+        private ReviewMovie.Base.Controls.CardPanel cardHeaderActions;
         private System.Windows.Forms.Button btnRecord;
         private System.Windows.Forms.TableLayoutPanel tlpImportMedia;
         private System.Windows.Forms.TableLayoutPanel tlpText;
