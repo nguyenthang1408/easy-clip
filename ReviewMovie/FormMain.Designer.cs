@@ -1,4 +1,4 @@
-﻿
+
 namespace ReviewMovie
 {
     partial class FormMain
@@ -129,6 +129,10 @@ namespace ReviewMovie
             this.btnImportSubtitle = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnDestroyAction = new System.Windows.Forms.ToolStripButton();
+            this.pnlMainTopBar = new System.Windows.Forms.Panel();
+            this.lblMainTopSub = new System.Windows.Forms.Label();
+            this.lblMainTopTitle = new System.Windows.Forms.Label();
+            this.lblMainTopIcon = new System.Windows.Forms.Label();
             this.grViewHeader = new System.Windows.Forms.GroupBox();
             this.tlpViewHeader = new System.Windows.Forms.TableLayoutPanel();
             this.tlpImportMedia = new System.Windows.Forms.TableLayoutPanel();
@@ -161,6 +165,7 @@ namespace ReviewMovie
             this.tlpView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainView)).BeginInit();
             this.tsMenuView.SuspendLayout();
+            this.pnlMainTopBar.SuspendLayout();
             this.grViewHeader.SuspendLayout();
             this.tlpViewHeader.SuspendLayout();
             this.tlpImportMedia.SuspendLayout();
@@ -991,19 +996,68 @@ namespace ReviewMovie
             this.tlpView.ColumnCount = 1;
             this.tlpView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpView.Controls.Add(this.dgvMainView, 0, 2);
-            this.tlpView.Controls.Add(this.tsMenuView, 0, 1);
-            this.tlpView.Controls.Add(this.grViewHeader, 0, 0);
+            this.tlpView.Controls.Add(this.dgvMainView, 0, 3);
+            this.tlpView.Controls.Add(this.tsMenuView, 0, 2);
+            this.tlpView.Controls.Add(this.grViewHeader, 0, 1);
+            this.tlpView.Controls.Add(this.pnlMainTopBar, 0, 0);
             this.tlpView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpView.Location = new System.Drawing.Point(0, 0);
             this.tlpView.Name = "tlpView";
-            this.tlpView.RowCount = 3;
+            this.tlpView.RowCount = 4;
+            this.tlpView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
             this.tlpView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 87.22222F));
             this.tlpView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.77778F));
             this.tlpView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 529F));
             this.tlpView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpView.Size = new System.Drawing.Size(877, 734);
             this.tlpView.TabIndex = 2;
+            // 
+            // pnlMainTopBar
+            // 
+            this.pnlMainTopBar.BackColor = System.Drawing.Color.White;
+            this.pnlMainTopBar.Controls.Add(this.lblMainTopSub);
+            this.pnlMainTopBar.Controls.Add(this.lblMainTopTitle);
+            this.pnlMainTopBar.Controls.Add(this.lblMainTopIcon);
+            this.pnlMainTopBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMainTopBar.Location = new System.Drawing.Point(0, 0);
+            this.pnlMainTopBar.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlMainTopBar.Name = "pnlMainTopBar";
+            this.pnlMainTopBar.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
+            this.pnlMainTopBar.Size = new System.Drawing.Size(877, 42);
+            this.pnlMainTopBar.TabIndex = 44;
+            // 
+            // lblMainTopIcon
+            // 
+            this.lblMainTopIcon.Font = new System.Drawing.Font("Segoe MDL2 Assets", 12F);
+            this.lblMainTopIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(140)))), ((int)(((byte)(0)))));
+            this.lblMainTopIcon.Location = new System.Drawing.Point(12, 12);
+            this.lblMainTopIcon.Name = "lblMainTopIcon";
+            this.lblMainTopIcon.Size = new System.Drawing.Size(18, 18);
+            this.lblMainTopIcon.TabIndex = 0;
+            this.lblMainTopIcon.Text = "";
+            this.lblMainTopIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblMainTopTitle
+            // 
+            this.lblMainTopTitle.AutoSize = true;
+            this.lblMainTopTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblMainTopTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(40)))), ((int)(((byte)(55)))));
+            this.lblMainTopTitle.Location = new System.Drawing.Point(34, 10);
+            this.lblMainTopTitle.Name = "lblMainTopTitle";
+            this.lblMainTopTitle.Size = new System.Drawing.Size(93, 17);
+            this.lblMainTopTitle.TabIndex = 1;
+            this.lblMainTopTitle.Text = "EasyClip Studio";
+            // 
+            // lblMainTopSub
+            // 
+            this.lblMainTopSub.AutoSize = true;
+            this.lblMainTopSub.Font = new System.Drawing.Font("Segoe UI", 7.5F);
+            this.lblMainTopSub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(145)))), ((int)(((byte)(165)))));
+            this.lblMainTopSub.Location = new System.Drawing.Point(34, 26);
+            this.lblMainTopSub.Name = "lblMainTopSub";
+            this.lblMainTopSub.Size = new System.Drawing.Size(90, 12);
+            this.lblMainTopSub.TabIndex = 2;
+            this.lblMainTopSub.Text = "TPMEDIA PREMIUM";
             // 
             // dgvMainView
             // 
@@ -1050,12 +1104,12 @@ namespace ReviewMovie
             this.dgvMainView.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvMainView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMainView.GridColor = System.Drawing.Color.Silver;
-            this.dgvMainView.Location = new System.Drawing.Point(3, 207);
+            this.dgvMainView.Location = new System.Drawing.Point(3, 249);
             this.dgvMainView.Name = "dgvMainView";
             this.dgvMainView.RowHeadersVisible = false;
             this.dgvMainView.RowHeadersWidth = 20;
             this.dgvMainView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMainView.Size = new System.Drawing.Size(871, 524);
+            this.dgvMainView.Size = new System.Drawing.Size(871, 482);
             this.dgvMainView.StandardTab = true;
             this.dgvMainView.TabIndex = 8;
             this.dgvMainView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMainView_CellClick);
@@ -1188,7 +1242,7 @@ namespace ReviewMovie
             this.btnImportSubtitle,
             this.toolStripSeparator3,
             this.btnDestroyAction});
-            this.tsMenuView.Location = new System.Drawing.Point(0, 178);
+            this.tsMenuView.Location = new System.Drawing.Point(0, 220);
             this.tsMenuView.Name = "tsMenuView";
             this.tsMenuView.Size = new System.Drawing.Size(877, 25);
             this.tsMenuView.TabIndex = 1;
@@ -1628,6 +1682,8 @@ namespace ReviewMovie
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainView)).EndInit();
             this.tsMenuView.ResumeLayout(false);
             this.tsMenuView.PerformLayout();
+            this.pnlMainTopBar.ResumeLayout(false);
+            this.pnlMainTopBar.PerformLayout();
             this.grViewHeader.ResumeLayout(false);
             this.tlpViewHeader.ResumeLayout(false);
             this.tlpImportMedia.ResumeLayout(false);
@@ -1763,6 +1819,10 @@ namespace ReviewMovie
         private System.Windows.Forms.ToolStripButton btnImportSubtitle;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton btnDestroyAction;
+        private System.Windows.Forms.Panel pnlMainTopBar;
+        private System.Windows.Forms.Label lblMainTopSub;
+        private System.Windows.Forms.Label lblMainTopTitle;
+        private System.Windows.Forms.Label lblMainTopIcon;
         private System.Windows.Forms.ToolStripButton btnSearch;
         private System.Windows.Forms.CheckBox ckOpenPlayer;
     }

@@ -1,13 +1,16 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
 using Lib;
 using ReviewMovie.Infrastructure.Config;
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Net.Http;
 using System.Windows.Forms;
+using ReviewMovie.Base;
+using ReviewMovie.Base.Controls;
 
 namespace ReviewMovie
 {
@@ -28,6 +31,113 @@ namespace ReviewMovie
 
             // Đặt sự kiện cho việc đóng form
             this.FormClosing += LoginApiKey_FormClosing;
+
+            // Smooth painting (gradient + shadow)
+            UiHelpers.EnableSmoothPainting(this);
+            DoubleBuffered = true;
+
+            SetupLoginUi();
+        }
+
+        private void SetupLoginUi()
+        {
+            // Commonized UI setup (easy to maintain)
+            if (txAppCodeShow is PillTextBox appCode)
+            {
+                appCode.IconGlyph = "";
+                appCode.ReadOnly = true;
+            }
+
+            if (txInsertApiKey is PillTextBox apiKey)
+            {
+                apiKey.IconGlyph = "";
+            }
+
+            if (btnLoginApiKey is PrimaryButton primary)
+            {
+                primary.FillColor = UiTheme.Accent;
+                primary.HoverFillColor = UiTheme.AccentHover;
+                primary.PressedFillColor = UiTheme.AccentPressed;
+                primary.CornerRadius = UiTheme.ButtonRadius;
+            }
+
+            if (btnClose is IconCircleButton close)
+            {
+                close.CornerRadius = UiTheme.CloseRadius;
+                close.NormalBackColor = Color.White;
+                close.HoverBackColor = UiTheme.CloseHover;
+                close.PressedBackColor = UiTheme.ClosePressed;
+            }
+        }
+
+        private void DragArea_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+            Win32.BeginDrag(this);
+        }
+
+        private void LoginApiKey_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
+        }
+
+        private void CenterCard()
+        {
+            if (cardPanel == null) return;
+            if (cardPanel.Dock == DockStyle.Fill)
+            {
+                ApplyRoundedRegions();
+                return;
+            }
+            int x = (ClientSize.Width - cardPanel.Width) / 2;
+            int y = (ClientSize.Height - cardPanel.Height) / 2;
+            cardPanel.Location = new Point(Math.Max(0, x), Math.Max(0, y));
+            ApplyRoundedRegions();
+            Invalidate();
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            CenterCard();
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            // Pure white background like screenshot #2
+            e.Graphics.Clear(Color.White);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            // Subtle border for rounded window
+            var rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            UiHelpers.DrawRoundedBorder(e.Graphics, rect, UiTheme.WindowRadius, UiTheme.WindowBorder);
+        }
+
+        private void ApplyRoundedRegions()
+        {
+            // Rounded window (requested)
+            UiHelpers.ApplyRoundRegion(this, UiTheme.WindowRadius);
+
+            // Card + logo (pills/buttons handle their own rounding)
+            UiHelpers.ApplyRoundRegion(pnlLogo, 14);
+        }
+
+        // Paint borders for card + pill panels (Designer-safe: standard Panels)
+        private void cardPanel_Paint(object sender, PaintEventArgs e)
+        {
+            // Intentionally empty: we only round the window (1 layer)
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private void DisplayAppCode()
@@ -144,7 +254,8 @@ namespace ReviewMovie
 
         private void LoginApiKey_Load(object sender, EventArgs e)
         {
-
+            CenterCard();
+            SetupLoginUi();
         }
     }
 }
