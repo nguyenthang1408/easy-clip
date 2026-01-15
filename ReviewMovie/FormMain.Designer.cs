@@ -130,11 +130,20 @@ namespace ReviewMovie
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnDestroyAction = new System.Windows.Forms.ToolStripButton();
             this.grViewHeader = new System.Windows.Forms.GroupBox();
+            this.tlpHeaderRoot = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlTopBar = new System.Windows.Forms.Panel();
+            this.lblTopTitle = new System.Windows.Forms.Label();
+            this.lblTopSub = new System.Windows.Forms.Label();
+            this.lblTopIcon = new System.Windows.Forms.Label();
             this.tlpViewHeader = new System.Windows.Forms.TableLayoutPanel();
             this.cardRecord = new ReviewMovie.Base.Controls.CardPanel();
             this.cardTextInput = new ReviewMovie.Base.Controls.CardPanel();
             this.cardDropVisual = new ReviewMovie.Base.Controls.CardPanel();
             this.cardHeaderActions = new ReviewMovie.Base.Controls.CardPanel();
+            this.pnlQuickActions = new System.Windows.Forms.Panel();
+            this.btnNewLine = new ReviewMovie.Base.Controls.TagButton();
+            this.btnAutoSubtitle = new ReviewMovie.Base.Controls.TagButton();
+            this.btnCancelQuick = new ReviewMovie.Base.Controls.TagButton();
             this.tlpImportMedia = new System.Windows.Forms.TableLayoutPanel();
             this.pnlDropHeader = new System.Windows.Forms.Panel();
             this.lblDropTitle = new System.Windows.Forms.Label();
@@ -172,11 +181,14 @@ namespace ReviewMovie
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainView)).BeginInit();
             this.tsMenuView.SuspendLayout();
             this.grViewHeader.SuspendLayout();
+            this.tlpHeaderRoot.SuspendLayout();
+            this.pnlTopBar.SuspendLayout();
             this.tlpViewHeader.SuspendLayout();
             this.cardRecord.SuspendLayout();
             this.cardTextInput.SuspendLayout();
             this.cardDropVisual.SuspendLayout();
             this.cardHeaderActions.SuspendLayout();
+            this.pnlQuickActions.SuspendLayout();
             this.tlpImportMedia.SuspendLayout();
             this.pnlDropHeader.SuspendLayout();
             this.tlpText.SuspendLayout();
@@ -1321,7 +1333,7 @@ namespace ReviewMovie
             // grViewHeader
             // 
             this.grViewHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
-            this.grViewHeader.Controls.Add(this.tlpViewHeader);
+            this.grViewHeader.Controls.Add(this.tlpHeaderRoot);
             this.grViewHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grViewHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.grViewHeader.Location = new System.Drawing.Point(3, 3);
@@ -1330,6 +1342,70 @@ namespace ReviewMovie
             this.grViewHeader.TabIndex = 0;
             this.grViewHeader.TabStop = false;
             this.grViewHeader.Text = "";
+            // 
+            // tlpHeaderRoot
+            // 
+            this.tlpHeaderRoot.ColumnCount = 1;
+            this.tlpHeaderRoot.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpHeaderRoot.Controls.Add(this.pnlTopBar, 0, 0);
+            this.tlpHeaderRoot.Controls.Add(this.tlpViewHeader, 0, 1);
+            this.tlpHeaderRoot.Controls.Add(this.pnlQuickActions, 0, 2);
+            this.tlpHeaderRoot.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpHeaderRoot.Location = new System.Drawing.Point(3, 16);
+            this.tlpHeaderRoot.Margin = new System.Windows.Forms.Padding(0);
+            this.tlpHeaderRoot.Name = "tlpHeaderRoot";
+            this.tlpHeaderRoot.RowCount = 3;
+            this.tlpHeaderRoot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tlpHeaderRoot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpHeaderRoot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tlpHeaderRoot.Size = new System.Drawing.Size(865, 153);
+            this.tlpHeaderRoot.TabIndex = 10;
+            // 
+            // pnlTopBar
+            // 
+            this.pnlTopBar.BackColor = System.Drawing.Color.Transparent;
+            this.pnlTopBar.Controls.Add(this.lblTopSub);
+            this.pnlTopBar.Controls.Add(this.lblTopTitle);
+            this.pnlTopBar.Controls.Add(this.lblTopIcon);
+            this.pnlTopBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTopBar.Location = new System.Drawing.Point(0, 0);
+            this.pnlTopBar.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlTopBar.Name = "pnlTopBar";
+            this.pnlTopBar.Size = new System.Drawing.Size(865, 38);
+            this.pnlTopBar.TabIndex = 0;
+            // 
+            // lblTopIcon
+            // 
+            this.lblTopIcon.Font = new System.Drawing.Font("Segoe MDL2 Assets", 12F);
+            this.lblTopIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(140)))), ((int)(((byte)(0)))));
+            this.lblTopIcon.Location = new System.Drawing.Point(8, 8);
+            this.lblTopIcon.Name = "lblTopIcon";
+            this.lblTopIcon.Size = new System.Drawing.Size(18, 18);
+            this.lblTopIcon.TabIndex = 0;
+            this.lblTopIcon.Text = "";
+            this.lblTopIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblTopTitle
+            // 
+            this.lblTopTitle.AutoSize = true;
+            this.lblTopTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblTopTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(40)))), ((int)(((byte)(55)))));
+            this.lblTopTitle.Location = new System.Drawing.Point(30, 6);
+            this.lblTopTitle.Name = "lblTopTitle";
+            this.lblTopTitle.Size = new System.Drawing.Size(93, 17);
+            this.lblTopTitle.TabIndex = 1;
+            this.lblTopTitle.Text = "EasyClip Studio";
+            // 
+            // lblTopSub
+            // 
+            this.lblTopSub.AutoSize = true;
+            this.lblTopSub.Font = new System.Drawing.Font("Segoe UI", 7.5F);
+            this.lblTopSub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(145)))), ((int)(((byte)(165)))));
+            this.lblTopSub.Location = new System.Drawing.Point(30, 22);
+            this.lblTopSub.Name = "lblTopSub";
+            this.lblTopSub.Size = new System.Drawing.Size(90, 12);
+            this.lblTopSub.TabIndex = 2;
+            this.lblTopSub.Text = "TPMEDIA PREMIUM";
             // 
             // tlpViewHeader
             // 
@@ -1343,13 +1419,75 @@ namespace ReviewMovie
             this.tlpViewHeader.Controls.Add(this.cardTextInput, 1, 0);
             this.tlpViewHeader.Controls.Add(this.cardHeaderActions, 3, 0);
             this.tlpViewHeader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpViewHeader.Location = new System.Drawing.Point(3, 16);
+            this.tlpViewHeader.Location = new System.Drawing.Point(0, 38);
+            this.tlpViewHeader.Margin = new System.Windows.Forms.Padding(0);
             this.tlpViewHeader.Name = "tlpViewHeader";
             this.tlpViewHeader.RowCount = 1;
             this.tlpViewHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpViewHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpViewHeader.Size = new System.Drawing.Size(865, 153);
+            this.tlpViewHeader.Size = new System.Drawing.Size(865, 75);
             this.tlpViewHeader.TabIndex = 0;
+            // 
+            // pnlQuickActions
+            // 
+            this.pnlQuickActions.BackColor = System.Drawing.Color.Transparent;
+            this.pnlQuickActions.Controls.Add(this.btnCancelQuick);
+            this.pnlQuickActions.Controls.Add(this.btnAutoSubtitle);
+            this.pnlQuickActions.Controls.Add(this.btnNewLine);
+            this.pnlQuickActions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlQuickActions.Location = new System.Drawing.Point(0, 113);
+            this.pnlQuickActions.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlQuickActions.Name = "pnlQuickActions";
+            this.pnlQuickActions.Size = new System.Drawing.Size(865, 40);
+            this.pnlQuickActions.TabIndex = 2;
+            // 
+            // btnNewLine
+            // 
+            this.btnNewLine.CornerRadius = 10;
+            this.btnNewLine.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(140)))), ((int)(((byte)(0)))));
+            this.btnNewLine.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnNewLine.ForeColor = System.Drawing.Color.White;
+            this.btnNewLine.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(132)))), ((int)(((byte)(0)))));
+            this.btnNewLine.Location = new System.Drawing.Point(8, 8);
+            this.btnNewLine.Name = "btnNewLine";
+            this.btnNewLine.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(120)))), ((int)(((byte)(0)))));
+            this.btnNewLine.Size = new System.Drawing.Size(92, 24);
+            this.btnNewLine.TabIndex = 0;
+            this.btnNewLine.Text = "New Line";
+            this.btnNewLine.UseVisualStyleBackColor = false;
+            this.btnNewLine.Click += new System.EventHandler(this.btnAddRow_Click);
+            // 
+            // btnAutoSubtitle
+            // 
+            this.btnAutoSubtitle.CornerRadius = 10;
+            this.btnAutoSubtitle.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(252)))));
+            this.btnAutoSubtitle.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnAutoSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
+            this.btnAutoSubtitle.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(240)))), ((int)(((byte)(248)))));
+            this.btnAutoSubtitle.Location = new System.Drawing.Point(108, 8);
+            this.btnAutoSubtitle.Name = "btnAutoSubtitle";
+            this.btnAutoSubtitle.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnAutoSubtitle.Size = new System.Drawing.Size(104, 24);
+            this.btnAutoSubtitle.TabIndex = 1;
+            this.btnAutoSubtitle.Text = "Auto Subtitle";
+            this.btnAutoSubtitle.UseVisualStyleBackColor = false;
+            this.btnAutoSubtitle.Click += new System.EventHandler(this.btnImportSubtitle_Click);
+            // 
+            // btnCancelQuick
+            // 
+            this.btnCancelQuick.CornerRadius = 10;
+            this.btnCancelQuick.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(235)))));
+            this.btnCancelQuick.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnCancelQuick.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.btnCancelQuick.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.btnCancelQuick.Location = new System.Drawing.Point(220, 8);
+            this.btnCancelQuick.Name = "btnCancelQuick";
+            this.btnCancelQuick.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(210)))), ((int)(((byte)(210)))));
+            this.btnCancelQuick.Size = new System.Drawing.Size(78, 24);
+            this.btnCancelQuick.TabIndex = 2;
+            this.btnCancelQuick.Text = "Cancel";
+            this.btnCancelQuick.UseVisualStyleBackColor = false;
+            this.btnCancelQuick.Click += new System.EventHandler(this.btnDestroyAction_Click);
             // 
             // cardRecord
             // 
@@ -1771,13 +1909,23 @@ namespace ReviewMovie
             this.tsMenuView.ResumeLayout(false);
             this.tsMenuView.PerformLayout();
             this.grViewHeader.ResumeLayout(false);
+            this.tlpHeaderRoot.ResumeLayout(false);
+            this.pnlTopBar.ResumeLayout(false);
+            this.pnlTopBar.PerformLayout();
             this.tlpViewHeader.ResumeLayout(false);
+            this.cardRecord.ResumeLayout(false);
+            this.cardTextInput.ResumeLayout(false);
+            this.cardDropVisual.ResumeLayout(false);
+            this.cardHeaderActions.ResumeLayout(false);
+            this.pnlQuickActions.ResumeLayout(false);
             this.tlpImportMedia.ResumeLayout(false);
             this.tlpImportMedia.PerformLayout();
             this.pnlDropHeader.ResumeLayout(false);
+            this.pnlDropHeader.PerformLayout();
             this.tlpText.ResumeLayout(false);
             this.tlpText.PerformLayout();
             this.pnlTextHeader.ResumeLayout(false);
+            this.pnlTextHeader.PerformLayout();
             this.tlpHeaderButton.ResumeLayout(false);
             this.scMain.Panel1.ResumeLayout(false);
             this.scMain.Panel2.ResumeLayout(false);
@@ -1837,7 +1985,16 @@ namespace ReviewMovie
         private System.Windows.Forms.ToolStripMenuItem PartRenderAll;
         private System.Windows.Forms.TableLayoutPanel tlpView;
         private System.Windows.Forms.GroupBox grViewHeader;
+        private System.Windows.Forms.TableLayoutPanel tlpHeaderRoot;
+        private System.Windows.Forms.Panel pnlTopBar;
+        private System.Windows.Forms.Label lblTopTitle;
+        private System.Windows.Forms.Label lblTopSub;
+        private System.Windows.Forms.Label lblTopIcon;
         private System.Windows.Forms.TableLayoutPanel tlpViewHeader;
+        private System.Windows.Forms.Panel pnlQuickActions;
+        private ReviewMovie.Base.Controls.TagButton btnNewLine;
+        private ReviewMovie.Base.Controls.TagButton btnAutoSubtitle;
+        private ReviewMovie.Base.Controls.TagButton btnCancelQuick;
         private ReviewMovie.Base.Controls.CardPanel cardRecord;
         private ReviewMovie.Base.Controls.CardPanel cardTextInput;
         private ReviewMovie.Base.Controls.CardPanel cardDropVisual;
