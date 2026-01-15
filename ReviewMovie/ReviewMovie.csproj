@@ -103,6 +103,9 @@
     <Compile Include="Base\UiTheme.cs" />
     <Compile Include="Base\Win32.cs" />
     <Compile Include="Base\Controls\IconCircleButton.cs" />
+    <Compile Include="Base\Controls\PillComboBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Base\Controls\PillTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
