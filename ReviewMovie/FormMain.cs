@@ -1,4 +1,4 @@
-using Common.Constant;
+﻿using Common.Constant;
 using Common.Model;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
@@ -1885,12 +1885,6 @@ namespace ReviewMovie
         private void txtImPortMedia_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
-        }
-
-        private void lnkClearText_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            // UI only: clear text input (no business logic changes)
-            txtTextInput.Text = string.Empty;
         }
 
         private void InSertInputMediaData(string fileNames, int index)
