@@ -15,6 +15,8 @@ namespace ReviewMovie.Base.Controls
         private Color _borderColor = UiTheme.PillBorder;
         private Color _fillColor = Color.FromArgb(248, 249, 253);
 
+        public event EventHandler SelectedIndexChanged;
+
         public PillComboBox()
         {
             _initialized = false;
@@ -54,7 +56,7 @@ namespace ReviewMovie.Base.Controls
             _initialized = true;
 
             // Bubble common events
-            _comboBox.SelectedIndexChanged += (s, e) => OnSelectedIndexChanged(e);
+            _comboBox.SelectedIndexChanged += (s, e) => SelectedIndexChanged?.Invoke(this, e);
             _comboBox.TextChanged += (s, e) => OnTextChanged(e);
         }
 
