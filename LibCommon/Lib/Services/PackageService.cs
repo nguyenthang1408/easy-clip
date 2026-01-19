@@ -13,7 +13,7 @@ namespace LibCommon.Lib.Services
     /// </summary>
     public class PackageService
     {
-        private const string BASE_URL = "https://t2psoft.com/api/v1";
+        private const string BASE_URL = "https://t2psoft.com";
         private const string API_VERSION = "1.0";
 
         private readonly HttpClient _httpClient;
@@ -45,8 +45,8 @@ namespace LibCommon.Lib.Services
 
                 var jsonContent = JsonConvert.SerializeObject(request);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-                var response = await _httpClient.PostAsync("http://localhost:3000/api/check", content);
+                string requestUrl = BASE_URL + "/api/v1/GetVersion/ReviewMovie";
+                var response = await _httpClient.PostAsync(requestUrl, content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -81,8 +81,8 @@ namespace LibCommon.Lib.Services
                 var request = new GetVoiceSourceRequest();
                 var jsonContent = JsonConvert.SerializeObject(request);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-                var response = await _httpClient.PostAsync("http://localhost:3000/api/Voice", content);
+                string requestUrl = BASE_URL + "/GetVoiceSourceEnum";
+                var response = await _httpClient.PostAsync(requestUrl, content);
 
                 if (response.IsSuccessStatusCode)
                 {

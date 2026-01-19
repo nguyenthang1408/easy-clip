@@ -30,8 +30,8 @@ namespace Common.Services
 
         public async Task<VersionResponse> ReviewMovieVersionAsync(string appCode, string appName)
         {
-            //string requestUrl = _baseUrl + "/api/v1/GetVersion/ReviewMovie";
-            string requestUrl = "http://localhost:3000/api/check";
+            string requestUrl = _baseUrl + "/api/v1/GetVersion/ReviewMovie";
+            //string requestUrl = "http://localhost:3000/api/check";
             var requestBody = new
             {
                 appCode = appCode,
