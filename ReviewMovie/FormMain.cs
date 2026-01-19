@@ -1,4 +1,4 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Model;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
@@ -136,6 +136,18 @@ namespace ReviewMovie
             InitializeComponent();
             this.toolTipPL = new ToolTip();
             this.Text = "EasyClip || " + "TPMEDIA";
+
+            // Apply common ToolStrip/Menu styling (safe even if not supported at runtime)
+            try
+            {
+                var renderer = new Base.Controls.UiToolStripRenderer(new Base.Controls.UiToolStripColors());
+                tsMenuView.Renderer = renderer;
+                ctMenu.Renderer = renderer;
+            }
+            catch
+            {
+                // ignore (designer/runtime differences)
+            }
 
             _appcode = appcode;
             _apikey = apikey;
