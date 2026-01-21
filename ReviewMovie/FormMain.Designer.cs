@@ -50,10 +50,10 @@ namespace ReviewMovie
             this.tsMenuDeleteRow = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.lblapi = new System.Windows.Forms.Label();
-            this.txtAppID = new System.Windows.Forms.TextBox();
+            this.txtAppID = new ReviewMovie.Base.Controls.UiTextBox();
             this.btnOpenProject = new ReviewMovie.Base.Controls.UiButton();
             this.lblToken = new System.Windows.Forms.Label();
-            this.txtToken = new System.Windows.Forms.TextBox();
+            this.txtToken = new ReviewMovie.Base.Controls.UiTextBox();
             this.grbConfigRender = new System.Windows.Forms.GroupBox();
             this.ckOpenPlayer = new ReviewMovie.Base.Controls.UiCheckBox();
             this.nbSpeechRatio = new System.Windows.Forms.NumericUpDown();
@@ -1710,10 +1710,10 @@ namespace ReviewMovie
         #endregion
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblapi;
-        private System.Windows.Forms.TextBox txtAppID;
+        private ReviewMovie.Base.Controls.UiTextBox txtAppID;
         private ReviewMovie.Base.Controls.UiButton btnOpenProject;
         private System.Windows.Forms.Label lblToken;
-        private System.Windows.Forms.TextBox txtToken;
+        private ReviewMovie.Base.Controls.UiTextBox txtToken;
         private System.Windows.Forms.GroupBox grbConfigRender;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cbxSpeechType;
