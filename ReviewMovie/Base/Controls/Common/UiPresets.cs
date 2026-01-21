@@ -65,7 +65,7 @@ namespace ReviewMovie.Base.Controls.Common
                 BorderStyle = UiBorderStyle.None,
                 IconSize = new Size(18, 18),
                 IconPadding = 8,
-                TextAlign = System.Windows.Forms.ContentAlignment.MiddleCenter
+                TextAlign = ContentAlignment.MiddleCenter
             };
 
             public static UiButtonStyle Secondary => new UiButtonStyle
@@ -82,7 +82,7 @@ namespace ReviewMovie.Base.Controls.Common
                 BorderStyle = UiBorderStyle.Solid,
                 IconSize = new Size(18, 18),
                 IconPadding = 8,
-                TextAlign = System.Windows.Forms.ContentAlignment.MiddleCenter
+                TextAlign = ContentAlignment.MiddleCenter
             };
         }
 
