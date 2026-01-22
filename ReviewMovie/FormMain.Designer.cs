@@ -56,7 +56,7 @@ namespace ReviewMovie
             this.txtToken = new ReviewMovie.Base.Controls.UiTextBox();
             this.grbConfigRender = new System.Windows.Forms.GroupBox();
             this.ckOpenPlayer = new ReviewMovie.Base.Controls.UiCheckBox();
-            this.nbSpeechRatio = new System.Windows.Forms.NumericUpDown();
+            this.nbSpeechRatio = new ReviewMovie.Base.Controls.UiNumericUpDown();
             this.cbSettingTemplate = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
             this.btnSaveEffectSetting = new ReviewMovie.Base.Controls.UiButton();
@@ -64,13 +64,13 @@ namespace ReviewMovie
             this.cbLanguageSelect = new System.Windows.Forms.ComboBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.nScaleAudioRangeEnd = new System.Windows.Forms.NumericUpDown();
-            this.nScaleAudioRangeStart = new System.Windows.Forms.NumericUpDown();
+            this.nScaleAudioRangeEnd = new ReviewMovie.Base.Controls.UiNumericUpDown();
+            this.nScaleAudioRangeStart = new ReviewMovie.Base.Controls.UiNumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
             this.ckHflipRandom = new ReviewMovie.Base.Controls.UiCheckBox();
-            this.nbThread = new System.Windows.Forms.NumericUpDown();
+            this.nbThread = new ReviewMovie.Base.Controls.UiNumericUpDown();
             this.label13 = new System.Windows.Forms.Label();
-            this.nbVolumnOrigin = new System.Windows.Forms.NumericUpDown();
+            this.nbVolumnOrigin = new ReviewMovie.Base.Controls.UiNumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.ckNotUseAudio = new ReviewMovie.Base.Controls.UiCheckBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -78,7 +78,7 @@ namespace ReviewMovie
             this.label12 = new System.Windows.Forms.Label();
             this.cbZoomQuality = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.nFPS = new System.Windows.Forms.NumericUpDown();
+            this.nFPS = new ReviewMovie.Base.Controls.UiNumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
             this.cbZoomRatio = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -1726,7 +1726,7 @@ namespace ReviewMovie
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox cbZoomQuality;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.NumericUpDown nFPS;
+        private ReviewMovie.Base.Controls.UiNumericUpDown nFPS;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox cbZoomRatio;
         private System.Windows.Forms.Label label9;
@@ -1781,9 +1781,9 @@ namespace ReviewMovie
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_renderstatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_inputtext;
         private System.Windows.Forms.TextBox txtTextInput;
-        private System.Windows.Forms.NumericUpDown nbVolumnOrigin;
+        private ReviewMovie.Base.Controls.UiNumericUpDown nbVolumnOrigin;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown nbThread;
+        private ReviewMovie.Base.Controls.UiNumericUpDown nbThread;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ToolStripMenuItem tsMenuDeleteRow;
         private System.Windows.Forms.ToolStripMenuItem ConvertTex2SpeechSelect;
@@ -1791,10 +1791,10 @@ namespace ReviewMovie
         private System.Windows.Forms.ComboBox cbProjectName;
         private System.Windows.Forms.ToolStripMenuItem PartRenderSelect;
         private ReviewMovie.Base.Controls.UiCheckBox ckHflipRandom;
-        private System.Windows.Forms.NumericUpDown nScaleAudioRangeStart;
+        private ReviewMovie.Base.Controls.UiNumericUpDown nScaleAudioRangeStart;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.NumericUpDown nScaleAudioRangeEnd;
+        private ReviewMovie.Base.Controls.UiNumericUpDown nScaleAudioRangeEnd;
         private System.Windows.Forms.ToolStripMenuItem MenuItemReloadVideoTime;
         private System.Windows.Forms.ToolStripMenuItem tsMAll;
         private System.Windows.Forms.ToolStripMenuItem tsMSelected;
@@ -1812,7 +1812,7 @@ namespace ReviewMovie
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.GroupBox grbActionRender;
         private System.Windows.Forms.GroupBox grbConfigVoice;
-        private System.Windows.Forms.NumericUpDown nbSpeechRatio;
+        private ReviewMovie.Base.Controls.UiNumericUpDown nbSpeechRatio;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btnAddRow;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;

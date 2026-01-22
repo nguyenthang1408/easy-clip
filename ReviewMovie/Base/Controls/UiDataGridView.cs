@@ -90,8 +90,8 @@ namespace ReviewMovie.Base.Controls
             DefaultCellStyle.BackColor = _cellBackColor;
             DefaultCellStyle.ForeColor = _cellForeColor;
             DefaultCellStyle.Font = _cellFont;
-            DefaultCellStyle.SelectionBackColor = ThemeManager.Current.Hover;
-            DefaultCellStyle.SelectionForeColor = _cellForeColor;
+            DefaultCellStyle.SelectionBackColor = ThemeManager.Current.SelectionBackColor;
+            DefaultCellStyle.SelectionForeColor = ThemeManager.Current.SelectionForeColor;
 
             ColumnHeadersDefaultCellStyle.BackColor = _headerBackColor;
             ColumnHeadersDefaultCellStyle.ForeColor = _headerForeColor;

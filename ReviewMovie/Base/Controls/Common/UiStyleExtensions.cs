@@ -25,6 +25,7 @@ namespace ReviewMovie.Base.Controls.Common
             if (btn == null || style == null) return;
             btn.BackgroundColor = style.BackgroundColor;
             btn.HoverColor = style.HoverColor;
+            btn.PressedColor = style.PressedColor;
             btn.DisabledColor = style.DisabledColor;
             btn.TextColor = style.TextColor;
             btn.TextHoverColor = style.TextHoverColor;
@@ -96,6 +97,20 @@ namespace ReviewMovie.Base.Controls.Common
             grid.BorderRadius = style.BorderRadius;
 
             grid.ApplyStyles();
+        }
+
+        public static void ApplyStyle(this UiNumericUpDown num, UiNumericUpDownStyle style)
+        {
+            if (num == null || style == null) return;
+            num.BackgroundColor = style.BackgroundColor;
+            num.TextColor = style.TextColor;
+            num.ButtonColor = style.ButtonColor;
+            num.ButtonHoverColor = style.ButtonHoverColor;
+            num.ButtonIconColor = style.ButtonIconColor;
+            num.BorderColor = style.BorderColor;
+            num.BorderFocusColor = style.BorderFocusColor;
+            num.BorderSize = style.BorderSize;
+            num.BorderRadius = style.BorderRadius;
         }
     }
 }

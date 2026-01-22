@@ -14,6 +14,7 @@ namespace ReviewMovie.Base.Controls
 
         private Color _backgroundColor = ThemeManager.Current.Accent;
         private Color _hoverColor = ThemeManager.Current.AccentHover;
+        private Color _pressedColor = ThemeManager.Current.AccentPressed;
         private Color _disabledColor = ThemeManager.Current.Disabled;
         private Color _textColor = Color.White;
         private Color _textHoverColor = Color.White;
@@ -56,6 +57,13 @@ namespace ReviewMovie.Base.Controls
         {
             get => _hoverColor;
             set { _hoverColor = value; Invalidate(); }
+        }
+
+        [Category("Appearance")]
+        public Color PressedColor
+        {
+            get => _pressedColor;
+            set { _pressedColor = value; Invalidate(); }
         }
 
         [Category("Appearance")]
@@ -206,7 +214,7 @@ namespace ReviewMovie.Base.Controls
             var rect = new Rectangle(0, 0, Width - 1, Height - 1);
 
             var back = Enabled
-                ? (_hovered ? _hoverColor : _backgroundColor)
+                ? (_pressed ? _pressedColor : (_hovered ? _hoverColor : _backgroundColor))
                 : _disabledColor;
 
             using (var path = UiHelpers.CreateRoundedRectPath(rect, _borderRadius))

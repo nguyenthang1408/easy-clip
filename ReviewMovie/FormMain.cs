@@ -177,6 +177,13 @@ namespace ReviewMovie
                 ckOpenPlayer.ApplyStyle(UiPresets.CheckBox.Default);
 
                 dgvMainView.ApplyStyle(UiPresets.Grid.Default);
+
+                nFPS.ApplyStyle(UiPresets.Numeric.Default);
+                nbThread.ApplyStyle(UiPresets.Numeric.Default);
+                nbVolumnOrigin.ApplyStyle(UiPresets.Numeric.Default);
+                nbSpeechRatio.ApplyStyle(UiPresets.Numeric.Default);
+                nScaleAudioRangeStart.ApplyStyle(UiPresets.Numeric.Default);
+                nScaleAudioRangeEnd.ApplyStyle(UiPresets.Numeric.Default);
             }
             catch
             {

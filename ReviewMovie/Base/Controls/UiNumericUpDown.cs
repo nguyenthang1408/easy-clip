@@ -8,7 +8,7 @@ using ReviewMovie.Base.Controls.Common;
 namespace ReviewMovie.Base.Controls
 {
     [DefaultEvent(nameof(ValueChanged))]
-    public class UiNumericUpDown : UserControl
+    public class UiNumericUpDown : UserControl, ISupportInitialize
     {
         private readonly NumericUpDown _numeric;
         private bool _focused;
@@ -51,6 +51,20 @@ namespace ReviewMovie.Base.Controls
 
             ApplyThemeToInner();
             LayoutChildren();
+        }
+
+        // Designer compatibility (FormMain.Designer.cs uses BeginInit/EndInit pattern)
+        public void BeginInit()
+        {
+            // no-op
+        }
+
+        public void EndInit()
+        {
+            // ensure layout after designer sets properties
+            ApplyThemeToInner();
+            LayoutChildren();
+            Invalidate();
         }
 
         private void ApplyThemeToInner()

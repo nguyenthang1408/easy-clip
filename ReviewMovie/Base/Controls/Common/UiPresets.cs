@@ -30,7 +30,7 @@ namespace ReviewMovie.Base.Controls.Common
                 BorderColor = ThemeManager.Current.Border,
                 BorderFocusColor = ThemeManager.Current.BorderFocus,
                 HoverColor = ThemeManager.Current.Hover,
-                BorderRadius = 10,
+                BorderRadius = 12,
                 BorderSize = 1,
                 BorderStyle = UiBorderStyle.Solid,
                 IconSize = new Size(16, 16)
@@ -55,12 +55,13 @@ namespace ReviewMovie.Base.Controls.Common
             {
                 BackgroundColor = ThemeManager.Current.Accent,
                 HoverColor = ThemeManager.Current.AccentHover,
+                PressedColor = ThemeManager.Current.AccentPressed,
                 DisabledColor = ThemeManager.Current.Disabled,
                 TextColor = Color.White,
                 TextHoverColor = Color.White,
                 BorderColor = Color.Transparent,
                 BorderHoverColor = Color.Transparent,
-                BorderRadius = 12,
+                BorderRadius = 10,
                 BorderSize = 0,
                 BorderStyle = UiBorderStyle.None,
                 IconSize = new Size(18, 18),
@@ -72,12 +73,13 @@ namespace ReviewMovie.Base.Controls.Common
             {
                 BackgroundColor = ThemeManager.Current.SurfaceColor,
                 HoverColor = ThemeManager.Current.Hover,
+                PressedColor = ThemeManager.Current.Hover,
                 DisabledColor = ThemeManager.Current.Disabled,
                 TextColor = ThemeManager.Current.TextPrimary,
                 TextHoverColor = ThemeManager.Current.TextPrimary,
                 BorderColor = ThemeManager.Current.Border,
                 BorderHoverColor = ThemeManager.Current.BorderFocus,
-                BorderRadius = 12,
+                BorderRadius = 10,
                 BorderSize = 1,
                 BorderStyle = UiBorderStyle.Solid,
                 IconSize = new Size(18, 18),
@@ -119,6 +121,22 @@ namespace ReviewMovie.Base.Controls.Common
                 BorderColor = ThemeManager.Current.Border,
                 BorderSize = 1,
                 BorderRadius = 0
+            };
+        }
+
+        public static class Numeric
+        {
+            public static UiNumericUpDownStyle Default => new UiNumericUpDownStyle
+            {
+                BackgroundColor = ThemeManager.Current.SurfaceColor,
+                TextColor = ThemeManager.Current.TextPrimary,
+                ButtonColor = ThemeManager.Current.SurfaceColor,
+                ButtonHoverColor = ThemeManager.Current.Hover,
+                ButtonIconColor = ThemeManager.Current.TextSecondary,
+                BorderColor = ThemeManager.Current.Border,
+                BorderFocusColor = ThemeManager.Current.BorderFocus,
+                BorderSize = 1,
+                BorderRadius = 10
             };
         }
     }

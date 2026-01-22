@@ -20,6 +20,7 @@ namespace ReviewMovie.Base.Controls.Common
     {
         public Color BackgroundColor { get; set; } = ThemeManager.Current.Accent;
         public Color HoverColor { get; set; } = ThemeManager.Current.AccentHover;
+        public Color PressedColor { get; set; } = ThemeManager.Current.AccentPressed;
         public Color DisabledColor { get; set; } = ThemeManager.Current.Disabled;
         public Color TextColor { get; set; } = Color.White;
         public Color TextHoverColor { get; set; } = Color.White;
@@ -84,6 +85,20 @@ namespace ReviewMovie.Base.Controls.Common
         public Color BorderColor { get; set; } = ThemeManager.Current.Border;
         public int BorderSize { get; set; } = 1;
         public int BorderRadius { get; set; } = 0;
+    }
+
+    public sealed class UiNumericUpDownStyle
+    {
+        public Color BackgroundColor { get; set; } = ThemeManager.Current.SurfaceColor;
+        public Color TextColor { get; set; } = ThemeManager.Current.TextPrimary;
+        public Color ButtonColor { get; set; } = ThemeManager.Current.SurfaceColor;
+        public Color ButtonHoverColor { get; set; } = ThemeManager.Current.Hover;
+        public Color ButtonIconColor { get; set; } = ThemeManager.Current.TextSecondary;
+
+        public Color BorderColor { get; set; } = ThemeManager.Current.Border;
+        public Color BorderFocusColor { get; set; } = ThemeManager.Current.BorderFocus;
+        public int BorderSize { get; set; } = 1;
+        public int BorderRadius { get; set; } = 10;
     }
 }
 
