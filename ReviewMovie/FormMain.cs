@@ -1,4 +1,4 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Model;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
@@ -17,6 +17,7 @@ using ReviewMovie.Infrastructure.Config;
 using ReviewMovie.Infrastructure.Project;
 using ReviewMovie.Model;
 using ReviewMovie.Services;
+using ReviewMovie.Base.Controls.Common;
 using SubtitlesParser;
 using System;
 using System.Collections.Generic;
@@ -137,6 +138,58 @@ namespace ReviewMovie
             this.toolTipPL = new ToolTip();
             this.Text = "EasyClip || " + "TPMEDIA";
 
+            // Apply common ToolStrip/Menu styling (safe even if not supported at runtime)
+            try
+            {
+                var renderer = new Base.Controls.UiToolStripRenderer(new Base.Controls.UiToolStripColors());
+                tsMenuView.Renderer = renderer;
+                ctMenu.Renderer = renderer;
+            }
+            catch
+            {
+                // ignore (designer/runtime differences)
+            }
+
+            // Apply common UI presets (easy to read + maintain)
+            try
+            {
+                txtAppID.ApplyStyle(UiPresets.TextBox.Multiline);
+                txtToken.ApplyStyle(UiPresets.TextBox.Multiline);
+
+                btnAddAll.ApplyStyle(UiPresets.Button.Primary);
+                btnConvertAudio.ApplyStyle(UiPresets.Button.Primary);
+                btnSaveAudio.ApplyStyle(UiPresets.Button.Primary);
+                btnRenderVideoPart.ApplyStyle(UiPresets.Button.Primary);
+
+                btnOpenProject.ApplyStyle(UiPresets.Button.Secondary);
+                btnSaveVoiceSource.ApplyStyle(UiPresets.Button.Secondary);
+                btnSaveEffectSetting.ApplyStyle(UiPresets.Button.Secondary);
+                btnRecord.ApplyStyle(UiPresets.Button.Secondary);
+                btnExpand.ApplyStyle(UiPresets.Button.Secondary);
+                btnCollapse.ApplyStyle(UiPresets.Button.Secondary);
+
+                ckNotUseAudio.ApplyStyle(UiPresets.CheckBox.Default);
+                ckHflip.ApplyStyle(UiPresets.CheckBox.Default);
+                ckRotate.ApplyStyle(UiPresets.CheckBox.Default);
+                CkZoom.ApplyStyle(UiPresets.CheckBox.Default);
+                ckHflipRandom.ApplyStyle(UiPresets.CheckBox.Default);
+                ckRandomMoveLeftRight.ApplyStyle(UiPresets.CheckBox.Default);
+                ckOpenPlayer.ApplyStyle(UiPresets.CheckBox.Default);
+
+                dgvMainView.ApplyStyle(UiPresets.Grid.Default);
+
+                nFPS.ApplyStyle(UiPresets.Numeric.Default);
+                nbThread.ApplyStyle(UiPresets.Numeric.Default);
+                nbVolumnOrigin.ApplyStyle(UiPresets.Numeric.Default);
+                nbSpeechRatio.ApplyStyle(UiPresets.Numeric.Default);
+                nScaleAudioRangeStart.ApplyStyle(UiPresets.Numeric.Default);
+                nScaleAudioRangeEnd.ApplyStyle(UiPresets.Numeric.Default);
+            }
+            catch
+            {
+                // ignore if some controls are not initialized (designer/runtime differences)
+            }
+
             _appcode = appcode;
             _apikey = apikey;
 
@@ -157,6 +210,25 @@ namespace ReviewMovie
             _loadConfig.InitOrUpdateBaseConfig(_apikey, txtAppID.Text, txtAppID.Text, txtToken.Text);
             
             Init();
+        }
+
+        // ---- Custom title bar (borderless window) ----
+        private void pnlMainTopBar_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Base.Win32.BeginDrag(this);
+            }
+        }
+
+        private void btnWindowClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void btnWindowMinimize_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized; // minimize to taskbar
         }
         private void Form1_Load(object sender, EventArgs e)
         {

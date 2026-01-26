@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Windows.Forms;
+using ReviewMovie.Base.Controls.Common;
 
 namespace ReviewMovie
 {
@@ -26,6 +27,9 @@ namespace ReviewMovie
             // Kiểm tra xem ứng dụng đã chạy hay chưa
             if (mutex.WaitOne(TimeSpan.Zero, true))
             {
+                // Apply global theme (match screenshot palette)
+                ThemeManager.Current = new ThemeColors();
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new LoginApiKey());
@@ -42,6 +46,7 @@ namespace ReviewMovie
 
                 if (result == DialogResult.Yes)
                 {
+                    ThemeManager.Current = new ThemeColors();
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     Application.Run(new LoginApiKey());

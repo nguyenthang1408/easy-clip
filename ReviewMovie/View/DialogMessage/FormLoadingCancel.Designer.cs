@@ -1,4 +1,4 @@
-﻿namespace EasyClip.View.DialogMessage
+namespace EasyClip.View.DialogMessage
 {
     partial class FormLoadingCancel
     {
@@ -55,7 +55,8 @@
             // FormLoadingCancel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            // Prevent runtime layout changes due to font/DPI autoscaling
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(200, 190);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.pictureBox1);
