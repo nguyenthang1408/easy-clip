@@ -1603,7 +1603,7 @@ namespace ReviewMovie
             this.scMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.scMain.IsSplitterFixed = true;
-            this.scMain.Location = new System.Drawing.Point(0, 42);
+            this.scMain.Location = new System.Drawing.Point(0, 0);
             this.scMain.Name = "scMain";
             // 
             // scMain.Panel1
@@ -1613,7 +1613,7 @@ namespace ReviewMovie
             // scMain.Panel2
             // 
             this.scMain.Panel2.Controls.Add(this.scSetting);
-            this.scMain.Size = new System.Drawing.Size(1294, 694);
+            this.scMain.Size = new System.Drawing.Size(1294, 736);
             this.scMain.SplitterDistance = 910;
             this.scMain.TabIndex = 43;
             // 
@@ -1666,6 +1666,7 @@ namespace ReviewMovie
             // 
             // scSetting.Panel2
             // 
+            this.scSetting.Panel2.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.scSetting.Panel2.Controls.Add(this.grboxSetting);
             this.scSetting.Size = new System.Drawing.Size(380, 736);
             this.scSetting.SplitterDistance = 27;
@@ -1693,8 +1694,8 @@ namespace ReviewMovie
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1294, 736);
-            this.Controls.Add(this.pnlMainTopBar);
             this.Controls.Add(this.scMain);
+            this.Controls.Add(this.pnlMainTopBar);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
