@@ -998,15 +998,13 @@ namespace ReviewMovie
             this.tlpView.ColumnCount = 1;
             this.tlpView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpView.Controls.Add(this.dgvMainView, 0, 3);
-            this.tlpView.Controls.Add(this.tsMenuView, 0, 2);
-            this.tlpView.Controls.Add(this.grViewHeader, 0, 1);
-            this.tlpView.Controls.Add(this.pnlMainTopBar, 0, 0);
+            this.tlpView.Controls.Add(this.dgvMainView, 0, 2);
+            this.tlpView.Controls.Add(this.tsMenuView, 0, 1);
+            this.tlpView.Controls.Add(this.grViewHeader, 0, 0);
             this.tlpView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpView.Location = new System.Drawing.Point(0, 0);
             this.tlpView.Name = "tlpView";
-            this.tlpView.RowCount = 4;
-            this.tlpView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tlpView.RowCount = 3;
             this.tlpView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 87.22222F));
             this.tlpView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.77778F));
             this.tlpView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 529F));
@@ -1022,12 +1020,12 @@ namespace ReviewMovie
             this.pnlMainTopBar.Controls.Add(this.lblMainTopSub);
             this.pnlMainTopBar.Controls.Add(this.lblMainTopTitle);
             this.pnlMainTopBar.Controls.Add(this.lblMainTopIcon);
-            this.pnlMainTopBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMainTopBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlMainTopBar.Location = new System.Drawing.Point(0, 0);
             this.pnlMainTopBar.Margin = new System.Windows.Forms.Padding(0);
             this.pnlMainTopBar.Name = "pnlMainTopBar";
             this.pnlMainTopBar.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
-            this.pnlMainTopBar.Size = new System.Drawing.Size(877, 42);
+            this.pnlMainTopBar.Size = new System.Drawing.Size(1294, 42);
             this.pnlMainTopBar.TabIndex = 44;
             this.pnlMainTopBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlMainTopBar_MouseDown);
             // 
@@ -1605,7 +1603,7 @@ namespace ReviewMovie
             this.scMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.scMain.IsSplitterFixed = true;
-            this.scMain.Location = new System.Drawing.Point(0, 0);
+            this.scMain.Location = new System.Drawing.Point(0, 42);
             this.scMain.Name = "scMain";
             // 
             // scMain.Panel1
@@ -1615,7 +1613,7 @@ namespace ReviewMovie
             // scMain.Panel2
             // 
             this.scMain.Panel2.Controls.Add(this.scSetting);
-            this.scMain.Size = new System.Drawing.Size(1294, 736);
+            this.scMain.Size = new System.Drawing.Size(1294, 694);
             this.scMain.SplitterDistance = 910;
             this.scMain.TabIndex = 43;
             // 
@@ -1695,6 +1693,7 @@ namespace ReviewMovie
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1294, 736);
+            this.Controls.Add(this.pnlMainTopBar);
             this.Controls.Add(this.scMain);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
