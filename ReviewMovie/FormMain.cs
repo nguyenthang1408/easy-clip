@@ -211,6 +211,25 @@ namespace ReviewMovie
             
             Init();
         }
+
+        // ---- Custom title bar (borderless window) ----
+        private void pnlMainTopBar_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Base.Win32.BeginDrag(this);
+            }
+        }
+
+        private void btnWindowClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void btnWindowMinimize_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized; // minimize to taskbar
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             //CreateProjectPath();  // bỏ tạo project tại thư mục gốc

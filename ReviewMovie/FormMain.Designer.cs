@@ -130,6 +130,8 @@ namespace ReviewMovie
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnDestroyAction = new System.Windows.Forms.ToolStripButton();
             this.pnlMainTopBar = new System.Windows.Forms.Panel();
+            this.btnWindowMinimize = new ReviewMovie.Base.Controls.IconCircleButton();
+            this.btnWindowClose = new ReviewMovie.Base.Controls.IconCircleButton();
             this.lblMainTopSub = new System.Windows.Forms.Label();
             this.lblMainTopTitle = new System.Windows.Forms.Label();
             this.lblMainTopIcon = new System.Windows.Forms.Label();
@@ -1015,6 +1017,8 @@ namespace ReviewMovie
             // pnlMainTopBar
             // 
             this.pnlMainTopBar.BackColor = System.Drawing.Color.White;
+            this.pnlMainTopBar.Controls.Add(this.btnWindowMinimize);
+            this.pnlMainTopBar.Controls.Add(this.btnWindowClose);
             this.pnlMainTopBar.Controls.Add(this.lblMainTopSub);
             this.pnlMainTopBar.Controls.Add(this.lblMainTopTitle);
             this.pnlMainTopBar.Controls.Add(this.lblMainTopIcon);
@@ -1025,6 +1029,41 @@ namespace ReviewMovie
             this.pnlMainTopBar.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
             this.pnlMainTopBar.Size = new System.Drawing.Size(877, 42);
             this.pnlMainTopBar.TabIndex = 44;
+            this.pnlMainTopBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlMainTopBar_MouseDown);
+            // 
+            // btnWindowMinimize
+            // 
+            this.btnWindowMinimize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnWindowMinimize.CornerRadius = 10;
+            this.btnWindowMinimize.Font = new System.Drawing.Font("Segoe MDL2 Assets", 10F);
+            this.btnWindowMinimize.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
+            this.btnWindowMinimize.Location = new System.Drawing.Point(815, 8);
+            this.btnWindowMinimize.Name = "btnWindowMinimize";
+            this.btnWindowMinimize.NormalBackColor = System.Drawing.Color.White;
+            this.btnWindowMinimize.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.btnWindowMinimize.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.btnWindowMinimize.Size = new System.Drawing.Size(26, 26);
+            this.btnWindowMinimize.TabIndex = 46;
+            this.btnWindowMinimize.Text = "";
+            this.btnWindowMinimize.UseVisualStyleBackColor = true;
+            this.btnWindowMinimize.Click += new System.EventHandler(this.btnWindowMinimize_Click);
+            // 
+            // btnWindowClose
+            // 
+            this.btnWindowClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnWindowClose.CornerRadius = 10;
+            this.btnWindowClose.Font = new System.Drawing.Font("Segoe MDL2 Assets", 10F);
+            this.btnWindowClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
+            this.btnWindowClose.Location = new System.Drawing.Point(845, 8);
+            this.btnWindowClose.Name = "btnWindowClose";
+            this.btnWindowClose.NormalBackColor = System.Drawing.Color.White;
+            this.btnWindowClose.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.btnWindowClose.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.btnWindowClose.Size = new System.Drawing.Size(26, 26);
+            this.btnWindowClose.TabIndex = 45;
+            this.btnWindowClose.Text = "";
+            this.btnWindowClose.UseVisualStyleBackColor = true;
+            this.btnWindowClose.Click += new System.EventHandler(this.btnWindowClose_Click);
             // 
             // lblMainTopIcon
             // 
@@ -1036,6 +1075,7 @@ namespace ReviewMovie
             this.lblMainTopIcon.TabIndex = 0;
             this.lblMainTopIcon.Text = "";
             this.lblMainTopIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblMainTopIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlMainTopBar_MouseDown);
             // 
             // lblMainTopTitle
             // 
@@ -1047,6 +1087,7 @@ namespace ReviewMovie
             this.lblMainTopTitle.Size = new System.Drawing.Size(93, 17);
             this.lblMainTopTitle.TabIndex = 1;
             this.lblMainTopTitle.Text = "EasyClip Studio";
+            this.lblMainTopTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlMainTopBar_MouseDown);
             // 
             // lblMainTopSub
             // 
@@ -1058,6 +1099,7 @@ namespace ReviewMovie
             this.lblMainTopSub.Size = new System.Drawing.Size(90, 12);
             this.lblMainTopSub.TabIndex = 2;
             this.lblMainTopSub.Text = "TPMEDIA PREMIUM";
+            this.lblMainTopSub.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlMainTopBar_MouseDown);
             // 
             // dgvMainView
             // 
@@ -1656,7 +1698,7 @@ namespace ReviewMovie
             this.Controls.Add(this.scMain);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Name = "FormMain";
@@ -1821,6 +1863,8 @@ namespace ReviewMovie
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton btnDestroyAction;
         private System.Windows.Forms.Panel pnlMainTopBar;
+        private ReviewMovie.Base.Controls.IconCircleButton btnWindowMinimize;
+        private ReviewMovie.Base.Controls.IconCircleButton btnWindowClose;
         private System.Windows.Forms.Label lblMainTopSub;
         private System.Windows.Forms.Label lblMainTopTitle;
         private System.Windows.Forms.Label lblMainTopIcon;
