@@ -25,7 +25,8 @@ namespace ReviewMovie.Base.Controls
                 ControlStyles.UserPaint |
                 ControlStyles.AllPaintingInWmPaint |
                 ControlStyles.OptimizedDoubleBuffer |
-                ControlStyles.ResizeRedraw,
+                ControlStyles.ResizeRedraw |
+                ControlStyles.SupportsTransparentBackColor,
                 true);
 
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
