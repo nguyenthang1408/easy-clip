@@ -24,6 +24,27 @@ namespace ReviewMovie
         [STAThread]
         static void Main()
         {
+            // Show unhandled exceptions instead of failing silently.
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            Application.ThreadException += (s, e) =>
+            {
+                try
+                {
+                    MessageBox.Show(e.Exception?.ToString() ?? "Unknown UI thread exception", "Unhandled UI Exception",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch { /* ignore */ }
+            };
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                try
+                {
+                    MessageBox.Show(e.ExceptionObject?.ToString() ?? "Unknown non-UI exception", "Unhandled Exception",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch { /* ignore */ }
+            };
+
             // Kiểm tra xem ứng dụng đã chạy hay chưa
             if (mutex.WaitOne(TimeSpan.Zero, true))
             {
@@ -32,7 +53,14 @@ namespace ReviewMovie
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new LoginApiKey());
+                try
+                {
+                    Application.Run(new LoginApiKey());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Startup error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 mutex.ReleaseMutex();
             }
             else
@@ -49,7 +77,14 @@ namespace ReviewMovie
                     ThemeManager.Current = new ThemeColors();
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
-                    Application.Run(new LoginApiKey());
+                    try
+                    {
+                        Application.Run(new LoginApiKey());
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "Startup error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {

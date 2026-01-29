@@ -212,11 +212,19 @@ namespace ReviewMovie
 
                     // Mở form chính và đóng form đăng nhập
                     this.Hide();
-                    FormMain mainForm = new FormMain(txAppCodeShow.Text, txInsertApiKey.Text);
-
-                    mainForm.ShowDialog();
-                    // Sau khi đóng form chính, thoát ứng dụng
-                    Application.Exit();
+                    try
+                    {
+                        FormMain mainForm = new FormMain(txAppCodeShow.Text, txInsertApiKey.Text);
+                        mainForm.ShowDialog();
+                        // Sau khi đóng form chính, thoát ứng dụng
+                        Application.Exit();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Nếu FormMain lỗi lúc khởi tạo, show lại login để tránh "mất cửa sổ"
+                        this.Show();
+                        MessageBox.Show(ex.ToString(), "Lỗi mở FormMain", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
