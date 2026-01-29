@@ -118,6 +118,7 @@
     <Compile Include="Base\Controls\PrimaryButton.cs" />
     <Compile Include="Base\Controls\UiButton.cs" />
     <Compile Include="Base\Controls\UiCheckBox.cs" />
+    <Compile Include="Base\Controls\UiComboBox.cs" />
     <Compile Include="Base\Controls\UiDataGridView.cs" />
     <Compile Include="Base\Controls\UiGroupBox.cs" />
     <Compile Include="Base\Controls\UiLabel.cs" />
