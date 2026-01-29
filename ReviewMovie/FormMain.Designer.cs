@@ -135,6 +135,12 @@ namespace ReviewMovie
             this.btnDestroyAction = new ReviewMovie.Base.Controls.UiButton();
             this.hostBtnDestroyAction = new System.Windows.Forms.ToolStripControlHost(this.btnDestroyAction);
             this.pnlMainTopBar = new System.Windows.Forms.Panel();
+            this.flpHeaderOptions = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblHeaderActive = new ReviewMovie.Base.Controls.UiLabel();
+            this.lblHeaderRemaining = new ReviewMovie.Base.Controls.UiLabel();
+            this.btnHeaderHelp = new ReviewMovie.Base.Controls.IconCircleButton();
+            this.btnHeaderSettings = new ReviewMovie.Base.Controls.IconCircleButton();
+            this.btnHeaderAvatar = new ReviewMovie.Base.Controls.IconCircleButton();
             this.btnWindowMinimize = new ReviewMovie.Base.Controls.IconCircleButton();
             this.btnWindowClose = new ReviewMovie.Base.Controls.IconCircleButton();
             this.lblMainTopSub = new ReviewMovie.Base.Controls.UiLabel();
@@ -173,6 +179,7 @@ namespace ReviewMovie
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainView)).BeginInit();
             this.tsMenuView.SuspendLayout();
             this.pnlMainTopBar.SuspendLayout();
+            this.flpHeaderOptions.SuspendLayout();
             this.grViewHeader.SuspendLayout();
             this.tlpViewHeader.SuspendLayout();
             this.tlpImportMedia.SuspendLayout();
@@ -1020,8 +1027,7 @@ namespace ReviewMovie
             // pnlMainTopBar
             // 
             this.pnlMainTopBar.BackColor = System.Drawing.Color.White;
-            this.pnlMainTopBar.Controls.Add(this.btnWindowMinimize);
-            this.pnlMainTopBar.Controls.Add(this.btnWindowClose);
+            this.pnlMainTopBar.Controls.Add(this.flpHeaderOptions);
             this.pnlMainTopBar.Controls.Add(this.lblMainTopSub);
             this.pnlMainTopBar.Controls.Add(this.lblMainTopTitle);
             this.pnlMainTopBar.Controls.Add(this.lblMainTopIcon);
@@ -1034,13 +1040,118 @@ namespace ReviewMovie
             this.pnlMainTopBar.TabIndex = 44;
             this.pnlMainTopBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlMainTopBar_MouseDown);
             // 
+            // flpHeaderOptions
+            // 
+            this.flpHeaderOptions.AutoSize = true;
+            this.flpHeaderOptions.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.flpHeaderOptions.BackColor = System.Drawing.Color.White;
+            this.flpHeaderOptions.Controls.Add(this.lblHeaderActive);
+            this.flpHeaderOptions.Controls.Add(this.lblHeaderRemaining);
+            this.flpHeaderOptions.Controls.Add(this.btnHeaderHelp);
+            this.flpHeaderOptions.Controls.Add(this.btnHeaderSettings);
+            this.flpHeaderOptions.Controls.Add(this.btnHeaderAvatar);
+            this.flpHeaderOptions.Controls.Add(this.btnWindowMinimize);
+            this.flpHeaderOptions.Controls.Add(this.btnWindowClose);
+            this.flpHeaderOptions.Dock = System.Windows.Forms.DockStyle.Right;
+            this.flpHeaderOptions.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
+            this.flpHeaderOptions.Location = new System.Drawing.Point(741, 8);
+            this.flpHeaderOptions.Margin = new System.Windows.Forms.Padding(0);
+            this.flpHeaderOptions.Name = "flpHeaderOptions";
+            this.flpHeaderOptions.Padding = new System.Windows.Forms.Padding(0);
+            this.flpHeaderOptions.Size = new System.Drawing.Size(543, 26);
+            this.flpHeaderOptions.TabIndex = 47;
+            this.flpHeaderOptions.WrapContents = false;
+            this.flpHeaderOptions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlMainTopBar_MouseDown);
+            // 
+            // lblHeaderActive
+            // 
+            this.lblHeaderActive.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(179)))), ((int)(((byte)(126)))));
+            this.lblHeaderActive.BorderRadius = 12;
+            this.lblHeaderActive.BorderSize = 0;
+            this.lblHeaderActive.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
+            this.lblHeaderActive.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblHeaderActive.Location = new System.Drawing.Point(0, 2);
+            this.lblHeaderActive.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblHeaderActive.Name = "lblHeaderActive";
+            this.lblHeaderActive.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.lblHeaderActive.Size = new System.Drawing.Size(56, 22);
+            this.lblHeaderActive.TabIndex = 0;
+            this.lblHeaderActive.Text = "Active";
+            this.lblHeaderActive.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblHeaderActive.TextColor = System.Drawing.Color.White;
+            // 
+            // lblHeaderRemaining
+            // 
+            this.lblHeaderRemaining.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.lblHeaderRemaining.BorderRadius = 12;
+            this.lblHeaderRemaining.BorderSize = 0;
+            this.lblHeaderRemaining.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
+            this.lblHeaderRemaining.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular);
+            this.lblHeaderRemaining.Location = new System.Drawing.Point(64, 2);
+            this.lblHeaderRemaining.Margin = new System.Windows.Forms.Padding(0, 2, 12, 2);
+            this.lblHeaderRemaining.Name = "lblHeaderRemaining";
+            this.lblHeaderRemaining.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.lblHeaderRemaining.Size = new System.Drawing.Size(112, 22);
+            this.lblHeaderRemaining.TabIndex = 1;
+            this.lblHeaderRemaining.Text = "1 Day Remaining";
+            this.lblHeaderRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblHeaderRemaining.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(40)))), ((int)(((byte)(55)))));
+            // 
+            // btnHeaderHelp
+            // 
+            this.btnHeaderHelp.CornerRadius = 10;
+            this.btnHeaderHelp.Font = new System.Drawing.Font("Segoe MDL2 Assets", 10F);
+            this.btnHeaderHelp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
+            this.btnHeaderHelp.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.btnHeaderHelp.Location = new System.Drawing.Point(188, 0);
+            this.btnHeaderHelp.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.btnHeaderHelp.Name = "btnHeaderHelp";
+            this.btnHeaderHelp.NormalBackColor = System.Drawing.Color.White;
+            this.btnHeaderHelp.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.btnHeaderHelp.Size = new System.Drawing.Size(26, 26);
+            this.btnHeaderHelp.TabIndex = 2;
+            this.btnHeaderHelp.Text = "";
+            this.btnHeaderHelp.UseVisualStyleBackColor = true;
+            // 
+            // btnHeaderSettings
+            // 
+            this.btnHeaderSettings.CornerRadius = 10;
+            this.btnHeaderSettings.Font = new System.Drawing.Font("Segoe MDL2 Assets", 10F);
+            this.btnHeaderSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
+            this.btnHeaderSettings.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.btnHeaderSettings.Location = new System.Drawing.Point(220, 0);
+            this.btnHeaderSettings.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.btnHeaderSettings.Name = "btnHeaderSettings";
+            this.btnHeaderSettings.NormalBackColor = System.Drawing.Color.White;
+            this.btnHeaderSettings.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.btnHeaderSettings.Size = new System.Drawing.Size(26, 26);
+            this.btnHeaderSettings.TabIndex = 3;
+            this.btnHeaderSettings.Text = "";
+            this.btnHeaderSettings.UseVisualStyleBackColor = true;
+            // 
+            // btnHeaderAvatar
+            // 
+            this.btnHeaderAvatar.CornerRadius = 13;
+            this.btnHeaderAvatar.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnHeaderAvatar.ForeColor = System.Drawing.Color.White;
+            this.btnHeaderAvatar.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnHeaderAvatar.Location = new System.Drawing.Point(252, 0);
+            this.btnHeaderAvatar.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            this.btnHeaderAvatar.Name = "btnHeaderAvatar";
+            this.btnHeaderAvatar.NormalBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnHeaderAvatar.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
+            this.btnHeaderAvatar.Size = new System.Drawing.Size(26, 26);
+            this.btnHeaderAvatar.TabIndex = 4;
+            this.btnHeaderAvatar.Text = "TN";
+            this.btnHeaderAvatar.UseVisualStyleBackColor = true;
+            // 
             // btnWindowMinimize
             // 
-            this.btnWindowMinimize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnWindowMinimize.CornerRadius = 10;
             this.btnWindowMinimize.Font = new System.Drawing.Font("Segoe MDL2 Assets", 10F);
             this.btnWindowMinimize.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
-            this.btnWindowMinimize.Location = new System.Drawing.Point(815, 8);
+            this.btnWindowMinimize.Location = new System.Drawing.Point(288, 0);
+            this.btnWindowMinimize.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.btnWindowMinimize.Name = "btnWindowMinimize";
             this.btnWindowMinimize.NormalBackColor = System.Drawing.Color.White;
             this.btnWindowMinimize.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
@@ -1053,11 +1164,11 @@ namespace ReviewMovie
             // 
             // btnWindowClose
             // 
-            this.btnWindowClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnWindowClose.CornerRadius = 10;
             this.btnWindowClose.Font = new System.Drawing.Font("Segoe MDL2 Assets", 10F);
             this.btnWindowClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
-            this.btnWindowClose.Location = new System.Drawing.Point(845, 8);
+            this.btnWindowClose.Location = new System.Drawing.Point(314, 0);
+            this.btnWindowClose.Margin = new System.Windows.Forms.Padding(0);
             this.btnWindowClose.Name = "btnWindowClose";
             this.btnWindowClose.NormalBackColor = System.Drawing.Color.White;
             this.btnWindowClose.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
@@ -1803,6 +1914,7 @@ namespace ReviewMovie
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainView)).EndInit();
             this.tsMenuView.ResumeLayout(false);
             this.tsMenuView.PerformLayout();
+            this.flpHeaderOptions.ResumeLayout(false);
             this.pnlMainTopBar.ResumeLayout(false);
             this.pnlMainTopBar.PerformLayout();
             this.grViewHeader.ResumeLayout(false);
@@ -1945,6 +2057,12 @@ namespace ReviewMovie
         private ReviewMovie.Base.Controls.UiButton btnDestroyAction;
         private System.Windows.Forms.ToolStripControlHost hostBtnDestroyAction;
         private System.Windows.Forms.Panel pnlMainTopBar;
+        private System.Windows.Forms.FlowLayoutPanel flpHeaderOptions;
+        private ReviewMovie.Base.Controls.UiLabel lblHeaderActive;
+        private ReviewMovie.Base.Controls.UiLabel lblHeaderRemaining;
+        private ReviewMovie.Base.Controls.IconCircleButton btnHeaderHelp;
+        private ReviewMovie.Base.Controls.IconCircleButton btnHeaderSettings;
+        private ReviewMovie.Base.Controls.IconCircleButton btnHeaderAvatar;
         private ReviewMovie.Base.Controls.IconCircleButton btnWindowMinimize;
         private ReviewMovie.Base.Controls.IconCircleButton btnWindowClose;
         private ReviewMovie.Base.Controls.UiLabel lblMainTopSub;
