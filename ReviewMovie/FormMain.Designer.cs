@@ -1503,7 +1503,10 @@ namespace ReviewMovie
             // 
             // btnAddRow
             // 
+            this.btnAddRow.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddRow.Name = "btnAddRow";
+            this.btnAddRow.Margin = new System.Windows.Forms.Padding(0);
+            this.btnAddRow.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
             this.btnAddRow.Size = new System.Drawing.Size(140, 30);
             this.btnAddRow.Text = "Thêm Dòng Mới";
             this.btnAddRow.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
@@ -1511,9 +1514,13 @@ namespace ReviewMovie
             this.btnAddRow.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(230)))), ((int)(((byte)(95)))));
             this.btnAddRow.TextColor = System.Drawing.Color.Black;
             this.btnAddRow.TextHoverColor = System.Drawing.Color.Black;
-            this.btnAddRow.BorderRadius = 8;
+            this.btnAddRow.BorderRadius = 10;
             this.btnAddRow.BorderSize = 0;
             this.btnAddRow.IconImage = global::EasyClip.Properties.Resources.add_1;
+            this.btnAddRow.IconPosition = ReviewMovie.Base.Controls.Common.UiIconPosition.Left;
+            this.btnAddRow.IconPadding = 6;
+            this.btnAddRow.IconSize = new System.Drawing.Size(16, 16);
+            this.btnAddRow.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnAddRow.Click += new System.EventHandler(this.btnAddRow_Click);
             // 
             // hostBtnAddRow
@@ -1530,7 +1537,10 @@ namespace ReviewMovie
             // 
             // btnImportSubtitle
             // 
+            this.btnImportSubtitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnImportSubtitle.Name = "btnImportSubtitle";
+            this.btnImportSubtitle.Margin = new System.Windows.Forms.Padding(0);
+            this.btnImportSubtitle.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
             this.btnImportSubtitle.Size = new System.Drawing.Size(165, 30);
             this.btnImportSubtitle.Text = "Nhập Subtitle (Auto)";
             this.btnImportSubtitle.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -1538,9 +1548,13 @@ namespace ReviewMovie
             this.btnImportSubtitle.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(150)))));
             this.btnImportSubtitle.TextColor = System.Drawing.Color.Black;
             this.btnImportSubtitle.TextHoverColor = System.Drawing.Color.Black;
-            this.btnImportSubtitle.BorderRadius = 8;
+            this.btnImportSubtitle.BorderRadius = 10;
             this.btnImportSubtitle.BorderSize = 0;
             this.btnImportSubtitle.IconImage = global::EasyClip.Properties.Resources.quick_edit;
+            this.btnImportSubtitle.IconPosition = ReviewMovie.Base.Controls.Common.UiIconPosition.Left;
+            this.btnImportSubtitle.IconPadding = 6;
+            this.btnImportSubtitle.IconSize = new System.Drawing.Size(16, 16);
+            this.btnImportSubtitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnImportSubtitle.Click += new System.EventHandler(this.btnImportSubtitle_Click);
             // 
             // hostBtnImportSubtitle
@@ -1557,8 +1571,10 @@ namespace ReviewMovie
             // 
             // btnDestroyAction
             // 
-            this.btnDestroyAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDestroyAction.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDestroyAction.Name = "btnDestroyAction";
+            this.btnDestroyAction.Margin = new System.Windows.Forms.Padding(0);
+            this.btnDestroyAction.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
             this.btnDestroyAction.Size = new System.Drawing.Size(160, 30);
             this.btnDestroyAction.Text = "&Hủy Mọi Hoạt Động";
             this.btnDestroyAction.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
@@ -1566,9 +1582,13 @@ namespace ReviewMovie
             this.btnDestroyAction.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(195)))), ((int)(((byte)(160)))));
             this.btnDestroyAction.TextColor = System.Drawing.Color.Black;
             this.btnDestroyAction.TextHoverColor = System.Drawing.Color.Black;
-            this.btnDestroyAction.BorderRadius = 8;
+            this.btnDestroyAction.BorderRadius = 10;
             this.btnDestroyAction.BorderSize = 0;
             this.btnDestroyAction.IconImage = ((System.Drawing.Image)(resources.GetObject("btnDestroyAction.Image")));
+            this.btnDestroyAction.IconPosition = ReviewMovie.Base.Controls.Common.UiIconPosition.Left;
+            this.btnDestroyAction.IconPadding = 6;
+            this.btnDestroyAction.IconSize = new System.Drawing.Size(16, 16);
+            this.btnDestroyAction.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnDestroyAction.Click += new System.EventHandler(this.btnDestroyAction_Click);
             // 
             // hostBtnDestroyAction
