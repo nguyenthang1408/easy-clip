@@ -1226,17 +1226,19 @@ namespace ReviewMovie
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Blue;
             this.dgvMainView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvMainView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dgvMainView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dgvMainView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.None;
             this.dgvMainView.BackgroundColor = System.Drawing.Color.MintCream;
             this.dgvMainView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(8, 6, 8, 6);
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvMainView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvMainView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvMainView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column_check,
             this.Column_id,
@@ -1254,6 +1256,7 @@ namespace ReviewMovie
             dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(8, 6, 8, 6);
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.PaleGreen;
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Blue;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
@@ -1262,6 +1265,8 @@ namespace ReviewMovie
             this.dgvMainView.GridColor = System.Drawing.Color.Silver;
             this.dgvMainView.Location = new System.Drawing.Point(3, 249);
             this.dgvMainView.Name = "dgvMainView";
+            this.dgvMainView.HeaderHeight = 40;
+            this.dgvMainView.RowHeight = 34;
             this.dgvMainView.RowHeadersVisible = false;
             this.dgvMainView.RowHeadersWidth = 20;
             this.dgvMainView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -1400,7 +1405,7 @@ namespace ReviewMovie
             this.hostBtnDestroyAction});
             this.tsMenuView.Location = new System.Drawing.Point(0, 220);
             this.tsMenuView.Name = "tsMenuView";
-            this.tsMenuView.Size = new System.Drawing.Size(877, 25);
+            this.tsMenuView.Size = new System.Drawing.Size(877, 34);
             this.tsMenuView.TabIndex = 1;
             this.tsMenuView.Text = "toolStrip5";
             // 
@@ -1499,7 +1504,7 @@ namespace ReviewMovie
             // btnAddRow
             // 
             this.btnAddRow.Name = "btnAddRow";
-            this.btnAddRow.Size = new System.Drawing.Size(113, 22);
+            this.btnAddRow.Size = new System.Drawing.Size(140, 30);
             this.btnAddRow.Text = "Thêm Dòng Mới";
             this.btnAddRow.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.btnAddRow.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(245)))), ((int)(((byte)(110)))));
@@ -1516,7 +1521,7 @@ namespace ReviewMovie
             this.hostBtnAddRow.AutoSize = false;
             this.hostBtnAddRow.Margin = new System.Windows.Forms.Padding(0);
             this.hostBtnAddRow.Name = "hostBtnAddRow";
-            this.hostBtnAddRow.Size = new System.Drawing.Size(115, 25);
+            this.hostBtnAddRow.Size = new System.Drawing.Size(150, 34);
             // 
             // toolStripSeparator2
             // 
@@ -1526,7 +1531,7 @@ namespace ReviewMovie
             // btnImportSubtitle
             // 
             this.btnImportSubtitle.Name = "btnImportSubtitle";
-            this.btnImportSubtitle.Size = new System.Drawing.Size(136, 22);
+            this.btnImportSubtitle.Size = new System.Drawing.Size(165, 30);
             this.btnImportSubtitle.Text = "Nhập Subtitle (Auto)";
             this.btnImportSubtitle.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnImportSubtitle.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(170)))));
@@ -1543,7 +1548,7 @@ namespace ReviewMovie
             this.hostBtnImportSubtitle.AutoSize = false;
             this.hostBtnImportSubtitle.Margin = new System.Windows.Forms.Padding(0);
             this.hostBtnImportSubtitle.Name = "hostBtnImportSubtitle";
-            this.hostBtnImportSubtitle.Size = new System.Drawing.Size(138, 25);
+            this.hostBtnImportSubtitle.Size = new System.Drawing.Size(175, 34);
             // 
             // toolStripSeparator3
             // 
@@ -1554,7 +1559,7 @@ namespace ReviewMovie
             // 
             this.btnDestroyAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDestroyAction.Name = "btnDestroyAction";
-            this.btnDestroyAction.Size = new System.Drawing.Size(121, 22);
+            this.btnDestroyAction.Size = new System.Drawing.Size(160, 30);
             this.btnDestroyAction.Text = "&Hủy Mọi Hoạt Động";
             this.btnDestroyAction.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.btnDestroyAction.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(210)))), ((int)(((byte)(175)))));
@@ -1571,7 +1576,7 @@ namespace ReviewMovie
             this.hostBtnDestroyAction.AutoSize = false;
             this.hostBtnDestroyAction.Margin = new System.Windows.Forms.Padding(0);
             this.hostBtnDestroyAction.Name = "hostBtnDestroyAction";
-            this.hostBtnDestroyAction.Size = new System.Drawing.Size(123, 25);
+            this.hostBtnDestroyAction.Size = new System.Drawing.Size(170, 34);
             this.hostBtnDestroyAction.ToolTipText = "&Hủy Mọi Hoạt Động";
             // 
             // grViewHeader
@@ -1646,7 +1651,9 @@ namespace ReviewMovie
             // lbHeaderInputMedia
             // 
             this.lbHeaderInputMedia.AutoSize = false;
-            this.lbHeaderInputMedia.BackgroundColor = System.Drawing.Color.SteelBlue;
+            this.lbHeaderInputMedia.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.lbHeaderInputMedia.BorderRadius = 10;
+            this.lbHeaderInputMedia.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.lbHeaderInputMedia.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbHeaderInputMedia.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.lbHeaderInputMedia.TextColor = System.Drawing.Color.White;
@@ -1693,7 +1700,9 @@ namespace ReviewMovie
             // lbHeaderText
             // 
             this.lbHeaderText.AutoSize = false;
-            this.lbHeaderText.BackgroundColor = System.Drawing.Color.SteelBlue;
+            this.lbHeaderText.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.lbHeaderText.BorderRadius = 10;
+            this.lbHeaderText.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.lbHeaderText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbHeaderText.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbHeaderText.TextColor = System.Drawing.Color.White;
