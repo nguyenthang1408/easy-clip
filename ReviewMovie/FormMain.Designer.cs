@@ -1645,7 +1645,7 @@ namespace ReviewMovie
             this.tlpImportMedia.Location = new System.Drawing.Point(538, 3);
             this.tlpImportMedia.Name = "tlpImportMedia";
             this.tlpImportMedia.RowCount = 2;
-            this.tlpImportMedia.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tlpImportMedia.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tlpImportMedia.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tlpImportMedia.Size = new System.Drawing.Size(150, 147);
             this.tlpImportMedia.TabIndex = 2;
@@ -1713,7 +1713,7 @@ namespace ReviewMovie
             this.tlpText.Location = new System.Drawing.Point(103, 3);
             this.tlpText.Name = "tlpText";
             this.tlpText.RowCount = 2;
-            this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tlpText.Size = new System.Drawing.Size(429, 147);
             this.tlpText.TabIndex = 1;
