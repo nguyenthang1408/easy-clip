@@ -1230,9 +1230,9 @@ namespace ReviewMovie
             this.dgvMainView.BackgroundColor = System.Drawing.Color.MintCream;
             this.dgvMainView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(12, 10, 12, 10);
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -1262,10 +1262,13 @@ namespace ReviewMovie
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvMainView.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvMainView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvMainView.EnableHeadersVisualStyles = false;
             this.dgvMainView.GridColor = System.Drawing.Color.Silver;
             this.dgvMainView.Location = new System.Drawing.Point(3, 249);
             this.dgvMainView.Name = "dgvMainView";
             this.dgvMainView.HeaderHeight = 52;
+            this.dgvMainView.HeaderBackColor = ReviewMovie.Base.Controls.Common.ThemeManager.Current.SurfaceColor;
+            this.dgvMainView.HeaderForeColor = ReviewMovie.Base.Controls.Common.ThemeManager.Current.TextPrimary;
             this.dgvMainView.RowHeight = 34;
             this.dgvMainView.RowHeadersVisible = false;
             this.dgvMainView.RowHeadersWidth = 20;
