@@ -18,13 +18,16 @@ namespace ReviewMovie.Base.Controls
 
             ApplyThemeDefaults();
 
-            ThemeManager.ThemeChanged += (_, __) =>
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                if (!_userCustomizedColors)
+                ThemeManager.ThemeChanged += (_, __) =>
                 {
-                    ApplyThemeDefaults();
-                }
-            };
+                    if (!_userCustomizedColors)
+                    {
+                        ApplyThemeDefaults();
+                    }
+                };
+            }
         }
 
         private void ApplyThemeDefaults()

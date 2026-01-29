@@ -1534,7 +1534,7 @@ namespace ReviewMovie
             // 
             // lbHeaderInputMedia
             // 
-            this.lbHeaderInputMedia.AutoSize = true;
+            this.lbHeaderInputMedia.AutoSize = false;
             this.lbHeaderInputMedia.BackgroundColor = System.Drawing.Color.SteelBlue;
             this.lbHeaderInputMedia.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbHeaderInputMedia.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
@@ -1581,7 +1581,7 @@ namespace ReviewMovie
             // 
             // lbHeaderText
             // 
-            this.lbHeaderText.AutoSize = true;
+            this.lbHeaderText.AutoSize = false;
             this.lbHeaderText.BackgroundColor = System.Drawing.Color.SteelBlue;
             this.lbHeaderText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbHeaderText.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

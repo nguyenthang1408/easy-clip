@@ -67,11 +67,14 @@ namespace ReviewMovie.Base.Controls
             ApplyThemeToInner();
             LayoutChildren();
 
-            ThemeManager.ThemeChanged += (_, __) =>
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                // Only update defaults if user hasn't overridden colors explicitly.
-                Invalidate();
-            };
+                ThemeManager.ThemeChanged += (_, __) =>
+                {
+                    // Only update defaults if user hasn't overridden colors explicitly.
+                    Invalidate();
+                };
+            }
         }
 
         private void HookInnerEvents()

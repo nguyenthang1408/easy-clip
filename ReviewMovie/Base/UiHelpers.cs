@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection;
@@ -11,6 +12,8 @@ namespace ReviewMovie.Base
         internal static void EnableSmoothPainting(Control control)
         {
             if (control == null) return;
+            // Avoid slowing down WinForms Designer.
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
 
             // Control.SetStyle is protected, so invoke via reflection (Designer-safe).
             var setStyle = typeof(Control).GetMethod(
