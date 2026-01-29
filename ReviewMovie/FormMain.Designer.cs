@@ -48,60 +48,60 @@ namespace ReviewMovie
             this.tsMAll = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMSelected = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenuDeleteRow = new System.Windows.Forms.ToolStripMenuItem();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblapi = new System.Windows.Forms.Label();
+            this.label2 = new ReviewMovie.Base.Controls.UiLabel();
+            this.lblapi = new ReviewMovie.Base.Controls.UiLabel();
             this.txtAppID = new ReviewMovie.Base.Controls.UiTextBox();
             this.btnOpenProject = new ReviewMovie.Base.Controls.UiButton();
-            this.lblToken = new System.Windows.Forms.Label();
+            this.lblToken = new ReviewMovie.Base.Controls.UiLabel();
             this.txtToken = new ReviewMovie.Base.Controls.UiTextBox();
             this.grbConfigRender = new System.Windows.Forms.GroupBox();
             this.ckOpenPlayer = new ReviewMovie.Base.Controls.UiCheckBox();
             this.nbSpeechRatio = new ReviewMovie.Base.Controls.UiNumericUpDown();
-            this.cbSettingTemplate = new System.Windows.Forms.ComboBox();
-            this.label17 = new System.Windows.Forms.Label();
+            this.cbSettingTemplate = new ReviewMovie.Base.Controls.UiComboBox();
+            this.label17 = new ReviewMovie.Base.Controls.UiLabel();
             this.btnSaveEffectSetting = new ReviewMovie.Base.Controls.UiButton();
             this.ckRandomMoveLeftRight = new ReviewMovie.Base.Controls.UiCheckBox();
-            this.cbLanguageSelect = new System.Windows.Forms.ComboBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.cbLanguageSelect = new ReviewMovie.Base.Controls.UiComboBox();
+            this.label16 = new ReviewMovie.Base.Controls.UiLabel();
+            this.label15 = new ReviewMovie.Base.Controls.UiLabel();
             this.nScaleAudioRangeEnd = new ReviewMovie.Base.Controls.UiNumericUpDown();
             this.nScaleAudioRangeStart = new ReviewMovie.Base.Controls.UiNumericUpDown();
-            this.label14 = new System.Windows.Forms.Label();
+            this.label14 = new ReviewMovie.Base.Controls.UiLabel();
             this.ckHflipRandom = new ReviewMovie.Base.Controls.UiCheckBox();
             this.nbThread = new ReviewMovie.Base.Controls.UiNumericUpDown();
-            this.label13 = new System.Windows.Forms.Label();
+            this.label13 = new ReviewMovie.Base.Controls.UiLabel();
             this.nbVolumnOrigin = new ReviewMovie.Base.Controls.UiNumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
+            this.label4 = new ReviewMovie.Base.Controls.UiLabel();
             this.ckNotUseAudio = new ReviewMovie.Base.Controls.UiCheckBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cbMode = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.cbZoomQuality = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.label3 = new ReviewMovie.Base.Controls.UiLabel();
+            this.cbMode = new ReviewMovie.Base.Controls.UiComboBox();
+            this.label12 = new ReviewMovie.Base.Controls.UiLabel();
+            this.cbZoomQuality = new ReviewMovie.Base.Controls.UiComboBox();
+            this.label11 = new ReviewMovie.Base.Controls.UiLabel();
             this.nFPS = new ReviewMovie.Base.Controls.UiNumericUpDown();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cbZoomRatio = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.cbEffectType = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
+            this.label10 = new ReviewMovie.Base.Controls.UiLabel();
+            this.cbZoomRatio = new ReviewMovie.Base.Controls.UiComboBox();
+            this.label9 = new ReviewMovie.Base.Controls.UiLabel();
+            this.cbEffectType = new ReviewMovie.Base.Controls.UiComboBox();
+            this.label8 = new ReviewMovie.Base.Controls.UiLabel();
             this.ckHflip = new ReviewMovie.Base.Controls.UiCheckBox();
             this.ckRotate = new ReviewMovie.Base.Controls.UiCheckBox();
             this.CkZoom = new ReviewMovie.Base.Controls.UiCheckBox();
-            this.cbxVideoQuality = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cbxSpeechType = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.cbxVideoQuality = new ReviewMovie.Base.Controls.UiComboBox();
+            this.label7 = new ReviewMovie.Base.Controls.UiLabel();
+            this.cbxSpeechType = new ReviewMovie.Base.Controls.UiComboBox();
+            this.label6 = new ReviewMovie.Base.Controls.UiLabel();
+            this.label5 = new ReviewMovie.Base.Controls.UiLabel();
             this.btnAddAll = new ReviewMovie.Base.Controls.UiButton();
-            this.lblstatus = new System.Windows.Forms.Label();
-            this.cboSiteNguon = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblstatus = new ReviewMovie.Base.Controls.UiLabel();
+            this.cboSiteNguon = new ReviewMovie.Base.Controls.UiComboBox();
+            this.label1 = new ReviewMovie.Base.Controls.UiLabel();
             this.grboxSetting = new System.Windows.Forms.GroupBox();
             this.grbConfigVoice = new System.Windows.Forms.GroupBox();
             this.btnSaveVoiceSource = new ReviewMovie.Base.Controls.UiButton();
             this.grbActionRender = new System.Windows.Forms.GroupBox();
-            this.cbProjectName = new System.Windows.Forms.ComboBox();
-            this.tlpView = new System.Windows.Forms.TableLayoutPanel();
+            this.cbProjectName = new ReviewMovie.Base.Controls.UiComboBox();
+            this.tlpView = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
             this.dgvMainView = new ReviewMovie.Base.Controls.UiDataGridView();
             this.Column_check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -137,19 +137,19 @@ namespace ReviewMovie
             this.pnlMainTopBar = new System.Windows.Forms.Panel();
             this.btnWindowMinimize = new ReviewMovie.Base.Controls.IconCircleButton();
             this.btnWindowClose = new ReviewMovie.Base.Controls.IconCircleButton();
-            this.lblMainTopSub = new System.Windows.Forms.Label();
-            this.lblMainTopTitle = new System.Windows.Forms.Label();
-            this.lblMainTopIcon = new System.Windows.Forms.Label();
+            this.lblMainTopSub = new ReviewMovie.Base.Controls.UiLabel();
+            this.lblMainTopTitle = new ReviewMovie.Base.Controls.UiLabel();
+            this.lblMainTopIcon = new ReviewMovie.Base.Controls.UiLabel();
             this.grViewHeader = new System.Windows.Forms.GroupBox();
-            this.tlpViewHeader = new System.Windows.Forms.TableLayoutPanel();
-            this.tlpImportMedia = new System.Windows.Forms.TableLayoutPanel();
-            this.txtImPortMedia = new System.Windows.Forms.TextBox();
-            this.lbHeaderInputMedia = new System.Windows.Forms.Label();
+            this.tlpViewHeader = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
+            this.tlpImportMedia = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
+            this.txtImPortMedia = new ReviewMovie.Base.Controls.UiTextBox();
+            this.lbHeaderInputMedia = new ReviewMovie.Base.Controls.UiLabel();
             this.btnRecord = new ReviewMovie.Base.Controls.UiButton();
-            this.tlpText = new System.Windows.Forms.TableLayoutPanel();
-            this.lbHeaderText = new System.Windows.Forms.Label();
-            this.txtTextInput = new System.Windows.Forms.TextBox();
-            this.tlpHeaderButton = new System.Windows.Forms.TableLayoutPanel();
+            this.tlpText = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
+            this.lbHeaderText = new ReviewMovie.Base.Controls.UiLabel();
+            this.txtTextInput = new ReviewMovie.Base.Controls.UiTextBox();
+            this.tlpHeaderButton = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
             this.btnRenderVideoPart = new ReviewMovie.Base.Controls.UiButton();
             this.btnConvertAudio = new ReviewMovie.Base.Controls.UiButton();
             this.btnSaveAudio = new ReviewMovie.Base.Controls.UiButton();
@@ -722,7 +722,7 @@ namespace ReviewMovie
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Bold);
-            this.label11.ForeColor = System.Drawing.Color.Red;
+            this.label11.TextColor = System.Drawing.Color.Red;
             this.label11.Location = new System.Drawing.Point(6, 50);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(63, 12);
@@ -772,7 +772,7 @@ namespace ReviewMovie
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Bold);
-            this.label9.ForeColor = System.Drawing.Color.Red;
+            this.label9.TextColor = System.Drawing.Color.Red;
             this.label9.Location = new System.Drawing.Point(6, 24);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(63, 12);
@@ -1071,7 +1071,7 @@ namespace ReviewMovie
             // lblMainTopIcon
             // 
             this.lblMainTopIcon.Font = new System.Drawing.Font("Segoe MDL2 Assets", 12F);
-            this.lblMainTopIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(140)))), ((int)(((byte)(0)))));
+            this.lblMainTopIcon.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(140)))), ((int)(((byte)(0)))));
             this.lblMainTopIcon.Location = new System.Drawing.Point(12, 12);
             this.lblMainTopIcon.Name = "lblMainTopIcon";
             this.lblMainTopIcon.Size = new System.Drawing.Size(18, 18);
@@ -1084,7 +1084,7 @@ namespace ReviewMovie
             // 
             this.lblMainTopTitle.AutoSize = true;
             this.lblMainTopTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.lblMainTopTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(40)))), ((int)(((byte)(55)))));
+            this.lblMainTopTitle.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(40)))), ((int)(((byte)(55)))));
             this.lblMainTopTitle.Location = new System.Drawing.Point(34, 10);
             this.lblMainTopTitle.Name = "lblMainTopTitle";
             this.lblMainTopTitle.Size = new System.Drawing.Size(93, 17);
@@ -1096,7 +1096,7 @@ namespace ReviewMovie
             // 
             this.lblMainTopSub.AutoSize = true;
             this.lblMainTopSub.Font = new System.Drawing.Font("Segoe UI", 7.5F);
-            this.lblMainTopSub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(145)))), ((int)(((byte)(165)))));
+            this.lblMainTopSub.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(145)))), ((int)(((byte)(165)))));
             this.lblMainTopSub.Location = new System.Drawing.Point(34, 26);
             this.lblMainTopSub.Name = "lblMainTopSub";
             this.lblMainTopSub.Size = new System.Drawing.Size(90, 12);
@@ -1461,6 +1461,7 @@ namespace ReviewMovie
             this.hostBtnDestroyAction.Margin = new System.Windows.Forms.Padding(0);
             this.hostBtnDestroyAction.Name = "hostBtnDestroyAction";
             this.hostBtnDestroyAction.Size = new System.Drawing.Size(123, 25);
+            this.hostBtnDestroyAction.ToolTipText = "&Hủy Mọi Hoạt Động";
             // 
             // grViewHeader
             // 
@@ -1513,7 +1514,13 @@ namespace ReviewMovie
             // txtImPortMedia
             // 
             this.txtImPortMedia.AllowDrop = true;
-            this.txtImPortMedia.BackColor = System.Drawing.SystemColors.Menu;
+            this.txtImPortMedia.BackgroundColor = System.Drawing.SystemColors.Menu;
+            this.txtImPortMedia.BorderColor = ReviewMovie.Base.Controls.Common.ThemeManager.Current.Border;
+            this.txtImPortMedia.BorderFocusColor = ReviewMovie.Base.Controls.Common.ThemeManager.Current.BorderFocus;
+            this.txtImPortMedia.HoverColor = ReviewMovie.Base.Controls.Common.ThemeManager.Current.Hover;
+            this.txtImPortMedia.BorderRadius = 12;
+            this.txtImPortMedia.BorderSize = 1;
+            this.txtImPortMedia.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.txtImPortMedia.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtImPortMedia.Location = new System.Drawing.Point(1, 23);
             this.txtImPortMedia.Margin = new System.Windows.Forms.Padding(1);
@@ -1528,11 +1535,10 @@ namespace ReviewMovie
             // lbHeaderInputMedia
             // 
             this.lbHeaderInputMedia.AutoSize = true;
-            this.lbHeaderInputMedia.BackColor = System.Drawing.Color.SteelBlue;
+            this.lbHeaderInputMedia.BackgroundColor = System.Drawing.Color.SteelBlue;
             this.lbHeaderInputMedia.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbHeaderInputMedia.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.lbHeaderInputMedia.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.lbHeaderInputMedia.ForeColor = System.Drawing.Color.White;
+            this.lbHeaderInputMedia.TextColor = System.Drawing.Color.White;
             this.lbHeaderInputMedia.Location = new System.Drawing.Point(1, 1);
             this.lbHeaderInputMedia.Margin = new System.Windows.Forms.Padding(1);
             this.lbHeaderInputMedia.Name = "lbHeaderInputMedia";
@@ -1576,11 +1582,10 @@ namespace ReviewMovie
             // lbHeaderText
             // 
             this.lbHeaderText.AutoSize = true;
-            this.lbHeaderText.BackColor = System.Drawing.Color.SteelBlue;
+            this.lbHeaderText.BackgroundColor = System.Drawing.Color.SteelBlue;
             this.lbHeaderText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbHeaderText.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.lbHeaderText.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeaderText.ForeColor = System.Drawing.Color.White;
+            this.lbHeaderText.TextColor = System.Drawing.Color.White;
             this.lbHeaderText.Location = new System.Drawing.Point(1, 1);
             this.lbHeaderText.Margin = new System.Windows.Forms.Padding(1);
             this.lbHeaderText.Name = "lbHeaderText";
@@ -1592,6 +1597,13 @@ namespace ReviewMovie
             // txtTextInput
             // 
             this.txtTextInput.AllowDrop = true;
+            this.txtTextInput.BackgroundColor = System.Drawing.Color.White;
+            this.txtTextInput.BorderColor = ReviewMovie.Base.Controls.Common.ThemeManager.Current.Border;
+            this.txtTextInput.BorderFocusColor = ReviewMovie.Base.Controls.Common.ThemeManager.Current.BorderFocus;
+            this.txtTextInput.HoverColor = ReviewMovie.Base.Controls.Common.ThemeManager.Current.Hover;
+            this.txtTextInput.BorderRadius = 12;
+            this.txtTextInput.BorderSize = 1;
+            this.txtTextInput.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.txtTextInput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtTextInput.Location = new System.Drawing.Point(3, 25);
             this.txtTextInput.Multiline = true;
@@ -1817,38 +1829,38 @@ namespace ReviewMovie
         }
 
         #endregion
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label lblapi;
+        private ReviewMovie.Base.Controls.UiLabel label2;
+        private ReviewMovie.Base.Controls.UiLabel lblapi;
         private ReviewMovie.Base.Controls.UiTextBox txtAppID;
         private ReviewMovie.Base.Controls.UiButton btnOpenProject;
-        private System.Windows.Forms.Label lblToken;
+        private ReviewMovie.Base.Controls.UiLabel lblToken;
         private ReviewMovie.Base.Controls.UiTextBox txtToken;
         private System.Windows.Forms.GroupBox grbConfigRender;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cbxSpeechType;
-        private System.Windows.Forms.Label label6;
+        private ReviewMovie.Base.Controls.UiLabel label5;
+        private ReviewMovie.Base.Controls.UiComboBox cbxSpeechType;
+        private ReviewMovie.Base.Controls.UiLabel label6;
         private ReviewMovie.Base.Controls.UiButton btnAddAll;
-        private System.Windows.Forms.Label lblstatus;
-        private System.Windows.Forms.ComboBox cboSiteNguon;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cbMode;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox cbZoomQuality;
-        private System.Windows.Forms.Label label11;
+        private ReviewMovie.Base.Controls.UiLabel lblstatus;
+        private ReviewMovie.Base.Controls.UiComboBox cboSiteNguon;
+        private ReviewMovie.Base.Controls.UiLabel label1;
+        private ReviewMovie.Base.Controls.UiComboBox cbMode;
+        private ReviewMovie.Base.Controls.UiLabel label12;
+        private ReviewMovie.Base.Controls.UiComboBox cbZoomQuality;
+        private ReviewMovie.Base.Controls.UiLabel label11;
         private ReviewMovie.Base.Controls.UiNumericUpDown nFPS;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ComboBox cbZoomRatio;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox cbEffectType;
-        private System.Windows.Forms.Label label8;
+        private ReviewMovie.Base.Controls.UiLabel label10;
+        private ReviewMovie.Base.Controls.UiComboBox cbZoomRatio;
+        private ReviewMovie.Base.Controls.UiLabel label9;
+        private ReviewMovie.Base.Controls.UiComboBox cbEffectType;
+        private ReviewMovie.Base.Controls.UiLabel label8;
         private ReviewMovie.Base.Controls.UiCheckBox ckHflip;
         private ReviewMovie.Base.Controls.UiCheckBox ckRotate;
         private ReviewMovie.Base.Controls.UiCheckBox CkZoom;
-        private System.Windows.Forms.ComboBox cbxVideoQuality;
-        private System.Windows.Forms.Label label7;
+        private ReviewMovie.Base.Controls.UiComboBox cbxVideoQuality;
+        private ReviewMovie.Base.Controls.UiLabel label7;
         private System.Windows.Forms.GroupBox grboxSetting;
         private ReviewMovie.Base.Controls.UiCheckBox ckNotUseAudio;
-        private System.Windows.Forms.Label label3;
+        private ReviewMovie.Base.Controls.UiLabel label3;
         private System.Windows.Forms.ContextMenuStrip ctMenu;
         private System.Windows.Forms.ToolStripMenuItem MenuItemConvertTex2Speech;
         private System.Windows.Forms.ToolStripMenuItem MenuItemDownAudio;
@@ -1856,16 +1868,16 @@ namespace ReviewMovie
         private System.Windows.Forms.ToolStripMenuItem ConvertTex2SpeechAll;
         private System.Windows.Forms.ToolStripMenuItem DownAudioAll;
         private System.Windows.Forms.ToolStripMenuItem PartRenderAll;
-        private System.Windows.Forms.TableLayoutPanel tlpView;
+        private ReviewMovie.Base.Controls.UiTableLayoutPanel tlpView;
         private System.Windows.Forms.GroupBox grViewHeader;
-        private System.Windows.Forms.TableLayoutPanel tlpViewHeader;
+        private ReviewMovie.Base.Controls.UiTableLayoutPanel tlpViewHeader;
         private ReviewMovie.Base.Controls.UiButton btnRecord;
-        private System.Windows.Forms.TableLayoutPanel tlpImportMedia;
-        private System.Windows.Forms.TableLayoutPanel tlpText;
-        private System.Windows.Forms.Label lbHeaderInputMedia;
-        private System.Windows.Forms.Label lbHeaderText;
-        private System.Windows.Forms.TextBox txtImPortMedia;
-        private System.Windows.Forms.TableLayoutPanel tlpHeaderButton;
+        private ReviewMovie.Base.Controls.UiTableLayoutPanel tlpImportMedia;
+        private ReviewMovie.Base.Controls.UiTableLayoutPanel tlpText;
+        private ReviewMovie.Base.Controls.UiLabel lbHeaderInputMedia;
+        private ReviewMovie.Base.Controls.UiLabel lbHeaderText;
+        private ReviewMovie.Base.Controls.UiTextBox txtImPortMedia;
+        private ReviewMovie.Base.Controls.UiTableLayoutPanel tlpHeaderButton;
         private ReviewMovie.Base.Controls.UiButton btnRenderVideoPart;
         private ReviewMovie.Base.Controls.UiButton btnConvertAudio;
         private ReviewMovie.Base.Controls.UiButton btnSaveAudio;
@@ -1890,26 +1902,26 @@ namespace ReviewMovie
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_timevideo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_renderstatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_inputtext;
-        private System.Windows.Forms.TextBox txtTextInput;
+        private ReviewMovie.Base.Controls.UiTextBox txtTextInput;
         private ReviewMovie.Base.Controls.UiNumericUpDown nbVolumnOrigin;
-        private System.Windows.Forms.Label label4;
+        private ReviewMovie.Base.Controls.UiLabel label4;
         private ReviewMovie.Base.Controls.UiNumericUpDown nbThread;
-        private System.Windows.Forms.Label label13;
+        private ReviewMovie.Base.Controls.UiLabel label13;
         private System.Windows.Forms.ToolStripMenuItem tsMenuDeleteRow;
         private System.Windows.Forms.ToolStripMenuItem ConvertTex2SpeechSelect;
         private System.Windows.Forms.ToolStripMenuItem DownAudioAllSelect;
-        private System.Windows.Forms.ComboBox cbProjectName;
+        private ReviewMovie.Base.Controls.UiComboBox cbProjectName;
         private System.Windows.Forms.ToolStripMenuItem PartRenderSelect;
         private ReviewMovie.Base.Controls.UiCheckBox ckHflipRandom;
         private ReviewMovie.Base.Controls.UiNumericUpDown nScaleAudioRangeStart;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
+        private ReviewMovie.Base.Controls.UiLabel label14;
+        private ReviewMovie.Base.Controls.UiLabel label15;
         private ReviewMovie.Base.Controls.UiNumericUpDown nScaleAudioRangeEnd;
         private System.Windows.Forms.ToolStripMenuItem MenuItemReloadVideoTime;
         private System.Windows.Forms.ToolStripMenuItem tsMAll;
         private System.Windows.Forms.ToolStripMenuItem tsMSelected;
-        private System.Windows.Forms.ComboBox cbLanguageSelect;
-        private System.Windows.Forms.Label label16;
+        private ReviewMovie.Base.Controls.UiComboBox cbLanguageSelect;
+        private ReviewMovie.Base.Controls.UiLabel label16;
         private ReviewMovie.Base.Controls.UiButton btnSaveVoiceSource;
         private ReviewMovie.Base.Controls.UiSplitContainer scMain;
         private ReviewMovie.Base.Controls.UiButton btnCollapse;
@@ -1918,8 +1930,8 @@ namespace ReviewMovie
         private ReviewMovie.Base.Controls.UiSplitContainer scSetting;
         private ReviewMovie.Base.Controls.UiCheckBox ckRandomMoveLeftRight;
         private ReviewMovie.Base.Controls.UiButton btnSaveEffectSetting;
-        private System.Windows.Forms.ComboBox cbSettingTemplate;
-        private System.Windows.Forms.Label label17;
+        private ReviewMovie.Base.Controls.UiComboBox cbSettingTemplate;
+        private ReviewMovie.Base.Controls.UiLabel label17;
         private System.Windows.Forms.GroupBox grbActionRender;
         private System.Windows.Forms.GroupBox grbConfigVoice;
         private ReviewMovie.Base.Controls.UiNumericUpDown nbSpeechRatio;
@@ -1935,9 +1947,9 @@ namespace ReviewMovie
         private System.Windows.Forms.Panel pnlMainTopBar;
         private ReviewMovie.Base.Controls.IconCircleButton btnWindowMinimize;
         private ReviewMovie.Base.Controls.IconCircleButton btnWindowClose;
-        private System.Windows.Forms.Label lblMainTopSub;
-        private System.Windows.Forms.Label lblMainTopTitle;
-        private System.Windows.Forms.Label lblMainTopIcon;
+        private ReviewMovie.Base.Controls.UiLabel lblMainTopSub;
+        private ReviewMovie.Base.Controls.UiLabel lblMainTopTitle;
+        private ReviewMovie.Base.Controls.UiLabel lblMainTopIcon;
         private ReviewMovie.Base.Controls.UiButton btnSearch;
         private System.Windows.Forms.ToolStripControlHost hostBtnSearch;
         private ReviewMovie.Base.Controls.UiCheckBox ckOpenPlayer;
