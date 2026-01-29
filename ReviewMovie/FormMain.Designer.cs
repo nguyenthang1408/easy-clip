@@ -1233,7 +1233,7 @@ namespace ReviewMovie
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(8, 6, 8, 6);
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(12, 10, 12, 10);
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
@@ -1265,7 +1265,7 @@ namespace ReviewMovie
             this.dgvMainView.GridColor = System.Drawing.Color.Silver;
             this.dgvMainView.Location = new System.Drawing.Point(3, 249);
             this.dgvMainView.Name = "dgvMainView";
-            this.dgvMainView.HeaderHeight = 40;
+            this.dgvMainView.HeaderHeight = 52;
             this.dgvMainView.RowHeight = 34;
             this.dgvMainView.RowHeadersVisible = false;
             this.dgvMainView.RowHeadersWidth = 20;
@@ -1651,9 +1651,7 @@ namespace ReviewMovie
             // lbHeaderInputMedia
             // 
             this.lbHeaderInputMedia.AutoSize = false;
-            this.lbHeaderInputMedia.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.lbHeaderInputMedia.BorderRadius = 10;
-            this.lbHeaderInputMedia.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.lbHeaderInputMedia.BackgroundColor = System.Drawing.Color.SteelBlue;
             this.lbHeaderInputMedia.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbHeaderInputMedia.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.lbHeaderInputMedia.TextColor = System.Drawing.Color.White;
@@ -1700,9 +1698,7 @@ namespace ReviewMovie
             // lbHeaderText
             // 
             this.lbHeaderText.AutoSize = false;
-            this.lbHeaderText.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.lbHeaderText.BorderRadius = 10;
-            this.lbHeaderText.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.lbHeaderText.BackgroundColor = System.Drawing.Color.SteelBlue;
             this.lbHeaderText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbHeaderText.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbHeaderText.TextColor = System.Drawing.Color.White;
