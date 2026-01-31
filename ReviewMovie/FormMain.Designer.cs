@@ -1066,7 +1066,7 @@ namespace ReviewMovie
             // lblHeaderActive
             // 
             this.lblHeaderActive.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(179)))), ((int)(((byte)(126)))));
-            this.lblHeaderActive.BorderRadius = 12;
+            this.lblHeaderActive.BorderRadius = 4;
             this.lblHeaderActive.BorderSize = 0;
             this.lblHeaderActive.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
             this.lblHeaderActive.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
@@ -1083,7 +1083,7 @@ namespace ReviewMovie
             // lblHeaderRemaining
             // 
             this.lblHeaderRemaining.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
-            this.lblHeaderRemaining.BorderRadius = 12;
+            this.lblHeaderRemaining.BorderRadius = 4;
             this.lblHeaderRemaining.BorderSize = 0;
             this.lblHeaderRemaining.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
             this.lblHeaderRemaining.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular);
