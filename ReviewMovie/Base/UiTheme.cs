@@ -19,7 +19,7 @@ namespace ReviewMovie.Base
         // Radii
         internal const int WindowRadius = 18;
         internal const int PillRadius = 12;
-        internal const int ButtonRadius = 6;
+        internal const int ButtonRadius = 12;
         internal const int CloseRadius = 15;
     }
 }
