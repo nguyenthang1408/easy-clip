@@ -2712,7 +2712,7 @@ namespace ReviewMovie
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1294, 736);
+            this.ClientSize = new System.Drawing.Size(1294, 800);
             this.Controls.Add(this.scMain);
             this.Controls.Add(this.pnlMainTopBar);
             this.DoubleBuffered = true;
@@ -2720,6 +2720,8 @@ namespace ReviewMovie
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
+            this.MaximumSize = new System.Drawing.Size(1294, 800);
+            this.MinimumSize = new System.Drawing.Size(1294, 800);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
