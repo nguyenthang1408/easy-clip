@@ -96,13 +96,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Constant.cs" />
-    <Compile Include="Base\RoundedButton.cs" />
-    <Compile Include="Base\RoundedPanel.cs" />
+    <Compile Include="Base\RoundedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Base\RoundedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Base\UiBorder.cs" />
     <Compile Include="Base\UiHelpers.cs" />
     <Compile Include="Base\UiTheme.cs" />
     <Compile Include="Base\Win32.cs" />
-    <Compile Include="Base\Controls\IconCircleButton.cs" />
+    <Compile Include="Base\Controls\IconCircleButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Base\Controls\Common\ThemeColors.cs" />
     <Compile Include="Base\Controls\Common\ThemeManager.cs" />
     <Compile Include="Base\Controls\Common\UiCommonEnums.cs" />
@@ -115,19 +121,39 @@
     <Compile Include="Base\Controls\PillTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Base\Controls\PrimaryButton.cs" />
-    <Compile Include="Base\Controls\UiButton.cs" />
-    <Compile Include="Base\Controls\UiCheckBox.cs" />
-    <Compile Include="Base\Controls\UiComboBox.cs" />
-    <Compile Include="Base\Controls\UiDataGridView.cs" />
-    <Compile Include="Base\Controls\UiGroupBox.cs" />
-    <Compile Include="Base\Controls\UiLabel.cs" />
+    <Compile Include="Base\Controls\PrimaryButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Base\Controls\UiButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Base\Controls\UiCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Base\Controls\UiComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Base\Controls\UiDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Base\Controls\UiGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Base\Controls\UiLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Base\Controls\UiNumericUpDown.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Base\Controls\UiRadioButton.cs" />
-    <Compile Include="Base\Controls\UiSplitContainer.cs" />
-    <Compile Include="Base\Controls\UiTableLayoutPanel.cs" />
+    <Compile Include="Base\Controls\UiRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Base\Controls\UiSplitContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Base\Controls\UiTableLayoutPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Base\Controls\UiTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -19,7 +19,7 @@ namespace ReviewMovie.Base.Controls
         private Color _boxBorderColor = ThemeManager.Current.Border;
         private int _boxBorderSize = 1;
         private int _boxSize = 16;
-        private int _boxRadius = 8;
+        private int _boxRadius = 4;
         private UiBoxStyle _boxStyle = UiBoxStyle.Circle;
         private UiTextPosition _textPosition = UiTextPosition.Right;
 

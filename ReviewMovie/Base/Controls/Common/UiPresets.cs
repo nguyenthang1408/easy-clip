@@ -17,7 +17,7 @@ namespace ReviewMovie.Base.Controls.Common
                 BorderColor = ThemeManager.Current.Border,
                 BorderFocusColor = ThemeManager.Current.BorderFocus,
                 HoverColor = ThemeManager.Current.Hover,
-                BorderRadius = 12,
+                BorderRadius = 4,
                 BorderSize = 1,
                 BorderStyle = UiBorderStyle.Solid,
                 IconSize = new Size(16, 16)
@@ -30,7 +30,7 @@ namespace ReviewMovie.Base.Controls.Common
                 BorderColor = ThemeManager.Current.Border,
                 BorderFocusColor = ThemeManager.Current.BorderFocus,
                 HoverColor = ThemeManager.Current.Hover,
-                BorderRadius = 12,
+                BorderRadius = 4,
                 BorderSize = 1,
                 BorderStyle = UiBorderStyle.Solid,
                 IconSize = new Size(16, 16)
@@ -43,7 +43,7 @@ namespace ReviewMovie.Base.Controls.Common
                 BorderColor = Color.IndianRed,
                 BorderFocusColor = Color.Red,
                 HoverColor = ThemeManager.Current.Hover,
-                BorderRadius = 12,
+                BorderRadius = 4,
                 BorderSize = 1,
                 BorderStyle = UiBorderStyle.Solid
             };
@@ -136,7 +136,7 @@ namespace ReviewMovie.Base.Controls.Common
                 BorderColor = ThemeManager.Current.Border,
                 BorderFocusColor = ThemeManager.Current.BorderFocus,
                 BorderSize = 1,
-                BorderRadius = 10
+                BorderRadius = 4
             };
         }
     }

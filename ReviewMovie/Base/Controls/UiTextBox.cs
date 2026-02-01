@@ -22,7 +22,7 @@ namespace ReviewMovie.Base.Controls
         private Color _borderColor = ThemeManager.Current.Border;
         private Color _borderFocusColor = ThemeManager.Current.BorderFocus;
         private Color _hoverColor = ThemeManager.Current.Hover;
-        private int _borderRadius = 16;
+        private int _borderRadius = 4;
         private int _borderSize = 1;
         private UiBorderStyle _borderStyle = UiBorderStyle.Solid;
         private Size _iconSize = new Size(18, 18);
