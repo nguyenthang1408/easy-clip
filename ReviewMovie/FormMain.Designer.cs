@@ -2096,11 +2096,12 @@ namespace ReviewMovie
             // 
             // tlpImportMedia
             // 
-            this.tlpImportMedia.BackgroundColor = System.Drawing.Color.Transparent;
+            this.tlpImportMedia.AllowDrop = true;
+            this.tlpImportMedia.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(243)))), ((int)(((byte)(247)))));
             this.tlpImportMedia.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.tlpImportMedia.BorderRadius = 0;
-            this.tlpImportMedia.BorderSizeEx = 0;
-            this.tlpImportMedia.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
+            this.tlpImportMedia.BorderRadius = 14;
+            this.tlpImportMedia.BorderSizeEx = 2;
+            this.tlpImportMedia.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Dashed;
             this.tlpImportMedia.ColumnCount = 1;
             this.tlpImportMedia.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpImportMedia.Controls.Add(this.txtImPortMedia, 0, 1);
@@ -2109,19 +2110,21 @@ namespace ReviewMovie
             this.tlpImportMedia.Location = new System.Drawing.Point(538, 3);
             this.tlpImportMedia.Name = "tlpImportMedia";
             this.tlpImportMedia.RowCount = 2;
-            this.tlpImportMedia.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tlpImportMedia.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
+            this.tlpImportMedia.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tlpImportMedia.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpImportMedia.Size = new System.Drawing.Size(150, 111);
             this.tlpImportMedia.TabIndex = 2;
+            this.tlpImportMedia.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtImPortMedia_DragDrop);
+            this.tlpImportMedia.DragEnter += new System.Windows.Forms.DragEventHandler(this.txtImPortMedia_DragEnter);
             // 
             // txtImPortMedia
             // 
             this.txtImPortMedia.AllowDrop = true;
             this.txtImPortMedia.BackColor = System.Drawing.Color.Transparent;
-            this.txtImPortMedia.BackgroundColor = System.Drawing.SystemColors.Menu;
+            this.txtImPortMedia.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(243)))), ((int)(((byte)(247)))));
             this.txtImPortMedia.BorderColor = themeColors1.Border;
             this.txtImPortMedia.BorderFocusColor = themeColors1.BorderFocus;
-            this.txtImPortMedia.BorderRadius = 4;
+            this.txtImPortMedia.BorderRadius = 14;
             this.txtImPortMedia.DisableTextBox = false;
             this.txtImPortMedia.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtImPortMedia.HoverColor = themeColors1.Hover;
@@ -2141,7 +2144,7 @@ namespace ReviewMovie
             this.txtImPortMedia.SelectionStart = 0;
             this.txtImPortMedia.Size = new System.Drawing.Size(148, 84);
             this.txtImPortMedia.TabIndex = 2;
-            this.txtImPortMedia.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtImPortMedia.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtImPortMedia.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.txtImPortMedia.UseSystemPasswordChar = false;
             this.txtImPortMedia.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtImPortMedia_DragDrop);
@@ -2150,19 +2153,19 @@ namespace ReviewMovie
             // lbHeaderInputMedia
             // 
             this.lbHeaderInputMedia.BackColor = System.Drawing.Color.Transparent;
-            this.lbHeaderInputMedia.BackgroundColor = System.Drawing.Color.SteelBlue;
+            this.lbHeaderInputMedia.BackgroundColor = System.Drawing.Color.Transparent;
             this.lbHeaderInputMedia.BorderColor = System.Drawing.Color.Transparent;
             this.lbHeaderInputMedia.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbHeaderInputMedia.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.lbHeaderInputMedia.ForeColor = System.Drawing.Color.White;
+            this.lbHeaderInputMedia.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lbHeaderInputMedia.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
             this.lbHeaderInputMedia.Location = new System.Drawing.Point(1, 1);
             this.lbHeaderInputMedia.Margin = new System.Windows.Forms.Padding(1);
             this.lbHeaderInputMedia.Name = "lbHeaderInputMedia";
             this.lbHeaderInputMedia.Size = new System.Drawing.Size(148, 23);
             this.lbHeaderInputMedia.TabIndex = 1;
-            this.lbHeaderInputMedia.Text = "Kéo Thả (Ảnh , Video)";
-            this.lbHeaderInputMedia.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lbHeaderInputMedia.TextColor = System.Drawing.Color.White;
+            this.lbHeaderInputMedia.Text = "DROP VISUALS HERE";
+            this.lbHeaderInputMedia.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbHeaderInputMedia.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
             // 
             // btnRecord
             // 
@@ -2195,11 +2198,11 @@ namespace ReviewMovie
             // 
             // tlpText
             // 
-            this.tlpText.BackgroundColor = System.Drawing.Color.Transparent;
+            this.tlpText.BackgroundColor = System.Drawing.Color.White;
             this.tlpText.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.tlpText.BorderRadius = 0;
-            this.tlpText.BorderSizeEx = 0;
-            this.tlpText.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
+            this.tlpText.BorderRadius = 14;
+            this.tlpText.BorderSizeEx = 1;
+            this.tlpText.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.tlpText.ColumnCount = 1;
             this.tlpText.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpText.Controls.Add(this.lbHeaderText, 0, 0);
@@ -2208,36 +2211,36 @@ namespace ReviewMovie
             this.tlpText.Location = new System.Drawing.Point(103, 3);
             this.tlpText.Name = "tlpText";
             this.tlpText.RowCount = 2;
-            this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
+            this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpText.Size = new System.Drawing.Size(429, 111);
             this.tlpText.TabIndex = 1;
             // 
             // lbHeaderText
             // 
             this.lbHeaderText.BackColor = System.Drawing.Color.Transparent;
-            this.lbHeaderText.BackgroundColor = System.Drawing.Color.SteelBlue;
+            this.lbHeaderText.BackgroundColor = System.Drawing.Color.Transparent;
             this.lbHeaderText.BorderColor = System.Drawing.Color.Transparent;
             this.lbHeaderText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbHeaderText.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeaderText.ForeColor = System.Drawing.Color.White;
+            this.lbHeaderText.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbHeaderText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
             this.lbHeaderText.Location = new System.Drawing.Point(1, 1);
             this.lbHeaderText.Margin = new System.Windows.Forms.Padding(1);
             this.lbHeaderText.Name = "lbHeaderText";
             this.lbHeaderText.Size = new System.Drawing.Size(427, 23);
             this.lbHeaderText.TabIndex = 0;
-            this.lbHeaderText.Text = "Nhập Text | Hoặc Kéo Audio File Vào !";
-            this.lbHeaderText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lbHeaderText.TextColor = System.Drawing.Color.White;
+            this.lbHeaderText.Text = "TEXT INPUT";
+            this.lbHeaderText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbHeaderText.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
             // 
             // txtTextInput
             // 
             this.txtTextInput.AllowDrop = true;
             this.txtTextInput.BackColor = System.Drawing.Color.Transparent;
-            this.txtTextInput.BackgroundColor = System.Drawing.Color.White;
+            this.txtTextInput.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(248)))));
             this.txtTextInput.BorderColor = themeColors1.Border;
             this.txtTextInput.BorderFocusColor = themeColors1.BorderFocus;
-            this.txtTextInput.BorderRadius = 4;
+            this.txtTextInput.BorderRadius = 12;
             this.txtTextInput.DisableTextBox = false;
             this.txtTextInput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtTextInput.HoverColor = themeColors1.Hover;
@@ -2267,104 +2270,102 @@ namespace ReviewMovie
             // 
             this.tlpHeaderButton.BackgroundColor = System.Drawing.Color.Transparent;
             this.tlpHeaderButton.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.tlpHeaderButton.BorderRadius = 0;
-            this.tlpHeaderButton.BorderSizeEx = 0;
-            this.tlpHeaderButton.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
-            this.tlpHeaderButton.ColumnCount = 1;
-            this.tlpHeaderButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpHeaderButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpHeaderButton.Controls.Add(this.btnRenderVideoPart, 0, 2);
+            this.tlpHeaderButton.BorderRadius = 14;
+            this.tlpHeaderButton.BorderSizeEx = 1;
+            this.tlpHeaderButton.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
+            this.tlpHeaderButton.ColumnCount = 3;
+            this.tlpHeaderButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpHeaderButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpHeaderButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpHeaderButton.Controls.Add(this.btnConvertAudio, 0, 0);
-            this.tlpHeaderButton.Controls.Add(this.btnSaveAudio, 0, 1);
+            this.tlpHeaderButton.Controls.Add(this.btnSaveAudio, 1, 0);
+            this.tlpHeaderButton.Controls.Add(this.btnRenderVideoPart, 2, 0);
             this.tlpHeaderButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpHeaderButton.Location = new System.Drawing.Point(694, 3);
             this.tlpHeaderButton.Name = "tlpHeaderButton";
-            this.tlpHeaderButton.RowCount = 3;
-            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpHeaderButton.RowCount = 1;
+            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpHeaderButton.Size = new System.Drawing.Size(168, 111);
             this.tlpHeaderButton.TabIndex = 3;
             // 
             // btnRenderVideoPart
             // 
             this.btnRenderVideoPart.BackColor = System.Drawing.SystemColors.Control;
-            this.btnRenderVideoPart.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.btnRenderVideoPart.BorderColor = System.Drawing.Color.Transparent;
-            this.btnRenderVideoPart.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnRenderVideoPart.BackgroundColor = System.Drawing.Color.White;
+            this.btnRenderVideoPart.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.btnRenderVideoPart.BorderHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.btnRenderVideoPart.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
             this.btnRenderVideoPart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnRenderVideoPart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRenderVideoPart.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRenderVideoPart.ForeColor = System.Drawing.Color.White;
-            this.btnRenderVideoPart.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnRenderVideoPart.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRenderVideoPart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
+            this.btnRenderVideoPart.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.btnRenderVideoPart.IconImage = null;
             this.btnRenderVideoPart.IconSize = new System.Drawing.Size(18, 18);
             this.btnRenderVideoPart.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnRenderVideoPart.Location = new System.Drawing.Point(4, 68);
-            this.btnRenderVideoPart.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRenderVideoPart.Location = new System.Drawing.Point(8, 8);
+            this.btnRenderVideoPart.Margin = new System.Windows.Forms.Padding(8);
             this.btnRenderVideoPart.Name = "btnRenderVideoPart";
-            this.btnRenderVideoPart.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
-            this.btnRenderVideoPart.Size = new System.Drawing.Size(160, 39);
+            this.btnRenderVideoPart.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.btnRenderVideoPart.Size = new System.Drawing.Size(40, 95);
             this.btnRenderVideoPart.TabIndex = 3;
-            this.btnRenderVideoPart.Text = "Render Part";
-            this.btnRenderVideoPart.TextColor = System.Drawing.Color.White;
-            this.btnRenderVideoPart.TextHoverColor = System.Drawing.Color.White;
+            this.btnRenderVideoPart.Text = "Render";
+            this.btnRenderVideoPart.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
+            this.btnRenderVideoPart.TextHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
             this.btnRenderVideoPart.UseVisualStyleBackColor = false;
             this.btnRenderVideoPart.Click += new System.EventHandler(this.btnRenderVideoPart_Click);
             // 
             // btnConvertAudio
             // 
             this.btnConvertAudio.BackColor = System.Drawing.SystemColors.Control;
-            this.btnConvertAudio.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.btnConvertAudio.BorderColor = System.Drawing.Color.Transparent;
-            this.btnConvertAudio.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnConvertAudio.BackgroundColor = System.Drawing.Color.White;
+            this.btnConvertAudio.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.btnConvertAudio.BorderHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.btnConvertAudio.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
             this.btnConvertAudio.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnConvertAudio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnConvertAudio.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConvertAudio.ForeColor = System.Drawing.Color.White;
-            this.btnConvertAudio.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnConvertAudio.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConvertAudio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
+            this.btnConvertAudio.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.btnConvertAudio.IconImage = null;
             this.btnConvertAudio.IconSize = new System.Drawing.Size(18, 18);
             this.btnConvertAudio.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnConvertAudio.Location = new System.Drawing.Point(4, 4);
-            this.btnConvertAudio.Margin = new System.Windows.Forms.Padding(4);
+            this.btnConvertAudio.Location = new System.Drawing.Point(8, 8);
+            this.btnConvertAudio.Margin = new System.Windows.Forms.Padding(8);
             this.btnConvertAudio.Name = "btnConvertAudio";
-            this.btnConvertAudio.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
-            this.btnConvertAudio.Size = new System.Drawing.Size(160, 24);
+            this.btnConvertAudio.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.btnConvertAudio.Size = new System.Drawing.Size(40, 95);
             this.btnConvertAudio.TabIndex = 1;
-            this.btnConvertAudio.Text = "Convert Audio";
-            this.btnConvertAudio.TextColor = System.Drawing.Color.White;
-            this.btnConvertAudio.TextHoverColor = System.Drawing.Color.White;
+            this.btnConvertAudio.Text = "Convert";
+            this.btnConvertAudio.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
+            this.btnConvertAudio.TextHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
             this.btnConvertAudio.UseVisualStyleBackColor = false;
             this.btnConvertAudio.Click += new System.EventHandler(this.btnConvertAudio_Click);
             // 
             // btnSaveAudio
             // 
             this.btnSaveAudio.BackColor = System.Drawing.SystemColors.Control;
-            this.btnSaveAudio.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.btnSaveAudio.BorderColor = System.Drawing.Color.Transparent;
-            this.btnSaveAudio.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnSaveAudio.BackgroundColor = System.Drawing.Color.White;
+            this.btnSaveAudio.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.btnSaveAudio.BorderHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.btnSaveAudio.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
             this.btnSaveAudio.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSaveAudio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveAudio.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSaveAudio.ForeColor = System.Drawing.Color.White;
-            this.btnSaveAudio.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnSaveAudio.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSaveAudio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
+            this.btnSaveAudio.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.btnSaveAudio.IconImage = null;
             this.btnSaveAudio.IconSize = new System.Drawing.Size(18, 18);
             this.btnSaveAudio.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnSaveAudio.Location = new System.Drawing.Point(4, 36);
-            this.btnSaveAudio.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSaveAudio.Location = new System.Drawing.Point(8, 8);
+            this.btnSaveAudio.Margin = new System.Windows.Forms.Padding(8);
             this.btnSaveAudio.Name = "btnSaveAudio";
-            this.btnSaveAudio.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
-            this.btnSaveAudio.Size = new System.Drawing.Size(160, 24);
+            this.btnSaveAudio.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.btnSaveAudio.Size = new System.Drawing.Size(40, 95);
             this.btnSaveAudio.TabIndex = 2;
-            this.btnSaveAudio.Text = "Save Audio";
-            this.btnSaveAudio.TextColor = System.Drawing.Color.White;
-            this.btnSaveAudio.TextHoverColor = System.Drawing.Color.White;
+            this.btnSaveAudio.Text = "Save";
+            this.btnSaveAudio.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
+            this.btnSaveAudio.TextHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
             this.btnSaveAudio.UseVisualStyleBackColor = false;
             this.btnSaveAudio.Click += new System.EventHandler(this.btnSaveAudio_Click);
             // 
