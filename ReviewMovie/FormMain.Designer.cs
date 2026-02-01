@@ -2824,7 +2824,6 @@ namespace ReviewMovie
         private System.Windows.Forms.ToolStrip tsMenuView;
         private System.Windows.Forms.ToolStripTextBox txtTim;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private ReviewMovie.Base.Controls.UiButton btnSelectAll;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripLabel lbTitle;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
