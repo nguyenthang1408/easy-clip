@@ -1099,7 +1099,7 @@ namespace ReviewMovie
             // 
             // btnHeaderHelp
             // 
-            this.btnHeaderHelp.CornerRadius = 10;
+            this.btnHeaderHelp.CornerRadius = 6;
             this.btnHeaderHelp.Font = new System.Drawing.Font("Segoe MDL2 Assets", 10F);
             this.btnHeaderHelp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
             this.btnHeaderHelp.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
@@ -1115,7 +1115,7 @@ namespace ReviewMovie
             // 
             // btnHeaderSettings
             // 
-            this.btnHeaderSettings.CornerRadius = 10;
+            this.btnHeaderSettings.CornerRadius = 6;
             this.btnHeaderSettings.Font = new System.Drawing.Font("Segoe MDL2 Assets", 10F);
             this.btnHeaderSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
             this.btnHeaderSettings.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
@@ -1131,7 +1131,7 @@ namespace ReviewMovie
             // 
             // btnHeaderAvatar
             // 
-            this.btnHeaderAvatar.CornerRadius = 13;
+            this.btnHeaderAvatar.CornerRadius = 6;
             this.btnHeaderAvatar.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnHeaderAvatar.ForeColor = System.Drawing.Color.White;
             this.btnHeaderAvatar.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
@@ -1147,7 +1147,7 @@ namespace ReviewMovie
             // 
             // btnWindowMinimize
             // 
-            this.btnWindowMinimize.CornerRadius = 10;
+            this.btnWindowMinimize.CornerRadius = 6;
             this.btnWindowMinimize.Font = new System.Drawing.Font("Segoe MDL2 Assets", 10F);
             this.btnWindowMinimize.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
             this.btnWindowMinimize.Location = new System.Drawing.Point(288, 0);
@@ -1164,7 +1164,7 @@ namespace ReviewMovie
             // 
             // btnWindowClose
             // 
-            this.btnWindowClose.CornerRadius = 10;
+            this.btnWindowClose.CornerRadius = 6;
             this.btnWindowClose.Font = new System.Drawing.Font("Segoe MDL2 Assets", 10F);
             this.btnWindowClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
             this.btnWindowClose.Location = new System.Drawing.Point(314, 0);
@@ -1428,7 +1428,7 @@ namespace ReviewMovie
             this.btnSearch.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(225)))), ((int)(((byte)(240)))));
             this.btnSearch.TextColor = System.Drawing.Color.Black;
             this.btnSearch.TextHoverColor = System.Drawing.Color.Black;
-            this.btnSearch.BorderRadius = 8;
+            this.btnSearch.BorderRadius = 6;
             this.btnSearch.BorderSize = 0;
             this.btnSearch.IconImage = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
             // 
@@ -1473,7 +1473,7 @@ namespace ReviewMovie
             this.btnSelectAll.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(225)))), ((int)(((byte)(240)))));
             this.btnSelectAll.TextColor = System.Drawing.Color.Black;
             this.btnSelectAll.TextHoverColor = System.Drawing.Color.Black;
-            this.btnSelectAll.BorderRadius = 8;
+            this.btnSelectAll.BorderRadius = 6;
             this.btnSelectAll.BorderSize = 0;
             this.btnSelectAll.IconImage = ((System.Drawing.Image)(resources.GetObject("btnSelectAll.Image")));
             this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
@@ -1517,7 +1517,7 @@ namespace ReviewMovie
             this.btnAddRow.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(230)))), ((int)(((byte)(95)))));
             this.btnAddRow.TextColor = System.Drawing.Color.Black;
             this.btnAddRow.TextHoverColor = System.Drawing.Color.Black;
-            this.btnAddRow.BorderRadius = 10;
+            this.btnAddRow.BorderRadius = 6;
             this.btnAddRow.BorderSize = 0;
             this.btnAddRow.IconImage = global::EasyClip.Properties.Resources.add_1;
             this.btnAddRow.IconPosition = ReviewMovie.Base.Controls.Common.UiIconPosition.Left;
@@ -1551,7 +1551,7 @@ namespace ReviewMovie
             this.btnImportSubtitle.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(150)))));
             this.btnImportSubtitle.TextColor = System.Drawing.Color.Black;
             this.btnImportSubtitle.TextHoverColor = System.Drawing.Color.Black;
-            this.btnImportSubtitle.BorderRadius = 10;
+            this.btnImportSubtitle.BorderRadius = 6;
             this.btnImportSubtitle.BorderSize = 0;
             this.btnImportSubtitle.IconImage = global::EasyClip.Properties.Resources.quick_edit;
             this.btnImportSubtitle.IconPosition = ReviewMovie.Base.Controls.Common.UiIconPosition.Left;
@@ -1585,7 +1585,7 @@ namespace ReviewMovie
             this.btnDestroyAction.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(195)))), ((int)(((byte)(160)))));
             this.btnDestroyAction.TextColor = System.Drawing.Color.Black;
             this.btnDestroyAction.TextHoverColor = System.Drawing.Color.Black;
-            this.btnDestroyAction.BorderRadius = 10;
+            this.btnDestroyAction.BorderRadius = 6;
             this.btnDestroyAction.BorderSize = 0;
             this.btnDestroyAction.IconImage = ((System.Drawing.Image)(resources.GetObject("btnDestroyAction.Image")));
             this.btnDestroyAction.IconPosition = ReviewMovie.Base.Controls.Common.UiIconPosition.Left;
