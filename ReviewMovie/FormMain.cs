@@ -2085,7 +2085,7 @@ namespace ReviewMovie
             }
         }
 
-        private void TextboxInThread(TextBox itextbox, string message)
+        private void TextboxInThread(Control itextbox, string message)
         {
             // Kiểm tra xem luồng gọi có đang chạy trên luồng UI chính không
             if (itextbox.InvokeRequired)

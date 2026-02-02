@@ -22,7 +22,7 @@ namespace ReviewMovie.Base.Controls
         private Color _borderColor = ThemeManager.Current.Border;
         private Color _borderFocusColor = ThemeManager.Current.BorderFocus;
         private int _borderSize = 1;
-        private int _borderRadius = 10;
+        private int _borderRadius = 4;
 
         public event EventHandler ValueChanged;
 

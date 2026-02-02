@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -19,14 +19,20 @@ namespace ReviewMovie
                     {
                         if (!button.IsDisposed)
                         {
-                            button.ForeColor = color;
+                            if (button is Base.Controls.UiButton uiButton)
+                                uiButton.TextColor = color;
+                            else
+                                button.ForeColor = color;
                             button.Text = message;
                         }
                     }));
                 }
                 else
                 {
-                    button.ForeColor = color;
+                    if (button is Base.Controls.UiButton uiButton)
+                        uiButton.TextColor = color;
+                    else
+                        button.ForeColor = color;
                     button.Text = message;
                 }
             }
@@ -66,7 +72,7 @@ namespace ReviewMovie
         }
 
 
-        public static void SetLabelText(Label label, string message, Color color)
+        public static void SetLabelText(Control label, string message, Color color)
         {
             if (label == null || label.IsDisposed) return;
 
@@ -78,14 +84,20 @@ namespace ReviewMovie
                     {
                         if (!label.IsDisposed)
                         {
-                            label.ForeColor = color;
+                            if (label is Base.Controls.UiLabel uiLabel)
+                                uiLabel.TextColor = color;
+                            else
+                                label.ForeColor = color;
                             label.Text = message;
                         }
                     }));
                 }
                 else
                 {
-                    label.ForeColor = color;
+                    if (label is Base.Controls.UiLabel uiLabel)
+                        uiLabel.TextColor = color;
+                    else
+                        label.ForeColor = color;
                     label.Text = message;
                 }
             }
@@ -95,7 +107,7 @@ namespace ReviewMovie
             }
         }
 
-        public static void SetTextboxText(TextBox textbox, string message)
+        public static void SetTextboxText(Control textbox, string message)
         {
             if (textbox == null || textbox.IsDisposed) return;
 
