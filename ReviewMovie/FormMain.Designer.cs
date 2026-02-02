@@ -135,6 +135,9 @@ namespace ReviewMovie
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnDestroyAction = new ReviewMovie.Base.Controls.UiButton();
             this.hostBtnDestroyAction = new System.Windows.Forms.ToolStripControlHost(this.btnDestroyAction);
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.grViewHeader = new System.Windows.Forms.GroupBox();
             this.tlpViewHeader = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
             this.tlpImportMedia = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
@@ -148,6 +151,9 @@ namespace ReviewMovie
             this.btnRenderVideoPart = new ReviewMovie.Base.Controls.UiButton();
             this.btnConvertAudio = new ReviewMovie.Base.Controls.UiButton();
             this.btnSaveAudio = new ReviewMovie.Base.Controls.UiButton();
+            this.hostBtnConvertAudio = new System.Windows.Forms.ToolStripControlHost(this.btnConvertAudio);
+            this.hostBtnSaveAudio = new System.Windows.Forms.ToolStripControlHost(this.btnSaveAudio);
+            this.hostBtnRenderVideoPart = new System.Windows.Forms.ToolStripControlHost(this.btnRenderVideoPart);
             this.pnlMainTopBar = new System.Windows.Forms.Panel();
             this.flpHeaderOptions = new System.Windows.Forms.FlowLayoutPanel();
             this.lblHeaderActive = new ReviewMovie.Base.Controls.UiLabel();
@@ -1842,7 +1848,13 @@ namespace ReviewMovie
             this.toolStripSeparator2,
             this.hostBtnImportSubtitle,
             this.toolStripSeparator3,
-            this.hostBtnDestroyAction});
+            this.hostBtnDestroyAction,
+            this.toolStripSeparator9,
+            this.hostBtnConvertAudio,
+            this.toolStripSeparator10,
+            this.hostBtnSaveAudio,
+            this.toolStripSeparator11,
+            this.hostBtnRenderVideoPart});
             this.tsMenuView.Location = new System.Drawing.Point(0, 142);
             this.tsMenuView.Name = "tsMenuView";
             this.tsMenuView.Size = new System.Drawing.Size(877, 20);
@@ -2055,6 +2067,57 @@ namespace ReviewMovie
             this.hostBtnDestroyAction.Text = "&Hủy Mọi Hoạt Động";
             this.hostBtnDestroyAction.ToolTipText = "&Hủy Mọi Hoạt Động";
             // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 20);
+            // 
+            // hostBtnConvertAudio
+            // 
+            this.hostBtnConvertAudio.AutoSize = false;
+            this.hostBtnConvertAudio.BackColor = System.Drawing.Color.Transparent;
+            this.hostBtnConvertAudio.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hostBtnConvertAudio.ForeColor = System.Drawing.Color.Black;
+            this.hostBtnConvertAudio.Margin = new System.Windows.Forms.Padding(0);
+            this.hostBtnConvertAudio.Name = "hostBtnConvertAudio";
+            this.hostBtnConvertAudio.Size = new System.Drawing.Size(125, 34);
+            this.hostBtnConvertAudio.Text = "Convert Audio";
+            this.hostBtnConvertAudio.ToolTipText = "Convert Audio";
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 20);
+            // 
+            // hostBtnSaveAudio
+            // 
+            this.hostBtnSaveAudio.AutoSize = false;
+            this.hostBtnSaveAudio.BackColor = System.Drawing.Color.Transparent;
+            this.hostBtnSaveAudio.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hostBtnSaveAudio.ForeColor = System.Drawing.Color.Black;
+            this.hostBtnSaveAudio.Margin = new System.Windows.Forms.Padding(0);
+            this.hostBtnSaveAudio.Name = "hostBtnSaveAudio";
+            this.hostBtnSaveAudio.Size = new System.Drawing.Size(120, 34);
+            this.hostBtnSaveAudio.Text = "Save Audio";
+            this.hostBtnSaveAudio.ToolTipText = "Save Audio";
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(6, 20);
+            // 
+            // hostBtnRenderVideoPart
+            // 
+            this.hostBtnRenderVideoPart.AutoSize = false;
+            this.hostBtnRenderVideoPart.BackColor = System.Drawing.Color.Transparent;
+            this.hostBtnRenderVideoPart.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hostBtnRenderVideoPart.ForeColor = System.Drawing.Color.Black;
+            this.hostBtnRenderVideoPart.Margin = new System.Windows.Forms.Padding(0);
+            this.hostBtnRenderVideoPart.Name = "hostBtnRenderVideoPart";
+            this.hostBtnRenderVideoPart.Size = new System.Drawing.Size(115, 34);
+            this.hostBtnRenderVideoPart.Text = "Render Part";
+            this.hostBtnRenderVideoPart.ToolTipText = "Render Part";
+            // 
             // grViewHeader
             // 
             this.grViewHeader.BackColor = System.Drawing.ColorTranslator.FromHtml("#F3F4F6");
@@ -2088,7 +2151,7 @@ namespace ReviewMovie
             this.tlpViewHeader.Name = "tlpViewHeader";
             this.tlpViewHeader.RowCount = 2;
             this.tlpViewHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpViewHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
+            this.tlpViewHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
             this.tlpViewHeader.Size = new System.Drawing.Size(865, 117);
             this.tlpViewHeader.TabIndex = 0;
             this.tlpViewHeader.SetRowSpan(this.btnRecord, 2);
@@ -2277,9 +2340,6 @@ namespace ReviewMovie
             this.tlpHeaderButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpHeaderButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpHeaderButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpHeaderButton.Controls.Add(this.btnConvertAudio, 0, 0);
-            this.tlpHeaderButton.Controls.Add(this.btnSaveAudio, 1, 0);
-            this.tlpHeaderButton.Controls.Add(this.btnRenderVideoPart, 2, 0);
             this.tlpHeaderButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpHeaderButton.Location = new System.Drawing.Point(694, 3);
             this.tlpHeaderButton.Name = "tlpHeaderButton";
@@ -2287,6 +2347,7 @@ namespace ReviewMovie
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpHeaderButton.Size = new System.Drawing.Size(752, 46);
             this.tlpHeaderButton.TabIndex = 3;
+            this.tlpHeaderButton.Visible = false;
             // 
             // btnRenderVideoPart
             // 
@@ -2295,7 +2356,7 @@ namespace ReviewMovie
             this.btnRenderVideoPart.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.btnRenderVideoPart.BorderHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.btnRenderVideoPart.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
-            this.btnRenderVideoPart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnRenderVideoPart.Dock = System.Windows.Forms.DockStyle.None;
             this.btnRenderVideoPart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRenderVideoPart.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRenderVideoPart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
@@ -2304,10 +2365,10 @@ namespace ReviewMovie
             this.btnRenderVideoPart.IconSize = new System.Drawing.Size(18, 18);
             this.btnRenderVideoPart.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnRenderVideoPart.Location = new System.Drawing.Point(514, 8);
-            this.btnRenderVideoPart.Margin = new System.Windows.Forms.Padding(8);
+            this.btnRenderVideoPart.Margin = new System.Windows.Forms.Padding(0);
             this.btnRenderVideoPart.Name = "btnRenderVideoPart";
             this.btnRenderVideoPart.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.btnRenderVideoPart.Size = new System.Drawing.Size(230, 30);
+            this.btnRenderVideoPart.Size = new System.Drawing.Size(110, 30);
             this.btnRenderVideoPart.TabIndex = 3;
             this.btnRenderVideoPart.Text = "Render Part";
             this.btnRenderVideoPart.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
@@ -2322,7 +2383,7 @@ namespace ReviewMovie
             this.btnConvertAudio.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.btnConvertAudio.BorderHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.btnConvertAudio.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
-            this.btnConvertAudio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnConvertAudio.Dock = System.Windows.Forms.DockStyle.None;
             this.btnConvertAudio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnConvertAudio.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConvertAudio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
@@ -2331,10 +2392,10 @@ namespace ReviewMovie
             this.btnConvertAudio.IconSize = new System.Drawing.Size(18, 18);
             this.btnConvertAudio.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnConvertAudio.Location = new System.Drawing.Point(8, 8);
-            this.btnConvertAudio.Margin = new System.Windows.Forms.Padding(8);
+            this.btnConvertAudio.Margin = new System.Windows.Forms.Padding(0);
             this.btnConvertAudio.Name = "btnConvertAudio";
             this.btnConvertAudio.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.btnConvertAudio.Size = new System.Drawing.Size(230, 30);
+            this.btnConvertAudio.Size = new System.Drawing.Size(120, 30);
             this.btnConvertAudio.TabIndex = 1;
             this.btnConvertAudio.Text = "Convert Audio";
             this.btnConvertAudio.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
@@ -2349,7 +2410,7 @@ namespace ReviewMovie
             this.btnSaveAudio.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.btnSaveAudio.BorderHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.btnSaveAudio.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
-            this.btnSaveAudio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSaveAudio.Dock = System.Windows.Forms.DockStyle.None;
             this.btnSaveAudio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveAudio.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSaveAudio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
@@ -2358,10 +2419,10 @@ namespace ReviewMovie
             this.btnSaveAudio.IconSize = new System.Drawing.Size(18, 18);
             this.btnSaveAudio.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnSaveAudio.Location = new System.Drawing.Point(261, 8);
-            this.btnSaveAudio.Margin = new System.Windows.Forms.Padding(8);
+            this.btnSaveAudio.Margin = new System.Windows.Forms.Padding(0);
             this.btnSaveAudio.Name = "btnSaveAudio";
             this.btnSaveAudio.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.btnSaveAudio.Size = new System.Drawing.Size(230, 30);
+            this.btnSaveAudio.Size = new System.Drawing.Size(105, 30);
             this.btnSaveAudio.TabIndex = 2;
             this.btnSaveAudio.Text = "Save Audio";
             this.btnSaveAudio.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(80)))));
@@ -2901,6 +2962,12 @@ namespace ReviewMovie
         private System.Windows.Forms.ToolStripControlHost hostBtnAddRow;
         private System.Windows.Forms.ToolStripControlHost hostBtnImportSubtitle;
         private System.Windows.Forms.ToolStripControlHost hostBtnDestroyAction;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripControlHost hostBtnConvertAudio;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripControlHost hostBtnSaveAudio;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+        private System.Windows.Forms.ToolStripControlHost hostBtnRenderVideoPart;
     }
 }
 
