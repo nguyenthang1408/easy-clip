@@ -7,7 +7,7 @@ namespace ReviewMovie.Base.Controls
 {
     public class PrimaryButton : Button
     {
-        private Color _fillColor = UiTheme.Accent;
+        private Color _fillColor = UiTheme.Blue;
         private Color _hoverFillColor = UiTheme.AccentHover;
         private Color _pressedFillColor = UiTheme.AccentPressed;
         private int _cornerRadius = UiTheme.ButtonRadius;

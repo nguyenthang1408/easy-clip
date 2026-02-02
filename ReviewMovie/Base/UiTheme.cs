@@ -9,6 +9,7 @@ namespace ReviewMovie.Base
         internal static readonly Color Accent = Color.FromArgb(255, 122, 0);
         internal static readonly Color AccentHover = Color.FromArgb(255, 138, 26);
         internal static readonly Color AccentPressed = Color.FromArgb(233, 108, 0);
+        internal static readonly Color Blue = Color.FromArgb(255, 24, 119, 242);
 
         internal static readonly Color PillBorder = Color.FromArgb(230, 232, 239);
         internal static readonly Color WindowBorder = Color.FromArgb(230, 232, 239);

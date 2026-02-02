@@ -32,18 +32,18 @@ namespace ReviewMovie
             this.cardPanel = new System.Windows.Forms.Panel();
             this.linklbRegister = new System.Windows.Forms.LinkLabel();
             this.lkHelp = new System.Windows.Forms.LinkLabel();
-            this.btnLoginApiKey = new ReviewMovie.Base.Controls.PrimaryButton();
-            this.btnClose = new ReviewMovie.Base.Controls.IconCircleButton();
             this.lbstatus = new System.Windows.Forms.Label();
-            this.txInsertApiKey = new ReviewMovie.Base.Controls.PillTextBox();
             this.materialLabel2 = new System.Windows.Forms.Label();
-            this.txAppCodeShow = new ReviewMovie.Base.Controls.PillTextBox();
             this.materialLabel1 = new System.Windows.Forms.Label();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlLogo = new System.Windows.Forms.Panel();
             this.lblLogoIcon = new System.Windows.Forms.Label();
             this.pnlTopAccent = new System.Windows.Forms.Panel();
+            this.btnLoginApiKey = new ReviewMovie.Base.Controls.PrimaryButton();
+            this.btnClose = new ReviewMovie.Base.Controls.IconCircleButton();
+            this.txInsertApiKey = new ReviewMovie.Base.Controls.PillTextBox();
+            this.txAppCodeShow = new ReviewMovie.Base.Controls.PillTextBox();
             this.cardPanel.SuspendLayout();
             this.pnlLogo.SuspendLayout();
             this.SuspendLayout();
@@ -101,42 +101,6 @@ namespace ReviewMovie
             this.lkHelp.Text = "Help";
             this.lkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lkHelp_LinkClicked);
             // 
-            // btnLoginApiKey
-            // 
-            this.btnLoginApiKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.btnLoginApiKey.CornerRadius = 12;
-            this.btnLoginApiKey.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.btnLoginApiKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoginApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 11.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLoginApiKey.ForeColor = System.Drawing.Color.Black;
-            this.btnLoginApiKey.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
-            this.btnLoginApiKey.Location = new System.Drawing.Point(44, 430);
-            this.btnLoginApiKey.Name = "btnLoginApiKey";
-            this.btnLoginApiKey.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
-            this.btnLoginApiKey.Size = new System.Drawing.Size(332, 52);
-            this.btnLoginApiKey.TabIndex = 9;
-            this.btnLoginApiKey.Text = "Login  ➜";
-            this.btnLoginApiKey.UseVisualStyleBackColor = false;
-            this.btnLoginApiKey.Click += new System.EventHandler(this.btnLoginApiKey_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.BackColor = System.Drawing.Color.White;
-            this.btnClose.CornerRadius = 15;
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(145)))), ((int)(((byte)(165)))));
-            this.btnClose.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
-            this.btnClose.Location = new System.Drawing.Point(378, 12);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.NormalBackColor = System.Drawing.Color.White;
-            this.btnClose.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.btnClose.Size = new System.Drawing.Size(30, 30);
-            this.btnClose.TabIndex = 12;
-            this.btnClose.Text = "✕";
-            this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
             // lbstatus
             // 
             this.lbstatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -145,22 +109,6 @@ namespace ReviewMovie
             this.lbstatus.Name = "lbstatus";
             this.lbstatus.Size = new System.Drawing.Size(332, 30);
             this.lbstatus.TabIndex = 8;
-            // 
-            // txInsertApiKey
-            // 
-            this.txInsertApiKey.BackColor = System.Drawing.Color.Transparent;
-            this.txInsertApiKey.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(236)))), ((int)(((byte)(255)))));
-            this.txInsertApiKey.CornerRadius = 16;
-            this.txInsertApiKey.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
-            this.txInsertApiKey.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
-            this.txInsertApiKey.IconGlyph = "";
-            this.txInsertApiKey.Location = new System.Drawing.Point(44, 316);
-            this.txInsertApiKey.MaxLength = 32767;
-            this.txInsertApiKey.Name = "txInsertApiKey";
-            this.txInsertApiKey.ReadOnly = false;
-            this.txInsertApiKey.Size = new System.Drawing.Size(332, 52);
-            this.txInsertApiKey.TabIndex = 7;
-            this.txInsertApiKey.UseSystemPasswordChar = false;
             // 
             // materialLabel2
             // 
@@ -172,22 +120,6 @@ namespace ReviewMovie
             this.materialLabel2.Size = new System.Drawing.Size(70, 23);
             this.materialLabel2.TabIndex = 6;
             this.materialLabel2.Text = "API KEY";
-            // 
-            // txAppCodeShow
-            // 
-            this.txAppCodeShow.BackColor = System.Drawing.Color.Transparent;
-            this.txAppCodeShow.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(85)))), ((int)(((byte)(99)))));
-            this.txAppCodeShow.CornerRadius = 16;
-            this.txAppCodeShow.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
-            this.txAppCodeShow.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
-            this.txAppCodeShow.IconGlyph = "";
-            this.txAppCodeShow.Location = new System.Drawing.Point(48, 239);
-            this.txAppCodeShow.MaxLength = 32767;
-            this.txAppCodeShow.Name = "txAppCodeShow";
-            this.txAppCodeShow.ReadOnly = true;
-            this.txAppCodeShow.Size = new System.Drawing.Size(332, 52);
-            this.txAppCodeShow.TabIndex = 1;
-            this.txAppCodeShow.UseSystemPasswordChar = false;
             // 
             // materialLabel1
             // 
@@ -255,6 +187,74 @@ namespace ReviewMovie
             this.pnlTopAccent.TabIndex = 0;
             this.pnlTopAccent.Visible = false;
             this.pnlTopAccent.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
+            // 
+            // btnLoginApiKey
+            // 
+            this.btnLoginApiKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.btnLoginApiKey.CornerRadius = 12;
+            this.btnLoginApiKey.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnLoginApiKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLoginApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 11.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLoginApiKey.ForeColor = System.Drawing.Color.Black;
+            this.btnLoginApiKey.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnLoginApiKey.Location = new System.Drawing.Point(44, 430);
+            this.btnLoginApiKey.Name = "btnLoginApiKey";
+            this.btnLoginApiKey.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.btnLoginApiKey.Size = new System.Drawing.Size(332, 52);
+            this.btnLoginApiKey.TabIndex = 9;
+            this.btnLoginApiKey.Text = "Login  ➜";
+            this.btnLoginApiKey.UseVisualStyleBackColor = false;
+            this.btnLoginApiKey.Click += new System.EventHandler(this.btnLoginApiKey_Click);
+            // 
+            // btnClose
+            // 
+            this.btnClose.BackColor = System.Drawing.Color.White;
+            this.btnClose.CornerRadius = 15;
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(145)))), ((int)(((byte)(165)))));
+            this.btnClose.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.btnClose.Location = new System.Drawing.Point(378, 12);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.NormalBackColor = System.Drawing.Color.White;
+            this.btnClose.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.btnClose.Size = new System.Drawing.Size(30, 30);
+            this.btnClose.TabIndex = 12;
+            this.btnClose.Text = "✕";
+            this.btnClose.UseVisualStyleBackColor = false;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // txInsertApiKey
+            // 
+            this.txInsertApiKey.BackColor = System.Drawing.Color.Transparent;
+            this.txInsertApiKey.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(236)))), ((int)(((byte)(255)))));
+            this.txInsertApiKey.CornerRadius = 16;
+            this.txInsertApiKey.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
+            this.txInsertApiKey.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
+            this.txInsertApiKey.IconGlyph = "";
+            this.txInsertApiKey.Location = new System.Drawing.Point(44, 316);
+            this.txInsertApiKey.MaxLength = 32767;
+            this.txInsertApiKey.Name = "txInsertApiKey";
+            this.txInsertApiKey.ReadOnly = false;
+            this.txInsertApiKey.Size = new System.Drawing.Size(332, 52);
+            this.txInsertApiKey.TabIndex = 7;
+            this.txInsertApiKey.UseSystemPasswordChar = false;
+            // 
+            // txAppCodeShow
+            // 
+            this.txAppCodeShow.BackColor = System.Drawing.Color.Transparent;
+            this.txAppCodeShow.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(85)))), ((int)(((byte)(99)))));
+            this.txAppCodeShow.CornerRadius = 16;
+            this.txAppCodeShow.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
+            this.txAppCodeShow.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
+            this.txAppCodeShow.IconGlyph = "";
+            this.txAppCodeShow.Location = new System.Drawing.Point(48, 239);
+            this.txAppCodeShow.MaxLength = 32767;
+            this.txAppCodeShow.Name = "txAppCodeShow";
+            this.txAppCodeShow.ReadOnly = true;
+            this.txAppCodeShow.Size = new System.Drawing.Size(332, 52);
+            this.txAppCodeShow.TabIndex = 1;
+            this.txAppCodeShow.UseSystemPasswordChar = false;
             // 
             // LoginApiKey
             // 
