@@ -1872,7 +1872,7 @@ namespace ReviewMovie
             this.hostBtnRenderVideoPart.Name = "hostBtnRenderVideoPart";
             this.hostBtnRenderVideoPart.Size = new System.Drawing.Size(34, 34);
             this.hostBtnRenderVideoPart.ToolTipText = "Render Part";
-            this.hostBtnRenderVideoPart.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
+            this.hostBtnRenderVideoPart.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             // 
             // hostBtnSaveAudio
             // 
@@ -1893,7 +1893,7 @@ namespace ReviewMovie
             this.hostBtnSaveAudio.Name = "hostBtnSaveAudio";
             this.hostBtnSaveAudio.Size = new System.Drawing.Size(34, 34);
             this.hostBtnSaveAudio.ToolTipText = "Save Audio";
-            this.hostBtnSaveAudio.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
+            this.hostBtnSaveAudio.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             // 
             // hostBtnConvertAudio
             // 
@@ -1914,7 +1914,7 @@ namespace ReviewMovie
             this.hostBtnConvertAudio.Name = "hostBtnConvertAudio";
             this.hostBtnConvertAudio.Size = new System.Drawing.Size(34, 34);
             this.hostBtnConvertAudio.ToolTipText = "Convert Audio";
-            this.hostBtnConvertAudio.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
+            this.hostBtnConvertAudio.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             // 
             // hostBtnSelectAll
             // 
