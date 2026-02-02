@@ -2057,7 +2057,7 @@ namespace ReviewMovie
             // 
             // grViewHeader
             // 
-            this.grViewHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
+            this.grViewHeader.BackColor = System.Drawing.ColorTranslator.FromHtml("#F3F4F6");
             this.grViewHeader.Controls.Add(this.tlpViewHeader);
             this.grViewHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grViewHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -2238,7 +2238,7 @@ namespace ReviewMovie
             // 
             this.txtTextInput.AllowDrop = true;
             this.txtTextInput.BackColor = System.Drawing.Color.Transparent;
-            this.txtTextInput.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(248)))));
+            this.txtTextInput.BackgroundColor = System.Drawing.ColorTranslator.FromHtml("#FFFFFF");
             this.txtTextInput.BorderColor = themeColors1.Border;
             this.txtTextInput.BorderFocusColor = themeColors1.BorderFocus;
             this.txtTextInput.BorderRadius = 12;
