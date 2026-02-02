@@ -20,7 +20,7 @@
             string processed = RemoveNewLineChars(input);
 
             // Trim khoảng trắng đầu cuối
-            processed = processed.Trim();
+            processed = processed.TrimStart();
 
             // Giới hạn độ dài
             if (processed.Length > maxLength)
