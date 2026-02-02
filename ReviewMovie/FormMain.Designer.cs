@@ -1941,12 +1941,14 @@ namespace ReviewMovie
             this.hostBtnSelectAll.Name = "hostBtnSelectAll";
             this.hostBtnSelectAll.Size = new System.Drawing.Size(26, 25);
             this.hostBtnSelectAll.ToolTipText = "Chọn/Không chọn tất cả";
-            this.hostBtnSelectAll.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            // Allow optional items to overflow; keep 6 main buttons visible.
+            this.hostBtnSelectAll.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 20);
+            this.toolStripSeparator4.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
             // 
             // lbTitle
             // 
@@ -1955,12 +1957,13 @@ namespace ReviewMovie
             this.lbTitle.Name = "lbTitle";
             this.lbTitle.Size = new System.Drawing.Size(71, 17);
             this.lbTitle.Text = "Chọn Tác Vụ";
-            this.lbTitle.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.lbTitle.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 20);
+            this.toolStripSeparator1.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
             // 
             // hostBtnAddRow
             // 
@@ -2000,6 +2003,7 @@ namespace ReviewMovie
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 20);
+            this.toolStripSeparator2.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
             // 
             // hostBtnImportSubtitle
             // 
@@ -2039,6 +2043,7 @@ namespace ReviewMovie
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 20);
+            this.toolStripSeparator3.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
             // 
             // hostBtnDestroyAction
             // 
