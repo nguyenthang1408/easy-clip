@@ -117,10 +117,6 @@ namespace ReviewMovie
             this.Column_inputtext = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tsMenuView = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSearch = new ReviewMovie.Base.Controls.UiButton();
-            this.hostBtnSearch = new System.Windows.Forms.ToolStripControlHost(this.btnSearch);
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.txtTim = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.btnSelectAll = new ReviewMovie.Base.Controls.UiButton();
             this.hostBtnSelectAll = new System.Windows.Forms.ToolStripControlHost(this.btnSelectAll);
@@ -148,6 +144,9 @@ namespace ReviewMovie
             this.btnRenderVideoPart = new ReviewMovie.Base.Controls.UiButton();
             this.btnConvertAudio = new ReviewMovie.Base.Controls.UiButton();
             this.btnSaveAudio = new ReviewMovie.Base.Controls.UiButton();
+            this.hostBtnConvertAudio = new System.Windows.Forms.ToolStripControlHost(this.btnConvertAudio);
+            this.hostBtnSaveAudio = new System.Windows.Forms.ToolStripControlHost(this.btnSaveAudio);
+            this.hostBtnRenderVideoPart = new System.Windows.Forms.ToolStripControlHost(this.btnRenderVideoPart);
             this.pnlMainTopBar = new System.Windows.Forms.Panel();
             this.flpHeaderOptions = new System.Windows.Forms.FlowLayoutPanel();
             this.lblHeaderActive = new ReviewMovie.Base.Controls.UiLabel();
@@ -1829,11 +1828,10 @@ namespace ReviewMovie
             // 
             this.tsMenuView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
             this.tsMenuView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSeparator6,
-            this.hostBtnSearch,
-            this.toolStripSeparator8,
-            this.txtTim,
             this.toolStripSeparator7,
+            this.hostBtnRenderVideoPart,
+            this.hostBtnSaveAudio,
+            this.hostBtnConvertAudio,
             this.hostBtnSelectAll,
             this.toolStripSeparator4,
             this.lbTitle,
@@ -1845,61 +1843,45 @@ namespace ReviewMovie
             this.hostBtnDestroyAction});
             this.tsMenuView.Location = new System.Drawing.Point(0, 142);
             this.tsMenuView.Name = "tsMenuView";
-            this.tsMenuView.Size = new System.Drawing.Size(877, 20);
+            this.tsMenuView.Size = new System.Drawing.Size(877, 34);
             this.tsMenuView.TabIndex = 1;
             this.tsMenuView.Text = "toolStrip5";
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 20);
-            // 
-            // hostBtnSearch
-            // 
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(24, 22);
-            this.btnSearch.Text = "";
-            this.btnSearch.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnSearch.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(235)))), ((int)(((byte)(245)))));
-            this.btnSearch.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(225)))), ((int)(((byte)(240)))));
-            this.btnSearch.TextColor = System.Drawing.Color.Black;
-            this.btnSearch.TextHoverColor = System.Drawing.Color.Black;
-            this.btnSearch.BorderRadius = 8;
-            this.btnSearch.BorderSize = 0;
-            this.btnSearch.IconImage = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
-            // 
-            // hostBtnSearch
-            // 
-            this.hostBtnSearch.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.hostBtnSearch.AutoSize = false;
-            this.hostBtnSearch.BackColor = System.Drawing.Color.Transparent;
-            this.hostBtnSearch.ForeColor = System.Drawing.Color.Black;
-            this.hostBtnSearch.Margin = new System.Windows.Forms.Padding(0);
-            this.hostBtnSearch.Name = "hostBtnSearch";
-            this.hostBtnSearch.Size = new System.Drawing.Size(26, 25);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 20);
-            // 
-            // txtTim
-            // 
-            this.txtTim.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.txtTim.BackColor = System.Drawing.Color.White;
-            this.txtTim.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTim.Font = new System.Drawing.Font("Tahoma", 7F);
-            this.txtTim.Name = "txtTim";
-            this.txtTim.Size = new System.Drawing.Size(150, 20);
-            this.txtTim.ToolTipText = "Nhập thông tin cần tìm vào đây";
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 20);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 34);
+            // 
+            // hostBtnRenderVideoPart
+            // 
+            this.btnRenderVideoPart.Dock = System.Windows.Forms.DockStyle.None;
+            this.btnRenderVideoPart.Size = new System.Drawing.Size(130, 28);
+            this.hostBtnRenderVideoPart.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.hostBtnRenderVideoPart.AutoSize = false;
+            this.hostBtnRenderVideoPart.Margin = new System.Windows.Forms.Padding(0, 2, 4, 2);
+            this.hostBtnRenderVideoPart.Name = "hostBtnRenderVideoPart";
+            this.hostBtnRenderVideoPart.Size = new System.Drawing.Size(138, 34);
+            // 
+            // hostBtnSaveAudio
+            // 
+            this.btnSaveAudio.Dock = System.Windows.Forms.DockStyle.None;
+            this.btnSaveAudio.Size = new System.Drawing.Size(120, 28);
+            this.hostBtnSaveAudio.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.hostBtnSaveAudio.AutoSize = false;
+            this.hostBtnSaveAudio.Margin = new System.Windows.Forms.Padding(0, 2, 4, 2);
+            this.hostBtnSaveAudio.Name = "hostBtnSaveAudio";
+            this.hostBtnSaveAudio.Size = new System.Drawing.Size(128, 34);
+            // 
+            // hostBtnConvertAudio
+            // 
+            this.btnConvertAudio.Dock = System.Windows.Forms.DockStyle.None;
+            this.btnConvertAudio.Size = new System.Drawing.Size(130, 28);
+            this.hostBtnConvertAudio.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.hostBtnConvertAudio.AutoSize = false;
+            this.hostBtnConvertAudio.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.hostBtnConvertAudio.Name = "hostBtnConvertAudio";
+            this.hostBtnConvertAudio.Size = new System.Drawing.Size(138, 34);
             // 
             // hostBtnSelectAll
             // 
@@ -2082,17 +2064,14 @@ namespace ReviewMovie
             this.tlpViewHeader.Controls.Add(this.btnRecord, 0, 0);
             this.tlpViewHeader.Controls.Add(this.tlpText, 1, 0);
             this.tlpViewHeader.Controls.Add(this.tlpImportMedia, 2, 0);
-            this.tlpViewHeader.Controls.Add(this.tlpHeaderButton, 1, 1);
+            // (moved action buttons to ToolStrip)
             this.tlpViewHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpViewHeader.Location = new System.Drawing.Point(3, 16);
             this.tlpViewHeader.Name = "tlpViewHeader";
-            this.tlpViewHeader.RowCount = 2;
+            this.tlpViewHeader.RowCount = 1;
             this.tlpViewHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpViewHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
             this.tlpViewHeader.Size = new System.Drawing.Size(865, 117);
             this.tlpViewHeader.TabIndex = 0;
-            this.tlpViewHeader.SetRowSpan(this.btnRecord, 2);
-            this.tlpViewHeader.SetColumnSpan(this.tlpHeaderButton, 2);
             // 
             // tlpImportMedia
             // 
@@ -2825,12 +2804,13 @@ namespace ReviewMovie
         private ReviewMovie.Base.Controls.UiButton btnSaveAudio;
         private ReviewMovie.Base.Controls.UiDataGridView dgvMainView;
         private System.Windows.Forms.ToolStrip tsMenuView;
-        private System.Windows.Forms.ToolStripTextBox txtTim;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripLabel lbTitle;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripControlHost hostBtnConvertAudio;
+        private System.Windows.Forms.ToolStripControlHost hostBtnSaveAudio;
+        private System.Windows.Forms.ToolStripControlHost hostBtnRenderVideoPart;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column_check;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_index;
@@ -2893,10 +2873,8 @@ namespace ReviewMovie
         private ReviewMovie.Base.Controls.UiLabel lblMainTopSub;
         private ReviewMovie.Base.Controls.UiLabel lblMainTopTitle;
         private ReviewMovie.Base.Controls.UiLabel lblMainTopIcon;
-        private ReviewMovie.Base.Controls.UiButton btnSearch;
         private ReviewMovie.Base.Controls.UiCheckBox ckOpenPlayer;
         private ReviewMovie.Base.Controls.UiButton btnSelectAll;
-        private System.Windows.Forms.ToolStripControlHost hostBtnSearch;
         private System.Windows.Forms.ToolStripControlHost hostBtnSelectAll;
         private System.Windows.Forms.ToolStripControlHost hostBtnAddRow;
         private System.Windows.Forms.ToolStripControlHost hostBtnImportSubtitle;
