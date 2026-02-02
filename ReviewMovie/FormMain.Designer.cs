@@ -1872,6 +1872,7 @@ namespace ReviewMovie
             this.hostBtnRenderVideoPart.Name = "hostBtnRenderVideoPart";
             this.hostBtnRenderVideoPart.Size = new System.Drawing.Size(34, 34);
             this.hostBtnRenderVideoPart.ToolTipText = "Render Part";
+            this.hostBtnRenderVideoPart.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
             // 
             // hostBtnSaveAudio
             // 
@@ -1892,6 +1893,7 @@ namespace ReviewMovie
             this.hostBtnSaveAudio.Name = "hostBtnSaveAudio";
             this.hostBtnSaveAudio.Size = new System.Drawing.Size(34, 34);
             this.hostBtnSaveAudio.ToolTipText = "Save Audio";
+            this.hostBtnSaveAudio.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
             // 
             // hostBtnConvertAudio
             // 
@@ -1912,6 +1914,7 @@ namespace ReviewMovie
             this.hostBtnConvertAudio.Name = "hostBtnConvertAudio";
             this.hostBtnConvertAudio.Size = new System.Drawing.Size(34, 34);
             this.hostBtnConvertAudio.ToolTipText = "Convert Audio";
+            this.hostBtnConvertAudio.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
             // 
             // hostBtnSelectAll
             // 
@@ -1938,6 +1941,7 @@ namespace ReviewMovie
             this.hostBtnSelectAll.Name = "hostBtnSelectAll";
             this.hostBtnSelectAll.Size = new System.Drawing.Size(26, 25);
             this.hostBtnSelectAll.ToolTipText = "Chọn/Không chọn tất cả";
+            this.hostBtnSelectAll.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             // 
             // toolStripSeparator4
             // 
@@ -1951,6 +1955,7 @@ namespace ReviewMovie
             this.lbTitle.Name = "lbTitle";
             this.lbTitle.Size = new System.Drawing.Size(71, 17);
             this.lbTitle.Text = "Chọn Tác Vụ";
+            this.lbTitle.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             // 
             // toolStripSeparator1
             // 
@@ -1989,6 +1994,7 @@ namespace ReviewMovie
             this.hostBtnAddRow.Name = "hostBtnAddRow";
             this.hostBtnAddRow.Size = new System.Drawing.Size(150, 34);
             this.hostBtnAddRow.Text = "Thêm Dòng Mới";
+            this.hostBtnAddRow.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             // 
             // toolStripSeparator2
             // 
@@ -2027,6 +2033,7 @@ namespace ReviewMovie
             this.hostBtnImportSubtitle.Name = "hostBtnImportSubtitle";
             this.hostBtnImportSubtitle.Size = new System.Drawing.Size(175, 34);
             this.hostBtnImportSubtitle.Text = "Nhập Subtitle (Auto)";
+            this.hostBtnImportSubtitle.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             // 
             // toolStripSeparator3
             // 
@@ -2066,6 +2073,7 @@ namespace ReviewMovie
             this.hostBtnDestroyAction.Size = new System.Drawing.Size(170, 34);
             this.hostBtnDestroyAction.Text = "&Hủy Mọi Hoạt Động";
             this.hostBtnDestroyAction.ToolTipText = "&Hủy Mọi Hoạt Động";
+            this.hostBtnDestroyAction.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             // 
             // grViewHeader
             // 
