@@ -2237,7 +2237,7 @@ namespace ReviewMovie
             // 
             this.txtTextInput.AllowDrop = true;
             this.txtTextInput.BackColor = System.Drawing.Color.Transparent;
-            this.txtTextInput.BackgroundColor = System.Drawing.ColorTranslator.FromHtml("#FFFFFF"); ;
+            this.txtTextInput.BackgroundColor = System.Drawing.ColorTranslator.FromHtml("#FFFFFF");
             this.txtTextInput.BorderColor = themeColors1.Border;
             this.txtTextInput.BorderFocusColor = themeColors1.BorderFocus;
             this.txtTextInput.BorderRadius = 12;
