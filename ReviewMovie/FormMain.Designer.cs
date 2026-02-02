@@ -1856,32 +1856,62 @@ namespace ReviewMovie
             // hostBtnRenderVideoPart
             // 
             this.btnRenderVideoPart.Dock = System.Windows.Forms.DockStyle.None;
-            this.btnRenderVideoPart.Size = new System.Drawing.Size(130, 28);
+            this.btnRenderVideoPart.Size = new System.Drawing.Size(28, 28);
+            this.btnRenderVideoPart.Text = "";
+            this.btnRenderVideoPart.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnRenderVideoPart.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(235)))), ((int)(((byte)(245)))));
+            this.btnRenderVideoPart.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(225)))), ((int)(((byte)(240)))));
+            this.btnRenderVideoPart.TextColor = System.Drawing.Color.Black;
+            this.btnRenderVideoPart.TextHoverColor = System.Drawing.Color.Black;
+            this.btnRenderVideoPart.BorderRadius = 8;
+            this.btnRenderVideoPart.BorderSize = 0;
+            this.btnRenderVideoPart.IconImage = global::EasyClip.Properties.Resources.next;
             this.hostBtnRenderVideoPart.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.hostBtnRenderVideoPart.AutoSize = false;
-            this.hostBtnRenderVideoPart.Margin = new System.Windows.Forms.Padding(0, 2, 4, 2);
+            this.hostBtnRenderVideoPart.Margin = new System.Windows.Forms.Padding(0, 2, 2, 2);
             this.hostBtnRenderVideoPart.Name = "hostBtnRenderVideoPart";
-            this.hostBtnRenderVideoPart.Size = new System.Drawing.Size(138, 34);
+            this.hostBtnRenderVideoPart.Size = new System.Drawing.Size(34, 34);
+            this.hostBtnRenderVideoPart.ToolTipText = "Render Part";
             // 
             // hostBtnSaveAudio
             // 
             this.btnSaveAudio.Dock = System.Windows.Forms.DockStyle.None;
-            this.btnSaveAudio.Size = new System.Drawing.Size(120, 28);
+            this.btnSaveAudio.Size = new System.Drawing.Size(28, 28);
+            this.btnSaveAudio.Text = "";
+            this.btnSaveAudio.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnSaveAudio.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(235)))), ((int)(((byte)(245)))));
+            this.btnSaveAudio.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(225)))), ((int)(((byte)(240)))));
+            this.btnSaveAudio.TextColor = System.Drawing.Color.Black;
+            this.btnSaveAudio.TextHoverColor = System.Drawing.Color.Black;
+            this.btnSaveAudio.BorderRadius = 8;
+            this.btnSaveAudio.BorderSize = 0;
+            this.btnSaveAudio.IconImage = global::EasyClip.Properties.Resources.ok;
             this.hostBtnSaveAudio.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.hostBtnSaveAudio.AutoSize = false;
-            this.hostBtnSaveAudio.Margin = new System.Windows.Forms.Padding(0, 2, 4, 2);
+            this.hostBtnSaveAudio.Margin = new System.Windows.Forms.Padding(0, 2, 2, 2);
             this.hostBtnSaveAudio.Name = "hostBtnSaveAudio";
-            this.hostBtnSaveAudio.Size = new System.Drawing.Size(128, 34);
+            this.hostBtnSaveAudio.Size = new System.Drawing.Size(34, 34);
+            this.hostBtnSaveAudio.ToolTipText = "Save Audio";
             // 
             // hostBtnConvertAudio
             // 
             this.btnConvertAudio.Dock = System.Windows.Forms.DockStyle.None;
-            this.btnConvertAudio.Size = new System.Drawing.Size(130, 28);
+            this.btnConvertAudio.Size = new System.Drawing.Size(28, 28);
+            this.btnConvertAudio.Text = "";
+            this.btnConvertAudio.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnConvertAudio.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(235)))), ((int)(((byte)(245)))));
+            this.btnConvertAudio.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(225)))), ((int)(((byte)(240)))));
+            this.btnConvertAudio.TextColor = System.Drawing.Color.Black;
+            this.btnConvertAudio.TextHoverColor = System.Drawing.Color.Black;
+            this.btnConvertAudio.BorderRadius = 8;
+            this.btnConvertAudio.BorderSize = 0;
+            this.btnConvertAudio.IconImage = global::EasyClip.Properties.Resources.refresh;
             this.hostBtnConvertAudio.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.hostBtnConvertAudio.AutoSize = false;
             this.hostBtnConvertAudio.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
             this.hostBtnConvertAudio.Name = "hostBtnConvertAudio";
-            this.hostBtnConvertAudio.Size = new System.Drawing.Size(138, 34);
+            this.hostBtnConvertAudio.Size = new System.Drawing.Size(34, 34);
+            this.hostBtnConvertAudio.ToolTipText = "Convert Audio";
             // 
             // hostBtnSelectAll
             // 
