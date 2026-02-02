@@ -2225,8 +2225,9 @@ namespace ReviewMovie
             this.lbHeaderText.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbHeaderText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
             this.lbHeaderText.Location = new System.Drawing.Point(1, 1);
-            this.lbHeaderText.Margin = new System.Windows.Forms.Padding(1);
+            this.lbHeaderText.Margin = new System.Windows.Forms.Padding(3);
             this.lbHeaderText.Name = "lbHeaderText";
+            this.lbHeaderText.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
             this.lbHeaderText.Size = new System.Drawing.Size(427, 23);
             this.lbHeaderText.TabIndex = 0;
             this.lbHeaderText.Text = "TEXT INPUT";
