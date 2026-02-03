@@ -116,23 +116,23 @@ namespace ReviewMovie
             this.Column_inputtext = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tsMenuView = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.hostBtnSearch = new ReviewMovie.Base.Controls.UiButton();
+            this.hostBtnSearch = new ReviewMovie.Base.Controls.UiToolStripButtonHost();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.hostBtnSelectAll = new ReviewMovie.Base.Controls.UiButton();
+            this.hostBtnSelectAll = new ReviewMovie.Base.Controls.UiToolStripButtonHost();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.hostBtnAddRow = new ReviewMovie.Base.Controls.UiButton();
+            this.hostBtnAddRow = new ReviewMovie.Base.Controls.UiToolStripButtonHost();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.hostBtnImportSubtitle = new ReviewMovie.Base.Controls.UiButton();
+            this.hostBtnImportSubtitle = new ReviewMovie.Base.Controls.UiToolStripButtonHost();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.hostBtnDestroyAction = new ReviewMovie.Base.Controls.UiButton();
+            this.hostBtnDestroyAction = new ReviewMovie.Base.Controls.UiToolStripButtonHost();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.hostBtnConvertAudio = new ReviewMovie.Base.Controls.UiButton();
+            this.hostBtnConvertAudio = new ReviewMovie.Base.Controls.UiToolStripButtonHost();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.hostBtnSaveAudio = new ReviewMovie.Base.Controls.UiButton();
+            this.hostBtnSaveAudio = new ReviewMovie.Base.Controls.UiToolStripButtonHost();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-            this.hostBtnRenderVideoPart = new ReviewMovie.Base.Controls.UiButton();
+            this.hostBtnRenderVideoPart = new ReviewMovie.Base.Controls.UiToolStripButtonHost();
             this.grViewHeader = new System.Windows.Forms.GroupBox();
             this.tlpViewHeader = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
             this.btnRecord = new ReviewMovie.Base.Controls.UiButton();
@@ -2753,14 +2753,14 @@ namespace ReviewMovie
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
-        private Base.Controls.UiButton hostBtnSearch;
-        private Base.Controls.UiButton hostBtnSelectAll;
-        private Base.Controls.UiButton hostBtnAddRow;
-        private Base.Controls.UiButton hostBtnImportSubtitle;
-        private Base.Controls.UiButton hostBtnDestroyAction;
-        private Base.Controls.UiButton hostBtnConvertAudio;
-        private Base.Controls.UiButton hostBtnSaveAudio;
-        private Base.Controls.UiButton hostBtnRenderVideoPart;
+        private Base.Controls.UiToolStripButtonHost hostBtnSearch;
+        private Base.Controls.UiToolStripButtonHost hostBtnSelectAll;
+        private Base.Controls.UiToolStripButtonHost hostBtnAddRow;
+        private Base.Controls.UiToolStripButtonHost hostBtnImportSubtitle;
+        private Base.Controls.UiToolStripButtonHost hostBtnDestroyAction;
+        private Base.Controls.UiToolStripButtonHost hostBtnConvertAudio;
+        private Base.Controls.UiToolStripButtonHost hostBtnSaveAudio;
+        private Base.Controls.UiToolStripButtonHost hostBtnRenderVideoPart;
     }
 }
 
