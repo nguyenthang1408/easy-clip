@@ -186,6 +186,9 @@ namespace ReviewMovie
             // 
             // btnLoginApiKey
             // 
+            this.btnLoginApiKey.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(119)))), ((int)(((byte)(242)))));
+            this.btnLoginApiKey.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(111)))), ((int)(((byte)(229)))));
+            this.btnLoginApiKey.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(93)))), ((int)(((byte)(191)))));
             this.btnLoginApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 11.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoginApiKey.ForeColor = System.Drawing.Color.White;
             this.btnLoginApiKey.Location = new System.Drawing.Point(44, 430);
