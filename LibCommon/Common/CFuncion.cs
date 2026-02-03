@@ -225,6 +225,18 @@ namespace LibCommon.Common
 
         public static bool RunFFmpeg(string ffmpegPath, string arguments, CancellationToken token)
         {
+            return RunFFmpeg(ffmpegPath, arguments, token, null);
+        }
+
+        /// <summary>
+        /// Chạy FFmpeg với progress callback để hiển thị tốc độ render
+        /// </summary>
+        /// <param name="ffmpegPath">Đường dẫn FFmpeg</param>
+        /// <param name="arguments">Arguments</param>
+        /// <param name="token">CancellationToken</param>
+        /// <param name="progressCallback">Callback nhận speed (vd: "2.23x")</param>
+        public static bool RunFFmpeg(string ffmpegPath, string arguments, CancellationToken token, Action<string> progressCallback)
+        {
             using (var process = new Process
             {
                 StartInfo = new ProcessStartInfo
@@ -241,7 +253,19 @@ namespace LibCommon.Common
                 process.ErrorDataReceived += (sender, e) =>
                 {
                     if (!string.IsNullOrEmpty(e.Data))
+                    {
                         error.AppendLine(e.Data);
+
+                        // Parse và gọi progress callback nếu có
+                        if (progressCallback != null)
+                        {
+                            string speed = ParseRenderSpeed(e.Data);
+                            if (!string.IsNullOrEmpty(speed))
+                            {
+                                progressCallback(speed);
+                            }
+                        }
+                    }
                 };
 
                 // Đăng ký callback cho token: nếu Cancel thì kill process
@@ -294,6 +318,54 @@ namespace LibCommon.Common
 
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Parse tốc độ render từ FFmpeg output
+        /// Example: "frame=  283 fps= 67 q=25.0 size=3840KiB time=00:00:09.36 bitrate=3358.5kbits/s speed=2.23x"
+        /// </summary>
+        private static string ParseRenderSpeed(string ffmpegOutput)
+        {
+            if (string.IsNullOrEmpty(ffmpegOutput))
+                return null;
+
+            try
+            {
+                // Tìm "speed=" trong output
+                int speedIndex = ffmpegOutput.IndexOf("speed=");
+                if (speedIndex >= 0)
+                {
+                    // Lấy phần sau "speed="
+                    string speedPart = ffmpegOutput.Substring(speedIndex + 6); // 6 = length of "speed="
+
+                    // Tìm khoảng trắng hoặc ký tự không phải số/dấu chấm/'x' đầu tiên
+                    int endIndex = 0;
+                    for (int i = 0; i < speedPart.Length; i++)
+                    {
+                        char c = speedPart[i];
+                        if (char.IsDigit(c) || c == '.' || c == 'x')
+                        {
+                            endIndex = i + 1;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    if (endIndex > 0)
+                    {
+                        string speed = speedPart.Substring(0, endIndex);
+                        return speed; // Trả về "2.23x"
+                    }
+                }
+            }
+            catch
+            {
+                // Ignore parsing errors
+            }
+
+            return null;
         }
 
     }

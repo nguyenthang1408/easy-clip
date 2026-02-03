@@ -1386,6 +1386,8 @@ namespace ReviewMovie
             // 
             // grbActionRender
             // 
+            this.grbActionRender.Controls.Add(this.rbGPUused);
+            this.grbActionRender.Controls.Add(this.rbCPUused);
             this.grbActionRender.Controls.Add(this.btnAddAll);
             this.grbActionRender.Controls.Add(this.lblstatus);
             this.grbActionRender.Location = new System.Drawing.Point(11, 625);
@@ -2452,6 +2454,32 @@ namespace ReviewMovie
             this.btnCollapse.TextHoverColor = System.Drawing.Color.White;
             this.btnCollapse.UseVisualStyleBackColor = false;
             this.btnCollapse.Click += new System.EventHandler(this.btnCollapse_Click);
+            // 
+            // rbCPUused
+            // 
+            this.rbCPUused.AutoSize = true;
+            this.rbCPUused.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbCPUused.ForeColor = System.Drawing.Color.Red;
+            this.rbCPUused.Location = new System.Drawing.Point(18, 26);
+            this.rbCPUused.Name = "rbCPUused";
+            this.rbCPUused.Size = new System.Drawing.Size(76, 17);
+            this.rbCPUused.TabIndex = 17;
+            this.rbCPUused.TabStop = true;
+            this.rbCPUused.Text = "Use CPU";
+            this.rbCPUused.UseVisualStyleBackColor = true;
+            // 
+            // rbGPUused
+            // 
+            this.rbGPUused.AutoSize = true;
+            this.rbGPUused.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbGPUused.ForeColor = System.Drawing.Color.ForestGreen;
+            this.rbGPUused.Location = new System.Drawing.Point(18, 49);
+            this.rbGPUused.Name = "rbGPUused";
+            this.rbGPUused.Size = new System.Drawing.Size(77, 17);
+            this.rbGPUused.TabIndex = 18;
+            this.rbGPUused.TabStop = true;
+            this.rbGPUused.Text = "Use GPU";
+            this.rbGPUused.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
