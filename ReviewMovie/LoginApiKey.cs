@@ -27,14 +27,17 @@ namespace ReviewMovie
             InitializeComponent();
 
             // Designer safety: avoid running runtime services / IO in WinForms designer.
-            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+            bool isDesignTime = LicenseManager.UsageMode == LicenseUsageMode.Designtime;
+
+            // Assign readonly fields on all paths (designer/runtime)
+            appCodeService = isDesignTime ? null : new AppCodeService(); // Khởi tạo service
+            _configService = isDesignTime ? null : new ConfigDataService();
+
+            if (isDesignTime)
             {
                 SetupLoginUi();
                 return;
             }
-
-            appCodeService = new AppCodeService(); // Khởi tạo service
-            _configService = new ConfigDataService();
 
             DisplayAppCode();
             LoadApiKey();
