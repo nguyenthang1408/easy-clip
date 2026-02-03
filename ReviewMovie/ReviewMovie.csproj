@@ -157,7 +157,9 @@
     <Compile Include="Base\Controls\UiTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Base\Controls\UiToolStripButtonHost.cs" />
+    <Compile Include="Base\Controls\UiToolStripButtonHost.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Base\Controls\UiToolStripRenderer.cs" />
     <Compile Include="Base\CustomTextBox.cs">
       <SubType>Component</SubType>
