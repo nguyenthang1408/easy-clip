@@ -135,6 +135,12 @@ namespace ReviewMovie
         public FormMain(string appcode, string apikey)
         {
             InitializeComponent();
+
+            // Some legacy buttons may be declared but not instantiated by the designer
+            // (e.g. after moving actions into ToolStrip hosts). Ensure they are non-null
+            // to avoid NullReferenceException during startup/login.
+            EnsureOptionalButtons();
+
             this.toolTipPL = new ToolTip();
             this.Text = "EasyClip || " + "TPMEDIA";
 
@@ -232,6 +238,31 @@ namespace ReviewMovie
             _loadConfig.InitOrUpdateBaseConfig(_apikey, txtAppID.Text, txtAppID.Text, txtToken.Text);
             
             Init();
+        }
+
+        private void EnsureOptionalButtons()
+        {
+            // These are referenced by some code paths / older builds.
+            // If the designer doesn't create them anymore, keep them as hidden no-op controls.
+            if (btnSelectAll == null)
+            {
+                btnSelectAll = new Base.Controls.UiButton
+                {
+                    Name = "btnSelectAll",
+                    Visible = false,
+                    Enabled = false
+                };
+            }
+
+            if (btnSearch == null)
+            {
+                btnSearch = new Base.Controls.UiButton
+                {
+                    Name = "btnSearch",
+                    Visible = false,
+                    Enabled = false
+                };
+            }
         }
 
         private void ApplySettingPanelTheme()
