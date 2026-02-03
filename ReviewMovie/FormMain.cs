@@ -135,8 +135,26 @@ namespace ReviewMovie
         public FormMain(string appcode, string apikey)
         {
             InitializeComponent();
+
+            // Some legacy buttons may be declared but not instantiated by the designer
+            // (e.g. after moving actions into ToolStrip hosts). Ensure they are non-null
+            // to avoid NullReferenceException during startup/login.
+            EnsureOptionalButtons();
+
             this.toolTipPL = new ToolTip();
             this.Text = "EasyClip || " + "TPMEDIA";
+
+            // Slightly rounded window corners (small radius as requested).
+            try
+            {
+                const int formCornerRadius = 12;
+                Base.UiHelpers.ApplyRoundRegion(this, formCornerRadius);
+                SizeChanged += (_, __) => Base.UiHelpers.ApplyRoundRegion(this, formCornerRadius);
+            }
+            catch
+            {
+                // ignore (designer/runtime differences)
+            }
 
             // Apply common ToolStrip/Menu styling (safe even if not supported at runtime)
             try
@@ -144,6 +162,16 @@ namespace ReviewMovie
                 var renderer = new Base.Controls.UiToolStripRenderer(new Base.Controls.UiToolStripColors());
                 tsMenuView.Renderer = renderer;
                 ctMenu.Renderer = renderer;
+            }
+            catch
+            {
+                // ignore (designer/runtime differences)
+            }
+
+            // Settings panel colors (UI common)
+            try
+            {
+                ApplySettingPanelTheme();
             }
             catch
             {
@@ -210,6 +238,106 @@ namespace ReviewMovie
             _loadConfig.InitOrUpdateBaseConfig(_apikey, txtAppID.Text, txtAppID.Text, txtToken.Text);
             
             Init();
+        }
+
+        private void EnsureOptionalButtons()
+        {
+            // These are referenced by some code paths / older builds.
+            // If the designer doesn't create them anymore, keep them as hidden no-op controls.
+            if (btnSelectAll == null)
+            {
+                btnSelectAll = new Base.Controls.UiButton
+                {
+                    Name = "btnSelectAll",
+                    Visible = false,
+                    Enabled = false
+                };
+            }
+
+            if (btnSearch == null)
+            {
+                btnSearch = new Base.Controls.UiButton
+                {
+                    Name = "btnSearch",
+                    Visible = false,
+                    Enabled = false
+                };
+            }
+        }
+
+        private void ApplySettingPanelTheme()
+        {
+            var white = ColorTranslator.FromHtml("#FFFFFF");
+            var containerSurface = ColorTranslator.FromHtml("#F8FAFC");
+            var inputSurface = ColorTranslator.FromHtml("#FFFFFF");
+            var orange = ColorTranslator.FromHtml("#FF7A00");
+
+            grboxSetting.BackColor = white;
+            grboxSetting.ForeColor = orange;
+
+            ApplyThemeRecursive(grboxSetting, containerSurface, inputSurface, orange);
+        }
+
+        private static void ApplyThemeRecursive(Control root, Color containerSurface, Color inputSurface, Color orange)
+        {
+            if (root == null) return;
+
+            foreach (Control c in root.Controls)
+            {
+                if (c == null) continue;
+
+                // Container surfaces inside settings
+                if (c is GroupBox gb)
+                {
+                    gb.BackColor = containerSurface;
+                    gb.ForeColor = orange;
+                }
+                else if (c is Panel p)
+                {
+                    p.BackColor = containerSurface;
+                }
+                else if (c is TableLayoutPanel tlp)
+                {
+                    tlp.BackColor = containerSurface;
+                }
+
+                // Field labels (e.g. "Dự Án", "Nguồn voice", ...)
+                if (c is Base.Controls.UiLabel uiLabel)
+                {
+                    uiLabel.TextColor = orange;
+                    uiLabel.ForeColor = orange;
+                    uiLabel.BackgroundColor = Color.Transparent;
+                }
+                else if (c is Label label)
+                {
+                    label.ForeColor = orange;
+                    label.BackColor = Color.Transparent;
+                }
+
+                // Inputs surface
+                if (c is Base.Controls.UiTextBox uiTextBox)
+                {
+                    uiTextBox.BackgroundColor = inputSurface;
+                }
+                else if (c is Base.Controls.UiNumericUpDown uiNumeric)
+                {
+                    uiNumeric.BackgroundColor = inputSurface;
+                    uiNumeric.ButtonColor = inputSurface;
+                }
+                else if (c is Base.Controls.UiComboBox uiComboBox)
+                {
+                    uiComboBox.BackColor = inputSurface;
+                }
+                else if (c is ComboBox comboBox)
+                {
+                    comboBox.BackColor = inputSurface;
+                }
+
+                if (c.HasChildren)
+                {
+                    ApplyThemeRecursive(c, containerSurface, inputSurface, orange);
+                }
+            }
         }
 
         // ---- Custom title bar (borderless window) ----
@@ -2404,6 +2532,10 @@ namespace ReviewMovie
                     CkZoom.Checked = _infoProject.ChkZoomvideo;
 
                     ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, true);
+
+                    // Allow typing in input textbox as soon as a project is opened.
+                    txtTextInput.ReadOnly = false;
+                    txtTextInput.DisableTextBox = false;
 
                     var voiceSite = _infoProject.VoiceSelect;
 

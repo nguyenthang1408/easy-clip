@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Net.Http;
+using System.ComponentModel;
 using System.Windows.Forms;
 using ReviewMovie.Base;
 using ReviewMovie.Base.Controls;
@@ -19,12 +20,24 @@ namespace ReviewMovie
         private string AppVersion { get; } = "2.0.0"; // Định nghĩa phiên bản ứng dụng
         private readonly AppCodeService appCodeService;
         private readonly IConfigDataService _configService;
+        private bool _readOnlyFocusWired;
 
         public LoginApiKey()
         {
             InitializeComponent();
-            appCodeService = new AppCodeService(); // Khởi tạo service
-            _configService = new ConfigDataService();
+
+            // Designer safety: avoid running runtime services / IO in WinForms designer.
+            bool isDesignTime = LicenseManager.UsageMode == LicenseUsageMode.Designtime;
+
+            // Assign readonly fields on all paths (designer/runtime)
+            appCodeService = isDesignTime ? null : new AppCodeService(); // Khởi tạo service
+            _configService = isDesignTime ? null : new ConfigDataService();
+
+            if (isDesignTime)
+            {
+                SetupLoginUi();
+                return;
+            }
 
             DisplayAppCode();
             LoadApiKey();
@@ -46,19 +59,41 @@ namespace ReviewMovie
             {
                 appCode.IconGlyph = "";
                 appCode.ReadOnly = true;
+                // Make it visually obvious it's read-only
+                appCode.FillColor = ColorTranslator.FromHtml("#F1F5F9");
+                appCode.BorderColor = ColorTranslator.FromHtml("#E2E8F0");
+                appCode.IconColor = ColorTranslator.FromHtml("#94A3B8");
+                appCode.InnerTextBox.ForeColor = ColorTranslator.FromHtml("#64748B");
+                appCode.InnerTextBox.Cursor = Cursors.Default;
+
+                // Prevent focusing/tabbing into AppCode field
+                appCode.TabStop = false;
+                appCode.InnerTextBox.TabStop = false;
+                if (!_readOnlyFocusWired)
+                {
+                    _readOnlyFocusWired = true;
+                    appCode.InnerTextBox.GotFocus += (_, __) =>
+                    {
+                        try { txInsertApiKey?.Focus(); } catch { }
+                    };
+                }
             }
 
             if (txInsertApiKey is PillTextBox apiKey)
             {
                 apiKey.IconGlyph = "";
+                apiKey.FillColor = Color.White;
+                apiKey.BorderColor = ColorTranslator.FromHtml("#E2E8F0");
             }
 
             if (btnLoginApiKey is PrimaryButton primary)
             {
-                primary.FillColor = UiTheme.Accent;
-                primary.HoverFillColor = UiTheme.AccentHover;
-                primary.PressedFillColor = UiTheme.AccentPressed;
+                // Facebook-style primary CTA
+                primary.FillColor = ColorTranslator.FromHtml("#1877F2");
+                primary.HoverFillColor = ColorTranslator.FromHtml("#166FE5");
+                primary.PressedFillColor = ColorTranslator.FromHtml("#145DBF");
                 primary.CornerRadius = UiTheme.ButtonRadius;
+                primary.ForeColor = Color.White;
             }
 
             if (btnClose is IconCircleButton close)
@@ -107,8 +142,8 @@ namespace ReviewMovie
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            // Pure white background like screenshot #2
-            e.Graphics.Clear(Color.White);
+            // Very light orange background (as requested)
+            e.Graphics.Clear(ColorTranslator.FromHtml("#FFF7ED"));
         }
 
         protected override void OnPaint(PaintEventArgs e)

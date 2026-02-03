@@ -88,8 +88,20 @@ namespace ReviewMovie.Base.Controls
 
         private void LayoutChildren()
         {
-            _numeric.Location = new Point(Padding.Left, Padding.Top);
-            _numeric.Size = new Size(Math.Max(0, Width - Padding.Horizontal), Math.Max(0, Height - Padding.Vertical));
+            int innerW = Math.Max(0, Width - Padding.Horizontal);
+
+            // If the designer sets a small Height but keeps large vertical Padding
+            // (common in legacy forms), ensure the inner NumericUpDown still has
+            // a usable height and stays vertically centered.
+            int requestedInnerH = Height - Padding.Vertical;
+            int innerH = Math.Max(18, requestedInnerH);
+            if (innerH > Height) innerH = Height;
+
+            int x = Padding.Left;
+            int y = Math.Max(0, (Height - innerH) / 2);
+
+            _numeric.Location = new Point(x, y);
+            _numeric.Size = new Size(innerW, innerH);
         }
 
         [Category("Colors")]
