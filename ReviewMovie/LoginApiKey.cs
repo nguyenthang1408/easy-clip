@@ -46,19 +46,29 @@ namespace ReviewMovie
             {
                 appCode.IconGlyph = "";
                 appCode.ReadOnly = true;
+                // Make it visually obvious it's read-only
+                appCode.FillColor = ColorTranslator.FromHtml("#F1F5F9");
+                appCode.BorderColor = ColorTranslator.FromHtml("#E2E8F0");
+                appCode.IconColor = ColorTranslator.FromHtml("#94A3B8");
+                appCode.InnerTextBox.ForeColor = ColorTranslator.FromHtml("#64748B");
+                appCode.InnerTextBox.Cursor = Cursors.Default;
             }
 
             if (txInsertApiKey is PillTextBox apiKey)
             {
                 apiKey.IconGlyph = "";
+                apiKey.FillColor = Color.White;
+                apiKey.BorderColor = ColorTranslator.FromHtml("#E2E8F0");
             }
 
             if (btnLoginApiKey is PrimaryButton primary)
             {
-                primary.FillColor = UiTheme.Accent;
-                primary.HoverFillColor = UiTheme.AccentHover;
-                primary.PressedFillColor = UiTheme.AccentPressed;
+                // Facebook-style primary CTA
+                primary.FillColor = ColorTranslator.FromHtml("#1877F2");
+                primary.HoverFillColor = ColorTranslator.FromHtml("#166FE5");
+                primary.PressedFillColor = ColorTranslator.FromHtml("#145DBF");
                 primary.CornerRadius = UiTheme.ButtonRadius;
+                primary.ForeColor = Color.White;
             }
 
             if (btnClose is IconCircleButton close)
@@ -107,8 +117,8 @@ namespace ReviewMovie
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            // Pure white background like screenshot #2
-            e.Graphics.Clear(Color.White);
+            // Very light orange background (as requested)
+            e.Graphics.Clear(ColorTranslator.FromHtml("#FFF7ED"));
         }
 
         protected override void OnPaint(PaintEventArgs e)

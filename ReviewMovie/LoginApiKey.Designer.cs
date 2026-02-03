@@ -101,7 +101,7 @@ namespace ReviewMovie
             this.lblLogoIcon.Name = "lblLogoIcon";
             this.lblLogoIcon.Size = new System.Drawing.Size(48, 48);
             this.lblLogoIcon.TabIndex = 0;
-            this.lblLogoIcon.Text = "\uE70F";
+            this.lblLogoIcon.Text = "\uE714";
             this.lblLogoIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblLogoIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
@@ -243,7 +243,7 @@ namespace ReviewMovie
             this.Controls.Add(this.cardPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(247)))), ((int)(((byte)(237)))));
             this.Name = "LoginApiKey";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Welcome";

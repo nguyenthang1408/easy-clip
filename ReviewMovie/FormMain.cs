@@ -237,16 +237,17 @@ namespace ReviewMovie
         private void ApplySettingPanelTheme()
         {
             var white = ColorTranslator.FromHtml("#FFFFFF");
-            var itemSurface = ColorTranslator.FromHtml("#F8FAFC");
+            var containerSurface = ColorTranslator.FromHtml("#F8FAFC");
+            var inputSurface = ColorTranslator.FromHtml("#FFFFFF");
             var orange = ColorTranslator.FromHtml("#FF7A00");
 
             grboxSetting.BackColor = white;
             grboxSetting.ForeColor = orange;
 
-            ApplyThemeRecursive(grboxSetting, itemSurface, orange);
+            ApplyThemeRecursive(grboxSetting, containerSurface, inputSurface, orange);
         }
 
-        private static void ApplyThemeRecursive(Control root, Color itemSurface, Color orange)
+        private static void ApplyThemeRecursive(Control root, Color containerSurface, Color inputSurface, Color orange)
         {
             if (root == null) return;
 
@@ -257,16 +258,16 @@ namespace ReviewMovie
                 // Container surfaces inside settings
                 if (c is GroupBox gb)
                 {
-                    gb.BackColor = itemSurface;
+                    gb.BackColor = containerSurface;
                     gb.ForeColor = orange;
                 }
                 else if (c is Panel p)
                 {
-                    p.BackColor = itemSurface;
+                    p.BackColor = containerSurface;
                 }
                 else if (c is TableLayoutPanel tlp)
                 {
-                    tlp.BackColor = itemSurface;
+                    tlp.BackColor = containerSurface;
                 }
 
                 // Field labels (e.g. "Dự Án", "Nguồn voice", ...)
@@ -285,25 +286,25 @@ namespace ReviewMovie
                 // Inputs surface
                 if (c is Base.Controls.UiTextBox uiTextBox)
                 {
-                    uiTextBox.BackgroundColor = itemSurface;
+                    uiTextBox.BackgroundColor = inputSurface;
                 }
                 else if (c is Base.Controls.UiNumericUpDown uiNumeric)
                 {
-                    uiNumeric.BackgroundColor = itemSurface;
-                    uiNumeric.ButtonColor = itemSurface;
+                    uiNumeric.BackgroundColor = inputSurface;
+                    uiNumeric.ButtonColor = inputSurface;
                 }
                 else if (c is Base.Controls.UiComboBox uiComboBox)
                 {
-                    uiComboBox.BackColor = itemSurface;
+                    uiComboBox.BackColor = inputSurface;
                 }
                 else if (c is ComboBox comboBox)
                 {
-                    comboBox.BackColor = itemSurface;
+                    comboBox.BackColor = inputSurface;
                 }
 
                 if (c.HasChildren)
                 {
-                    ApplyThemeRecursive(c, itemSurface, orange);
+                    ApplyThemeRecursive(c, containerSurface, inputSurface, orange);
                 }
             }
         }
