@@ -558,6 +558,7 @@ namespace ReviewMovie
             this.cbSettingTemplate.Name = "cbSettingTemplate";
             this.cbSettingTemplate.Size = new System.Drawing.Size(143, 23);
             this.cbSettingTemplate.TabIndex = 124;
+            this.cbSettingTemplate.BorderRadius = 6;
             this.cbSettingTemplate.SelectedIndexChanged += new System.EventHandler(this.cbSettingTemplate_SelectedIndexChanged);
             // 
             // label17
@@ -635,6 +636,7 @@ namespace ReviewMovie
             this.cbLanguageSelect.Name = "cbLanguageSelect";
             this.cbLanguageSelect.Size = new System.Drawing.Size(235, 23);
             this.cbLanguageSelect.TabIndex = 121;
+            this.cbLanguageSelect.BorderRadius = 6;
             this.cbLanguageSelect.SelectedIndexChanged += new System.EventHandler(this.cbLanguageSelect_SelectedIndexChanged);
             // 
             // label16
@@ -943,6 +945,7 @@ namespace ReviewMovie
             this.cbMode.Name = "cbMode";
             this.cbMode.Size = new System.Drawing.Size(125, 21);
             this.cbMode.TabIndex = 108;
+            this.cbMode.BorderRadius = 6;
             this.cbMode.SelectedIndexChanged += new System.EventHandler(this.cbMode_SelectedIndexChanged);
             // 
             // label12
@@ -973,6 +976,7 @@ namespace ReviewMovie
             this.cbZoomQuality.Name = "cbZoomQuality";
             this.cbZoomQuality.Size = new System.Drawing.Size(83, 20);
             this.cbZoomQuality.TabIndex = 106;
+            this.cbZoomQuality.BorderRadius = 6;
             this.cbZoomQuality.SelectedIndexChanged += new System.EventHandler(this.cbZoomQuality_SelectedIndexChanged);
             // 
             // label11
@@ -1058,6 +1062,7 @@ namespace ReviewMovie
             this.cbZoomRatio.Name = "cbZoomRatio";
             this.cbZoomRatio.Size = new System.Drawing.Size(83, 20);
             this.cbZoomRatio.TabIndex = 102;
+            this.cbZoomRatio.BorderRadius = 6;
             this.cbZoomRatio.SelectedIndexChanged += new System.EventHandler(this.cbZoomRatio_SelectedIndexChanged);
             // 
             // label9
@@ -1088,6 +1093,7 @@ namespace ReviewMovie
             this.cbEffectType.Name = "cbEffectType";
             this.cbEffectType.Size = new System.Drawing.Size(125, 20);
             this.cbEffectType.TabIndex = 99;
+            this.cbEffectType.BorderRadius = 6;
             this.cbEffectType.SelectedIndexChanged += new System.EventHandler(this.cbEffectType_SelectedIndexChanged);
             // 
             // label8
@@ -1186,6 +1192,7 @@ namespace ReviewMovie
             this.cbxVideoQuality.Name = "cbxVideoQuality";
             this.cbxVideoQuality.Size = new System.Drawing.Size(125, 21);
             this.cbxVideoQuality.TabIndex = 93;
+            this.cbxVideoQuality.BorderRadius = 6;
             this.cbxVideoQuality.SelectedIndexChanged += new System.EventHandler(this.cbxVideoQuality_SelectedIndexChanged);
             // 
             // label7
@@ -1216,6 +1223,7 @@ namespace ReviewMovie
             this.cbxSpeechType.Name = "cbxSpeechType";
             this.cbxSpeechType.Size = new System.Drawing.Size(235, 23);
             this.cbxSpeechType.TabIndex = 18;
+            this.cbxSpeechType.BorderRadius = 6;
             this.cbxSpeechType.SelectedIndexChanged += new System.EventHandler(this.cbxSpeechType_SelectedIndexChanged);
             // 
             // label6
@@ -1301,6 +1309,7 @@ namespace ReviewMovie
             this.cboSiteNguon.Name = "cboSiteNguon";
             this.cboSiteNguon.Size = new System.Drawing.Size(175, 23);
             this.cboSiteNguon.TabIndex = 40;
+            this.cboSiteNguon.BorderRadius = 6;
             this.cboSiteNguon.SelectedIndexChanged += new System.EventHandler(this.cboSiteNguon_SelectedIndexChanged);
             // 
             // label1
@@ -1402,6 +1411,7 @@ namespace ReviewMovie
             this.cbProjectName.Name = "cbProjectName";
             this.cbProjectName.Size = new System.Drawing.Size(175, 24);
             this.cbProjectName.TabIndex = 43;
+            this.cbProjectName.BorderRadius = 6;
             this.cbProjectName.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbProjectName_DrawItem);
             this.cbProjectName.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.cbProjectName_MeasureItem);
             this.cbProjectName.SelectedIndexChanged += new System.EventHandler(this.cbProjectName_SelectedIndexChanged);

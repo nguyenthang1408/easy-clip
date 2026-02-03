@@ -138,6 +138,18 @@ namespace ReviewMovie
             this.toolTipPL = new ToolTip();
             this.Text = "EasyClip || " + "TPMEDIA";
 
+            // Slightly rounded window corners (small radius as requested).
+            try
+            {
+                const int formCornerRadius = 12;
+                Base.UiHelpers.ApplyRoundRegion(this, formCornerRadius);
+                SizeChanged += (_, __) => Base.UiHelpers.ApplyRoundRegion(this, formCornerRadius);
+            }
+            catch
+            {
+                // ignore (designer/runtime differences)
+            }
+
             // Apply common ToolStrip/Menu styling (safe even if not supported at runtime)
             try
             {
