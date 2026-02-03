@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Net.Http;
+using System.ComponentModel;
 using System.Windows.Forms;
 using ReviewMovie.Base;
 using ReviewMovie.Base.Controls;
@@ -19,10 +20,19 @@ namespace ReviewMovie
         private string AppVersion { get; } = "2.0.0"; // Định nghĩa phiên bản ứng dụng
         private readonly AppCodeService appCodeService;
         private readonly IConfigDataService _configService;
+        private bool _readOnlyFocusWired;
 
         public LoginApiKey()
         {
             InitializeComponent();
+
+            // Designer safety: avoid running runtime services / IO in WinForms designer.
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+            {
+                SetupLoginUi();
+                return;
+            }
+
             appCodeService = new AppCodeService(); // Khởi tạo service
             _configService = new ConfigDataService();
 
@@ -52,6 +62,18 @@ namespace ReviewMovie
                 appCode.IconColor = ColorTranslator.FromHtml("#94A3B8");
                 appCode.InnerTextBox.ForeColor = ColorTranslator.FromHtml("#64748B");
                 appCode.InnerTextBox.Cursor = Cursors.Default;
+
+                // Prevent focusing/tabbing into AppCode field
+                appCode.TabStop = false;
+                appCode.InnerTextBox.TabStop = false;
+                if (!_readOnlyFocusWired)
+                {
+                    _readOnlyFocusWired = true;
+                    appCode.InnerTextBox.GotFocus += (_, __) =>
+                    {
+                        try { txInsertApiKey?.Focus(); } catch { }
+                    };
+                }
             }
 
             if (txInsertApiKey is PillTextBox apiKey)
