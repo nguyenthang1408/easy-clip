@@ -158,6 +158,8 @@ namespace ReviewMovie
             this.btnExpand = new ReviewMovie.Base.Controls.UiButton();
             this.scSetting = new ReviewMovie.Base.Controls.UiSplitContainer();
             this.btnCollapse = new ReviewMovie.Base.Controls.UiButton();
+            this.rbCPUused = new System.Windows.Forms.RadioButton();
+            this.rbGPUused = new System.Windows.Forms.RadioButton();
             this.ctMenu.SuspendLayout();
             this.grbConfigRender.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nbSpeechRatio)).BeginInit();
@@ -2674,6 +2676,8 @@ namespace ReviewMovie
         private Base.Controls.UiToolStripButtonHost hostBtnConvertAudio;
         private Base.Controls.UiToolStripButtonHost hostBtnSaveAudio;
         private Base.Controls.UiToolStripButtonHost hostBtnRenderVideoPart;
+        private System.Windows.Forms.RadioButton rbCPUused;
+        private System.Windows.Forms.RadioButton rbGPUused;
     }
 }
 
