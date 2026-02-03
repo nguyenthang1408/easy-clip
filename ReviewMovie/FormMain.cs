@@ -162,6 +162,16 @@ namespace ReviewMovie
                 // ignore (designer/runtime differences)
             }
 
+            // Settings panel colors (UI common)
+            try
+            {
+                ApplySettingPanelTheme();
+            }
+            catch
+            {
+                // ignore (designer/runtime differences)
+            }
+
             // Apply common UI presets (easy to read + maintain)
             try
             {
@@ -222,6 +232,80 @@ namespace ReviewMovie
             _loadConfig.InitOrUpdateBaseConfig(_apikey, txtAppID.Text, txtAppID.Text, txtToken.Text);
             
             Init();
+        }
+
+        private void ApplySettingPanelTheme()
+        {
+            var white = ColorTranslator.FromHtml("#FFFFFF");
+            var itemSurface = ColorTranslator.FromHtml("#F8FAFC");
+            var orange = ColorTranslator.FromHtml("#FF7A00");
+
+            grboxSetting.BackColor = white;
+            grboxSetting.ForeColor = orange;
+
+            ApplyThemeRecursive(grboxSetting, itemSurface, orange);
+        }
+
+        private static void ApplyThemeRecursive(Control root, Color itemSurface, Color orange)
+        {
+            if (root == null) return;
+
+            foreach (Control c in root.Controls)
+            {
+                if (c == null) continue;
+
+                // Container surfaces inside settings
+                if (c is GroupBox gb)
+                {
+                    gb.BackColor = itemSurface;
+                    gb.ForeColor = orange;
+                }
+                else if (c is Panel p)
+                {
+                    p.BackColor = itemSurface;
+                }
+                else if (c is TableLayoutPanel tlp)
+                {
+                    tlp.BackColor = itemSurface;
+                }
+
+                // Field labels (e.g. "Dự Án", "Nguồn voice", ...)
+                if (c is Base.Controls.UiLabel uiLabel)
+                {
+                    uiLabel.TextColor = orange;
+                    uiLabel.ForeColor = orange;
+                    uiLabel.BackgroundColor = Color.Transparent;
+                }
+                else if (c is Label label)
+                {
+                    label.ForeColor = orange;
+                    label.BackColor = Color.Transparent;
+                }
+
+                // Inputs surface
+                if (c is Base.Controls.UiTextBox uiTextBox)
+                {
+                    uiTextBox.BackgroundColor = itemSurface;
+                }
+                else if (c is Base.Controls.UiNumericUpDown uiNumeric)
+                {
+                    uiNumeric.BackgroundColor = itemSurface;
+                    uiNumeric.ButtonColor = itemSurface;
+                }
+                else if (c is Base.Controls.UiComboBox uiComboBox)
+                {
+                    uiComboBox.BackColor = itemSurface;
+                }
+                else if (c is ComboBox comboBox)
+                {
+                    comboBox.BackColor = itemSurface;
+                }
+
+                if (c.HasChildren)
+                {
+                    ApplyThemeRecursive(c, itemSurface, orange);
+                }
+            }
         }
 
         // ---- Custom title bar (borderless window) ----
@@ -2416,6 +2500,10 @@ namespace ReviewMovie
                     CkZoom.Checked = _infoProject.ChkZoomvideo;
 
                     ActiveProject.ActiveGroupBoxSetting(tlpView, grbConfigVoice, grbConfigRender, grbActionRender, true);
+
+                    // Allow typing in input textbox as soon as a project is opened.
+                    txtTextInput.ReadOnly = false;
+                    txtTextInput.DisableTextBox = false;
 
                     var voiceSite = _infoProject.VoiceSelect;
 
