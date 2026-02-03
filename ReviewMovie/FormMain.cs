@@ -243,7 +243,12 @@ namespace ReviewMovie
             this.MaximizeBox = false;
 
             // Tắt tạm button Checkbox chọn tác vụ
-            btnSelectAll.Enabled = false;
+            // NOTE: btnSelectAll may not exist in some builds/designer variants
+            // (field declared but not instantiated in InitializeComponent).
+            if (btnSelectAll != null)
+            {
+                btnSelectAll.Enabled = false;
+            }
 
             _sessionMerge = false;
             _clipPlayerService.ListenForClipPlayerMessages(HandleClipPlayerMessage);

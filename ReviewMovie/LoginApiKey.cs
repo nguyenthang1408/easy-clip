@@ -49,6 +49,9 @@ namespace ReviewMovie
             UiHelpers.EnableSmoothPainting(this);
             DoubleBuffered = true;
 
+            // Allow dragging the borderless window from background
+            this.MouseDown += DragArea_MouseDown;
+
             SetupLoginUi();
         }
 

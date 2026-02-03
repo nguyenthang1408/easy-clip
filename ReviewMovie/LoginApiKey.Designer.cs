@@ -64,8 +64,9 @@ namespace ReviewMovie
             this.cardPanel.Controls.Add(this.lblTitle);
             this.cardPanel.Controls.Add(this.pnlLogo);
             this.cardPanel.Controls.Add(this.pnlTopAccent);
-            this.cardPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cardPanel.Location = new System.Drawing.Point(0, 0);
+            this.cardPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cardPanel.Dock = System.Windows.Forms.DockStyle.None;
+            this.cardPanel.Location = new System.Drawing.Point(30, 35);
             this.cardPanel.Name = "cardPanel";
             this.cardPanel.Size = new System.Drawing.Size(420, 570);
             this.cardPanel.TabIndex = 0;
@@ -260,7 +261,7 @@ namespace ReviewMovie
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(247)))), ((int)(((byte)(237)))));
-            this.ClientSize = new System.Drawing.Size(420, 570);
+            this.ClientSize = new System.Drawing.Size(480, 640);
             this.Controls.Add(this.cardPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
