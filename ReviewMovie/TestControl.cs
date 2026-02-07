@@ -1,6 +1,7 @@
 using ReviewMovie.Base.Controls;
 using ReviewMovie.Base.Controls.Common;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace EasyClip
@@ -34,6 +35,9 @@ namespace EasyClip
             btnPrimary.ApplyStyle(UiPresets.Button.Primary);
             btnSecondary.ApplyStyle(UiPresets.Button.Secondary);
             btnDisabled.ApplyStyle(UiPresets.Button.Secondary);
+            btnLegacy.FillColor = Color.FromArgb(13, 110, 253);
+            btnLegacy.HoverFillColor = Color.FromArgb(11, 94, 215);
+            btnLegacy.PressedFillColor = Color.FromArgb(10, 88, 202);
 
             chkRemember.ApplyStyle(UiPresets.CheckBox.Default);
             numStandard.ApplyStyle(UiPresets.Numeric.Default);
