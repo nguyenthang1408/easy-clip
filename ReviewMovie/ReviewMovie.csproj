@@ -201,6 +201,12 @@
     <Compile Include="Services\RenderDataSyncService.cs" />
     <Compile Include="Services\VideoMergeService.cs" />
     <Compile Include="Services\VideoValidationService.cs" />
+    <Compile Include="TestControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestControl.Designer.cs">
+      <DependentUpon>TestControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\DialogMessage\FormLoadingCancel.cs">
       <SubType>Form</SubType>
     </Compile>
