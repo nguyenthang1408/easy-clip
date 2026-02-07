@@ -160,10 +160,20 @@
     <Compile Include="Base\Enum.cs" />
     <Compile Include="Base\GpuDetectionMessages.cs" />
     <Compile Include="Base\GpuDetectionResult.cs" />
+    <Compile Include="Base\RoundedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Base\RoundedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Base\RVFuncion.cs" />
     <Compile Include="Base\TextProcessUtil.cs" />
+    <Compile Include="Base\UiBorder.cs" />
+    <Compile Include="Base\UiHelpers.cs" />
+    <Compile Include="Base\UiTheme.cs" />
     <Compile Include="Base\UIThreadHelper.cs" />
     <Compile Include="Base\VideoMergeConfig.cs" />
+    <Compile Include="Base\Win32.cs" />
     <Compile Include="Infrastructure\Config\ConfigDataService.cs" />
     <Compile Include="Infrastructure\Config\ConfigModel.cs" />
     <Compile Include="Infrastructure\Config\ConfigCtrl.cs" />
@@ -229,6 +239,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TestControl.resx">
+      <DependentUpon>TestControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\DialogMessage\FormLoadingCancel.resx">
       <DependentUpon>FormLoadingCancel.cs</DependentUpon>
     </EmbeddedResource>

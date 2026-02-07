@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyClip;
+using System;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -28,7 +29,7 @@ namespace ReviewMovie
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new LoginApiKey());
+                Application.Run(new TestControl());
                 mutex.ReleaseMutex();
             }
             else

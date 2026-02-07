@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace EasyClip
 {
     partial class TestControl
@@ -28,7 +30,8 @@ namespace EasyClip
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tlpRoot = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
             this.lblTitle = new ReviewMovie.Base.Controls.UiLabel();
             this.tlpBody = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
@@ -69,6 +72,7 @@ namespace EasyClip
             this.splitMain.SuspendLayout();
             this.grpInputs.SuspendLayout();
             this.tlpInputs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numStandard)).BeginInit();
             this.pnlOptions.SuspendLayout();
             this.grpButtons.SuspendLayout();
             this.tlpButtons.SuspendLayout();
@@ -78,6 +82,11 @@ namespace EasyClip
             // 
             // tlpRoot
             // 
+            this.tlpRoot.BackgroundColor = System.Drawing.Color.Transparent;
+            this.tlpRoot.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.tlpRoot.BorderRadius = 0;
+            this.tlpRoot.BorderSizeEx = 0;
+            this.tlpRoot.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
             this.tlpRoot.ColumnCount = 1;
             this.tlpRoot.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpRoot.Controls.Add(this.lblTitle, 0, 0);
@@ -94,71 +103,95 @@ namespace EasyClip
             // 
             // lblTitle
             // 
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblTitle.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblTitle.BorderColor = System.Drawing.Color.Transparent;
             this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.lblTitle.Location = new System.Drawing.Point(16, 16);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.lblTitle.Size = new System.Drawing.Size(1168, 40);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "UI Test Control";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTitle.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // tlpBody
             // 
+            this.tlpBody.BackgroundColor = System.Drawing.Color.Transparent;
+            this.tlpBody.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.tlpBody.BorderRadius = 0;
+            this.tlpBody.BorderSizeEx = 0;
+            this.tlpBody.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
             this.tlpBody.ColumnCount = 1;
             this.tlpBody.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpBody.Controls.Add(this.splitMain, 0, 0);
             this.tlpBody.Controls.Add(this.grpGrid, 0, 1);
             this.tlpBody.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpBody.Location = new System.Drawing.Point(16, 72);
+            this.tlpBody.Location = new System.Drawing.Point(16, 64);
             this.tlpBody.Margin = new System.Windows.Forms.Padding(0);
             this.tlpBody.Name = "tlpBody";
             this.tlpBody.RowCount = 2;
-            this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tlpBody.Size = new System.Drawing.Size(1168, 632);
+            this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tlpBody.Size = new System.Drawing.Size(1168, 640);
             this.tlpBody.TabIndex = 1;
             // 
             // splitMain
             // 
+            this.splitMain.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.splitMain.BorderRadius = 8;
             this.splitMain.BorderSizeEx = 1;
             this.splitMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitMain.Location = new System.Drawing.Point(0, 0);
             this.splitMain.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.splitMain.Name = "splitMain";
-            this.splitMain.Orientation = System.Windows.Forms.Orientation.Vertical;
             // 
             // splitMain.Panel1
             // 
             this.splitMain.Panel1.Controls.Add(this.grpInputs);
+            this.splitMain.Panel1MinSize = 380;
             // 
             // splitMain.Panel2
             // 
             this.splitMain.Panel2.Controls.Add(this.grpButtons);
-            this.splitMain.Panel1MinSize = 380;
             this.splitMain.Panel2MinSize = 260;
-            this.splitMain.Size = new System.Drawing.Size(1168, 369);
+            this.splitMain.Size = new System.Drawing.Size(1168, 430);
+            this.splitMain.SplitterColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.splitMain.SplitterDistance = 740;
             this.splitMain.SplitterWidth = 6;
             this.splitMain.TabIndex = 0;
             // 
             // grpInputs
             // 
+            this.grpInputs.BackgroundColor = System.Drawing.Color.Transparent;
+            this.grpInputs.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.grpInputs.BorderRadius = 10;
+            this.grpInputs.BorderSizeEx = 1;
+            this.grpInputs.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.grpInputs.Controls.Add(this.tlpInputs);
             this.grpInputs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpInputs.Location = new System.Drawing.Point(0, 0);
             this.grpInputs.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.grpInputs.Name = "grpInputs";
             this.grpInputs.Padding = new System.Windows.Forms.Padding(12, 32, 12, 12);
-            this.grpInputs.Size = new System.Drawing.Size(740, 369);
+            this.grpInputs.Size = new System.Drawing.Size(740, 430);
             this.grpInputs.TabIndex = 0;
+            this.grpInputs.TabStop = false;
             this.grpInputs.Text = "Inputs";
+            this.grpInputs.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grpInputs.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.grpInputs.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // tlpInputs
             // 
+            this.tlpInputs.BackgroundColor = System.Drawing.Color.Transparent;
+            this.tlpInputs.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.tlpInputs.BorderRadius = 0;
+            this.tlpInputs.BorderSizeEx = 0;
+            this.tlpInputs.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
             this.tlpInputs.ColumnCount = 2;
             this.tlpInputs.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
             this.tlpInputs.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -177,7 +210,7 @@ namespace EasyClip
             this.tlpInputs.Controls.Add(this.lblOptions, 0, 6);
             this.tlpInputs.Controls.Add(this.pnlOptions, 1, 6);
             this.tlpInputs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpInputs.Location = new System.Drawing.Point(12, 32);
+            this.tlpInputs.Location = new System.Drawing.Point(12, 48);
             this.tlpInputs.Margin = new System.Windows.Forms.Padding(0);
             this.tlpInputs.Name = "tlpInputs";
             this.tlpInputs.RowCount = 7;
@@ -188,90 +221,163 @@ namespace EasyClip
             this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 56F));
             this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tlpInputs.Size = new System.Drawing.Size(716, 325);
+            this.tlpInputs.Size = new System.Drawing.Size(716, 370);
             this.tlpInputs.TabIndex = 0;
             // 
             // lblTextBox
             // 
+            this.lblTextBox.BackColor = System.Drawing.Color.Transparent;
+            this.lblTextBox.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblTextBox.BorderColor = System.Drawing.Color.Transparent;
             this.lblTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.lblTextBox.Location = new System.Drawing.Point(0, 0);
             this.lblTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.lblTextBox.Name = "lblTextBox";
-            this.lblTextBox.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.lblTextBox.Size = new System.Drawing.Size(130, 36);
             this.lblTextBox.TabIndex = 0;
             this.lblTextBox.Text = "Text Box";
             this.lblTextBox.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTextBox.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // txtStandard
             // 
+            this.txtStandard.BackColor = System.Drawing.Color.Transparent;
+            this.txtStandard.BackgroundColor = System.Drawing.Color.White;
+            this.txtStandard.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.txtStandard.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.txtStandard.BorderRadius = 4;
+            this.txtStandard.DisableTextBox = false;
             this.txtStandard.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtStandard.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.txtStandard.IconLeft = null;
+            this.txtStandard.IconRight = null;
+            this.txtStandard.IconSize = new System.Drawing.Size(18, 18);
+            this.txtStandard.Lines = new string[0];
             this.txtStandard.Location = new System.Drawing.Point(130, 4);
             this.txtStandard.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.txtStandard.MaxLength = 32767;
+            this.txtStandard.Multiline = false;
             this.txtStandard.Name = "txtStandard";
+            this.txtStandard.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
+            this.txtStandard.ReadOnly = false;
+            this.txtStandard.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtStandard.SelectionLength = 0;
+            this.txtStandard.SelectionStart = 0;
             this.txtStandard.Size = new System.Drawing.Size(586, 28);
             this.txtStandard.TabIndex = 1;
+            this.txtStandard.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtStandard.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.txtStandard.UseSystemPasswordChar = false;
             // 
             // lblMultiline
             // 
+            this.lblMultiline.BackColor = System.Drawing.Color.Transparent;
+            this.lblMultiline.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblMultiline.BorderColor = System.Drawing.Color.Transparent;
             this.lblMultiline.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMultiline.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblMultiline.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.lblMultiline.Location = new System.Drawing.Point(0, 36);
             this.lblMultiline.Margin = new System.Windows.Forms.Padding(0);
             this.lblMultiline.Name = "lblMultiline";
-            this.lblMultiline.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.lblMultiline.Size = new System.Drawing.Size(130, 80);
             this.lblMultiline.TabIndex = 2;
             this.lblMultiline.Text = "Multiline";
             this.lblMultiline.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblMultiline.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // txtMultiline
             // 
+            this.txtMultiline.BackColor = System.Drawing.Color.Transparent;
+            this.txtMultiline.BackgroundColor = System.Drawing.Color.White;
+            this.txtMultiline.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.txtMultiline.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.txtMultiline.BorderRadius = 4;
+            this.txtMultiline.DisableTextBox = false;
             this.txtMultiline.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtMultiline.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.txtMultiline.IconLeft = null;
+            this.txtMultiline.IconRight = null;
+            this.txtMultiline.IconSize = new System.Drawing.Size(18, 18);
+            this.txtMultiline.Lines = new string[0];
             this.txtMultiline.Location = new System.Drawing.Point(130, 40);
             this.txtMultiline.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.txtMultiline.MaxLength = 32767;
             this.txtMultiline.Multiline = true;
             this.txtMultiline.Name = "txtMultiline";
+            this.txtMultiline.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
+            this.txtMultiline.ReadOnly = false;
             this.txtMultiline.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtMultiline.SelectionLength = 0;
+            this.txtMultiline.SelectionStart = 0;
             this.txtMultiline.Size = new System.Drawing.Size(586, 72);
             this.txtMultiline.TabIndex = 3;
+            this.txtMultiline.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtMultiline.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.txtMultiline.UseSystemPasswordChar = false;
             // 
             // lblPillText
             // 
+            this.lblPillText.BackColor = System.Drawing.Color.Transparent;
+            this.lblPillText.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblPillText.BorderColor = System.Drawing.Color.Transparent;
             this.lblPillText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPillText.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblPillText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.lblPillText.Location = new System.Drawing.Point(0, 116);
             this.lblPillText.Margin = new System.Windows.Forms.Padding(0);
             this.lblPillText.Name = "lblPillText";
-            this.lblPillText.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.lblPillText.Size = new System.Drawing.Size(130, 56);
             this.lblPillText.TabIndex = 4;
             this.lblPillText.Text = "Pill Text";
             this.lblPillText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPillText.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // pillText
             // 
+            this.pillText.BackColor = System.Drawing.Color.Transparent;
+            this.pillText.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.pillText.CornerRadius = 12;
             this.pillText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pillText.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
+            this.pillText.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
+            this.pillText.IconGlyph = "";
             this.pillText.Location = new System.Drawing.Point(130, 120);
             this.pillText.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.pillText.MaxLength = 32767;
             this.pillText.Name = "pillText";
+            this.pillText.ReadOnly = false;
             this.pillText.Size = new System.Drawing.Size(586, 48);
             this.pillText.TabIndex = 5;
+            this.pillText.UseSystemPasswordChar = false;
             // 
             // lblCombo
             // 
+            this.lblCombo.BackColor = System.Drawing.Color.Transparent;
+            this.lblCombo.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblCombo.BorderColor = System.Drawing.Color.Transparent;
             this.lblCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCombo.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblCombo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.lblCombo.Location = new System.Drawing.Point(0, 172);
             this.lblCombo.Margin = new System.Windows.Forms.Padding(0);
             this.lblCombo.Name = "lblCombo";
-            this.lblCombo.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.lblCombo.Size = new System.Drawing.Size(130, 36);
             this.lblCombo.TabIndex = 6;
             this.lblCombo.Text = "Combo Box";
             this.lblCombo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblCombo.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // cmbStandard
             // 
+            this.cmbStandard.BackColor = System.Drawing.Color.White;
             this.cmbStandard.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cmbStandard.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbStandard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbStandard.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cmbStandard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cmbStandard.FormattingEnabled = true;
             this.cmbStandard.IntegralHeight = false;
             this.cmbStandard.Location = new System.Drawing.Point(130, 176);
@@ -282,56 +388,117 @@ namespace EasyClip
             // 
             // lblPillCombo
             // 
+            this.lblPillCombo.BackColor = System.Drawing.Color.Transparent;
+            this.lblPillCombo.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblPillCombo.BorderColor = System.Drawing.Color.Transparent;
             this.lblPillCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPillCombo.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblPillCombo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.lblPillCombo.Location = new System.Drawing.Point(0, 208);
             this.lblPillCombo.Margin = new System.Windows.Forms.Padding(0);
             this.lblPillCombo.Name = "lblPillCombo";
-            this.lblPillCombo.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.lblPillCombo.Size = new System.Drawing.Size(130, 56);
             this.lblPillCombo.TabIndex = 8;
             this.lblPillCombo.Text = "Pill Combo";
             this.lblPillCombo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPillCombo.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // pillCombo
             // 
+            this.pillCombo.BackColor = System.Drawing.Color.Transparent;
+            this.pillCombo.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.pillCombo.CornerRadius = 12;
+            this.pillCombo.DataSource = null;
+            this.pillCombo.DisplayMember = "";
             this.pillCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pillCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.pillCombo.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
+            this.pillCombo.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
+            this.pillCombo.IconGlyph = "";
             this.pillCombo.Location = new System.Drawing.Point(130, 212);
             this.pillCombo.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.pillCombo.Name = "pillCombo";
+            this.pillCombo.SelectedIndex = -1;
+            this.pillCombo.SelectedItem = null;
+            this.pillCombo.SelectedValue = null;
             this.pillCombo.Size = new System.Drawing.Size(586, 48);
             this.pillCombo.TabIndex = 9;
+            this.pillCombo.ValueMember = "";
             // 
             // lblNumeric
             // 
+            this.lblNumeric.BackColor = System.Drawing.Color.Transparent;
+            this.lblNumeric.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblNumeric.BorderColor = System.Drawing.Color.Transparent;
             this.lblNumeric.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblNumeric.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblNumeric.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.lblNumeric.Location = new System.Drawing.Point(0, 264);
             this.lblNumeric.Margin = new System.Windows.Forms.Padding(0);
             this.lblNumeric.Name = "lblNumeric";
-            this.lblNumeric.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.lblNumeric.Size = new System.Drawing.Size(130, 36);
             this.lblNumeric.TabIndex = 10;
             this.lblNumeric.Text = "Numeric";
             this.lblNumeric.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblNumeric.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // numStandard
             // 
+            this.numStandard.BackColor = System.Drawing.Color.Transparent;
+            this.numStandard.BackgroundColor = System.Drawing.Color.White;
+            this.numStandard.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.numStandard.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.numStandard.BorderRadius = 4;
+            this.numStandard.BorderSize = 1;
+            this.numStandard.ButtonColor = System.Drawing.Color.White;
+            this.numStandard.ButtonHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.numStandard.ButtonIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
+            this.numStandard.DecimalPlaces = 0;
+            this.numStandard.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numStandard.Location = new System.Drawing.Point(130, 268);
             this.numStandard.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.numStandard.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numStandard.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.numStandard.Name = "numStandard";
-            this.numStandard.Size = new System.Drawing.Size(120, 30);
+            this.numStandard.Padding = new System.Windows.Forms.Padding(10, 6, 10, 6);
+            this.numStandard.Size = new System.Drawing.Size(120, 28);
             this.numStandard.TabIndex = 11;
+            this.numStandard.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numStandard.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.numStandard.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             // 
             // lblOptions
             // 
+            this.lblOptions.BackColor = System.Drawing.Color.Transparent;
+            this.lblOptions.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblOptions.BorderColor = System.Drawing.Color.Transparent;
             this.lblOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblOptions.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblOptions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.lblOptions.Location = new System.Drawing.Point(0, 300);
             this.lblOptions.Margin = new System.Windows.Forms.Padding(0);
             this.lblOptions.Name = "lblOptions";
-            this.lblOptions.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.lblOptions.Size = new System.Drawing.Size(130, 36);
+            this.lblOptions.Size = new System.Drawing.Size(130, 70);
             this.lblOptions.TabIndex = 12;
             this.lblOptions.Text = "Options";
             this.lblOptions.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblOptions.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // pnlOptions
             // 
@@ -339,63 +506,109 @@ namespace EasyClip
             this.pnlOptions.Controls.Add(this.rdoOptionA);
             this.pnlOptions.Controls.Add(this.rdoOptionB);
             this.pnlOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlOptions.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
             this.pnlOptions.Location = new System.Drawing.Point(130, 304);
             this.pnlOptions.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.pnlOptions.Name = "pnlOptions";
-            this.pnlOptions.Size = new System.Drawing.Size(586, 28);
+            this.pnlOptions.Size = new System.Drawing.Size(586, 62);
             this.pnlOptions.TabIndex = 13;
             this.pnlOptions.WrapContents = false;
             // 
             // chkRemember
             // 
             this.chkRemember.AutoSize = true;
+            this.chkRemember.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.chkRemember.BoxBorderSize = 1;
+            this.chkRemember.BoxRadius = 4;
+            this.chkRemember.BoxSize = 16;
+            this.chkRemember.BoxStyle = ReviewMovie.Base.Controls.Common.UiBoxStyle.Rounded;
+            this.chkRemember.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.chkRemember.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.chkRemember.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.chkRemember.Location = new System.Drawing.Point(0, 4);
             this.chkRemember.Margin = new System.Windows.Forms.Padding(0, 4, 12, 4);
             this.chkRemember.Name = "chkRemember";
-            this.chkRemember.Size = new System.Drawing.Size(86, 19);
+            this.chkRemember.Size = new System.Drawing.Size(84, 19);
             this.chkRemember.TabIndex = 0;
             this.chkRemember.Text = "Remember";
+            this.chkRemember.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.chkRemember.TextPosition = ReviewMovie.Base.Controls.Common.UiTextPosition.Right;
+            this.chkRemember.UncheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.chkRemember.UseVisualStyleBackColor = true;
             // 
             // rdoOptionA
             // 
             this.rdoOptionA.AutoSize = true;
-            this.rdoOptionA.Location = new System.Drawing.Point(98, 4);
+            this.rdoOptionA.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.rdoOptionA.BoxBorderSize = 1;
+            this.rdoOptionA.BoxRadius = 4;
+            this.rdoOptionA.BoxSize = 16;
+            this.rdoOptionA.BoxStyle = ReviewMovie.Base.Controls.Common.UiBoxStyle.Circle;
+            this.rdoOptionA.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.rdoOptionA.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.rdoOptionA.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.rdoOptionA.Location = new System.Drawing.Point(96, 4);
             this.rdoOptionA.Margin = new System.Windows.Forms.Padding(0, 4, 12, 4);
             this.rdoOptionA.Name = "rdoOptionA";
-            this.rdoOptionA.Size = new System.Drawing.Size(77, 19);
+            this.rdoOptionA.Size = new System.Drawing.Size(73, 19);
             this.rdoOptionA.TabIndex = 1;
             this.rdoOptionA.TabStop = true;
             this.rdoOptionA.Text = "Option A";
+            this.rdoOptionA.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.rdoOptionA.TextPosition = ReviewMovie.Base.Controls.Common.UiTextPosition.Right;
+            this.rdoOptionA.UncheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.rdoOptionA.UseVisualStyleBackColor = true;
             // 
             // rdoOptionB
             // 
             this.rdoOptionB.AutoSize = true;
-            this.rdoOptionB.Location = new System.Drawing.Point(187, 4);
+            this.rdoOptionB.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.rdoOptionB.BoxBorderSize = 1;
+            this.rdoOptionB.BoxRadius = 4;
+            this.rdoOptionB.BoxSize = 16;
+            this.rdoOptionB.BoxStyle = ReviewMovie.Base.Controls.Common.UiBoxStyle.Circle;
+            this.rdoOptionB.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.rdoOptionB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.rdoOptionB.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.rdoOptionB.Location = new System.Drawing.Point(181, 4);
             this.rdoOptionB.Margin = new System.Windows.Forms.Padding(0, 4, 12, 4);
             this.rdoOptionB.Name = "rdoOptionB";
-            this.rdoOptionB.Size = new System.Drawing.Size(76, 19);
+            this.rdoOptionB.Size = new System.Drawing.Size(72, 19);
             this.rdoOptionB.TabIndex = 2;
             this.rdoOptionB.TabStop = true;
             this.rdoOptionB.Text = "Option B";
+            this.rdoOptionB.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.rdoOptionB.TextPosition = ReviewMovie.Base.Controls.Common.UiTextPosition.Right;
+            this.rdoOptionB.UncheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.rdoOptionB.UseVisualStyleBackColor = true;
             // 
             // grpButtons
             // 
+            this.grpButtons.BackgroundColor = System.Drawing.Color.Transparent;
+            this.grpButtons.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.grpButtons.BorderRadius = 10;
+            this.grpButtons.BorderSizeEx = 1;
+            this.grpButtons.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.grpButtons.Controls.Add(this.tlpButtons);
             this.grpButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpButtons.Location = new System.Drawing.Point(0, 0);
             this.grpButtons.Margin = new System.Windows.Forms.Padding(6, 0, 0, 0);
             this.grpButtons.Name = "grpButtons";
             this.grpButtons.Padding = new System.Windows.Forms.Padding(12, 32, 12, 12);
-            this.grpButtons.Size = new System.Drawing.Size(422, 369);
+            this.grpButtons.Size = new System.Drawing.Size(422, 430);
             this.grpButtons.TabIndex = 0;
+            this.grpButtons.TabStop = false;
             this.grpButtons.Text = "Buttons";
+            this.grpButtons.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grpButtons.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.grpButtons.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // tlpButtons
             // 
+            this.tlpButtons.BackgroundColor = System.Drawing.Color.Transparent;
+            this.tlpButtons.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.tlpButtons.BorderRadius = 0;
+            this.tlpButtons.BorderSizeEx = 0;
+            this.tlpButtons.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
             this.tlpButtons.ColumnCount = 1;
             this.tlpButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpButtons.Controls.Add(this.btnPrimary, 0, 0);
@@ -404,7 +617,7 @@ namespace EasyClip
             this.tlpButtons.Controls.Add(this.btnDisabled, 0, 3);
             this.tlpButtons.Controls.Add(this.btnIcon, 0, 4);
             this.tlpButtons.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpButtons.Location = new System.Drawing.Point(12, 32);
+            this.tlpButtons.Location = new System.Drawing.Point(12, 48);
             this.tlpButtons.Margin = new System.Windows.Forms.Padding(0);
             this.tlpButtons.Name = "tlpButtons";
             this.tlpButtons.RowCount = 5;
@@ -413,37 +626,72 @@ namespace EasyClip
             this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
-            this.tlpButtons.Size = new System.Drawing.Size(398, 325);
+            this.tlpButtons.Size = new System.Drawing.Size(398, 370);
             this.tlpButtons.TabIndex = 0;
             // 
             // btnPrimary
             // 
+            this.btnPrimary.BackColor = System.Drawing.Color.Transparent;
+            this.btnPrimary.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnPrimary.BorderColor = System.Drawing.Color.Transparent;
+            this.btnPrimary.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnPrimary.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
             this.btnPrimary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnPrimary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrimary.ForeColor = System.Drawing.Color.White;
+            this.btnPrimary.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnPrimary.IconImage = null;
+            this.btnPrimary.IconSize = new System.Drawing.Size(18, 18);
+            this.btnPrimary.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnPrimary.Location = new System.Drawing.Point(0, 4);
             this.btnPrimary.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.btnPrimary.Name = "btnPrimary";
+            this.btnPrimary.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnPrimary.Size = new System.Drawing.Size(398, 36);
             this.btnPrimary.TabIndex = 0;
             this.btnPrimary.Text = "Primary";
+            this.btnPrimary.TextColor = System.Drawing.Color.White;
+            this.btnPrimary.TextHoverColor = System.Drawing.Color.White;
             this.btnPrimary.UseVisualStyleBackColor = true;
             // 
             // btnSecondary
             // 
+            this.btnSecondary.BackColor = System.Drawing.Color.Transparent;
+            this.btnSecondary.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnSecondary.BorderColor = System.Drawing.Color.Transparent;
+            this.btnSecondary.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnSecondary.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
             this.btnSecondary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSecondary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSecondary.ForeColor = System.Drawing.Color.White;
+            this.btnSecondary.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnSecondary.IconImage = null;
+            this.btnSecondary.IconSize = new System.Drawing.Size(18, 18);
+            this.btnSecondary.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnSecondary.Location = new System.Drawing.Point(0, 48);
             this.btnSecondary.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.btnSecondary.Name = "btnSecondary";
+            this.btnSecondary.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnSecondary.Size = new System.Drawing.Size(398, 36);
             this.btnSecondary.TabIndex = 1;
             this.btnSecondary.Text = "Secondary";
+            this.btnSecondary.TextColor = System.Drawing.Color.White;
+            this.btnSecondary.TextHoverColor = System.Drawing.Color.White;
             this.btnSecondary.UseVisualStyleBackColor = true;
             // 
             // btnLegacy
             // 
+            this.btnLegacy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnLegacy.CornerRadius = 12;
             this.btnLegacy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLegacy.FillColor = System.Drawing.Color.FromArgb(13, 110, 253);
+            this.btnLegacy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLegacy.ForeColor = System.Drawing.Color.White;
+            this.btnLegacy.HoverFillColor = System.Drawing.Color.FromArgb(11, 94, 215);
             this.btnLegacy.Location = new System.Drawing.Point(0, 92);
             this.btnLegacy.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.btnLegacy.Name = "btnLegacy";
+            this.btnLegacy.PressedFillColor = System.Drawing.Color.FromArgb(10, 88, 202);
             this.btnLegacy.Size = new System.Drawing.Size(398, 36);
             this.btnLegacy.TabIndex = 2;
             this.btnLegacy.Text = "PrimaryButton";
@@ -451,22 +699,42 @@ namespace EasyClip
             // 
             // btnDisabled
             // 
+            this.btnDisabled.BackColor = System.Drawing.Color.Transparent;
+            this.btnDisabled.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnDisabled.BorderColor = System.Drawing.Color.Transparent;
+            this.btnDisabled.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnDisabled.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
             this.btnDisabled.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDisabled.Enabled = false;
+            this.btnDisabled.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDisabled.ForeColor = System.Drawing.Color.White;
+            this.btnDisabled.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnDisabled.IconImage = null;
+            this.btnDisabled.IconSize = new System.Drawing.Size(18, 18);
+            this.btnDisabled.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnDisabled.Location = new System.Drawing.Point(0, 136);
             this.btnDisabled.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.btnDisabled.Name = "btnDisabled";
+            this.btnDisabled.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnDisabled.Size = new System.Drawing.Size(398, 36);
             this.btnDisabled.TabIndex = 3;
             this.btnDisabled.Text = "Disabled";
+            this.btnDisabled.TextColor = System.Drawing.Color.White;
+            this.btnDisabled.TextHoverColor = System.Drawing.Color.White;
             this.btnDisabled.UseVisualStyleBackColor = true;
             // 
             // btnIcon
             // 
             this.btnIcon.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnIcon.Location = new System.Drawing.Point(0, 184);
+            this.btnIcon.BackColor = System.Drawing.Color.White;
+            this.btnIcon.CornerRadius = 15;
+            this.btnIcon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnIcon.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.btnIcon.Location = new System.Drawing.Point(0, 255);
             this.btnIcon.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.btnIcon.Name = "btnIcon";
+            this.btnIcon.NormalBackColor = System.Drawing.Color.White;
+            this.btnIcon.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.btnIcon.Size = new System.Drawing.Size(36, 36);
             this.btnIcon.TabIndex = 4;
             this.btnIcon.Text = "X";
@@ -474,32 +742,75 @@ namespace EasyClip
             // 
             // grpGrid
             // 
+            this.grpGrid.BackgroundColor = System.Drawing.Color.Transparent;
+            this.grpGrid.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.grpGrid.BorderRadius = 10;
+            this.grpGrid.BorderSizeEx = 1;
+            this.grpGrid.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.grpGrid.Controls.Add(this.gridSample);
             this.grpGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grpGrid.Location = new System.Drawing.Point(0, 379);
+            this.grpGrid.Location = new System.Drawing.Point(0, 440);
             this.grpGrid.Margin = new System.Windows.Forms.Padding(0);
             this.grpGrid.Name = "grpGrid";
             this.grpGrid.Padding = new System.Windows.Forms.Padding(12, 32, 12, 12);
-            this.grpGrid.Size = new System.Drawing.Size(1168, 253);
+            this.grpGrid.Size = new System.Drawing.Size(1168, 200);
             this.grpGrid.TabIndex = 1;
+            this.grpGrid.TabStop = false;
             this.grpGrid.Text = "Grid";
+            this.grpGrid.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grpGrid.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.grpGrid.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // gridSample
             // 
             this.gridSample.AllowUserToAddRows = false;
             this.gridSample.AllowUserToDeleteRows = false;
             this.gridSample.AllowUserToResizeRows = false;
-            this.gridSample.AutoGenerateColumns = false;
             this.gridSample.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSample.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(248)))));
+            this.gridSample.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.gridSample.BorderRadius = 0;
+            this.gridSample.BorderSizeEx = 1;
+            this.gridSample.CellBackColor = System.Drawing.Color.White;
+            this.gridSample.CellFont = new System.Drawing.Font("Segoe UI", 9F);
+            this.gridSample.CellForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridSample.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.gridSample.ColumnHeadersHeight = 28;
             this.gridSample.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridSample.DefaultCellStyle = dataGridViewCellStyle2;
             this.gridSample.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSample.Location = new System.Drawing.Point(12, 32);
+            this.gridSample.EnableHeadersVisualStyles = false;
+            this.gridSample.GridBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(248)))));
+            this.gridSample.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.gridSample.GridForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.gridSample.GridLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.gridSample.HeaderBackColor = System.Drawing.Color.White;
+            this.gridSample.HeaderFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.gridSample.HeaderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.gridSample.HeaderHeight = 28;
+            this.gridSample.Location = new System.Drawing.Point(12, 48);
             this.gridSample.MultiSelect = false;
             this.gridSample.Name = "gridSample";
             this.gridSample.ReadOnly = true;
             this.gridSample.RowHeadersVisible = false;
+            this.gridSample.RowHeight = 26;
+            this.gridSample.RowTemplate.Height = 26;
             this.gridSample.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSample.Size = new System.Drawing.Size(1144, 209);
+            this.gridSample.Size = new System.Drawing.Size(1144, 140);
             this.gridSample.TabIndex = 0;
             // 
             // TestControl
@@ -509,7 +820,7 @@ namespace EasyClip
             this.ClientSize = new System.Drawing.Size(1200, 720);
             this.Controls.Add(this.tlpRoot);
             this.DoubleBuffered = true;
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.MinimumSize = new System.Drawing.Size(1000, 650);
             this.Name = "TestControl";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -522,6 +833,7 @@ namespace EasyClip
             this.splitMain.ResumeLayout(false);
             this.grpInputs.ResumeLayout(false);
             this.tlpInputs.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numStandard)).EndInit();
             this.pnlOptions.ResumeLayout(false);
             this.pnlOptions.PerformLayout();
             this.grpButtons.ResumeLayout(false);
