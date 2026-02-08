@@ -389,7 +389,8 @@ namespace ReviewMovie
         {
             if (_packageInfo != null && _packageInfo.IsSuccess)
             {
-                string title = "EasyClip || TPMEDIA";
+                string version = !string.IsNullOrEmpty(_packageInfo.Version) ? _packageInfo.Version : "---";
+                string title = $"EasyClip v{version} || TPMEDIA";
 
                 // Thêm email từ server
                 if (!string.IsNullOrEmpty(_packageInfo.Email))
