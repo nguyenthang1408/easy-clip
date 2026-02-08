@@ -546,12 +546,12 @@ namespace EasyClip
             // 
             // btnPrimary
             // 
+            this.btnPrimary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrimary.BackColor = System.Drawing.Color.Transparent;
             this.btnPrimary.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.btnPrimary.BorderColor = System.Drawing.Color.Transparent;
             this.btnPrimary.BorderHoverColor = System.Drawing.Color.Transparent;
             this.btnPrimary.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
-            this.btnPrimary.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnPrimary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPrimary.ForeColor = System.Drawing.Color.White;
             this.btnPrimary.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
@@ -571,12 +571,12 @@ namespace EasyClip
             // 
             // btnSecondary
             // 
+            this.btnSecondary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSecondary.BackColor = System.Drawing.Color.Transparent;
             this.btnSecondary.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.btnSecondary.BorderColor = System.Drawing.Color.Transparent;
             this.btnSecondary.BorderHoverColor = System.Drawing.Color.Transparent;
             this.btnSecondary.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
-            this.btnSecondary.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSecondary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSecondary.ForeColor = System.Drawing.Color.White;
             this.btnSecondary.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
@@ -596,9 +596,9 @@ namespace EasyClip
             // 
             // btnLegacy
             // 
+            this.btnLegacy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLegacy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.btnLegacy.CornerRadius = 12;
-            this.btnLegacy.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnLegacy.FillColor = System.Drawing.Color.FromArgb(13, 110, 253);
             this.btnLegacy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLegacy.ForeColor = System.Drawing.Color.White;
@@ -614,12 +614,12 @@ namespace EasyClip
             // 
             // btnDisabled
             // 
+            this.btnDisabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDisabled.BackColor = System.Drawing.Color.Transparent;
             this.btnDisabled.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.btnDisabled.BorderColor = System.Drawing.Color.Transparent;
             this.btnDisabled.BorderHoverColor = System.Drawing.Color.Transparent;
             this.btnDisabled.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
-            this.btnDisabled.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDisabled.Enabled = false;
             this.btnDisabled.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDisabled.ForeColor = System.Drawing.Color.White;
