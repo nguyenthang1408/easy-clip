@@ -38,5 +38,18 @@ namespace LibCommon.Lib.Model.Package
             var timeSpan = ExpiryDate.Value.Date - DateTime.Now.Date;
             return timeSpan.Days;
         }
+
+        /// <summary>
+        /// Kiểm tra dữ liệu response có đầy đủ không
+        /// Trả về true nếu tất cả các trường bắt buộc đều có giá trị
+        /// </summary>
+        public bool IsDataValid()
+        {
+            return !string.IsNullOrEmpty(Version)
+                && !string.IsNullOrEmpty(Email)
+                && !string.IsNullOrEmpty(PackageId)
+                && !string.IsNullOrEmpty(PackageType)
+                && ExpiryDate.HasValue;
+        }
     }
 }

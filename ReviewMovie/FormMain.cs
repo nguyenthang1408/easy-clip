@@ -327,6 +327,18 @@ namespace ReviewMovie
 
                 if (_packageInfo != null && _packageInfo.IsSuccess)
                 {
+                    // Validate dữ liệu trả về có đầy đủ không
+                    if (!_packageInfo.IsDataValid())
+                    {
+                        MessageBox.Show(
+                            "Dữ liệu từ server không hợp lệ. Vui lòng liên hệ hỗ trợ.",
+                            "Lỗi dữ liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        this.Close();
+                        return;
+                    }
+
                     // Xác định package type
                     _currentPackageType = PackageTypeHelper.GetPackageType(_packageInfo.PackageId);
 
