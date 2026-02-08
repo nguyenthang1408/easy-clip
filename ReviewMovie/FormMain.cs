@@ -434,9 +434,11 @@ namespace ReviewMovie
         private void SetDefaultTrialAndUpdateTitle()
         {
             _currentPackageType = PackageType.Trial;
+            var existingVersion = _packageInfo?.Version;
             _packageInfo = new GetVersionResponse
             {
                 IsSuccess = true,
+                Version = existingVersion,
                 PackageId = PackageTypeHelper.PKG_TRIAL,
                 PackageType = "Trial"
             };
