@@ -335,19 +335,13 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    // Nếu failed, mặc định là Trial
-                    _currentPackageType = PackageType.Trial;
-                    _packageInfo = CreateDefaultTrialPackageInfo();
-                    UpdateAppTitle();
+                    SetDefaultTrialAndUpdateTitle();
                 }
             }
             catch (Exception ex)
             {
-                // Log error và fallback to Trial
                 Console.WriteLine($"Error loading package info: {ex.Message}");
-                _currentPackageType = PackageType.Trial;
-                _packageInfo = CreateDefaultTrialPackageInfo();
-                UpdateAppTitle();
+                SetDefaultTrialAndUpdateTitle();
             }
         }
 
@@ -434,16 +428,18 @@ namespace ReviewMovie
         }
 
         /// <summary>
-        /// Tạo default Trial package info cho fallback
+        /// Fallback: set default Trial và update title
         /// </summary>
-        private GetVersionResponse CreateDefaultTrialPackageInfo()
+        private void SetDefaultTrialAndUpdateTitle()
         {
-            return new GetVersionResponse
+            _currentPackageType = PackageType.Trial;
+            _packageInfo = new GetVersionResponse
             {
                 IsSuccess = true,
                 PackageId = PackageTypeHelper.PKG_TRIAL,
                 PackageType = "Trial"
             };
+            UpdateAppTitle();
         }
 
         /// <summary>
