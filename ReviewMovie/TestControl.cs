@@ -1,6 +1,7 @@
 using ReviewMovie.Base.Controls;
 using ReviewMovie.Base.Controls.Common;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,11 +9,26 @@ namespace EasyClip
 {
     public partial class TestControl : Form
     {
+        [Category("Behavior")]
+        [DefaultValue(false)]
+        public bool AutoApplyTheme { get; set; }
+
+        [Category("Behavior")]
+        [DefaultValue(true)]
+        public bool AutoFillSampleData { get; set; } = true;
+
         public TestControl()
         {
             InitializeComponent();
-            ApplyTheme();
-            BuildSampleData();
+            if (AutoApplyTheme)
+            {
+                ApplyTheme();
+            }
+
+            if (AutoFillSampleData)
+            {
+                BuildSampleData();
+            }
         }
 
         private void ApplyTheme()
