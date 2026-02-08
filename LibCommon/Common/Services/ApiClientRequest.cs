@@ -1,18 +1,19 @@
-﻿using System;
+﻿using Lib;
+using LibCommon.Lib.Model.Package;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Lib;
-using System.Net.Http;
-using Common.Model;
 
 namespace Common.Services
 {
-    public class ApiClientRequest
+    public partial class ApiClientRequest
     {
         private readonly string _baseUrl;
         private readonly string _apiKey;
@@ -28,23 +29,23 @@ namespace Common.Services
             };
         }
 
-        public async Task<VersionResponse> ReviewMovieVersionAsync(string appCode, string appName)
+        public async Task<GetVersionResponse> EasyClipVersionAsync(string appCode, string appSlugID)
         {
             string requestUrl = _baseUrl + "/api/v1/GetVersion/ReviewMovie";
             //string requestUrl = "http://localhost:3000/api/check";
-            var requestBody = new
+            var requestBody = new GetVersionRequest
             {
-                appCode = appCode,
-                appName = appName
+                AppCode = appCode,
+                ProductSlug = appSlugID
             };
-            var response = await SendPostRequestAsync<VersionResponse>(_apiKey, requestUrl, requestBody);
+            var response = await SendPostRequestAsync<GetVersionResponse>(_apiKey, requestUrl, requestBody);
             return response;
         }
 
-        public async Task<VersionResponse> CutVideoVersionAsync()
+        public async Task<GetVersionResponse> CutVideoVersionAsync()
         {
             string requestUrl = _baseUrl + "/api/v1/GetVersion/CutVideo";
-            var response = await SendPostRequestAsync<VersionResponse>(_apiKey, requestUrl, null);
+            var response = await SendPostRequestAsync<GetVersionResponse>(_apiKey, requestUrl, null);
             return response;
         }
 

@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace LibCommon.Lib.Model.Package
 {
     /// <summary>
@@ -5,6 +7,10 @@ namespace LibCommon.Lib.Model.Package
     /// </summary>
     public class GetVoiceSourceRequest
     {
-        // Empty request body theo spec
+        [JsonProperty("appCode")]
+        public string AppCode { get; set; }
+
+        [JsonProperty("productSlug")]
+        public string ProductSlug { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace ReviewMovie
 {
     public partial class LoginApiKey : Form
     {
-        private string AppVersion { get; } = "2.0.0"; // Định nghĩa phiên bản ứng dụng
+        private string AppVersion { get; } = "1.0.1"; // Định nghĩa phiên bản ứng dụng
         private readonly AppCodeService appCodeService;
         private readonly IConfigDataService _configService;
 
@@ -75,10 +75,10 @@ namespace ReviewMovie
             {
                 // Lấy appCode từ service
                 string appCode = appCodeService.GetAppCode();
-                string appName = "EasyClip";
+                string appSlugID = "easy-clip101"; // Mã SlugID của product - {101 là v1.0.1}, confirm admin nếu thấy thay đổi version
 
                 var request = new ApiClientRequest(LibConst.UrlServer, apiKey);
-                var response = await request.ReviewMovieVersionAsync(appCode, appName);
+                var response = await request.EasyClipVersionAsync(appCode, appSlugID);
                 if (response.IsSuccess)
                 {
                     string currentVersion = AppVersion;
@@ -106,7 +106,7 @@ namespace ReviewMovie
 
                     // Mở form chính và đóng form đăng nhập, truyền response để tránh gọi API lần 2
                     this.Hide();
-                    FormMain mainForm = new FormMain(txAppCodeShow.Text, txInsertApiKey.Text, response);
+                    FormMain mainForm = new FormMain(appCode, appSlugID, txInsertApiKey.Text, response);
 
                     mainForm.ShowDialog();
                     // Sau khi đóng form chính, thoát ứng dụng

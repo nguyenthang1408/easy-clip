@@ -1,6 +1,4 @@
 ﻿using Common.Constant;
-using Common.Model;
-using Common.Services;
 using EasyClip.Base;
 using EasyClip.Infrastructure.Config;
 using EasyClip.Infrastructure.Project;
@@ -14,8 +12,6 @@ using Lib.VoiceServices.ElevenLabs.V1.Services;
 using Lib.VoiceServices.GoogleTTS;
 using LibCommon.Common;
 using LibCommon.Lib.Model.Package;
-using LibCommon.Lib;
-using Newtonsoft.Json.Linq;
 using ReviewMovie.Base;
 using ReviewMovie.Infrastructure.Config;
 using ReviewMovie.Infrastructure.Project;
@@ -28,17 +24,12 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.IO.Pipes;
 using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using LibCommon.Lib.Services;
 
 namespace ReviewMovie
 {
@@ -62,6 +53,8 @@ namespace ReviewMovie
 
         private readonly IAudioRecordService _audioRecordService;
         private readonly IAudioDownloadService _audioDownloadService;
+
+        private Common.Services.ApiClientRequest _apiRequest;
 
         #region Const_Variable
 
@@ -146,13 +139,14 @@ namespace ReviewMovie
         private readonly VideoMergeService _videoMergeService;
 
         private string _appcode;
+        private string _appSlugID;
         private string _apikey;
 
         private string _videoMerge;
         private bool _sessionMerge;
 
         // Package and Voice Source Info
-        private PackageService _packageService;
+        //private PackageService _packageService;
         private GetVersionResponse _packageInfo;
         private GetVoiceSourceResponse _voiceSourceInfo;
         private PackageType _currentPackageType = PackageType.Trial;
@@ -160,7 +154,7 @@ namespace ReviewMovie
         #endregion
 
         #region Main_Init
-        public FormMain(string appcode, string apikey, VersionResponse loginResponse = null)
+        public FormMain(string appcode, string appSlugID, string apikey, GetVersionResponse loginResponse = null)
         {
             InitializeComponent();
             this.toolTipPL = new ToolTip();
@@ -168,27 +162,15 @@ namespace ReviewMovie
 
             _appcode = appcode;
             _apikey = apikey;
+            _appSlugID = appSlugID;
+            _packageInfo = loginResponse;
 
-            // Nếu có loginResponse từ đăng nhập, convert thành GetVersionResponse và lưu lại
-            if (loginResponse != null && loginResponse.IsSuccess)
-            {
-                _packageInfo = new GetVersionResponse
-                {
-                    IsSuccess = loginResponse.IsSuccess,
-                    Email = loginResponse.Email,
-                    PackageId = loginResponse.PackageId,
-                    PackageType = loginResponse.PackageType,
-                    ExpiryDate = loginResponse.ExpiryDate
-                };
-            }
+            _apiRequest = new Common.Services.ApiClientRequest(LibConst.UrlServer, _apikey);
 
             // Initialize video services
             _videoValidationService = new VideoValidationService(VideoMergeConfig.MAX_PARALLEL_VALIDATION_THREADS);
             _videoMergeService = new VideoMergeService();
             _gpuDetectionService = new GpuDetectionService();
-
-            // Initialize package service
-            _packageService = new PackageService(_apikey);
 
             // Fix cứng màn hình
             this.MaximizeBox = false;
@@ -340,7 +322,7 @@ namespace ReviewMovie
                 // Nếu chưa có _packageInfo (không truyền từ login), gọi API
                 if (_packageInfo == null)
                 {
-                    _packageInfo = await _packageService.GetVersionAsync(_appcode, "EasyClip");
+                    _packageInfo = await _apiRequest.EasyClipVersionAsync(_appcode, _appSlugID);
                 }
 
                 if (_packageInfo != null && _packageInfo.IsSuccess)
@@ -374,7 +356,7 @@ namespace ReviewMovie
         {
             try
             {
-                _voiceSourceInfo = await _packageService.GetVoiceSourceEnumAsync();
+                _voiceSourceInfo = await _apiRequest.GetVoiceSourceEnumAsync(_appcode, _appSlugID);
 
                 if (_voiceSourceInfo == null || !_voiceSourceInfo.IsSuccess)
                 {

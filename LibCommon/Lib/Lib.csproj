@@ -137,11 +137,6 @@
     <Compile Include="Constant\SizeVideo.cs" />
     <Compile Include="Enum\EffectEnum.cs" />
     <Compile Include="Funcion\Excute.cs" />
-    <Compile Include="Model\Package\GetVersionRequest.cs" />
-    <Compile Include="Model\Package\GetVersionResponse.cs" />
-    <Compile Include="Model\Package\GetVoiceSourceRequest.cs" />
-    <Compile Include="Model\Package\GetVoiceSourceResponse.cs" />
-    <Compile Include="Model\Package\PackageType.cs" />
     <Compile Include="VoiceServices\ElevenLabs\Common\ApiClientRequest.cs" />
     <Compile Include="VoiceServices\ElevenLabs\Common\OutputFormat.cs" />
     <Compile Include="VoiceServices\ElevenLabs\Common\URLInfoConst.cs" />
@@ -164,7 +159,6 @@
     <Compile Include="Model\Package\GetVersionResponse.cs" />
     <Compile Include="Model\Package\GetVoiceSourceRequest.cs" />
     <Compile Include="Model\Package\GetVoiceSourceResponse.cs" />
-    <Compile Include="Services\PackageService.cs" />
     <Compile Include="Constant\Enum.cs" />
     <Compile Include="Extension\ImageExtensions.cs" />
     <Compile Include="Extension\WebPWrapper.cs" />

@@ -4,8 +4,8 @@ namespace Common.Constant
     public class LibConst
     {
 #if DEBUG
-        //public const string UrlServer = "http://localhost:61364"; // URL dành cho debug
-        public const string UrlServer = "https://t2psoft.com"; // URL dành cho môi trường release
+        public const string UrlServer = "http://localhost:5000"; // URL dành cho debug
+        //public const string UrlServer = "https://t2psoft.com"; // URL dành cho môi trường release
 #else
                 public const string UrlServer = "https://t2psoft.com"; // URL dành cho môi trường release
 #endif

@@ -10,7 +10,7 @@ namespace LibCommon.Lib.Model.Package
         [JsonProperty("appCode")]
         public string AppCode { get; set; }
 
-        [JsonProperty("appName")]
-        public string AppName { get; set; }
+        [JsonProperty("productSlug")]
+        public string ProductSlug { get; set; }
     }
 }
