@@ -341,7 +341,13 @@ namespace ReviewMovie
             catch (Exception ex)
             {
                 Console.WriteLine($"Error loading package info: {ex.Message}");
-                SetDefaultTrialAndUpdateTitle();
+                MessageBox.Show(
+                    "Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng và thử lại.",
+                    "Lỗi kết nối",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                this.Close();
+                return;
             }
         }
 
