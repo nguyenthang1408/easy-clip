@@ -384,6 +384,7 @@ namespace ReviewMovie.Base.Controls
             if (e == null) return;
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            UiHelpers.ClearBackground(e.Graphics, this);
 
             var rect = GetBorderRect();
             using (var path = UiHelpers.CreateRoundedRectPath(rect, _borderRadius))

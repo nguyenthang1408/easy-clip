@@ -29,7 +29,8 @@ namespace ReviewMovie.Base.Controls
                 ControlStyles.UserPaint |
                 ControlStyles.AllPaintingInWmPaint |
                 ControlStyles.OptimizedDoubleBuffer |
-                ControlStyles.ResizeRedraw,
+                ControlStyles.ResizeRedraw |
+                ControlStyles.SupportsTransparentBackColor,
                 true);
 
             AutoSize = true;
@@ -84,7 +85,7 @@ namespace ReviewMovie.Base.Controls
         {
             if (e == null) return;
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.Clear(BackColor);
+            UiHelpers.ClearBackground(e.Graphics, this);
 
             var rect = ClientRectangle;
             int box = _boxSize;

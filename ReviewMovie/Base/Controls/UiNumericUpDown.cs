@@ -185,6 +185,7 @@ namespace ReviewMovie.Base.Controls
             base.OnPaint(e);
             if (e == null) return;
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            UiHelpers.ClearBackground(e.Graphics, this);
 
             var rect = new Rectangle(0, 0, Width - 1, Height - 1);
             using (var path = UiHelpers.CreateRoundedRectPath(rect, _borderRadius))

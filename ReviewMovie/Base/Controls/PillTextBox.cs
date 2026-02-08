@@ -170,6 +170,7 @@ namespace ReviewMovie.Base.Controls
         protected override void OnPaintBackground(PaintEventArgs e)
         {
             if (e == null) return;
+            UiHelpers.ClearBackground(e.Graphics, this);
             using (var brush = new SolidBrush(_fillColor))
             {
                 e.Graphics.FillRectangle(brush, ClientRectangle);

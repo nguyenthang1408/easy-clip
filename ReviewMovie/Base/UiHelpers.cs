@@ -32,7 +32,8 @@ namespace ReviewMovie.Base
                         ControlStyles.AllPaintingInWmPaint |
                         ControlStyles.OptimizedDoubleBuffer |
                         ControlStyles.ResizeRedraw |
-                        ControlStyles.UserPaint,
+                        ControlStyles.UserPaint |
+                        ControlStyles.SupportsTransparentBackColor,
                         true
                     });
             }
@@ -40,6 +41,22 @@ namespace ReviewMovie.Base
             // Apply immediately
             var updateStyles = typeof(Control).GetMethod("UpdateStyles", BindingFlags.Instance | BindingFlags.NonPublic);
             updateStyles?.Invoke(control, null);
+        }
+
+        internal static void ClearBackground(Graphics g, Control control)
+        {
+            if (g == null || control == null) return;
+
+            var back = control.BackColor;
+            if (back.A == 0 && control.Parent != null)
+            {
+                back = control.Parent.BackColor;
+            }
+
+            using (var brush = new SolidBrush(back))
+            {
+                g.FillRectangle(brush, control.ClientRectangle);
+            }
         }
 
         internal static GraphicsPath CreateRoundedRectPath(Rectangle rect, int radius)

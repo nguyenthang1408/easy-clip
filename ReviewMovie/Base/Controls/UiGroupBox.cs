@@ -25,7 +25,8 @@ namespace ReviewMovie.Base.Controls
                 ControlStyles.UserPaint |
                 ControlStyles.AllPaintingInWmPaint |
                 ControlStyles.OptimizedDoubleBuffer |
-                ControlStyles.ResizeRedraw,
+                ControlStyles.ResizeRedraw |
+                ControlStyles.SupportsTransparentBackColor,
                 true);
             _titleFont = new Font(Font, FontStyle.Bold);
         }
@@ -64,6 +65,7 @@ namespace ReviewMovie.Base.Controls
         {
             if (e == null) return;
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            UiHelpers.ClearBackground(e.Graphics, this);
 
             var rect = new Rectangle(0, 0, Width - 1, Height - 1);
             int textHeight = TextRenderer.MeasureText(Text ?? string.Empty, _titleFont).Height;

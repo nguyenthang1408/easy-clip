@@ -36,7 +36,8 @@ namespace ReviewMovie.Base.Controls
                 ControlStyles.UserPaint |
                 ControlStyles.AllPaintingInWmPaint |
                 ControlStyles.OptimizedDoubleBuffer |
-                ControlStyles.ResizeRedraw,
+                ControlStyles.ResizeRedraw |
+                ControlStyles.SupportsTransparentBackColor,
                 true);
 
             FlatStyle = FlatStyle.Flat;
@@ -210,6 +211,7 @@ namespace ReviewMovie.Base.Controls
             if (e == null) return;
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            UiHelpers.ClearBackground(e.Graphics, this);
 
             var rect = new Rectangle(0, 0, Width - 1, Height - 1);
 
