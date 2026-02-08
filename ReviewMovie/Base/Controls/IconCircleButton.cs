@@ -16,7 +16,6 @@ namespace ReviewMovie.Base.Controls
         {
             FlatStyle = FlatStyle.Flat;
             FlatAppearance.BorderSize = 0;
-            FlatAppearance.BorderColor = Color.Transparent;
             UseVisualStyleBackColor = false;
             BackColor = _normalBackColor;
         }
