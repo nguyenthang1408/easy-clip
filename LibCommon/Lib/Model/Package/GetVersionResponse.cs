@@ -4,7 +4,7 @@ using System;
 namespace LibCommon.Lib.Model.Package
 {
     /// <summary>
-    /// Response model cho API GetVersion/ReviewMovie
+    /// Response model cho API GetVersion/EasyClip
     /// </summary>
     public class GetVersionResponse
     {

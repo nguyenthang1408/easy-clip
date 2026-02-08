@@ -31,7 +31,7 @@ namespace Common.Services
 
         public async Task<GetVersionResponse> EasyClipVersionAsync(string appCode, string appSlugID)
         {
-            string requestUrl = _baseUrl + "/api/v1/GetVersion/ReviewMovie";
+            string requestUrl = _baseUrl + "/api/v1/GetVersion/EasyClip";
             //string requestUrl = "http://localhost:3000/api/check";
             var requestBody = new GetVersionRequest
             {

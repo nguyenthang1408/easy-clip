@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 namespace LibCommon.Lib.Model.Package
 {
     /// <summary>
-    /// Request model cho API GetVersion/ReviewMovie
+    /// Request model cho API GetVersion/EasyClip
     /// </summary>
     public class GetVersionRequest
     {
