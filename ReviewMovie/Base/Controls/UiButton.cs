@@ -118,7 +118,6 @@ namespace ReviewMovie.Base.Controls
             set
             {
                 _borderRadius = Math.Max(0, value);
-                UiHelpers.ApplyRoundRegion(this, _borderRadius);
                 Invalidate();
             }
         }
@@ -171,7 +170,6 @@ namespace ReviewMovie.Base.Controls
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            UiHelpers.ApplyRoundRegion(this, _borderRadius);
         }
 
         protected override void OnMouseEnter(EventArgs e)
@@ -214,13 +212,14 @@ namespace ReviewMovie.Base.Controls
             e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             UiHelpers.ClearBackground(e.Graphics, this);
 
-            var rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            var fillRect = new Rectangle(0, 0, Width, Height);
+            var borderRect = new Rectangle(0, 0, Width - 1, Height - 1);
 
             var back = Enabled
                 ? (_pressed ? _pressedColor : (_hovered ? _hoverColor : _backgroundColor))
                 : _disabledColor;
 
-            using (var path = UiHelpers.CreateRoundedRectPath(rect, _borderRadius))
+            using (var path = UiHelpers.CreateRoundedRectPath(fillRect, _borderRadius))
             using (var brush = new SolidBrush(back))
             {
                 e.Graphics.FillPath(brush, path);
@@ -234,7 +233,7 @@ namespace ReviewMovie.Base.Controls
                     pen.Alignment = PenAlignment.Inset;
                     if (_borderStyle == UiBorderStyle.Dashed) pen.DashStyle = DashStyle.Dash;
                     else if (_borderStyle == UiBorderStyle.Dotted) pen.DashStyle = DashStyle.Dot;
-                    using (var path = UiHelpers.CreateRoundedRectPath(rect, _borderRadius))
+                    using (var path = UiHelpers.CreateRoundedRectPath(borderRect, _borderRadius))
                     {
                         e.Graphics.DrawPath(pen, path);
                     }
@@ -246,8 +245,8 @@ namespace ReviewMovie.Base.Controls
                 : ThemeManager.Current.TextDisabled;
 
             // Content layout: icon + text centered as a group.
-            var contentRect = Rectangle.Inflate(rect, -Padding.Horizontal / 2 - 8, -Padding.Vertical / 2 - 4);
-            if (contentRect.Width <= 0 || contentRect.Height <= 0) contentRect = rect;
+            var contentRect = Rectangle.Inflate(borderRect, -Padding.Horizontal / 2 - 8, -Padding.Vertical / 2 - 4);
+            if (contentRect.Width <= 0 || contentRect.Height <= 0) contentRect = borderRect;
 
             Size iconDrawSize = _iconImage == null ? Size.Empty : _iconSize;
             Size textSize = TextRenderer.MeasureText(e.Graphics, Text ?? string.Empty, Font);

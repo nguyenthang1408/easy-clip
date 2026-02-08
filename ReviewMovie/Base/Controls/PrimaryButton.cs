@@ -63,7 +63,6 @@ namespace ReviewMovie.Base.Controls
             set
             {
                 _cornerRadius = Math.Max(0, value);
-                UiHelpers.ApplyRoundRegion(this, _cornerRadius);
                 Invalidate();
             }
         }
@@ -71,7 +70,6 @@ namespace ReviewMovie.Base.Controls
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            UiHelpers.ApplyRoundRegion(this, _cornerRadius);
         }
 
         protected override void OnMouseEnter(EventArgs e)
@@ -112,8 +110,8 @@ namespace ReviewMovie.Base.Controls
             e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             UiHelpers.ClearBackground(e.Graphics, this);
 
-            var rect = new Rectangle(0, 0, Width - 1, Height - 1);
-            using (var path = UiHelpers.CreateRoundedRectPath(rect, _cornerRadius))
+            var fillRect = new Rectangle(0, 0, Width, Height);
+            using (var path = UiHelpers.CreateRoundedRectPath(fillRect, _cornerRadius))
             using (var brush = new SolidBrush(BackColor))
             {
                 e.Graphics.FillPath(brush, path);
@@ -123,7 +121,7 @@ namespace ReviewMovie.Base.Controls
                 e.Graphics,
                 Text ?? string.Empty,
                 Font,
-                rect,
+                fillRect,
                 ForeColor,
                 TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
         }
