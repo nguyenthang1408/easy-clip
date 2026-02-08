@@ -48,9 +48,16 @@ namespace ReviewMovie.Base
             if (g == null || control == null) return;
 
             var back = control.BackColor;
-            if (back.A == 0 && control.Parent != null)
+            var current = control;
+            while (back.A == 0 && current.Parent != null)
             {
-                back = control.Parent.BackColor;
+                current = current.Parent;
+                back = current.BackColor;
+            }
+
+            if (back.A == 0)
+            {
+                back = SystemColors.Control;
             }
 
             using (var brush = new SolidBrush(back))
