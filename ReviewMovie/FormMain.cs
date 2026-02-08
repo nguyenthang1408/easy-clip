@@ -337,7 +337,8 @@ namespace ReviewMovie
                 {
                     // Nếu failed, mặc định là Trial
                     _currentPackageType = PackageType.Trial;
-                    this.Text = "EasyClip || TPMEDIA (Trial)";
+                    _packageInfo = CreateDefaultTrialPackageInfo();
+                    UpdateAppTitle();
                 }
             }
             catch (Exception ex)
@@ -345,7 +346,8 @@ namespace ReviewMovie
                 // Log error và fallback to Trial
                 Console.WriteLine($"Error loading package info: {ex.Message}");
                 _currentPackageType = PackageType.Trial;
-                this.Text = "EasyClip || TPMEDIA (Trial)";
+                _packageInfo = CreateDefaultTrialPackageInfo();
+                UpdateAppTitle();
             }
         }
 
@@ -429,6 +431,19 @@ namespace ReviewMovie
 
                 this.Text = title;
             }
+        }
+
+        /// <summary>
+        /// Tạo default Trial package info cho fallback
+        /// </summary>
+        private GetVersionResponse CreateDefaultTrialPackageInfo()
+        {
+            return new GetVersionResponse
+            {
+                IsSuccess = true,
+                PackageId = PackageTypeHelper.PKG_TRIAL,
+                PackageType = "Trial"
+            };
         }
 
         /// <summary>
