@@ -335,7 +335,7 @@ namespace ReviewMovie
                             "Lỗi dữ liệu",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
-                        Application.Exit();
+                        Environment.Exit(0);
                         return;
                     }
 
@@ -352,7 +352,7 @@ namespace ReviewMovie
                         "Lỗi xác thực",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-                    Application.Exit();
+                    Environment.Exit(0);
                     return;
                 }
             }
