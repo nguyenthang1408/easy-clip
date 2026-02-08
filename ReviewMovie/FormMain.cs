@@ -347,7 +347,13 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    SetDefaultTrialAndUpdateTitle();
+                    MessageBox.Show(
+                        "Xác thực tài khoản thất bại. Vui lòng đăng nhập lại.",
+                        "Lỗi xác thực",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    Application.Exit();
+                    return;
                 }
             }
             catch (Exception ex)
@@ -446,24 +452,6 @@ namespace ReviewMovie
             }
         }
 
-        /// <summary>
-        /// Fallback: set default Trial và update title
-        /// </summary>
-        private void SetDefaultTrialAndUpdateTitle()
-        {
-            _currentPackageType = PackageType.Trial;
-            var existing = _packageInfo;
-            _packageInfo = new GetVersionResponse
-            {
-                IsSuccess = true,
-                Version = existing?.Version,
-                Email = existing?.Email,
-                ExpiryDate = existing?.ExpiryDate,
-                PackageId = PackageTypeHelper.PKG_TRIAL,
-                PackageType = "Trial"
-            };
-            UpdateAppTitle();
-        }
 
         /// <summary>
         /// Lấy danh sách voice sources theo package type
