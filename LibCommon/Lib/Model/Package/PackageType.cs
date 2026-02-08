@@ -27,9 +27,12 @@ namespace LibCommon.Lib.Model.Package
     public static class PackageTypeHelper
     {
         // Package ID constants
-        public const string PKG_TRIAL = "PKG_TRIAL_001";
-        public const string PKG_BASIC = "PKG_BASIC_001";
-        public const string PKG_PREMIUM = "PKG_PREMIUM_001";
+        /// PKG_TRIAL_000
+        /// PKG_BASIC_001/003/006/012
+        /// PKG_PREMIUM_001/003/006/012
+        public const string PKG_TRIAL = "PKG_TRIAL_000";
+        public const string PKG_BASIC_PREFIX = "PKG_BASIC_";
+        public const string PKG_PREMIUM_PREFIX = "PKG_PREMIUM_";
 
         /// <summary>
         /// Chuyển đổi packageId từ server thành PackageType enum
@@ -46,6 +49,35 @@ namespace LibCommon.Lib.Model.Package
                 return PackageType.Basic;
 
             return PackageType.Trial;
+        }
+
+        /// <summary>
+        /// Parse số tháng từ packageId (3 ký tự cuối)
+        /// VD: PKG_BASIC_003 -> 3, PKG_PREMIUM_012 -> 12, PKG_TRIAL_000 -> 0
+        /// </summary>
+        public static int GetMonthsFromPackageId(string packageId)
+        {
+            if (string.IsNullOrEmpty(packageId) || packageId.Length < 3)
+                return 0;
+
+            string suffix = packageId.Substring(packageId.Length - 3);
+            if (int.TryParse(suffix, out int months))
+                return months;
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Lấy tên hiển thị gói kèm số tháng
+        /// VD: "Basic - 3 tháng", "Premium - 12 tháng", "Trial"
+        /// </summary>
+        public static string GetPackageDisplayName(string packageType, string packageId)
+        {
+            int months = GetMonthsFromPackageId(packageId);
+            if (months > 0)
+                return $"{packageType} - {months} tháng";
+
+            return packageType ?? "Trial";
         }
 
         /// <summary>

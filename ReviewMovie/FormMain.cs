@@ -401,10 +401,12 @@ namespace ReviewMovie
                     title += $" - {_packageInfo.Email}";
                 }
 
-                // Thêm package type (gói đang sử dụng)
+                // Thêm package type kèm số tháng (VD: "Basic - 3 tháng", "Trial")
                 if (!string.IsNullOrEmpty(_packageInfo.PackageType))
                 {
-                    title += $" ({_packageInfo.PackageType})";
+                    string packageDisplay = PackageTypeHelper.GetPackageDisplayName(
+                        _packageInfo.PackageType, _packageInfo.PackageId);
+                    title += $" ({packageDisplay})";
                 }
 
                 // Thêm số ngày còn lại (tính từ expiryDate - ngày hiện tại)
