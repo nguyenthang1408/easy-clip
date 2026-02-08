@@ -52,20 +52,12 @@ namespace EasyClip
         {
             txtStandard.Text = "Sample text";
             txtMultiline.Text = "Line 1" + Environment.NewLine + "Line 2" + Environment.NewLine + "Line 3";
-            pillText.Text = "Pill input";
 
             cmbStandard.Items.Clear();
             cmbStandard.Items.AddRange(new object[] { "Option A", "Option B", "Option C" });
             if (cmbStandard.Items.Count > 0)
             {
                 cmbStandard.SelectedIndex = 0;
-            }
-
-            pillCombo.Items.Clear();
-            pillCombo.Items.AddRange(new object[] { "Small", "Medium", "Large" });
-            if (pillCombo.Items.Count > 0)
-            {
-                pillCombo.SelectedIndex = 0;
             }
 
             numStandard.Minimum = 0;

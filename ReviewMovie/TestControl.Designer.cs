@@ -42,12 +42,8 @@ namespace EasyClip
             this.txtStandard = new ReviewMovie.Base.Controls.UiTextBox();
             this.lblMultiline = new ReviewMovie.Base.Controls.UiLabel();
             this.txtMultiline = new ReviewMovie.Base.Controls.UiTextBox();
-            this.lblPillText = new ReviewMovie.Base.Controls.UiLabel();
-            this.pillText = new ReviewMovie.Base.Controls.PillTextBox();
             this.lblCombo = new ReviewMovie.Base.Controls.UiLabel();
             this.cmbStandard = new ReviewMovie.Base.Controls.UiComboBox();
-            this.lblPillCombo = new ReviewMovie.Base.Controls.UiLabel();
-            this.pillCombo = new ReviewMovie.Base.Controls.PillComboBox();
             this.lblNumeric = new ReviewMovie.Base.Controls.UiLabel();
             this.numStandard = new ReviewMovie.Base.Controls.UiNumericUpDown();
             this.lblOptions = new ReviewMovie.Base.Controls.UiLabel();
@@ -199,26 +195,20 @@ namespace EasyClip
             this.tlpInputs.Controls.Add(this.txtStandard, 1, 0);
             this.tlpInputs.Controls.Add(this.lblMultiline, 0, 1);
             this.tlpInputs.Controls.Add(this.txtMultiline, 1, 1);
-            this.tlpInputs.Controls.Add(this.lblPillText, 0, 2);
-            this.tlpInputs.Controls.Add(this.pillText, 1, 2);
-            this.tlpInputs.Controls.Add(this.lblCombo, 0, 3);
-            this.tlpInputs.Controls.Add(this.cmbStandard, 1, 3);
-            this.tlpInputs.Controls.Add(this.lblPillCombo, 0, 4);
-            this.tlpInputs.Controls.Add(this.pillCombo, 1, 4);
-            this.tlpInputs.Controls.Add(this.lblNumeric, 0, 5);
-            this.tlpInputs.Controls.Add(this.numStandard, 1, 5);
-            this.tlpInputs.Controls.Add(this.lblOptions, 0, 6);
-            this.tlpInputs.Controls.Add(this.pnlOptions, 1, 6);
+            this.tlpInputs.Controls.Add(this.lblCombo, 0, 2);
+            this.tlpInputs.Controls.Add(this.cmbStandard, 1, 2);
+            this.tlpInputs.Controls.Add(this.lblNumeric, 0, 3);
+            this.tlpInputs.Controls.Add(this.numStandard, 1, 3);
+            this.tlpInputs.Controls.Add(this.lblOptions, 0, 4);
+            this.tlpInputs.Controls.Add(this.pnlOptions, 1, 4);
             this.tlpInputs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpInputs.Location = new System.Drawing.Point(12, 48);
             this.tlpInputs.Margin = new System.Windows.Forms.Padding(0);
             this.tlpInputs.Name = "tlpInputs";
-            this.tlpInputs.RowCount = 7;
+            this.tlpInputs.RowCount = 5;
             this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 56F));
             this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 56F));
             this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tlpInputs.Size = new System.Drawing.Size(716, 370);
@@ -317,42 +307,6 @@ namespace EasyClip
             this.txtMultiline.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtMultiline.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.txtMultiline.UseSystemPasswordChar = false;
-            // 
-            // lblPillText
-            // 
-            this.lblPillText.BackColor = System.Drawing.Color.Transparent;
-            this.lblPillText.BackgroundColor = System.Drawing.Color.Transparent;
-            this.lblPillText.BorderColor = System.Drawing.Color.Transparent;
-            this.lblPillText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblPillText.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblPillText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.lblPillText.Location = new System.Drawing.Point(0, 116);
-            this.lblPillText.Margin = new System.Windows.Forms.Padding(0);
-            this.lblPillText.Name = "lblPillText";
-            this.lblPillText.Size = new System.Drawing.Size(130, 56);
-            this.lblPillText.TabIndex = 4;
-            this.lblPillText.Text = "Pill Text";
-            this.lblPillText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblPillText.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            // 
-            // pillText
-            // 
-            this.pillText.BackColor = System.Drawing.Color.Transparent;
-            this.pillText.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.pillText.CornerRadius = 12;
-            this.pillText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pillText.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
-            this.pillText.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
-            this.pillText.IconGlyph = "";
-            this.pillText.Location = new System.Drawing.Point(130, 120);
-            this.pillText.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.pillText.MaxLength = 32767;
-            this.pillText.Name = "pillText";
-            this.pillText.ReadOnly = false;
-            this.pillText.Size = new System.Drawing.Size(586, 48);
-            this.pillText.TabIndex = 5;
-            this.pillText.UseSystemPasswordChar = false;
-            // 
             // lblCombo
             // 
             this.lblCombo.BackColor = System.Drawing.Color.Transparent;
@@ -385,45 +339,6 @@ namespace EasyClip
             this.cmbStandard.Name = "cmbStandard";
             this.cmbStandard.Size = new System.Drawing.Size(586, 23);
             this.cmbStandard.TabIndex = 7;
-            // 
-            // lblPillCombo
-            // 
-            this.lblPillCombo.BackColor = System.Drawing.Color.Transparent;
-            this.lblPillCombo.BackgroundColor = System.Drawing.Color.Transparent;
-            this.lblPillCombo.BorderColor = System.Drawing.Color.Transparent;
-            this.lblPillCombo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblPillCombo.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblPillCombo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.lblPillCombo.Location = new System.Drawing.Point(0, 208);
-            this.lblPillCombo.Margin = new System.Windows.Forms.Padding(0);
-            this.lblPillCombo.Name = "lblPillCombo";
-            this.lblPillCombo.Size = new System.Drawing.Size(130, 56);
-            this.lblPillCombo.TabIndex = 8;
-            this.lblPillCombo.Text = "Pill Combo";
-            this.lblPillCombo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblPillCombo.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            // 
-            // pillCombo
-            // 
-            this.pillCombo.BackColor = System.Drawing.Color.Transparent;
-            this.pillCombo.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.pillCombo.CornerRadius = 12;
-            this.pillCombo.DataSource = null;
-            this.pillCombo.DisplayMember = "";
-            this.pillCombo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pillCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.pillCombo.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
-            this.pillCombo.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(155)))), ((int)(((byte)(175)))));
-            this.pillCombo.IconGlyph = "";
-            this.pillCombo.Location = new System.Drawing.Point(130, 212);
-            this.pillCombo.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.pillCombo.Name = "pillCombo";
-            this.pillCombo.SelectedIndex = -1;
-            this.pillCombo.SelectedItem = null;
-            this.pillCombo.SelectedValue = null;
-            this.pillCombo.Size = new System.Drawing.Size(586, 48);
-            this.pillCombo.TabIndex = 9;
-            this.pillCombo.ValueMember = "";
             // 
             // lblNumeric
             // 
@@ -856,12 +771,8 @@ namespace EasyClip
         private ReviewMovie.Base.Controls.UiTextBox txtStandard;
         private ReviewMovie.Base.Controls.UiLabel lblMultiline;
         private ReviewMovie.Base.Controls.UiTextBox txtMultiline;
-        private ReviewMovie.Base.Controls.UiLabel lblPillText;
-        private ReviewMovie.Base.Controls.PillTextBox pillText;
         private ReviewMovie.Base.Controls.UiLabel lblCombo;
         private ReviewMovie.Base.Controls.UiComboBox cmbStandard;
-        private ReviewMovie.Base.Controls.UiLabel lblPillCombo;
-        private ReviewMovie.Base.Controls.PillComboBox pillCombo;
         private ReviewMovie.Base.Controls.UiLabel lblNumeric;
         private ReviewMovie.Base.Controls.UiNumericUpDown numStandard;
         private ReviewMovie.Base.Controls.UiLabel lblOptions;
