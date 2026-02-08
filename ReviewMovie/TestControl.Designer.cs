@@ -30,8 +30,8 @@ namespace EasyClip
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tlpRoot = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
             this.lblTitle = new ReviewMovie.Base.Controls.UiLabel();
             this.tlpBody = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
@@ -233,7 +233,7 @@ namespace EasyClip
             // 
             // txtStandard
             // 
-            this.txtStandard.BackColor = System.Drawing.Color.Transparent;
+            this.txtStandard.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtStandard.BackgroundColor = System.Drawing.Color.White;
             this.txtStandard.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.txtStandard.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
@@ -307,6 +307,7 @@ namespace EasyClip
             this.txtMultiline.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtMultiline.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.txtMultiline.UseSystemPasswordChar = false;
+            // 
             // lblCombo
             // 
             this.lblCombo.BackColor = System.Drawing.Color.Transparent;
@@ -315,7 +316,7 @@ namespace EasyClip
             this.lblCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblCombo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblCombo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.lblCombo.Location = new System.Drawing.Point(0, 172);
+            this.lblCombo.Location = new System.Drawing.Point(0, 116);
             this.lblCombo.Margin = new System.Windows.Forms.Padding(0);
             this.lblCombo.Name = "lblCombo";
             this.lblCombo.Size = new System.Drawing.Size(130, 36);
@@ -334,7 +335,7 @@ namespace EasyClip
             this.cmbStandard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cmbStandard.FormattingEnabled = true;
             this.cmbStandard.IntegralHeight = false;
-            this.cmbStandard.Location = new System.Drawing.Point(130, 176);
+            this.cmbStandard.Location = new System.Drawing.Point(130, 120);
             this.cmbStandard.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.cmbStandard.Name = "cmbStandard";
             this.cmbStandard.Size = new System.Drawing.Size(586, 23);
@@ -348,7 +349,7 @@ namespace EasyClip
             this.lblNumeric.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblNumeric.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblNumeric.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.lblNumeric.Location = new System.Drawing.Point(0, 264);
+            this.lblNumeric.Location = new System.Drawing.Point(0, 152);
             this.lblNumeric.Margin = new System.Windows.Forms.Padding(0);
             this.lblNumeric.Name = "lblNumeric";
             this.lblNumeric.Size = new System.Drawing.Size(130, 36);
@@ -374,7 +375,7 @@ namespace EasyClip
             0,
             0,
             0});
-            this.numStandard.Location = new System.Drawing.Point(130, 268);
+            this.numStandard.Location = new System.Drawing.Point(130, 156);
             this.numStandard.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.numStandard.Maximum = new decimal(new int[] {
             100,
@@ -406,10 +407,10 @@ namespace EasyClip
             this.lblOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblOptions.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblOptions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.lblOptions.Location = new System.Drawing.Point(0, 300);
+            this.lblOptions.Location = new System.Drawing.Point(0, 188);
             this.lblOptions.Margin = new System.Windows.Forms.Padding(0);
             this.lblOptions.Name = "lblOptions";
-            this.lblOptions.Size = new System.Drawing.Size(130, 70);
+            this.lblOptions.Size = new System.Drawing.Size(130, 182);
             this.lblOptions.TabIndex = 12;
             this.lblOptions.Text = "Options";
             this.lblOptions.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -421,10 +422,10 @@ namespace EasyClip
             this.pnlOptions.Controls.Add(this.rdoOptionA);
             this.pnlOptions.Controls.Add(this.rdoOptionB);
             this.pnlOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlOptions.Location = new System.Drawing.Point(130, 304);
+            this.pnlOptions.Location = new System.Drawing.Point(130, 192);
             this.pnlOptions.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.pnlOptions.Name = "pnlOptions";
-            this.pnlOptions.Size = new System.Drawing.Size(586, 62);
+            this.pnlOptions.Size = new System.Drawing.Size(586, 174);
             this.pnlOptions.TabIndex = 13;
             this.pnlOptions.WrapContents = false;
             // 
@@ -539,12 +540,12 @@ namespace EasyClip
             this.tlpButtons.Margin = new System.Windows.Forms.Padding(0);
             this.tlpButtons.Name = "tlpButtons";
             this.tlpButtons.RowCount = 5;
-            this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
-            this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
-            this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
-            this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
-            this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
-            this.tlpButtons.Size = new System.Drawing.Size(398, 370);
+            this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpButtons.Size = new System.Drawing.Size(398, 220);
             this.tlpButtons.TabIndex = 0;
             // 
             // btnPrimary
@@ -600,16 +601,16 @@ namespace EasyClip
             // btnLegacy
             // 
             this.btnLegacy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLegacy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnLegacy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
             this.btnLegacy.CornerRadius = 12;
-            this.btnLegacy.FillColor = System.Drawing.Color.FromArgb(13, 110, 253);
+            this.btnLegacy.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
             this.btnLegacy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLegacy.ForeColor = System.Drawing.Color.White;
-            this.btnLegacy.HoverFillColor = System.Drawing.Color.FromArgb(11, 94, 215);
+            this.btnLegacy.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(94)))), ((int)(((byte)(215)))));
             this.btnLegacy.Location = new System.Drawing.Point(0, 92);
             this.btnLegacy.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.btnLegacy.Name = "btnLegacy";
-            this.btnLegacy.PressedFillColor = System.Drawing.Color.FromArgb(10, 88, 202);
+            this.btnLegacy.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(88)))), ((int)(((byte)(202)))));
             this.btnLegacy.Size = new System.Drawing.Size(398, 36);
             this.btnLegacy.TabIndex = 2;
             this.btnLegacy.Text = "PrimaryButton";
@@ -648,7 +649,7 @@ namespace EasyClip
             this.btnIcon.CornerRadius = 15;
             this.btnIcon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnIcon.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
-            this.btnIcon.Location = new System.Drawing.Point(0, 255);
+            this.btnIcon.Location = new System.Drawing.Point(0, 180);
             this.btnIcon.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.btnIcon.Name = "btnIcon";
             this.btnIcon.NormalBackColor = System.Drawing.Color.White;
@@ -692,24 +693,24 @@ namespace EasyClip
             this.gridSample.CellBackColor = System.Drawing.Color.White;
             this.gridSample.CellFont = new System.Drawing.Font("Segoe UI", 9F);
             this.gridSample.CellForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridSample.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridSample.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.gridSample.ColumnHeadersHeight = 28;
             this.gridSample.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridSample.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridSample.DefaultCellStyle = dataGridViewCellStyle4;
             this.gridSample.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridSample.EnableHeadersVisualStyles = false;
             this.gridSample.GridBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(248)))));
@@ -755,6 +756,7 @@ namespace EasyClip
             this.pnlOptions.ResumeLayout(false);
             this.pnlOptions.PerformLayout();
             this.grpButtons.ResumeLayout(false);
+            this.grpButtons.PerformLayout();
             this.tlpButtons.ResumeLayout(false);
             this.grpGrid.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridSample)).EndInit();

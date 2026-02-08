@@ -205,7 +205,7 @@ namespace ReviewMovie.Base.Controls
             Invalidate();
         }
 
-        protected override Size GetPreferredSize(Size proposedSize)
+        public override Size GetPreferredSize(Size proposedSize)
         {
             if (!AutoSize && Size.Width > 0 && Size.Height > 0)
             {
