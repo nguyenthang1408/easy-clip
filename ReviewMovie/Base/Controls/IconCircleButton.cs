@@ -23,6 +23,7 @@ namespace ReviewMovie.Base.Controls
                 ControlStyles.SupportsTransparentBackColor,
                 true);
 
+            AutoSize = false;
             FlatStyle = FlatStyle.Flat;
             FlatAppearance.BorderSize = 0;
             UseVisualStyleBackColor = false;
@@ -133,6 +134,16 @@ namespace ReviewMovie.Base.Controls
                     ForeColor,
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
             }
+        }
+
+        protected override Size GetPreferredSize(Size proposedSize)
+        {
+            if (!AutoSize && Size.Width > 0 && Size.Height > 0)
+            {
+                return Size;
+            }
+
+            return base.GetPreferredSize(proposedSize);
         }
     }
 }

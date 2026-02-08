@@ -40,6 +40,7 @@ namespace ReviewMovie.Base.Controls
                 ControlStyles.SupportsTransparentBackColor,
                 true);
 
+            AutoSize = false;
             FlatStyle = FlatStyle.Flat;
             FlatAppearance.BorderSize = 0;
             BackColor = Color.Transparent;
@@ -202,6 +203,16 @@ namespace ReviewMovie.Base.Controls
             base.OnMouseUp(mevent);
             _pressed = false;
             Invalidate();
+        }
+
+        protected override Size GetPreferredSize(Size proposedSize)
+        {
+            if (!AutoSize && Size.Width > 0 && Size.Height > 0)
+            {
+                return Size;
+            }
+
+            return base.GetPreferredSize(proposedSize);
         }
 
         protected override void OnPaint(PaintEventArgs e)
