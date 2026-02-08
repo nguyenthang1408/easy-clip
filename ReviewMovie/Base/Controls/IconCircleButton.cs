@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace ReviewMovie.Base.Controls
@@ -14,6 +15,14 @@ namespace ReviewMovie.Base.Controls
 
         public IconCircleButton()
         {
+            SetStyle(
+                ControlStyles.UserPaint |
+                ControlStyles.AllPaintingInWmPaint |
+                ControlStyles.OptimizedDoubleBuffer |
+                ControlStyles.ResizeRedraw |
+                ControlStyles.SupportsTransparentBackColor,
+                true);
+
             FlatStyle = FlatStyle.Flat;
             FlatAppearance.BorderSize = 0;
             UseVisualStyleBackColor = false;
@@ -85,6 +94,47 @@ namespace ReviewMovie.Base.Controls
         {
             base.OnMouseUp(mevent);
             BackColor = ClientRectangle.Contains(mevent.Location) ? _hoverBackColor : _normalBackColor;
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            // Avoid default background fill to reduce edge artifacts.
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            if (e == null) return;
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            UiHelpers.ClearBackground(e.Graphics, this);
+
+            var rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            using (var path = UiHelpers.CreateRoundedRectPath(rect, _cornerRadius))
+            using (var brush = new SolidBrush(BackColor))
+            {
+                e.Graphics.FillPath(brush, path);
+            }
+
+            if (Image != null)
+            {
+                var imageRect = new Rectangle(
+                    (Width - Image.Width) / 2,
+                    (Height - Image.Height) / 2,
+                    Image.Width,
+                    Image.Height);
+                e.Graphics.DrawImage(Image, imageRect);
+            }
+            else
+            {
+                TextRenderer.DrawText(
+                    e.Graphics,
+                    Text ?? string.Empty,
+                    Font,
+                    rect,
+                    ForeColor,
+                    TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
+            }
         }
     }
 }

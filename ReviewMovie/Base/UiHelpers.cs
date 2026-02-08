@@ -62,6 +62,8 @@ namespace ReviewMovie.Base
         internal static GraphicsPath CreateRoundedRectPath(Rectangle rect, int radius)
         {
             var path = new GraphicsPath();
+            int maxRadius = Math.Max(0, Math.Min(rect.Width, rect.Height) / 2);
+            if (radius > maxRadius) radius = maxRadius;
             if (radius <= 0)
             {
                 path.AddRectangle(rect);
@@ -87,7 +89,13 @@ namespace ReviewMovie.Base
         {
             if (control == null || control.Width <= 0 || control.Height <= 0) return;
 
-            using (var path = CreateRoundedRectPath(new Rectangle(0, 0, control.Width, control.Height), radius))
+            var rect = new Rectangle(
+                0,
+                0,
+                Math.Max(1, control.Width - 1),
+                Math.Max(1, control.Height - 1));
+
+            using (var path = CreateRoundedRectPath(rect, radius))
             {
                 control.Region = new Region(path);
             }

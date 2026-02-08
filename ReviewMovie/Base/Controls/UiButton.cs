@@ -211,6 +211,7 @@ namespace ReviewMovie.Base.Controls
             if (e == null) return;
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             UiHelpers.ClearBackground(e.Graphics, this);
 
             var rect = new Rectangle(0, 0, Width - 1, Height - 1);
