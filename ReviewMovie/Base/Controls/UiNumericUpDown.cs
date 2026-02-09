@@ -11,6 +11,7 @@ namespace ReviewMovie.Base.Controls
     public class UiNumericUpDown : UserControl, ISupportInitialize
     {
         private readonly NumericUpDown _numeric;
+        private readonly UpDownButtonPanel _buttonPanel;
         private bool _focused;
 
         private Color _backgroundColor = ThemeManager.Current.SurfaceColor;
@@ -40,7 +41,22 @@ namespace ReviewMovie.Base.Controls
                 TextAlign = HorizontalAlignment.Center
             };
 
+            _buttonPanel = new UpDownButtonPanel();
+            _buttonPanel.UpClicked += (_, __) =>
+            {
+                if (!_numeric.Enabled || _numeric.ReadOnly) return;
+                _numeric.UpButton();
+                _numeric.Focus();
+            };
+            _buttonPanel.DownClicked += (_, __) =>
+            {
+                if (!_numeric.Enabled || _numeric.ReadOnly) return;
+                _numeric.DownButton();
+                _numeric.Focus();
+            };
+
             Controls.Add(_numeric);
+            Controls.Add(_buttonPanel);
             UiHelpers.EnableSmoothPainting(this);
 
             Size = new Size(90, 30);
@@ -49,6 +65,7 @@ namespace ReviewMovie.Base.Controls
             _numeric.Enter += (s, e) => { _focused = true; Invalidate(); };
             _numeric.Leave += (s, e) => { _focused = false; Invalidate(); };
             _numeric.ValueChanged += (s, e) => ValueChanged?.Invoke(this, e);
+            _numeric.EnabledChanged += (s, e) => _buttonPanel.Enabled = _numeric.Enabled;
 
             ApplyThemeToInner();
             LayoutChildren();
@@ -73,32 +90,25 @@ namespace ReviewMovie.Base.Controls
             _numeric.BackColor = _backgroundColor;
             _numeric.ForeColor = _textColor;
             _numeric.Font = Font;
-            UpdateInnerButtonColors();
+            HideInnerButtons();
+            UpdateButtonPanelTheme();
         }
 
-        private void UpdateInnerButtonColors()
-        {
-            // WinForms NumericUpDown contains an UpDownButtons child.
-            if (_numeric.Controls.Count <= 0) return;
-            var buttons = _numeric.Controls[0];
-            buttons.BackColor = _buttonColor;
-            buttons.ForeColor = _buttonIconColor;
-
-            // Hover is not directly supported; we keep properties for API completeness.
-        }
-
-        private void UpdateInnerButtonLayout()
+        private void HideInnerButtons()
         {
             if (_numeric.Controls.Count <= 0) return;
             var buttons = _numeric.Controls[0];
+            buttons.Visible = false;
+            buttons.Enabled = false;
+        }
 
-            int desiredWidth = Math.Max(18, _numeric.Height / 3);
-            int maxWidth = Math.Max(18, _numeric.Width / 2);
-            int buttonWidth = Math.Min(desiredWidth, maxWidth);
-
-            buttons.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
-            buttons.Size = new Size(buttonWidth, _numeric.Height);
-            buttons.Location = new Point(_numeric.Width - buttons.Width, 0);
+        private void UpdateButtonPanelTheme()
+        {
+            _buttonPanel.ButtonColor = _buttonColor;
+            _buttonPanel.HoverColor = _buttonHoverColor;
+            _buttonPanel.IconColor = _buttonIconColor;
+            _buttonPanel.Enabled = _numeric.Enabled;
+            _buttonPanel.Invalidate();
         }
 
         private void LayoutChildren()
@@ -115,9 +125,16 @@ namespace ReviewMovie.Base.Controls
             int x = Padding.Left;
             int y = Math.Max(0, (Height - innerH) / 2);
 
+            int buttonWidth = Math.Max(22, innerH / 2);
+            buttonWidth = Math.Min(buttonWidth, Math.Max(22, innerW / 2));
+            int spacing = 4;
+            int textWidth = Math.Max(0, innerW - buttonWidth - spacing);
+
             _numeric.Location = new Point(x, y);
-            _numeric.Size = new Size(innerW, innerH);
-            UpdateInnerButtonLayout();
+            _numeric.Size = new Size(textWidth, innerH);
+
+            _buttonPanel.Location = new Point(x + textWidth + spacing, y);
+            _buttonPanel.Size = new Size(buttonWidth, innerH);
         }
 
         [Category("Colors")]
@@ -192,7 +209,141 @@ namespace ReviewMovie.Base.Controls
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-            UpdateInnerButtonLayout();
+            HideInnerButtons();
+            UpdateButtonPanelTheme();
+            LayoutChildren();
+        }
+
+        private sealed class UpDownButtonPanel : Control
+        {
+            private bool _hoverUp;
+            private bool _hoverDown;
+            private bool _pressedUp;
+            private bool _pressedDown;
+
+            public Color ButtonColor { get; set; } = Color.White;
+            public Color HoverColor { get; set; } = Color.Gainsboro;
+            public Color IconColor { get; set; } = Color.Gray;
+
+            public event EventHandler UpClicked;
+            public event EventHandler DownClicked;
+
+            public UpDownButtonPanel()
+            {
+                SetStyle(
+                    ControlStyles.UserPaint |
+                    ControlStyles.AllPaintingInWmPaint |
+                    ControlStyles.OptimizedDoubleBuffer |
+                    ControlStyles.ResizeRedraw,
+                    true);
+                TabStop = false;
+            }
+
+            protected override void OnMouseMove(MouseEventArgs e)
+            {
+                base.OnMouseMove(e);
+                bool isUp = e.Y < Height / 2;
+                if (_hoverUp != isUp || _hoverDown != !isUp)
+                {
+                    _hoverUp = isUp;
+                    _hoverDown = !isUp;
+                    Invalidate();
+                }
+            }
+
+            protected override void OnMouseLeave(EventArgs e)
+            {
+                base.OnMouseLeave(e);
+                _hoverUp = false;
+                _hoverDown = false;
+                Invalidate();
+            }
+
+            protected override void OnMouseDown(MouseEventArgs e)
+            {
+                base.OnMouseDown(e);
+                if (e.Button != MouseButtons.Left) return;
+                bool isUp = e.Y < Height / 2;
+                _pressedUp = isUp;
+                _pressedDown = !isUp;
+                Invalidate();
+            }
+
+            protected override void OnMouseUp(MouseEventArgs e)
+            {
+                base.OnMouseUp(e);
+                if (e.Button != MouseButtons.Left) return;
+                bool isUp = e.Y < Height / 2;
+
+                if (_pressedUp && isUp) UpClicked?.Invoke(this, EventArgs.Empty);
+                if (_pressedDown && !isUp) DownClicked?.Invoke(this, EventArgs.Empty);
+
+                _pressedUp = false;
+                _pressedDown = false;
+                Invalidate();
+            }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                if (e == null) return;
+                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                var rect = new Rectangle(0, 0, Width, Height);
+                var topRect = new Rectangle(0, 0, Width, Height / 2);
+                var bottomRect = new Rectangle(0, Height / 2, Width, Height - Height / 2);
+
+                using (var b = new SolidBrush(ButtonColor))
+                {
+                    e.Graphics.FillRectangle(b, rect);
+                }
+
+                if (_hoverUp)
+                {
+                    using (var hb = new SolidBrush(_pressedUp ? ControlPaint.Dark(HoverColor, 0.15f) : HoverColor))
+                    {
+                        e.Graphics.FillRectangle(hb, topRect);
+                    }
+                }
+
+                if (_hoverDown)
+                {
+                    using (var hb = new SolidBrush(_pressedDown ? ControlPaint.Dark(HoverColor, 0.15f) : HoverColor))
+                    {
+                        e.Graphics.FillRectangle(hb, bottomRect);
+                    }
+                }
+
+                using (var pen = new Pen(ControlPaint.Dark(ButtonColor, 0.1f), 1f))
+                {
+                    e.Graphics.DrawLine(pen, 0, bottomRect.Top, Width, bottomRect.Top);
+                }
+
+                int triW = Math.Max(6, Math.Min(Width, Height / 2) / 3);
+                int triH = Math.Max(4, triW / 2);
+
+                var upCenter = new Point(Width / 2, topRect.Top + topRect.Height / 2);
+                var upPts = new[]
+                {
+                    new Point(upCenter.X - triW / 2, upCenter.Y + triH / 2),
+                    new Point(upCenter.X + triW / 2, upCenter.Y + triH / 2),
+                    new Point(upCenter.X, upCenter.Y - triH / 2)
+                };
+
+                var downCenter = new Point(Width / 2, bottomRect.Top + bottomRect.Height / 2);
+                var downPts = new[]
+                {
+                    new Point(downCenter.X - triW / 2, downCenter.Y - triH / 2),
+                    new Point(downCenter.X + triW / 2, downCenter.Y - triH / 2),
+                    new Point(downCenter.X, downCenter.Y + triH / 2)
+                };
+
+                using (var ib = new SolidBrush(IconColor))
+                {
+                    e.Graphics.FillPolygon(ib, upPts);
+                    e.Graphics.FillPolygon(ib, downPts);
+                }
+            }
         }
 
         protected override void OnPaintBackground(PaintEventArgs e)
