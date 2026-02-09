@@ -21,6 +21,7 @@ namespace ReviewMovie.Base.Controls
 
         private bool _hovered;
         private bool _focused;
+        private bool _centerContent = true;
 
         private Color _backgroundColor = ThemeManager.Current.SurfaceColor;
         private Color _textColor = ThemeManager.Current.TextPrimary;
@@ -148,8 +149,15 @@ namespace ReviewMovie.Base.Controls
                 right = _iconRight.Left - 8;
             }
 
-            int textY = Padding.Top;
-            int textHeight = Math.Max(0, Height - Padding.Vertical);
+            int availableH = Math.Max(0, Height - Padding.Vertical);
+            int textHeight = availableH;
+            if (_centerContent)
+            {
+                int preferred = TextRenderer.MeasureText("Ag", Font).Height + 2;
+                textHeight = Math.Min(availableH, preferred);
+            }
+
+            int textY = Padding.Top + Math.Max(0, (availableH - textHeight) / 2);
 
             _textBox.Bounds = new Rectangle(
                 left,
@@ -275,6 +283,19 @@ namespace ReviewMovie.Base.Controls
             set
             {
                 _iconSize = value.Width <= 0 || value.Height <= 0 ? new Size(18, 18) : value;
+                LayoutChildren();
+                Invalidate();
+            }
+        }
+
+        [Category("Layout")]
+        [DefaultValue(true)]
+        public bool CenterContent
+        {
+            get => _centerContent;
+            set
+            {
+                _centerContent = value;
                 LayoutChildren();
                 Invalidate();
             }

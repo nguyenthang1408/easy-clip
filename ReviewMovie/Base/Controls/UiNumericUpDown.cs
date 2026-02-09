@@ -14,6 +14,7 @@ namespace ReviewMovie.Base.Controls
         private readonly UpDownButtonPanel _buttonPanel;
         private bool _focused;
         private bool _layouting;
+        private bool _centerContent = true;
 
         private Color _backgroundColor = ThemeManager.Current.SurfaceColor;
         private Color _textColor = ThemeManager.Current.TextPrimary;
@@ -130,13 +131,22 @@ namespace ReviewMovie.Base.Controls
             int x = Padding.Left;
             int y = Math.Max(0, (Height - innerH) / 2);
 
+            int textHeight = innerH;
+            if (_centerContent)
+            {
+                int preferred = _numeric.PreferredHeight;
+                textHeight = Math.Min(innerH, Math.Max(18, preferred));
+            }
+
+            int textY = y + Math.Max(0, (innerH - textHeight) / 2);
+
             int buttonWidth = Math.Max(22, innerH / 2);
             buttonWidth = Math.Min(buttonWidth, Math.Max(22, innerW / 2));
             int spacing = 4;
             int textWidth = Math.Max(0, innerW - buttonWidth - spacing);
 
-            _numeric.Location = new Point(x, y);
-            _numeric.Size = new Size(textWidth, innerH);
+            _numeric.Location = new Point(x, textY);
+            _numeric.Size = new Size(textWidth, textHeight);
 
             _buttonPanel.Location = new Point(x + textWidth + spacing, y);
             _buttonPanel.Size = new Size(buttonWidth, innerH);
@@ -178,6 +188,19 @@ namespace ReviewMovie.Base.Controls
             set
             {
                 _borderRadius = Math.Max(0, value);
+                Invalidate();
+            }
+        }
+
+        [Category("Layout")]
+        [DefaultValue(true)]
+        public bool CenterContent
+        {
+            get => _centerContent;
+            set
+            {
+                _centerContent = value;
+                LayoutChildren();
                 Invalidate();
             }
         }
