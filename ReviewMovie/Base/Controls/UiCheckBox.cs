@@ -67,6 +67,17 @@ namespace ReviewMovie.Base.Controls
         [Category("Layout")]
         public UiTextPosition TextPosition { get => _textPosition; set { _textPosition = value; Invalidate(); } }
 
+        private Color GetEffectiveBorderColor()
+        {
+            var color = _boxBorderColor;
+            if (color.A < 255) color = Color.FromArgb(255, color);
+            if (color.GetBrightness() > 0.85f)
+            {
+                color = ControlPaint.Dark(color, 0.25f);
+            }
+            return color;
+        }
+
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
@@ -85,6 +96,7 @@ namespace ReviewMovie.Base.Controls
         {
             if (e == null) return;
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
             var rect = ClientRectangle;
             UiHelpers.ClearBackground(e.Graphics, this);
@@ -124,7 +136,7 @@ namespace ReviewMovie.Base.Controls
                     if (Checked) e.Graphics.FillPath(fill, path);
                 }
 
-                using (var pen = new Pen(_boxBorderColor, _boxBorderSize))
+                using (var pen = new Pen(GetEffectiveBorderColor(), _boxBorderSize))
                 {
                     pen.Alignment = PenAlignment.Inset;
                     e.Graphics.DrawPath(pen, path);

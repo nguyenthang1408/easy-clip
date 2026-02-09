@@ -96,11 +96,29 @@ namespace ReviewMovie.Base.Controls
             ColumnHeadersDefaultCellStyle.BackColor = _headerBackColor;
             ColumnHeadersDefaultCellStyle.ForeColor = _headerForeColor;
             ColumnHeadersDefaultCellStyle.Font = _headerFont;
+            ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            ColumnHeadersDefaultCellStyle.Padding = new Padding(0, 0, 18, 0);
             ColumnHeadersHeight = _headerHeight;
 
             RowTemplate.Height = _rowHeight;
             ForeColor = _gridForeColor;
             Invalidate();
+        }
+
+        protected override void OnColumnAdded(DataGridViewColumnEventArgs e)
+        {
+            base.OnColumnAdded(e);
+            if (e?.Column == null) return;
+
+            if (e.Column is DataGridViewTextBoxColumn ||
+                e.Column is DataGridViewCheckBoxColumn ||
+                e.Column is DataGridViewComboBoxColumn)
+            {
+                if (e.Column.SortMode == DataGridViewColumnSortMode.NotSortable)
+                {
+                    e.Column.SortMode = DataGridViewColumnSortMode.Automatic;
+                }
+            }
         }
 
         protected override void OnResize(EventArgs e)

@@ -186,7 +186,6 @@ namespace ReviewMovie.Base.Controls
             set
             {
                 _borderRadius = Math.Max(0, value);
-                UiHelpers.ApplyRoundRegion(this, _borderRadius);
                 Invalidate();
             }
         }
@@ -349,7 +348,6 @@ namespace ReviewMovie.Base.Controls
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            UiHelpers.ApplyRoundRegion(this, _borderRadius);
             LayoutChildren();
         }
 
@@ -384,10 +382,13 @@ namespace ReviewMovie.Base.Controls
             if (e == null) return;
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             UiHelpers.ClearBackground(e.Graphics, this);
 
-            var rect = GetBorderRect();
-            using (var path = UiHelpers.CreateRoundedRectPath(rect, _borderRadius))
+            var fillRect = new Rectangle(0, 0, Width, Height);
+            var borderRect = new Rectangle(0, 0, Width - 1, Height - 1);
+
+            using (var path = UiHelpers.CreateRoundedRectPath(fillRect, _borderRadius))
             using (var fill = new SolidBrush(_backgroundColor))
             {
                 e.Graphics.FillPath(fill, path);
@@ -412,7 +413,7 @@ namespace ReviewMovie.Base.Controls
                     if (_borderStyle == UiBorderStyle.Dashed) pen.DashStyle = DashStyle.Dash;
                     else if (_borderStyle == UiBorderStyle.Dotted) pen.DashStyle = DashStyle.Dot;
 
-                    using (var path = UiHelpers.CreateRoundedRectPath(rect, _borderRadius))
+                    using (var path = UiHelpers.CreateRoundedRectPath(borderRect, _borderRadius))
                     {
                         e.Graphics.DrawPath(pen, path);
                     }
