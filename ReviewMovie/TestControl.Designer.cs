@@ -30,8 +30,8 @@ namespace EasyClip
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tlpRoot = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
             this.lblTitle = new ReviewMovie.Base.Controls.UiLabel();
             this.tlpBody = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
@@ -60,6 +60,8 @@ namespace EasyClip
             this.btnIcon = new ReviewMovie.Base.Controls.IconCircleButton();
             this.grpGrid = new ReviewMovie.Base.Controls.UiGroupBox();
             this.gridSample = new ReviewMovie.Base.Controls.UiDataGridView();
+            this.uiNumericUpDown1 = new ReviewMovie.Base.Controls.UiNumericUpDown();
+            this.uiTextBox1 = new ReviewMovie.Base.Controls.UiTextBox();
             this.tlpRoot.SuspendLayout();
             this.tlpBody.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
@@ -74,6 +76,7 @@ namespace EasyClip
             this.tlpButtons.SuspendLayout();
             this.grpGrid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridSample)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiNumericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // tlpRoot
@@ -211,6 +214,7 @@ namespace EasyClip
             this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpInputs.Size = new System.Drawing.Size(716, 370);
             this.tlpInputs.TabIndex = 0;
             // 
@@ -245,8 +249,8 @@ namespace EasyClip
             this.txtStandard.IconRight = null;
             this.txtStandard.IconSize = new System.Drawing.Size(18, 18);
             this.txtStandard.Lines = new string[0];
-            this.txtStandard.Location = new System.Drawing.Point(130, 4);
-            this.txtStandard.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.txtStandard.Location = new System.Drawing.Point(130, 0);
+            this.txtStandard.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
             this.txtStandard.MaxLength = 32767;
             this.txtStandard.Multiline = false;
             this.txtStandard.Name = "txtStandard";
@@ -255,9 +259,9 @@ namespace EasyClip
             this.txtStandard.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txtStandard.SelectionLength = 0;
             this.txtStandard.SelectionStart = 0;
-            this.txtStandard.Size = new System.Drawing.Size(586, 28);
+            this.txtStandard.Size = new System.Drawing.Size(586, 32);
             this.txtStandard.TabIndex = 1;
-            this.txtStandard.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtStandard.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtStandard.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.txtStandard.UseSystemPasswordChar = false;
             // 
@@ -504,6 +508,8 @@ namespace EasyClip
             this.grpButtons.BorderRadius = 10;
             this.grpButtons.BorderSizeEx = 1;
             this.grpButtons.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
+            this.grpButtons.Controls.Add(this.uiTextBox1);
+            this.grpButtons.Controls.Add(this.uiNumericUpDown1);
             this.grpButtons.Controls.Add(this.tlpButtons);
             this.grpButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpButtons.Location = new System.Drawing.Point(0, 0);
@@ -693,24 +699,25 @@ namespace EasyClip
             this.gridSample.CellBackColor = System.Drawing.Color.White;
             this.gridSample.CellFont = new System.Drawing.Font("Segoe UI", 9F);
             this.gridSample.CellForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridSample.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(0, 0, 18, 0);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridSample.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.gridSample.ColumnHeadersHeight = 28;
             this.gridSample.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridSample.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridSample.DefaultCellStyle = dataGridViewCellStyle2;
             this.gridSample.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridSample.EnableHeadersVisualStyles = false;
             this.gridSample.GridBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(248)))));
@@ -731,6 +738,76 @@ namespace EasyClip
             this.gridSample.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridSample.Size = new System.Drawing.Size(1144, 140);
             this.gridSample.TabIndex = 0;
+            // 
+            // uiNumericUpDown1
+            // 
+            this.uiNumericUpDown1.BackColor = System.Drawing.Color.Transparent;
+            this.uiNumericUpDown1.BackgroundColor = System.Drawing.Color.White;
+            this.uiNumericUpDown1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.uiNumericUpDown1.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.uiNumericUpDown1.BorderRadius = 4;
+            this.uiNumericUpDown1.BorderSize = 1;
+            this.uiNumericUpDown1.ButtonColor = System.Drawing.Color.White;
+            this.uiNumericUpDown1.ButtonHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.uiNumericUpDown1.ButtonIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
+            this.uiNumericUpDown1.DecimalPlaces = 0;
+            this.uiNumericUpDown1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.uiNumericUpDown1.Location = new System.Drawing.Point(99, 354);
+            this.uiNumericUpDown1.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.uiNumericUpDown1.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.uiNumericUpDown1.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.uiNumericUpDown1.Name = "uiNumericUpDown1";
+            this.uiNumericUpDown1.Padding = new System.Windows.Forms.Padding(10, 6, 10, 6);
+            this.uiNumericUpDown1.Size = new System.Drawing.Size(137, 48);
+            this.uiNumericUpDown1.TabIndex = 12;
+            this.uiNumericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.uiNumericUpDown1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.uiNumericUpDown1.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
+            // uiTextBox1
+            // 
+            this.uiTextBox1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.uiTextBox1.BackgroundColor = System.Drawing.Color.White;
+            this.uiTextBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.uiTextBox1.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.uiTextBox1.BorderRadius = 4;
+            this.uiTextBox1.DisableTextBox = false;
+            this.uiTextBox1.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.uiTextBox1.IconLeft = null;
+            this.uiTextBox1.IconRight = null;
+            this.uiTextBox1.IconSize = new System.Drawing.Size(18, 18);
+            this.uiTextBox1.Lines = new string[0];
+            this.uiTextBox1.Location = new System.Drawing.Point(66, 268);
+            this.uiTextBox1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.uiTextBox1.MaxLength = 32767;
+            this.uiTextBox1.Multiline = false;
+            this.uiTextBox1.Name = "uiTextBox1";
+            this.uiTextBox1.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
+            this.uiTextBox1.ReadOnly = false;
+            this.uiTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.uiTextBox1.SelectionLength = 0;
+            this.uiTextBox1.SelectionStart = 0;
+            this.uiTextBox1.Size = new System.Drawing.Size(271, 85);
+            this.uiTextBox1.TabIndex = 13;
+            this.uiTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.uiTextBox1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.uiTextBox1.UseSystemPasswordChar = false;
             // 
             // TestControl
             // 
@@ -760,6 +837,7 @@ namespace EasyClip
             this.tlpButtons.ResumeLayout(false);
             this.grpGrid.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridSample)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiNumericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -794,5 +872,7 @@ namespace EasyClip
         private ReviewMovie.Base.Controls.IconCircleButton btnIcon;
         private ReviewMovie.Base.Controls.UiGroupBox grpGrid;
         private ReviewMovie.Base.Controls.UiDataGridView gridSample;
+        private ReviewMovie.Base.Controls.UiTextBox uiTextBox1;
+        private ReviewMovie.Base.Controls.UiNumericUpDown uiNumericUpDown1;
     }
 }
