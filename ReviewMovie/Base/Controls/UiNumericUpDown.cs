@@ -408,14 +408,17 @@ namespace ReviewMovie.Base.Controls
             if (e == null) return;
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
+            e.Graphics.CompositingMode = CompositingMode.SourceOver;
             UiHelpers.ClearBackground(e.Graphics, this);
 
             var fillRect = new RectangleF(0f, 0f, Width, Height);
+            float inset = Math.Max(1f, _borderSize) / 2f;
             var borderRect = new RectangleF(
-                _borderSize / 2f,
-                _borderSize / 2f,
-                Math.Max(0, Width - _borderSize),
-                Math.Max(0, Height - _borderSize));
+                inset,
+                inset,
+                Math.Max(0f, Width - _borderSize - 1f),
+                Math.Max(0f, Height - _borderSize - 1f));
             using (var path = UiHelpers.CreateRoundedRectPath(fillRect, _borderRadius))
             using (var fill = new SolidBrush(_backgroundColor))
             {

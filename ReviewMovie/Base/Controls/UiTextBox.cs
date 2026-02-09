@@ -151,13 +151,14 @@ namespace ReviewMovie.Base.Controls
 
             int availableH = Math.Max(0, Height - Padding.Vertical);
             int textHeight = availableH;
-            if (_centerContent)
+            if (_centerContent && !_textBox.Multiline)
             {
                 int preferred = TextRenderer.MeasureText("Ag", Font).Height + 2;
                 textHeight = Math.Min(availableH, preferred);
             }
 
             int textY = Padding.Top + Math.Max(0, (availableH - textHeight) / 2);
+            if (_textBox.Multiline) textY = Padding.Top;
 
             _textBox.Bounds = new Rectangle(
                 left,
@@ -347,6 +348,10 @@ namespace ReviewMovie.Base.Controls
             set
             {
                 _textBox.WordWrap = value;
+                if (value && (_textBox.ScrollBars == ScrollBars.Horizontal || _textBox.ScrollBars == ScrollBars.Both))
+                {
+                    _textBox.ScrollBars = ScrollBars.Vertical;
+                }
                 Invalidate();
             }
         }
@@ -456,14 +461,17 @@ namespace ReviewMovie.Base.Controls
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
+            e.Graphics.CompositingMode = CompositingMode.SourceOver;
             UiHelpers.ClearBackground(e.Graphics, this);
 
             var fillRect = new RectangleF(0f, 0f, Width, Height);
+            float inset = Math.Max(1f, _borderSize) / 2f;
             var borderRect = new RectangleF(
-                _borderSize / 2f,
-                _borderSize / 2f,
-                Math.Max(0, Width - _borderSize),
-                Math.Max(0, Height - _borderSize));
+                inset,
+                inset,
+                Math.Max(0f, Width - _borderSize - 1f),
+                Math.Max(0f, Height - _borderSize - 1f));
 
             using (var path = UiHelpers.CreateRoundedRectPath(fillRect, _borderRadius))
             using (var fill = new SolidBrush(_backgroundColor))
