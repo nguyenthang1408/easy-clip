@@ -55,6 +55,7 @@ namespace ReviewMovie.Base.Controls
             {
                 BorderStyle = BorderStyle.None,
                 Multiline = false,
+                WordWrap = true,
                 BackColor = _backgroundColor,
                 ForeColor = _textColor
             };
@@ -302,6 +303,10 @@ namespace ReviewMovie.Base.Controls
             set
             {
                 _textBox.Multiline = value;
+                if (value && !_textBox.WordWrap)
+                {
+                    _textBox.WordWrap = true;
+                }
                 LayoutChildren();
             }
         }
@@ -311,6 +316,18 @@ namespace ReviewMovie.Base.Controls
         {
             get => _textBox.ScrollBars;
             set => _textBox.ScrollBars = value;
+        }
+
+        [Category("Behavior")]
+        [DefaultValue(true)]
+        public bool WordWrap
+        {
+            get => _textBox.WordWrap;
+            set
+            {
+                _textBox.WordWrap = value;
+                Invalidate();
+            }
         }
 
         [Category("Behavior")]
