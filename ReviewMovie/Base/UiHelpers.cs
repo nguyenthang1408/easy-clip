@@ -92,6 +92,32 @@ namespace ReviewMovie.Base
             return path;
         }
 
+        internal static GraphicsPath CreateRoundedRectPath(RectangleF rect, float radius)
+        {
+            var path = new GraphicsPath();
+            float maxRadius = Math.Max(0, Math.Min(rect.Width, rect.Height) / 2f);
+            if (radius > maxRadius) radius = maxRadius;
+            if (radius <= 0)
+            {
+                path.AddRectangle(rect);
+                path.CloseFigure();
+                return path;
+            }
+
+            float d = radius * 2f;
+            var arc = new RectangleF(rect.X, rect.Y, d, d);
+
+            path.AddArc(arc, 180, 90);
+            arc.X = rect.Right - d;
+            path.AddArc(arc, 270, 90);
+            arc.Y = rect.Bottom - d;
+            path.AddArc(arc, 0, 90);
+            arc.X = rect.X;
+            path.AddArc(arc, 90, 90);
+            path.CloseFigure();
+            return path;
+        }
+
         internal static void ApplyRoundRegion(Control control, int radius)
         {
             if (control == null || control.Width <= 0 || control.Height <= 0) return;

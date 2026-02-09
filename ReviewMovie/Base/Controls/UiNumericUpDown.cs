@@ -13,6 +13,7 @@ namespace ReviewMovie.Base.Controls
         private readonly NumericUpDown _numeric;
         private readonly UpDownButtonPanel _buttonPanel;
         private bool _focused;
+        private bool _layouting;
 
         private Color _backgroundColor = ThemeManager.Current.SurfaceColor;
         private Color _textColor = ThemeManager.Current.TextPrimary;
@@ -113,6 +114,10 @@ namespace ReviewMovie.Base.Controls
 
         private void LayoutChildren()
         {
+            if (_layouting) return;
+            _layouting = true;
+            try
+            {
             int innerW = Math.Max(0, Width - Padding.Horizontal);
 
             // If the designer sets a small Height but keeps large vertical Padding
@@ -135,6 +140,11 @@ namespace ReviewMovie.Base.Controls
 
             _buttonPanel.Location = new Point(x + textWidth + spacing, y);
             _buttonPanel.Size = new Size(buttonWidth, innerH);
+            }
+            finally
+            {
+                _layouting = false;
+            }
         }
 
         [Category("Colors")]
@@ -144,13 +154,13 @@ namespace ReviewMovie.Base.Controls
         public Color TextColor { get => _textColor; set { _textColor = value; ApplyThemeToInner(); Invalidate(); } }
 
         [Category("Colors")]
-        public Color ButtonColor { get => _buttonColor; set { _buttonColor = value; ApplyThemeToInner(); Invalidate(); } }
+        public Color ButtonColor { get => _buttonColor; set { _buttonColor = value; ApplyThemeToInner(); UpdateButtonPanelTheme(); Invalidate(); } }
 
         [Category("Colors")]
-        public Color ButtonHoverColor { get => _buttonHoverColor; set { _buttonHoverColor = value; Invalidate(); } }
+        public Color ButtonHoverColor { get => _buttonHoverColor; set { _buttonHoverColor = value; UpdateButtonPanelTheme(); Invalidate(); } }
 
         [Category("Colors")]
-        public Color ButtonIconColor { get => _buttonIconColor; set { _buttonIconColor = value; ApplyThemeToInner(); Invalidate(); } }
+        public Color ButtonIconColor { get => _buttonIconColor; set { _buttonIconColor = value; ApplyThemeToInner(); UpdateButtonPanelTheme(); Invalidate(); } }
 
         [Category("Border")]
         public Color BorderColor { get => _borderColor; set { _borderColor = value; Invalidate(); } }
@@ -200,6 +210,12 @@ namespace ReviewMovie.Base.Controls
             LayoutChildren();
         }
 
+        protected override void OnPaddingChanged(EventArgs e)
+        {
+            base.OnPaddingChanged(e);
+            LayoutChildren();
+        }
+
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
@@ -211,6 +227,18 @@ namespace ReviewMovie.Base.Controls
             base.OnHandleCreated(e);
             HideInnerButtons();
             UpdateButtonPanelTheme();
+            LayoutChildren();
+        }
+
+        protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
+        {
+            base.SetBoundsCore(x, y, width, height, specified);
+            LayoutChildren();
+        }
+
+        protected override void OnLayout(LayoutEventArgs e)
+        {
+            base.OnLayout(e);
             LayoutChildren();
         }
 
@@ -359,8 +387,12 @@ namespace ReviewMovie.Base.Controls
             e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             UiHelpers.ClearBackground(e.Graphics, this);
 
-            var fillRect = new Rectangle(0, 0, Width, Height);
-            var borderRect = new Rectangle(0, 0, Width - 1, Height - 1);
+            var fillRect = new RectangleF(0f, 0f, Width, Height);
+            var borderRect = new RectangleF(
+                _borderSize / 2f,
+                _borderSize / 2f,
+                Math.Max(0, Width - _borderSize),
+                Math.Max(0, Height - _borderSize));
             using (var path = UiHelpers.CreateRoundedRectPath(fillRect, _borderRadius))
             using (var fill = new SolidBrush(_backgroundColor))
             {
@@ -372,7 +404,10 @@ namespace ReviewMovie.Base.Controls
             {
                 using (var pen = new Pen(border, _borderSize))
                 {
-                    pen.Alignment = PenAlignment.Inset;
+                    pen.Alignment = PenAlignment.Center;
+                    pen.LineJoin = LineJoin.Round;
+                    pen.StartCap = LineCap.Round;
+                    pen.EndCap = LineCap.Round;
                     using (var path = UiHelpers.CreateRoundedRectPath(borderRect, _borderRadius))
                     {
                         e.Graphics.DrawPath(pen, path);

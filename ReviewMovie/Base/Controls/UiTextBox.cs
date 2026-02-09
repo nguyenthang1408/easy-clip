@@ -437,8 +437,12 @@ namespace ReviewMovie.Base.Controls
             e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             UiHelpers.ClearBackground(e.Graphics, this);
 
-            var fillRect = new Rectangle(0, 0, Width, Height);
-            var borderRect = new Rectangle(0, 0, Width - 1, Height - 1);
+            var fillRect = new RectangleF(0f, 0f, Width, Height);
+            var borderRect = new RectangleF(
+                _borderSize / 2f,
+                _borderSize / 2f,
+                Math.Max(0, Width - _borderSize),
+                Math.Max(0, Height - _borderSize));
 
             using (var path = UiHelpers.CreateRoundedRectPath(fillRect, _borderRadius))
             using (var fill = new SolidBrush(_backgroundColor))
@@ -461,7 +465,10 @@ namespace ReviewMovie.Base.Controls
             {
                 using (var pen = new Pen(border, _borderSize))
                 {
-                    pen.Alignment = PenAlignment.Inset;
+                    pen.Alignment = PenAlignment.Center;
+                    pen.LineJoin = LineJoin.Round;
+                    pen.StartCap = LineCap.Round;
+                    pen.EndCap = LineCap.Round;
                     if (_borderStyle == UiBorderStyle.Dashed) pen.DashStyle = DashStyle.Dash;
                     else if (_borderStyle == UiBorderStyle.Dotted) pen.DashStyle = DashStyle.Dot;
 
