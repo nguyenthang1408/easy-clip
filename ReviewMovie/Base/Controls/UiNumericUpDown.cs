@@ -87,6 +87,20 @@ namespace ReviewMovie.Base.Controls
             // Hover is not directly supported; we keep properties for API completeness.
         }
 
+        private void UpdateInnerButtonLayout()
+        {
+            if (_numeric.Controls.Count <= 0) return;
+            var buttons = _numeric.Controls[0];
+
+            int desiredWidth = Math.Max(18, _numeric.Height / 3);
+            int maxWidth = Math.Max(18, _numeric.Width / 2);
+            int buttonWidth = Math.Min(desiredWidth, maxWidth);
+
+            buttons.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+            buttons.Size = new Size(buttonWidth, _numeric.Height);
+            buttons.Location = new Point(_numeric.Width - buttons.Width, 0);
+        }
+
         private void LayoutChildren()
         {
             int innerW = Math.Max(0, Width - Padding.Horizontal);
@@ -103,6 +117,7 @@ namespace ReviewMovie.Base.Controls
 
             _numeric.Location = new Point(x, y);
             _numeric.Size = new Size(innerW, innerH);
+            UpdateInnerButtonLayout();
         }
 
         [Category("Colors")]
@@ -172,6 +187,12 @@ namespace ReviewMovie.Base.Controls
         {
             base.OnResize(e);
             LayoutChildren();
+        }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            UpdateInnerButtonLayout();
         }
 
         protected override void OnPaintBackground(PaintEventArgs e)
