@@ -13,6 +13,11 @@ namespace ReviewMovie.Base.Controls
         private readonly TextBox _textBox;
         private readonly PictureBox _iconLeft;
         private readonly PictureBox _iconRight;
+        private readonly ContextMenuStrip _textMenu;
+        private readonly ToolStripMenuItem _menuCut;
+        private readonly ToolStripMenuItem _menuCopy;
+        private readonly ToolStripMenuItem _menuPaste;
+        private readonly ToolStripMenuItem _menuSelectAll;
 
         private bool _hovered;
         private bool _focused;
@@ -53,6 +58,25 @@ namespace ReviewMovie.Base.Controls
                 BackColor = _backgroundColor,
                 ForeColor = _textColor
             };
+
+            _menuCut = new ToolStripMenuItem("Cut", null, (_, __) => _textBox.Cut());
+            _menuCopy = new ToolStripMenuItem("Copy", null, (_, __) => _textBox.Copy());
+            _menuPaste = new ToolStripMenuItem("Paste", null, (_, __) => _textBox.Paste());
+            _menuSelectAll = new ToolStripMenuItem("Select All", null, (_, __) => _textBox.SelectAll());
+
+            _textMenu = new ContextMenuStrip();
+            _textMenu.Items.AddRange(new ToolStripItem[]
+            {
+                _menuCut,
+                _menuCopy,
+                _menuPaste,
+                new ToolStripSeparator(),
+                _menuSelectAll
+            });
+            _textMenu.Opening += (_, __) => UpdateTextMenuState();
+
+            _textBox.ShortcutsEnabled = true;
+            _textBox.ContextMenuStrip = _textMenu;
 
             Controls.Add(_textBox);
             Controls.Add(_iconLeft);
@@ -131,6 +155,17 @@ namespace ReviewMovie.Base.Controls
                 textY,
                 Math.Max(0, right - left),
                 textHeight);
+        }
+
+        private void UpdateTextMenuState()
+        {
+            bool canEdit = _textBox.Enabled && !_textBox.ReadOnly;
+            bool hasSelection = _textBox.SelectionLength > 0;
+
+            _menuCut.Enabled = canEdit && hasSelection;
+            _menuCopy.Enabled = hasSelection;
+            _menuPaste.Enabled = canEdit && Clipboard.ContainsText();
+            _menuSelectAll.Enabled = _textBox.TextLength > 0;
         }
 
         [Category("Appearance")]

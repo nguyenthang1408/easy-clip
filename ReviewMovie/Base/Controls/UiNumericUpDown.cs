@@ -33,6 +33,7 @@ namespace ReviewMovie.Base.Controls
 
             _numeric = new NumericUpDown
             {
+                AutoSize = false,
                 BorderStyle = BorderStyle.None,
                 Location = new Point(10, 8),
                 Width = 80,
