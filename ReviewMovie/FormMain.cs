@@ -670,29 +670,19 @@ namespace ReviewMovie
             if (allLanguages == null)
                 return null;
 
-            // Nếu là Premium, không filter
-            if (_currentPackageType == PackageType.Premium)
+            // Nếu unlimit = true, hiển thị tất cả ngôn ngữ (mọi gói)
+            if (_voiceSourceInfo != null && _voiceSourceInfo.Unlimit)
             {
                 return allLanguages;
             }
 
-            // Nếu là Basic hoặc Trial, check unlimit
-            if (_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Trial)
+            // Nếu unlimit = false, filter theo allowedLanguages (mọi gói kể cả Premium)
+            if (_voiceSourceInfo != null &&
+                _voiceSourceInfo.AllowedLanguages != null &&
+                _voiceSourceInfo.AllowedLanguages.Count > 0)
             {
-                // Nếu unlimit = true, hiển thị tất cả ngôn ngữ
-                if (_voiceSourceInfo != null && _voiceSourceInfo.Unlimit)
-                {
-                    return allLanguages;
-                 }
-
-                // Nếu unlimit = false, filter theo allowedLanguages
-                if (_voiceSourceInfo != null &&
-                    _voiceSourceInfo.AllowedLanguages != null &&
-                    _voiceSourceInfo.AllowedLanguages.Count > 0)
-                {
-                    var allowedCodes = _voiceSourceInfo.AllowedLanguages.Select(x => x.LanguageCode).ToList();
-                    return allLanguages.Where(lang => IsLanguageAllowedByCode(lang.Value, allowedCodes)).ToList();
-                }
+                var allowedCodes = _voiceSourceInfo.AllowedLanguages.Select(x => x.LanguageCode).ToList();
+                return allLanguages.Where(lang => IsLanguageAllowedByCode(lang.Value, allowedCodes)).ToList();
             }
 
             // Default: trả về tất cả
@@ -865,16 +855,14 @@ namespace ReviewMovie
             if (allVoices == null)
                 return null;
 
-            // Nếu là Premium, không giới hạn
-            if (_currentPackageType == PackageType.Premium)
+            // Nếu unlimit = true, không giới hạn (mọi gói)
+            if (_voiceSourceInfo != null && _voiceSourceInfo.Unlimit)
             {
                 return allVoices;
             }
 
-            // Nếu là Basic hoặc Trial, giới hạn theo allowedTotalVoices
-            if ((_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Trial) &&
-                _voiceSourceInfo != null &&
-                _voiceSourceInfo.AllowedTotalVoices > 0)
+            // Nếu unlimit = false, giới hạn theo allowedTotalVoices (mọi gói kể cả Premium)
+            if (_voiceSourceInfo != null && _voiceSourceInfo.AllowedTotalVoices > 0)
             {
                 return allVoices.Take(_voiceSourceInfo.AllowedTotalVoices).ToList();
             }
@@ -885,23 +873,21 @@ namespace ReviewMovie
 
         /// <summary>
         /// Giới hạn số lượng voices cho Vbee theo package type
-        /// Chỉ phụ thuộc vào allowedTotalVoices, không phụ thuộc vào unlimit
+        /// Giới hạn dựa vào unlimit flag từ server
         /// </summary>
         private List<ComboboxVbeeModel> LimitVbeeVoicesByPackage(List<ComboboxVbeeModel> allVoices)
         {
             if (allVoices == null)
                 return null;
 
-            // Nếu là Premium, không giới hạn
-            if (_currentPackageType == PackageType.Premium)
+            // Nếu unlimit = true, không giới hạn (mọi gói)
+            if (_voiceSourceInfo != null && _voiceSourceInfo.Unlimit)
             {
                 return allVoices;
             }
 
-            // Nếu là Basic hoặc Trial, giới hạn theo allowedTotalVoices
-            if ((_currentPackageType == PackageType.Basic || _currentPackageType == PackageType.Trial) &&
-                _voiceSourceInfo != null &&
-                _voiceSourceInfo.AllowedTotalVoices > 0)
+            // Nếu unlimit = false, giới hạn theo allowedTotalVoices (mọi gói kể cả Premium)
+            if (_voiceSourceInfo != null && _voiceSourceInfo.AllowedTotalVoices > 0)
             {
                 return allVoices.Take(_voiceSourceInfo.AllowedTotalVoices).ToList();
             }
