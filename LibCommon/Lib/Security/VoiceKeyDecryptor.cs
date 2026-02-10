@@ -16,7 +16,7 @@ namespace LibCommon.Lib.Security
     /// </summary>
     public static class VoiceKeyDecryptor
     {
-        private const string SALT = "CHANGE-THIS-TO-A-STRONG-SALT-IN-PRODUCTION-MUST-MATCH-CLIENT";
+        private const string SALT = "T2P-VoiceKey-XcvvfLdvvBuHKPYaaLmkLAYS7eXxea";
 
         /// <summary>
         /// Giải mã voice key từ response server

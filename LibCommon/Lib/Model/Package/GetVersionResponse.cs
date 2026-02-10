@@ -49,6 +49,7 @@ namespace LibCommon.Lib.Model.Package
         public bool IsDataValid()
         {
             return !string.IsNullOrEmpty(Version)
+                && !string.IsNullOrEmpty(Message)
                 && !string.IsNullOrEmpty(Email)
                 && !string.IsNullOrEmpty(PackageId)
                 && !string.IsNullOrEmpty(PackageType)

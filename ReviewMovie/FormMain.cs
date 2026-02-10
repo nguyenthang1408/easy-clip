@@ -365,7 +365,7 @@ namespace ReviewMovie
                     "Lỗi kết nối",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-                Application.Exit();
+                Environment.Exit(0);
                 return;
             }
         }
@@ -386,7 +386,7 @@ namespace ReviewMovie
                         "Lỗi dữ liệu",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-                    Application.Exit();
+                    Environment.Exit(0);
                     return;
                 }
 
@@ -400,15 +400,14 @@ namespace ReviewMovie
                     _voiceSourceInfo.VoiceKey = decryptedKey;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine($"Error loading voice source info: {ex.Message}");
                 MessageBox.Show(
-                    "Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng và thử lại.",
+                    "Nguồn Âm Thanh bị lỗi. Khởi động lại App !",
                     "Lỗi kết nối",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-                Application.Exit();
+                Environment.Exit(0);
                 return;
             }
         }
