@@ -1,0 +1,45 @@
+Check và update tính năng của file ..\EasyClip_Winform_2025\ReviewMovie\FormMain.cs ,
+Hàm LoadVoiceSourceInfoAsync() => cần update thông tin nhận response cho api ../api/v1/VoiceKeys/current.
+
+1.Hiện trạng
+- server input/response trả về dữ liệu api theo cấu trúc như sau :
++ input :
+	{
+	  "appCode": "RCF50ACE26NU3M",
+	  "productSlug": "easy-clip1"
+	}
++ response :
+	{
+	  "error": false,
+	  "message": null,
+	  "code": 200,
+	  "data": {
+		"isSuccess": true,
+		"unlimit": true,
+		"voiceType": "TTSGoogle",
+		"providerName": "TTS Google Sv #1",
+		"packageId": "PKG_BASIC_001",
+		"keyName": "key #1",
+		"keyId": 1,
+		"voiceKey": "aX9vTLHX9UmUP6+xPqiiBDETvERU7nQ6FGhx/wH4gG1/8w==",
+		"keyTs": 1770713068,
+		"keyVersion": "v1",
+		"assignedAt": "2026-01-28T07:40:47.9875703",
+		"activeUsers": 3,
+		"maxActiveUsers": 10,
+		"allowedLanguages": [],
+		"allowedTotalVoices": 9999,
+		"characterUsed": 999,
+		"characterLimit": 10000000000,
+		"dailyCharacterUsed": 0,
+		"dailyCharacterLimit": null
+	  }
+	}
+
+Các thay đổi và update là : [voiceKey + keyTs + keyVersion] với cơ chế mã hóa trên server , [characterUsed,characterLimit,dailyCharacterUsed,dailyCharacterLimit] để phục vụ hiển thị ở gói sau này.
+chi tiết tại : ..\Task_requirment\voice_key_security\VALIDATE-CHARACTER-USAGE-AND-ENCRYPT-VOICEKEY.md
+
+2.Nội dung cần làm
+Step1 : đối ứng việc giải mã voiceKey từ response trả về từ api.
+Step2 : [Viết tiếp phía dưới Nội dung thực hiện]
+-> ...
