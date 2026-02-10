@@ -664,6 +664,8 @@ namespace ReviewMovie
 
         /// <summary>
         /// Filter ngôn ngữ theo package type
+        /// Server trả về allowedLanguages dùng Google TTS code làm chuẩn (vi-VN, en-GB, ar-XA...)
+        /// Google TTS, Vbee, FptAI đều dùng chung format này → exact match
         /// </summary>
         private List<ComboboxModel> FilterLanguagesByPackage(List<ComboboxModel> allLanguages)
         {
@@ -681,169 +683,14 @@ namespace ReviewMovie
                 _voiceSourceInfo.AllowedLanguages != null &&
                 _voiceSourceInfo.AllowedLanguages.Count > 0)
             {
-                var allowedCodes = _voiceSourceInfo.AllowedLanguages.Select(x => x.LanguageCode).ToList();
-                return allLanguages.Where(lang => IsLanguageAllowedByCode(lang.Value, allowedCodes)).ToList();
+                var allowedCodes = new HashSet<string>(
+                    _voiceSourceInfo.AllowedLanguages.Select(x => x.LanguageCode),
+                    StringComparer.OrdinalIgnoreCase);
+                return allLanguages.Where(lang => allowedCodes.Contains(lang.Value)).ToList();
             }
 
             // Default: trả về tất cả
             return allLanguages;
-        }
-
-        /// <summary>
-        /// Kiểm tra xem một language value có được phép theo allowed codes không
-        /// Hỗ trợ cả language code format (vi-VN, en-US) và ElevenLabs format (Vietnamese*Vietnamese, English*American)
-        /// </summary>
-        private bool IsLanguageAllowedByCode(string languageValue, List<string> allowedCodes)
-        {
-            if (string.IsNullOrEmpty(languageValue) || allowedCodes == null || allowedCodes.Count == 0)
-                return false;
-
-            // Kiểm tra từng code trong allowedCodes
-            foreach (var code in allowedCodes)
-            {
-                // Check 1: Kiểm tra languageValue có chứa code không
-                // Ví dụ: code = "vi" -> match với "vi-VN", "vi-SG", v.v.
-                if (languageValue.ToLower().Contains(code.ToLower()))
-                    return true;
-
-                // Check 2: Kiểm tra language name cho các voice source như ElevenLabs
-                // Map code ngắn sang tên ngôn ngữ đầy đủ
-                string languageName = GetLanguageNameFromCode(code);
-                if (!string.IsNullOrEmpty(languageName) && languageValue.Contains(languageName))
-                    return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Map language code ngắn (vi, en, ja) sang tên ngôn ngữ đầy đủ
-        /// </summary>
-        private string GetLanguageNameFromCode(string code)
-        {
-            if (string.IsNullOrEmpty(code))
-                return null;
-
-            // Loại bỏ phần region nếu có (vi-VN -> vi, en-US -> en)
-            string baseCode = code.Split('-')[0].ToLower();
-
-            switch (baseCode)
-            {
-                case "af":
-                    return "Afrikaans";
-                case "am":
-                    return "Amharic";
-                case "ar":
-                    return "Arabic";
-                case "bg":
-                    return "Bulgarian";
-                case "bn":
-                    return "Bengali";
-                case "ca":
-                    return "Catalan";
-                case "cmn":
-                    return "Chinese";
-                case "cs":
-                    return "Czech";
-                case "da":
-                    return "Danish";
-                case "de":
-                    return "German";
-                case "el":
-                    return "Greek";
-                case "en":
-                    return "English";
-                case "es":
-                    return "Spanish";
-                case "et":
-                    return "Estonian";
-                case "eu":
-                    return "Basque";
-                case "fi":
-                    return "Finnish";
-                case "fil":
-                    return "Filipino";
-                case "fr":
-                    return "French";
-                case "gl":
-                    return "Galician";
-                case "gu":
-                    return "Gujarati";
-                case "he":
-                    return "Hebrew";
-                case "hi":
-                    return "Hindi";
-                case "hr":
-                    return "Croatian";
-                case "hu":
-                    return "Hungarian";
-                case "id":
-                    return "Indonesian";
-                case "is":
-                    return "Icelandic";
-                case "it":
-                    return "Italian";
-                case "ja":
-                    return "Japanese";
-                case "kn":
-                    return "Kannada";
-                case "ko":
-                    return "Korean";
-                case "lt":
-                    return "Lithuanian";
-                case "lv":
-                    return "Latvian";
-                case "ml":
-                    return "Malayalam";
-                case "mr":
-                    return "Marathi";
-                case "ms":
-                    return "Malay";
-                case "nb":
-                    return "Norwegian";
-                case "nl":
-                    return "Dutch";
-                case "pa":
-                    return "Punjabi";
-                case "pl":
-                    return "Polish";
-                case "pt":
-                    return "Portuguese";
-                case "ro":
-                    return "Romanian";
-                case "ru":
-                    return "Russian";
-                case "sk":
-                    return "Slovak";
-                case "sl":
-                    return "Slovenian";
-                case "sr":
-                    return "Serbian";
-                case "sv":
-                    return "Swedish";
-                case "sw":
-                    return "Swahili";
-                case "ta":
-                    return "Tamil";
-                case "te":
-                    return "Telugu";
-                case "th":
-                    return "Thai";
-                case "tr":
-                    return "Turkish";
-                case "uk":
-                    return "Ukrainian";
-                case "ur":
-                    return "Urdu";
-                case "vi":
-                    return "Vietnamese";
-                case "yue":
-                    return "Cantonese";
-                case "zh":
-                    return "Chinese";
-                default:
-                    return null;
-            }
         }
 
         /// <summary>
