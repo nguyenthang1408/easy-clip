@@ -389,16 +389,6 @@ namespace ReviewMovie
                     Environment.Exit(0);
                     return;
                 }
-
-                // Giải mã voiceKey: dùng email (userId) từ _packageInfo + keyTs từ response
-                if (!string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey) && _packageInfo != null)
-                {
-                    string decryptedKey = VoiceKeyDecryptor.Decrypt(
-                        _voiceSourceInfo.VoiceKey,
-                        _packageInfo.Email,
-                        _voiceSourceInfo.KeyTs);
-                    _voiceSourceInfo.VoiceKey = decryptedKey;
-                }
             }
             catch (Exception)
             {
@@ -410,6 +400,23 @@ namespace ReviewMovie
                 Environment.Exit(0);
                 return;
             }
+        }
+
+        /// <summary>
+        /// Decrypt voiceKey on-the-fly cho T2Psoft, không lưu lại decrypted key
+        /// </summary>
+        private string GetDecryptedVoiceKey()
+        {
+            if (_voiceSourceInfo == null
+                || string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey)
+                || _packageInfo == null
+                || string.IsNullOrEmpty(_packageInfo.Email))
+                return null;
+
+            return VoiceKeyDecryptor.Decrypt(
+                _voiceSourceInfo.VoiceKey,
+                _packageInfo.Email,
+                _voiceSourceInfo.KeyTs);
         }
 
         /// <summary>
@@ -572,9 +579,10 @@ namespace ReviewMovie
         {
             nbSpeechRatio.Value = _speechratioGoogleTTS;
 
-            if (!string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey))
+            string decryptedKey = GetDecryptedVoiceKey();
+            if (!string.IsNullOrEmpty(decryptedKey))
             {
-                GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(_voiceSourceInfo.VoiceKey);
+                GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(decryptedKey);
                 if (serviceGoogleTTS.CheckClient())
                 {
                     var allLanguages = serviceGoogleTTS.GetListLanguage()?.ToList();
@@ -622,9 +630,10 @@ namespace ReviewMovie
         {
             nbSpeechRatio.Value = _speechratioElevenlab;
 
-            if (!string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey))
+            string decryptedKey = GetDecryptedVoiceKey();
+            if (!string.IsNullOrEmpty(decryptedKey))
             {
-                VoicesEndpoint voiceServices = new VoicesEndpoint(_voiceSourceInfo.VoiceKey);
+                VoicesEndpoint voiceServices = new VoicesEndpoint(decryptedKey);
                 var listVoice = await voiceServices.GetAllVoicesAsync();
 
                 if (listVoice == null)
@@ -1595,12 +1604,12 @@ namespace ReviewMovie
         {
             ComboboxModel selectedVoiceSource = (ComboboxModel)cboSiteNguon.SelectedItem;
 
-            // Nếu chọn T2Psoft, lấy key từ server
-            if (selectedVoiceSource?.Value == ListVoiceSite.T2Psoft &&
-                _voiceSourceInfo != null &&
-                !string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey))
+            // Nếu chọn T2Psoft, decrypt key từ server on-the-fly
+            if (selectedVoiceSource?.Value == ListVoiceSite.T2Psoft)
             {
-                return _voiceSourceInfo.VoiceKey;
+                string decryptedKey = GetDecryptedVoiceKey();
+                if (!string.IsNullOrEmpty(decryptedKey))
+                    return decryptedKey;
             }
 
             // Ngược lại, lấy từ textbox
@@ -1667,14 +1676,14 @@ namespace ReviewMovie
             // Nếu _voiceSetting chưa được khởi tạo thì tạo default để tránh NullReferenceException
             var safeVoiceSetting = _voiceSetting ?? new VoiceSettings();
 
-            // Xác định AppID: nếu chọn T2Psoft thì dùng voiceKey từ server, ngược lại dùng txtAppID.Text
-            string appIdToUse = _voiceSourceInfo.VoiceKey;
+            // Xác định AppID: nếu chọn T2Psoft thì decrypt voiceKey, ngược lại dùng txtAppID.Text
+            string appIdToUse = txtAppID.Text;
             ComboboxModel selectedVoiceSource = (ComboboxModel)cboSiteNguon.SelectedItem;
-            if (selectedVoiceSource?.Value == ListVoiceSite.T2Psoft &&
-                _voiceSourceInfo != null &&
-                !string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey))
+            if (selectedVoiceSource?.Value == ListVoiceSite.T2Psoft)
             {
-                appIdToUse = _voiceSourceInfo.VoiceKey;
+                string decryptedKey = GetDecryptedVoiceKey();
+                if (!string.IsNullOrEmpty(decryptedKey))
+                    appIdToUse = decryptedKey;
             }
 
             _audioConvertContext = new AudioConvertContextModel
@@ -3858,7 +3867,7 @@ namespace ReviewMovie
 
                     // Lấy key: nếu đang chọn T2PSOFT thì từ server, ngược lại từ textbox
                     ComboboxModel selectedVoiceSource = (ComboboxModel)cboSiteNguon.SelectedItem;
-                    string apiKey = selectedVoiceSource?.Value == ListVoiceSite.T2Psoft ? _voiceSourceInfo.VoiceKey : txtAppID.Text;
+                    string apiKey = selectedVoiceSource?.Value == ListVoiceSite.T2Psoft ? GetDecryptedVoiceKey() : txtAppID.Text;
                     GoogleTTSVoiceTemplate serviceGoogleTTS = new GoogleTTSVoiceTemplate(apiKey);
                     var googleVoices = serviceGoogleTTS.GetVoicesByLanguage(languageCode);
                     var limitedGoogleVoices = LimitVoicesByPackage(googleVoices);
