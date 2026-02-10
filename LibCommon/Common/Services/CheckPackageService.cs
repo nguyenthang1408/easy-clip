@@ -11,9 +11,10 @@ namespace Common.Services
     public partial class ApiClientRequest
     {
         /// <summary>
-        /// Gọi API GetVoiceSourceEnum để lấy thông tin voice source
+        /// Gọi API /api/v1/VoiceKeys/current để lấy thông tin voice source (encrypted)
+        /// Server trả response bọc trong ApiResponse wrapper { error, message, code, data }
         /// </summary>
-        /// <returns>GetVoiceSourceResponse hoặc null nếu failed</returns>
+        /// <returns>GetVoiceSourceResponse (data bên trong wrapper) hoặc null nếu failed</returns>
         public async Task<GetVoiceSourceResponse> GetVoiceSourceEnumAsync(string appCode, string appSlugID)
         {
             string requestUrl = _baseUrl + "/api/v1/VoiceKeys/current";
@@ -22,8 +23,8 @@ namespace Common.Services
                 AppCode = appCode,
                 ProductSlug = appSlugID
             };
-            var response = await SendPostRequestAsync<GetVoiceSourceResponse>(_apiKey, requestUrl, requestBody);
-            return response;
+            var apiResponse = await SendPostRequestAsync<ApiResponse<GetVoiceSourceResponse>>(_apiKey, requestUrl, requestBody);
+            return apiResponse?.Data;
         }
     }
 }

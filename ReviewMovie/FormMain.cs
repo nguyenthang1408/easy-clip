@@ -12,6 +12,7 @@ using Lib.VoiceServices.ElevenLabs.V1.Services;
 using Lib.VoiceServices.GoogleTTS;
 using LibCommon.Common;
 using LibCommon.Lib.Model.Package;
+using LibCommon.Lib.Security;
 using ReviewMovie.Base;
 using ReviewMovie.Infrastructure.Config;
 using ReviewMovie.Infrastructure.Project;
@@ -370,7 +371,7 @@ namespace ReviewMovie
         }
 
         /// <summary>
-        /// Load thông tin voice source từ server
+        /// Load thông tin voice source từ server và giải mã voiceKey
         /// </summary>
         private async Task LoadVoiceSourceInfoAsync()
         {
@@ -380,29 +381,35 @@ namespace ReviewMovie
 
                 if (_voiceSourceInfo == null || !_voiceSourceInfo.IsSuccess)
                 {
-                    // Nếu failed, tạo default cho Trial
-                    _voiceSourceInfo = new GetVoiceSourceResponse
-                    {
-                        IsSuccess = true,
-                        Unlimit = false,
-                        PackageId = PackageTypeHelper.PKG_TRIAL,
-                        AllowedTotalVoices = 5,
-                        AllowedLanguages = new List<AllowedLanguage>()
-                    };
+                    MessageBox.Show(
+                        "Không thể lấy thông tin voice source từ server.",
+                        "Lỗi dữ liệu",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    Application.Exit();
+                    return;
+                }
+
+                // Giải mã voiceKey: dùng email (userId) từ _packageInfo + keyTs từ response
+                if (!string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey) && _packageInfo != null)
+                {
+                    string decryptedKey = VoiceKeyDecryptor.Decrypt(
+                        _voiceSourceInfo.VoiceKey,
+                        _packageInfo.Email,
+                        _voiceSourceInfo.KeyTs);
+                    _voiceSourceInfo.VoiceKey = decryptedKey;
                 }
             }
             catch (Exception ex)
             {
-                // Log error và tạo default
                 Console.WriteLine($"Error loading voice source info: {ex.Message}");
-                _voiceSourceInfo = new GetVoiceSourceResponse
-                {
-                    IsSuccess = true,
-                    Unlimit = false,
-                    PackageId = PackageTypeHelper.PKG_TRIAL,
-                    AllowedTotalVoices = 5,
-                    AllowedLanguages = new List<AllowedLanguage>()
-                };
+                MessageBox.Show(
+                    "Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng và thử lại.",
+                    "Lỗi kết nối",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                Application.Exit();
+                return;
             }
         }
 
