@@ -650,13 +650,11 @@ namespace ReviewMovie
 
                     var allLanguages = _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null;
 
-                    // Filter theo allowedLanguages nếu là gói Trial
-                    var filteredLanguages = FilterLanguagesByPackage(allLanguages);
-
+                    // ElevenLabs: chưa hỗ trợ filter language theo allowedLanguages (format khác Google TTS code)
                     ComboBoxFuncion.CbBlinding(cbLanguageSelect,
-                        filteredLanguages,
-                        filteredLanguages != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                            ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                        allLanguages,
+                        allLanguages != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
+                            ? Math.Max(allLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                             : 0);
                 }
             }
@@ -3713,13 +3711,13 @@ namespace ReviewMovie
                 }
                 else if (_manualSelected == ManualSelect.Elevenlab)
                 {
+                    // ElevenLabs: chưa hỗ trợ limit voices theo package
                     var elevenLabVoices = GetVoiceTemplate.SearchVoicesByLanguageAccent(_listVoice, cbLanguageSelect.Text);
-                    var limitedElevenLabVoices = LimitVoicesByPackage(elevenLabVoices);
 
                     ComboBoxFuncion.CbBlinding(cbxSpeechType
-                           , limitedElevenLabVoices
+                           , elevenLabVoices
                            , !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                               ? Math.Max(limitedElevenLabVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
+                               ? Math.Max(elevenLabVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
                                : 0);
                 }
                 else if (_manualSelected == ManualSelect.Vbee)
@@ -4433,12 +4431,12 @@ namespace ReviewMovie
                     _listVoice = listVoice?.ToList();
 
                     var allLanguages = _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null;
-                    var filteredLanguages = FilterLanguagesByPackage(allLanguages);
 
+                    // ElevenLabs: chưa hỗ trợ filter language theo allowedLanguages (format khác Google TTS code)
                     ComboBoxFuncion.CbBlinding(cbLanguageSelect
-                                , filteredLanguages
-                                , filteredLanguages != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                    ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                                , allLanguages
+                                , allLanguages != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
+                                    ? Math.Max(allLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                                     : 0);
 
                     //cbLanguageSelect.DataSource = _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null;
