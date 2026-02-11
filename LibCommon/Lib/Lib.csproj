@@ -148,6 +148,9 @@
     <Compile Include="VoiceServices\ElevenLabs\V1\Services\TextToSpeechEndpoint.cs" />
     <Compile Include="VoiceServices\ElevenLabs\V1\Template\GetVoiceTemplate.cs" />
     <Compile Include="VoiceServices\ElevenLabs\V1\Services\VoicesEndpoint.cs" />
+    <Compile Include="VoiceServices\ElevenLabs\V2\Model\VoiceQueryV2.cs" />
+    <Compile Include="VoiceServices\ElevenLabs\V2\Model\VoiceV2Response.cs" />
+    <Compile Include="VoiceServices\ElevenLabs\V2\Services\VoicesV2Endpoint.cs" />
     <Compile Include="VoiceServices\FptAI\ApiFptAI.cs" />
     <Compile Include="VoiceServices\GoogleTTS\APIGoogleTTS.cs" />
     <Compile Include="VoiceServices\GoogleTTS\GoogleTTSVoiceTemplate.cs" />
