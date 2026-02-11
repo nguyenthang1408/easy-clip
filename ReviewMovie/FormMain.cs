@@ -9,6 +9,8 @@ using Lib.VoiceServices.ElevenLabs;
 using Lib.VoiceServices.ElevenLabs.V1;
 using Lib.VoiceServices.ElevenLabs.V1.Model;
 using Lib.VoiceServices.ElevenLabs.V1.Services;
+// [V2-UPDATE] Thêm using cho V2 services
+using Lib.VoiceServices.ElevenLabs.V2.Services;
 using Lib.VoiceServices.GoogleTTS;
 using LibCommon.Common;
 using LibCommon.Lib.Model.Package;
@@ -633,7 +635,9 @@ namespace ReviewMovie
             string decryptedKey = GetDecryptedVoiceKey();
             if (!string.IsNullOrEmpty(decryptedKey))
             {
-                VoicesEndpoint voiceServices = new VoicesEndpoint(decryptedKey);
+                // [V2-UPDATE] Chuyển sang VoicesV2Endpoint (API /v2/voices) thay cho VoicesEndpoint (API /v1/voices)
+                // V1 VoicesEndpoint vẫn giữ nguyên, không ảnh hưởng các chỗ khác
+                VoicesV2Endpoint voiceServices = new VoicesV2Endpoint(decryptedKey);
                 var listVoice = await voiceServices.GetAllVoicesAsync();
 
                 if (listVoice == null)
@@ -4415,7 +4419,8 @@ namespace ReviewMovie
                 nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioElevenlab ? nbSpeechRatio.Value : _speechratioElevenlab;
 
                 // Lấy key từ textbox (vì đây là voice source khác T2PSOFT)
-                VoicesEndpoint voiceServices = new VoicesEndpoint(txtAppID.Text);
+                // [V2-UPDATE] Chuyển sang VoicesV2Endpoint (API /v2/voices) thay cho VoicesEndpoint (API /v1/voices)
+                VoicesV2Endpoint voiceServices = new VoicesV2Endpoint(txtAppID.Text);
                 var listVoice = await voiceServices.GetAllVoicesAsync();
                 if(listVoice == null)
                 {
