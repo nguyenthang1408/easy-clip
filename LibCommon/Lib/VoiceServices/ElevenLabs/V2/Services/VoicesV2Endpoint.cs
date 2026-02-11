@@ -1,12 +1,11 @@
 // [V2-UPDATE] VoicesV2Endpoint - Gọi API /v2/voices thay cho /v1/voices
-// Tái sử dụng: ApiClientRequest, Voice model, VoiceSettings từ V1
-// Khác V1: dùng /v2, hỗ trợ pagination, search, filter
+// Tái sử dụng: Voice model, VoiceSettings từ V1
+// Dùng ApiClientRequestV2 (fix bug duplicate header của V1 ApiClientRequest)
+// Tham khảo: ElevenLabs-DotNet-20260211/ElevenLabs-DotNet/Voices/VoicesV2Endpoint.cs
 using Lib.VoiceServices.ElevenLabs.V1.Model;
 using Lib.VoiceServices.ElevenLabs.V2.Model;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,23 +14,30 @@ namespace Lib.VoiceServices.ElevenLabs.V2.Services
 {
     /// <summary>
     /// [V2-UPDATE] Endpoint voices API v2 - hỗ trợ pagination, search, filter
-    /// Tái sử dụng ApiClientRequest và Voice/VoiceSettings model từ V1
+    /// Tái sử dụng Voice/VoiceSettings model từ V1
+    /// Dùng ApiClientRequestV2 thay cho ApiClientRequest (fix duplicate header bug)
     /// </summary>
     public class VoicesV2Endpoint
     {
         public string ApiKey { get; }
 
-        // [V2-UPDATE] Đổi sang /v2 thay vì /v1
+        // [V2-UPDATE] Base address cho /v2/voices
         public string ElevenlabsV2Address { get; }
 
-        // [V2-UPDATE] Tái sử dụng ApiClientRequest từ V1
-        private readonly ApiClientRequest _apiClientRequest = new ApiClientRequest();
+        // [V2-UPDATE] Base address cho /v1 (dùng cho voice settings - v2 không có endpoint này)
+        private string ElevenlabsV1Address { get; }
+
+        // [V2-UPDATE] Dùng ApiClientRequestV2 - fix bug duplicate header của V1 ApiClientRequest
+        // V1 ApiClientRequest dùng DefaultRequestHeaders.Add() → header bị trùng sau lần gọi đầu
+        private readonly ApiClientRequestV2 _apiClient = new ApiClientRequestV2();
 
         public VoicesV2Endpoint(string apiKey)
         {
             ApiKey = apiKey;
-            // [V2-UPDATE] URL mới: https://api.elevenlabs.io/v2/voices
+            // [V2-UPDATE] URL: https://api.elevenlabs.io/v2/voices
             ElevenlabsV2Address = $"{URLInfo.Https}{URLInfo.ElevenLabsDomain}{URLInfo.ApiVersionV2}{URLInfo.Voice}";
+            // [V2-UPDATE] URL V1 cho voice settings: https://api.elevenlabs.io/v1
+            ElevenlabsV1Address = $"{URLInfo.Https}{URLInfo.ElevenLabsDomain}{URLInfo.DefaultApiVersion}";
         }
 
         /// <summary>
@@ -43,7 +49,7 @@ namespace Lib.VoiceServices.ElevenLabs.V2.Services
 
         /// <summary>
         /// [V2-UPDATE] Lấy tất cả voices qua API v2 - tự động phân trang
-        /// downloadSettings: nếu true sẽ gọi thêm API lấy settings cho mỗi voice (tái sử dụng logic V1)
+        /// Tham khảo cách paginate: ElevenLabs-DotNet-20260211/.../TestFixture_03_VoicesEndpoint.cs Test_12_01
         /// </summary>
         public async Task<IReadOnlyList<Voice>> GetAllVoicesAsync(bool downloadSettings, CancellationToken cancellationToken = default)
         {
@@ -60,11 +66,11 @@ namespace Lib.VoiceServices.ElevenLabs.V2.Services
                 };
 
                 string url = $"{ElevenlabsV2Address}{query.ToQueryString()}";
-                HttpResponseMessage response = await _apiClientRequest.GetAsync(url, ApiKey);
+                HttpResponseMessage response = await _apiClient.GetAsync(url, ApiKey, cancellationToken);
 
                 if (response == null || !response.IsSuccessStatusCode)
                 {
-                    // [V2-UPDATE] Nếu V2 thất bại, trả null để caller xử lý
+                    // [V2-UPDATE] Nếu V2 thất bại, trả null để caller hiện MessageBox
                     return null;
                 }
 
@@ -81,7 +87,7 @@ namespace Lib.VoiceServices.ElevenLabs.V2.Services
 
             } while (!string.IsNullOrEmpty(nextPageToken));
 
-            // [V2-UPDATE] Download settings cho mỗi voice - tái sử dụng logic giống V1
+            // [V2-UPDATE] Download settings cho mỗi voice song song - tái sử dụng logic giống V1
             if (downloadSettings && allVoices.Count > 0)
             {
                 var voiceSettingsTasks = new List<Task>();
@@ -90,7 +96,7 @@ namespace Lib.VoiceServices.ElevenLabs.V2.Services
                 {
                     voiceSettingsTasks.Add(Task.Run(async () =>
                     {
-                        voice.Settings = await GetVoiceSettingsAsync(voice.VoiceId).ConfigureAwait(false);
+                        voice.Settings = await GetVoiceSettingsAsync(voice.VoiceId, cancellationToken).ConfigureAwait(false);
                     }, cancellationToken));
                 }
 
@@ -108,7 +114,7 @@ namespace Lib.VoiceServices.ElevenLabs.V2.Services
         {
             query = query ?? new VoiceQueryV2();
             string url = $"{ElevenlabsV2Address}{query.ToQueryString()}";
-            HttpResponseMessage response = await _apiClientRequest.GetAsync(url, ApiKey);
+            HttpResponseMessage response = await _apiClient.GetAsync(url, ApiKey, cancellationToken);
 
             if (response == null || !response.IsSuccessStatusCode)
             {
@@ -120,16 +126,17 @@ namespace Lib.VoiceServices.ElevenLabs.V2.Services
         }
 
         /// <summary>
-        /// [V2-UPDATE] Tái sử dụng: lấy VoiceSettings - vẫn dùng /v1/voices/{id}/settings (V2 không có endpoint này)
+        /// [V2-UPDATE] Lấy VoiceSettings - vẫn dùng /v1/voices/{id}/settings
+        /// (V2 không có endpoint riêng cho settings)
         /// </summary>
-        private async Task<VoiceSettings> GetVoiceSettingsAsync(string voiceId)
+        private async Task<VoiceSettings> GetVoiceSettingsAsync(string voiceId, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(voiceId))
                 return null;
 
             // [V2-UPDATE] Voice settings vẫn dùng V1 endpoint
-            string url = $"{URLInfo.Https}{URLInfo.ElevenLabsDomain}{URLInfo.DefaultApiVersion}{URLInfo.Voice}/{voiceId}{URLInfo.VoiceSetting}";
-            HttpResponseMessage response = await _apiClientRequest.GetAsync(url, ApiKey);
+            string url = $"{ElevenlabsV1Address}{URLInfo.Voice}/{voiceId}{URLInfo.VoiceSetting}";
+            HttpResponseMessage response = await _apiClient.GetAsync(url, ApiKey, cancellationToken);
 
             if (response == null || !response.IsSuccessStatusCode)
                 return null;
