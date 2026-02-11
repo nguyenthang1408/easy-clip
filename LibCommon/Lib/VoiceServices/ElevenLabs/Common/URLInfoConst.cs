@@ -5,6 +5,8 @@ namespace Lib.VoiceServices.ElevenLabs
     {
         public const string Https = "https://";
         public const string DefaultApiVersion = "/v1";
+        // [V2-UPDATE] Thêm API version V2 cho voices endpoint mới
+        public const string ApiVersionV2 = "/v2";
         public const string ElevenLabsDomain = "api.elevenlabs.io";
 
         public const string Voice = "/voices";
