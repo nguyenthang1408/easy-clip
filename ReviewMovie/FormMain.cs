@@ -4523,11 +4523,19 @@ namespace ReviewMovie
                         var listlanguage = serviceGoogleTTS.GetListLanguage()?.ToList();
                         var filteredLanguages = FilterLanguagesByPackage(listlanguage);
 
-                        ComboBoxFuncion.CbBlinding(cbLanguageSelect
-                                              , filteredLanguages
-                                              , !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                                  ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
-                                                  : 0);
+                        if (filteredLanguages == null || filteredLanguages.Count == 0)
+                        {
+                            MessageBox.Show("Không thể tải danh sách giọng đọc. Kiểm tra kết nối mạng và thử lại.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            cbLanguageSelect.DataSource = null;
+                        }
+                        else
+                        {
+                            ComboBoxFuncion.CbBlinding(cbLanguageSelect
+                                                  , filteredLanguages
+                                                  , !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
+                                                      ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                                                      : 0);
+                        }
                     }
                     else
                     {
