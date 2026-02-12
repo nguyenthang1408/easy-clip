@@ -1654,7 +1654,10 @@ namespace ReviewMovie
 
             try
             {
-                await _audioConvertService.ConvertText2SpeechAsync(_indexRowSelect, _audioConvertContext, _convertSingleCTS.Token);
+                await Task.Run(async () =>
+                {
+                    await _audioConvertService.ConvertText2SpeechAsync(_indexRowSelect, _audioConvertContext, _convertSingleCTS.Token);
+                });
             }
             catch (OperationCanceledException) when (_convertSingleCTS?.IsCancellationRequested == true)
             {
@@ -1931,21 +1934,92 @@ namespace ReviewMovie
 
         private async Task theart_SaveSpeechAsync(int index, CancellationToken token)
         {
+            // === Pre-capture UI control values trên UI thread ===
             var dataGridRowSelect = dgvMainView.Rows[index];
+            string audioLink = dataGridRowSelect.Cells["Column_audiolink"].Value?.ToString();
+            string appIdToUse = GetCurrentAppId();
+            decimal scaleStart = (decimal)nScaleAudioRangeStart.Value;
+            decimal scaleEnd = (decimal)nScaleAudioRangeEnd.Value;
+            string vbeeToken = txtToken.Text;
+            int rowCount = dgvMainView.RowCount;
+            ManualSelect provider = _manualSelected;
 
             FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", "Start Download ...", Color.Yellow);
-            UIThreadHelper.SetLabelText(lblstatus, string.Format("Download part thứ {0}/{1}", index, dgvMainView.RowCount), Color.Green);
+            UIThreadHelper.SetLabelText(lblstatus, string.Format("Download part thứ {0}/{1}", index, rowCount), Color.Green);
 
             token.ThrowIfCancellationRequested();
 
-            if (_manualSelected == ManualSelect.FptAI)
-                await DownloadAudio_FptAIAsync(btnSaveAudio, index, dataGridRowSelect, token);
-            else if (_manualSelected == ManualSelect.Google)
-                await DownloadAudio_GoogleTTSAsync(btnSaveAudio, index, dataGridRowSelect, token);
-            else if (_manualSelected == ManualSelect.Elevenlab)
-                await DownloadAudio_ElevenLabAsync(btnSaveAudio, index, dataGridRowSelect, token);
-            else if (_manualSelected == ManualSelect.Vbee)
-                await DownloadAudio_VbeeAsync(btnSaveAudio, index, dataGridRowSelect, token);
+            // === Chạy download I/O trên background thread để không đơ UI ===
+            await Task.Run(async () =>
+            {
+                string downloadAddress = null;
+                string errorMessage = null;
+
+                if (provider == ManualSelect.Vbee)
+                {
+                    var api = new ApiVbee();
+                    var input = new GetaudioModelInput
+                    {
+                        linksite = "https://vbee.vn/api/v1/tts",
+                        token = vbeeToken,
+                        requestID = audioLink
+                    };
+                    var output = await api.GetLinkaudioAsync(input);
+                    token.ThrowIfCancellationRequested();
+                    downloadAddress = output?.result?.audio_link;
+                    if (downloadAddress == null) errorMessage = "Không Tải được Audio !";
+                }
+                else if (provider == ManualSelect.FptAI)
+                {
+                    downloadAddress = audioLink;
+                    if (string.IsNullOrEmpty(downloadAddress)) errorMessage = "Không Có Link Convert Speech !";
+                }
+                else if (provider == ManualSelect.Google)
+                {
+                    downloadAddress = audioLink;
+                    if (string.IsNullOrEmpty(downloadAddress)) errorMessage = "Không Có Link File Download !";
+                }
+                else if (provider == ManualSelect.Elevenlab)
+                {
+                    downloadAddress = audioLink;
+                    if (string.IsNullOrEmpty(downloadAddress)) errorMessage = "Không Có HistoryID";
+                }
+
+                if (!string.IsNullOrEmpty(downloadAddress))
+                {
+                    var context = new AudioDownloadContextModel
+                    {
+                        RowIndex = index,
+                        AddressLink = downloadAddress,
+                        AudioPath = _audioPath,
+                        ScaleAudioRangeStart = scaleStart,
+                        ScaleAudioRangeEnd = scaleEnd,
+                        ManualSelected = provider,
+                        AppId = appIdToUse,
+
+                        GetDataGridViewRow = idx => dgvMainView.Rows[idx],
+                        GetInfoRenderByRowIndex = idx => _allInfoRender.FirstOrDefault(c => c.NoID == idx),
+
+                        UpdateCellCallback = (idx, column, value, color) =>
+                        {
+                            FuncDataGridView.UpdateDataGridViewCell(dgvMainView, idx, column, value, color);
+                        },
+                        UpdateAudioTimeCallback = (idx, timeaudio) =>
+                        {
+                            var info = _allInfoRender.FirstOrDefault(c => c.NoID == idx);
+                            if (info != null) info.Audiotime = timeaudio;
+                        }
+                    };
+
+                    await _audioDownloadService.DownloadAudioAsync(context, false, token);
+                }
+                else if (errorMessage != null)
+                {
+                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", errorMessage, Color.Red);
+                }
+
+                UIThreadHelper.SetButtonText(btnSaveAudio, "Save Audio", Color.Black);
+            });
 
             var saveInfo = _allInfoRender.FirstOrDefault(c => c.NoID == index);
             if (saveInfo != null)
