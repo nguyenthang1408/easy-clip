@@ -65,7 +65,14 @@ namespace Lib.VoiceServices.GoogleTTS
 
         public ListVoicesResponse listVoicesResponse(TextToSpeechClient client)
         {
-            return client?.ListVoices(new ListVoicesRequest(), _callSettings) ?? null;
+            try
+            {
+                return client?.ListVoices(new ListVoicesRequest(), _callSettings);
+            }
+            catch (RpcException)
+            {
+                return null;
+            }
         }
 
         public ConversionResult ConvertTextToSpeech(string jsonData, string textInput, string voiceCode, string savePath)
