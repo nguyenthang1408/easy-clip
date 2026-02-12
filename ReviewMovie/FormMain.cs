@@ -1647,6 +1647,14 @@ namespace ReviewMovie
             {
                 UIThreadHelper.SetLabelText(lblstatus, "Đã huỷ convert dòng.", Color.OrangeRed);
             }
+            catch (TaskCanceledException)
+            {
+                UIThreadHelper.SetLabelText(lblstatus, "Convert timeout - kiểm tra kết nối mạng.", Color.OrangeRed);
+            }
+            catch (System.Net.Http.HttpRequestException)
+            {
+                UIThreadHelper.SetLabelText(lblstatus, "Lỗi kết nối mạng khi convert.", Color.OrangeRed);
+            }
             finally
             {
                 _isConvertingSingle = false;
@@ -1817,6 +1825,14 @@ namespace ReviewMovie
             catch (OperationCanceledException)
             {
                 UIThreadHelper.SetLabelText(lblstatus, "Đã huỷ download audio dòng.", Color.OrangeRed);
+            }
+            catch (TaskCanceledException)
+            {
+                UIThreadHelper.SetLabelText(lblstatus, "Download timeout - kiểm tra kết nối mạng.", Color.OrangeRed);
+            }
+            catch (System.Net.Http.HttpRequestException)
+            {
+                UIThreadHelper.SetLabelText(lblstatus, "Lỗi kết nối mạng khi download.", Color.OrangeRed);
             }
             finally
             {
@@ -4542,6 +4558,14 @@ namespace ReviewMovie
                 cbLanguageSelect_SelectedIndexChanged(cbLanguageSelect, EventArgs.Empty);
 
                 UpdateVoiceSourceSelect();
+            }
+            catch (TaskCanceledException)
+            {
+                MessageBox.Show("Kết nối bị timeout. Vui lòng kiểm tra mạng và thử lại.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (System.Net.Http.HttpRequestException)
+            {
+                MessageBox.Show("Không thể kết nối đến server. Vui lòng kiểm tra mạng và thử lại.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {

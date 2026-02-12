@@ -17,7 +17,11 @@ namespace Lib.VoiceServices.ElevenLabs
     public class ApiClientRequestV2
     {
         // [V2-UPDATE] Dùng static HttpClient (best practice) - tái sử dụng connection pool
-        private static readonly HttpClient _httpClient = new HttpClient();
+        // Timeout 7s để tránh treo app khi mất mạng
+        private static readonly HttpClient _httpClient = new HttpClient
+        {
+            Timeout = TimeSpan.FromSeconds(7)
+        };
 
         /// <summary>
         /// [V2-UPDATE] GET request - dùng HttpRequestMessage để set header per-request (không bị trùng)

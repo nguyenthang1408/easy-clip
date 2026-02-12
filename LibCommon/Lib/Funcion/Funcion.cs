@@ -2,8 +2,10 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NReco.VideoInfo;
@@ -60,51 +62,36 @@ namespace Lib
             newjob = rec;
             try
             {
-                //var t = Task.Run(() => {
-                //    using (WebClient webclient = new WebClient())
-                //    {
-                //        string localPath = Path.Combine(rec.savepath, rec.filename);
-                //        webclient.DownloadFile(rec.uri, localPath);
-                //    }
-                //});
-                //t.Wait();
-                //newjob.ResultCode = true;
-
-                var t = Task.Run(() => {
-                    using (WebClient webclient = new WebClient())
-                    {
-                        string localPath = Path.Combine(rec.savepath, rec.filename);
-                        try
+                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(7)))
+                {
+                    var t = Task.Run(() => {
+                        using (WebClient webclient = new WebClient())
                         {
-                            webclient.DownloadFile(rec.uri, localPath);
-                            newjob.ResultCode = true;
-                        }
-                        catch (WebException webEx)
-                        {
-                            if (webEx.Response is HttpWebResponse response)
+                            string localPath = Path.Combine(rec.savepath, rec.filename);
+                            try
                             {
-                                if ((int)response.StatusCode == 402)
+                                // Đăng ký cancel WebClient khi timeout
+                                cts.Token.Register(() => webclient.CancelAsync());
+                                webclient.DownloadFile(rec.uri, localPath);
+                                newjob.ResultCode = true;
+                            }
+                            catch (WebException webEx)
+                            {
+                                if (webEx.Response is HttpWebResponse response)
                                 {
-                                    //Console.WriteLine("Lỗi 402: Payment Required. Vui lòng kiểm tra quyền truy cập hoặc thanh toán.");
                                     newjob.ResultCode = false;
                                 }
                                 else
                                 {
-                                    //Console.WriteLine($"Lỗi HTTP: {(int)response.StatusCode} - {response.StatusDescription}");
                                     newjob.ResultCode = false;
                                 }
                             }
-                            else
-                            {
-                                //Console.WriteLine($"Lỗi mạng: {webEx.Message}");
-                                newjob.ResultCode = false;
-                            }
                         }
-                    }
-                });
+                    }, cts.Token);
 
-                // Chờ tác vụ hoàn thành
-                t.Wait();
+                    // Chờ tác vụ hoàn thành
+                    t.Wait();
+                }
             }
             catch
             {
@@ -112,40 +99,31 @@ namespace Lib
             }
             return newjob;
         }
+        private static readonly HttpClient _downloadHttpClient = new HttpClient
+        {
+            Timeout = TimeSpan.FromSeconds(7)
+        };
+
         public static async Task<Iobject> DownloadFileAsync(Iobject rec)
         {
             Iobject newjob = rec;
             try
             {
-                using (WebClient webclient = new WebClient())
+                string localPath = Path.Combine(rec.savepath, rec.filename);
+                try
                 {
-                    string localPath = Path.Combine(rec.savepath, rec.filename);
-                    try
-                    {
-                        await webclient.DownloadFileTaskAsync(new Uri(rec.uri), localPath);
-                        newjob.ResultCode = true;
-                    }
-                    catch (WebException webEx)
-                    {
-                        if (webEx.Response is HttpWebResponse response)
-                        {
-                            if ((int)response.StatusCode == 402)
-                            {
-                                //Console.WriteLine("Lỗi 402: Payment Required. Vui lòng kiểm tra quyền truy cập hoặc thanh toán.");
-                                newjob.ResultCode = false;
-                            }
-                            else
-                            {
-                                //Console.WriteLine($"Lỗi HTTP: {(int)response.StatusCode} - {response.StatusDescription}");
-                                newjob.ResultCode = false;
-                            }
-                        }
-                        else
-                        {
-                            //Console.WriteLine($"Lỗi mạng: {webEx.Message}");
-                            newjob.ResultCode = false;
-                        }
-                    }
+                    var responseBytes = await _downloadHttpClient.GetByteArrayAsync(rec.uri);
+                    File.WriteAllBytes(localPath, responseBytes);
+                    newjob.ResultCode = true;
+                }
+                catch (HttpRequestException)
+                {
+                    newjob.ResultCode = false;
+                }
+                catch (TaskCanceledException)
+                {
+                    // Timeout
+                    newjob.ResultCode = false;
                 }
             }
             catch

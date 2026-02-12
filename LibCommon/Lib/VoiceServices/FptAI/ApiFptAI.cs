@@ -16,7 +16,7 @@ namespace Lib
             try
             {
                 string payload = input.textinput;
-                using (var client = new HttpClient())
+                using (var client = new HttpClient { Timeout = TimeSpan.FromSeconds(7) })
                 {
                     client.DefaultRequestHeaders.Add("api-key", input.apikey);
                     client.DefaultRequestHeaders.Add("speed", input.speedrate);
