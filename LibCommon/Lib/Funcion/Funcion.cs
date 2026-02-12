@@ -2,7 +2,6 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -99,31 +98,18 @@ namespace Lib
             }
             return newjob;
         }
-        private static readonly HttpClient _downloadHttpClient = new HttpClient
-        {
-            Timeout = NetworkConfig.Timeout
-        };
-
         public static async Task<Iobject> DownloadFileAsync(Iobject rec)
         {
             Iobject newjob = rec;
             try
             {
                 string localPath = Path.Combine(rec.savepath, rec.filename);
-                try
+                using (var cts = new CancellationTokenSource(NetworkConfig.Timeout))
+                using (var webClient = new WebClient())
                 {
-                    var responseBytes = await _downloadHttpClient.GetByteArrayAsync(rec.uri);
-                    File.WriteAllBytes(localPath, responseBytes);
+                    cts.Token.Register(() => webClient.CancelAsync());
+                    await webClient.DownloadFileTaskAsync(new Uri(rec.uri), localPath);
                     newjob.ResultCode = true;
-                }
-                catch (HttpRequestException)
-                {
-                    newjob.ResultCode = false;
-                }
-                catch (TaskCanceledException)
-                {
-                    // Timeout
-                    newjob.ResultCode = false;
                 }
             }
             catch
