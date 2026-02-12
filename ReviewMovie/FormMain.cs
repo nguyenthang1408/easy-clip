@@ -317,6 +317,10 @@ namespace ReviewMovie
 
             // Clear flag sau khi init xong
             _isInitializing = false;
+
+            // Trigger chuỗi init cho voice source đã chọn
+            // (set _manualSelected, populate cbLanguageSelect/cbxSpeechType, set _voiceCode)
+            cboSiteNguon_SelectedIndexChanged(cboSiteNguon, EventArgs.Empty);
         }
 
         /// <summary>
