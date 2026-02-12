@@ -523,11 +523,13 @@ namespace ReviewMovie
         /// </summary>
         private async Task<GoogleTTSVoiceTemplate> GetOrCreateGoogleTTSAsync(string apiKey)
         {
-            if (!string.IsNullOrEmpty(apiKey) && _cachedGoogleTTS != null && _cachedGoogleTTSKey == apiKey)
+            // Chỉ dùng cache nếu client valid VÀ đã load được voice list
+            if (!string.IsNullOrEmpty(apiKey) && _cachedGoogleTTS != null && _cachedGoogleTTSKey == apiKey
+                && _cachedGoogleTTS.GetListLanguage() != null)
                 return _cachedGoogleTTS;
 
             var service = await Task.Run(() => new GoogleTTSVoiceTemplate(apiKey));
-            if (service.CheckClient())
+            if (service.CheckClient() && service.GetListLanguage() != null)
             {
                 _cachedGoogleTTS = service;
                 _cachedGoogleTTSKey = apiKey;
