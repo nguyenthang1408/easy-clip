@@ -614,6 +614,13 @@ namespace ReviewMovie
                     // Filter theo allowedLanguages nếu là gói Trial
                     var filteredLanguages = FilterLanguagesByPackage(allLanguages);
 
+                    if (filteredLanguages == null || filteredLanguages.Count == 0)
+                    {
+                        MessageBox.Show("Không thể tải danh sách giọng đọc. Kiểm tra kết nối mạng và thử lại.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        cbLanguageSelect.DataSource = null;
+                        return;
+                    }
+
                     // Tạm unsubscribe event để tránh cascading trigger network call
                     cbLanguageSelect.SelectedIndexChanged -= cbLanguageSelect_SelectedIndexChanged;
                     ComboBoxFuncion.CbBlinding(cbLanguageSelect,
