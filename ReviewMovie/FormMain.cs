@@ -1643,11 +1643,11 @@ namespace ReviewMovie
             {
                 await _audioConvertService.ConvertText2SpeechAsync(_indexRowSelect, _audioConvertContext, _convertSingleCTS.Token);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) when (_convertSingleCTS?.IsCancellationRequested == true)
             {
                 UIThreadHelper.SetLabelText(lblstatus, "Đã huỷ convert dòng.", Color.OrangeRed);
             }
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 UIThreadHelper.SetLabelText(lblstatus, "Convert timeout - kiểm tra kết nối mạng.", Color.OrangeRed);
             }
@@ -1822,11 +1822,11 @@ namespace ReviewMovie
             {
                 await theart_SaveSpeechAsync(_indexRowSelect, _downloadSingleCTS.Token);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) when (_downloadSingleCTS?.IsCancellationRequested == true)
             {
                 UIThreadHelper.SetLabelText(lblstatus, "Đã huỷ download audio dòng.", Color.OrangeRed);
             }
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 UIThreadHelper.SetLabelText(lblstatus, "Download timeout - kiểm tra kết nối mạng.", Color.OrangeRed);
             }
