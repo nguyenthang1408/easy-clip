@@ -16,7 +16,7 @@ namespace Lib.VoiceServices.ElevenLabs
         {
             _httpClient = new HttpClient
             {
-                Timeout = TimeSpan.FromSeconds(7)
+                Timeout = NetworkConfig.Timeout
             };
         }
 

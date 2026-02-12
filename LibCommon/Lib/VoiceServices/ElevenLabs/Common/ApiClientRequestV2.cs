@@ -17,10 +17,10 @@ namespace Lib.VoiceServices.ElevenLabs
     public class ApiClientRequestV2
     {
         // [V2-UPDATE] Dùng static HttpClient (best practice) - tái sử dụng connection pool
-        // Timeout 7s để tránh treo app khi mất mạng
+        // Timeout tránh treo app khi mất mạng
         private static readonly HttpClient _httpClient = new HttpClient
         {
-            Timeout = TimeSpan.FromSeconds(7)
+            Timeout = NetworkConfig.Timeout
         };
 
         /// <summary>

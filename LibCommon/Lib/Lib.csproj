@@ -134,6 +134,7 @@
   <ItemGroup>
     <Compile Include="Constant\Component.cs" />
     <Compile Include="Constant\EffectConfig.cs" />
+    <Compile Include="Constant\NetworkConfig.cs" />
     <Compile Include="Constant\SizeVideo.cs" />
     <Compile Include="Enum\EffectEnum.cs" />
     <Compile Include="Funcion\Excute.cs" />

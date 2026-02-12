@@ -62,7 +62,7 @@ namespace Lib
             newjob = rec;
             try
             {
-                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(7)))
+                using (var cts = new CancellationTokenSource(NetworkConfig.Timeout))
                 {
                     var t = Task.Run(() => {
                         using (WebClient webclient = new WebClient())
@@ -101,7 +101,7 @@ namespace Lib
         }
         private static readonly HttpClient _downloadHttpClient = new HttpClient
         {
-            Timeout = TimeSpan.FromSeconds(7)
+            Timeout = NetworkConfig.Timeout
         };
 
         public static async Task<Iobject> DownloadFileAsync(Iobject rec)

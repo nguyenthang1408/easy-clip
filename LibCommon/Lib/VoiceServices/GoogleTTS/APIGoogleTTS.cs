@@ -58,9 +58,9 @@ namespace Lib.VoiceServices.GoogleTTS
             }
         }
 
-        // Timeout 7s cho gRPC calls tránh treo app khi mất mạng
+        // Timeout cho gRPC calls tránh treo app khi mất mạng
         private static readonly CallSettings _callSettings = CallSettings.FromExpiration(
-            Expiration.FromTimeout(TimeSpan.FromSeconds(7)));
+            Expiration.FromTimeout(NetworkConfig.Timeout));
 
         public ListVoicesResponse listVoicesResponse(TextToSpeechClient client)
         {
