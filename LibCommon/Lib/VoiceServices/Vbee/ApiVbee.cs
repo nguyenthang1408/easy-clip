@@ -82,6 +82,8 @@ namespace Lib
             try
             {
                 var request = (HttpWebRequest)WebRequest.Create(input.linksite);
+                request.Timeout = NetworkConfig.TimeoutMs;
+                request.ReadWriteTimeout = NetworkConfig.TimeoutMs;
                 var postData = @"{" + "\n" +
                                 @"    ""app_id"": """ + input.appId + @"""," + "\n" +
                                 @"    ""response_type"": ""indirect""," + "\n" +
@@ -147,7 +149,7 @@ namespace Lib
                                 @"    ""speed_rate"": """ + input.speedrate + @"""" + "\n" +
                                 @"}";
 
-                using (var client = new HttpClient())
+                using (var client = new HttpClient { Timeout = NetworkConfig.Timeout })
                 {
                     client.DefaultRequestHeaders.Authorization =
                         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", input.token);
@@ -192,7 +194,7 @@ namespace Lib
 
             try
             {
-                using (var client = new HttpClient())
+                using (var client = new HttpClient { Timeout = NetworkConfig.Timeout })
                 {
                     client.DefaultRequestHeaders.Authorization =
                         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", input.token);
@@ -222,6 +224,8 @@ namespace Lib
             try
             {
                 var request = (HttpWebRequest)WebRequest.Create(input.linksite + "/" + input.requestID);
+                request.Timeout = NetworkConfig.TimeoutMs;
+                request.ReadWriteTimeout = NetworkConfig.TimeoutMs;
                 request.Headers.Add("Authorization", $"Bearer {input.token}");
                 request.Method = "GET";
 

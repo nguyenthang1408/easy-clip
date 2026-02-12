@@ -317,6 +317,10 @@ namespace ReviewMovie
 
             // Clear flag sau khi init xong
             _isInitializing = false;
+
+            // Trigger chuỗi init cho voice source đã chọn
+            // (set _manualSelected, populate cbLanguageSelect/cbxSpeechType, set _voiceCode)
+            cboSiteNguon_SelectedIndexChanged(cboSiteNguon, EventArgs.Empty);
         }
 
         /// <summary>
@@ -523,11 +527,13 @@ namespace ReviewMovie
         /// </summary>
         private async Task<GoogleTTSVoiceTemplate> GetOrCreateGoogleTTSAsync(string apiKey)
         {
-            if (!string.IsNullOrEmpty(apiKey) && _cachedGoogleTTS != null && _cachedGoogleTTSKey == apiKey)
+            // Chỉ dùng cache nếu client valid VÀ đã load được voice list
+            if (!string.IsNullOrEmpty(apiKey) && _cachedGoogleTTS != null && _cachedGoogleTTSKey == apiKey
+                && _cachedGoogleTTS.GetListLanguage() != null)
                 return _cachedGoogleTTS;
 
             var service = await Task.Run(() => new GoogleTTSVoiceTemplate(apiKey));
-            if (service.CheckClient())
+            if (service.CheckClient() && service.GetListLanguage() != null)
             {
                 _cachedGoogleTTS = service;
                 _cachedGoogleTTSKey = apiKey;
@@ -613,6 +619,13 @@ namespace ReviewMovie
 
                     // Filter theo allowedLanguages nếu là gói Trial
                     var filteredLanguages = FilterLanguagesByPackage(allLanguages);
+
+                    if (filteredLanguages == null || filteredLanguages.Count == 0)
+                    {
+                        MessageBox.Show("Không thể tải danh sách giọng đọc. Kiểm tra kết nối mạng và thử lại.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        cbLanguageSelect.DataSource = null;
+                        return;
+                    }
 
                     // Tạm unsubscribe event để tránh cascading trigger network call
                     cbLanguageSelect.SelectedIndexChanged -= cbLanguageSelect_SelectedIndexChanged;
@@ -1641,11 +1654,22 @@ namespace ReviewMovie
 
             try
             {
-                await _audioConvertService.ConvertText2SpeechAsync(_indexRowSelect, _audioConvertContext, _convertSingleCTS.Token);
+                await Task.Run(async () =>
+                {
+                    await _audioConvertService.ConvertText2SpeechAsync(_indexRowSelect, _audioConvertContext, _convertSingleCTS.Token);
+                });
+            }
+            catch (OperationCanceledException) when (_convertSingleCTS?.IsCancellationRequested == true)
+            {
+                UIThreadHelper.SetLabelText(lblstatus, "Đã huỷ convert dòng.", Color.OrangeRed);
             }
             catch (OperationCanceledException)
             {
-                UIThreadHelper.SetLabelText(lblstatus, "Đã huỷ convert dòng.", Color.OrangeRed);
+                UIThreadHelper.SetLabelText(lblstatus, "Convert timeout - kiểm tra kết nối mạng.", Color.OrangeRed);
+            }
+            catch (System.Net.Http.HttpRequestException)
+            {
+                UIThreadHelper.SetLabelText(lblstatus, "Lỗi kết nối mạng khi convert.", Color.OrangeRed);
             }
             finally
             {
@@ -1814,9 +1838,17 @@ namespace ReviewMovie
             {
                 await theart_SaveSpeechAsync(_indexRowSelect, _downloadSingleCTS.Token);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) when (_downloadSingleCTS?.IsCancellationRequested == true)
             {
                 UIThreadHelper.SetLabelText(lblstatus, "Đã huỷ download audio dòng.", Color.OrangeRed);
+            }
+            catch (OperationCanceledException)
+            {
+                UIThreadHelper.SetLabelText(lblstatus, "Download timeout - kiểm tra kết nối mạng.", Color.OrangeRed);
+            }
+            catch (System.Net.Http.HttpRequestException)
+            {
+                UIThreadHelper.SetLabelText(lblstatus, "Lỗi kết nối mạng khi download.", Color.OrangeRed);
             }
             finally
             {
@@ -1902,21 +1934,92 @@ namespace ReviewMovie
 
         private async Task theart_SaveSpeechAsync(int index, CancellationToken token)
         {
+            // === Pre-capture UI control values trên UI thread ===
             var dataGridRowSelect = dgvMainView.Rows[index];
+            string audioLink = dataGridRowSelect.Cells["Column_audiolink"].Value?.ToString();
+            string appIdToUse = GetCurrentAppId();
+            decimal scaleStart = (decimal)nScaleAudioRangeStart.Value;
+            decimal scaleEnd = (decimal)nScaleAudioRangeEnd.Value;
+            string vbeeToken = txtToken.Text;
+            int rowCount = dgvMainView.RowCount;
+            ManualSelect provider = _manualSelected;
 
             FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", "Start Download ...", Color.Yellow);
-            UIThreadHelper.SetLabelText(lblstatus, string.Format("Download part thứ {0}/{1}", index, dgvMainView.RowCount), Color.Green);
+            UIThreadHelper.SetLabelText(lblstatus, string.Format("Download part thứ {0}/{1}", index, rowCount), Color.Green);
 
             token.ThrowIfCancellationRequested();
 
-            if (_manualSelected == ManualSelect.FptAI)
-                await DownloadAudio_FptAIAsync(btnSaveAudio, index, dataGridRowSelect, token);
-            else if (_manualSelected == ManualSelect.Google)
-                await DownloadAudio_GoogleTTSAsync(btnSaveAudio, index, dataGridRowSelect, token);
-            else if (_manualSelected == ManualSelect.Elevenlab)
-                await DownloadAudio_ElevenLabAsync(btnSaveAudio, index, dataGridRowSelect, token);
-            else if (_manualSelected == ManualSelect.Vbee)
-                await DownloadAudio_VbeeAsync(btnSaveAudio, index, dataGridRowSelect, token);
+            // === Chạy download I/O trên background thread để không đơ UI ===
+            await Task.Run(async () =>
+            {
+                string downloadAddress = null;
+                string errorMessage = null;
+
+                if (provider == ManualSelect.Vbee)
+                {
+                    var api = new ApiVbee();
+                    var input = new GetaudioModelInput
+                    {
+                        linksite = "https://vbee.vn/api/v1/tts",
+                        token = vbeeToken,
+                        requestID = audioLink
+                    };
+                    var output = await api.GetLinkaudioAsync(input);
+                    token.ThrowIfCancellationRequested();
+                    downloadAddress = output?.result?.audio_link;
+                    if (downloadAddress == null) errorMessage = "Không Tải được Audio !";
+                }
+                else if (provider == ManualSelect.FptAI)
+                {
+                    downloadAddress = audioLink;
+                    if (string.IsNullOrEmpty(downloadAddress)) errorMessage = "Không Có Link Convert Speech !";
+                }
+                else if (provider == ManualSelect.Google)
+                {
+                    downloadAddress = audioLink;
+                    if (string.IsNullOrEmpty(downloadAddress)) errorMessage = "Không Có Link File Download !";
+                }
+                else if (provider == ManualSelect.Elevenlab)
+                {
+                    downloadAddress = audioLink;
+                    if (string.IsNullOrEmpty(downloadAddress)) errorMessage = "Không Có HistoryID";
+                }
+
+                if (!string.IsNullOrEmpty(downloadAddress))
+                {
+                    var context = new AudioDownloadContextModel
+                    {
+                        RowIndex = index,
+                        AddressLink = downloadAddress,
+                        AudioPath = _audioPath,
+                        ScaleAudioRangeStart = scaleStart,
+                        ScaleAudioRangeEnd = scaleEnd,
+                        ManualSelected = provider,
+                        AppId = appIdToUse,
+
+                        GetDataGridViewRow = idx => dgvMainView.Rows[idx],
+                        GetInfoRenderByRowIndex = idx => _allInfoRender.FirstOrDefault(c => c.NoID == idx),
+
+                        UpdateCellCallback = (idx, column, value, color) =>
+                        {
+                            FuncDataGridView.UpdateDataGridViewCell(dgvMainView, idx, column, value, color);
+                        },
+                        UpdateAudioTimeCallback = (idx, timeaudio) =>
+                        {
+                            var info = _allInfoRender.FirstOrDefault(c => c.NoID == idx);
+                            if (info != null) info.Audiotime = timeaudio;
+                        }
+                    };
+
+                    await _audioDownloadService.DownloadAudioAsync(context, false, token);
+                }
+                else if (errorMessage != null)
+                {
+                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", errorMessage, Color.Red);
+                }
+
+                UIThreadHelper.SetButtonText(btnSaveAudio, "Save Audio", Color.Black);
+            });
 
             var saveInfo = _allInfoRender.FirstOrDefault(c => c.NoID == index);
             if (saveInfo != null)
@@ -4500,11 +4603,19 @@ namespace ReviewMovie
                         var listlanguage = serviceGoogleTTS.GetListLanguage()?.ToList();
                         var filteredLanguages = FilterLanguagesByPackage(listlanguage);
 
-                        ComboBoxFuncion.CbBlinding(cbLanguageSelect
-                                              , filteredLanguages
-                                              , !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                                  ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
-                                                  : 0);
+                        if (filteredLanguages == null || filteredLanguages.Count == 0)
+                        {
+                            MessageBox.Show("Không thể tải danh sách giọng đọc. Kiểm tra kết nối mạng và thử lại.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            cbLanguageSelect.DataSource = null;
+                        }
+                        else
+                        {
+                            ComboBoxFuncion.CbBlinding(cbLanguageSelect
+                                                  , filteredLanguages
+                                                  , !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
+                                                      ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                                                      : 0);
+                        }
                     }
                     else
                     {
@@ -4542,6 +4653,14 @@ namespace ReviewMovie
                 cbLanguageSelect_SelectedIndexChanged(cbLanguageSelect, EventArgs.Empty);
 
                 UpdateVoiceSourceSelect();
+            }
+            catch (TaskCanceledException)
+            {
+                MessageBox.Show("Kết nối bị timeout. Vui lòng kiểm tra mạng và thử lại.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (System.Net.Http.HttpRequestException)
+            {
+                MessageBox.Show("Không thể kết nối đến server. Vui lòng kiểm tra mạng và thử lại.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {
