@@ -72,6 +72,11 @@ namespace ReviewMovie.Model
         public Action<string, Color> SetStatusCallback { get; set; }
 
         /// <summary>
+        /// Cập nhật status kèm tooltip chi tiết (text, color, tooltipText)
+        /// </summary>
+        public Action<string, Color, string> SetStatusWithTooltipCallback { get; set; }
+
+        /// <summary>
         /// (Tùy chọn) Cập nhật text cho button/label nếu muốn
         /// </summary>
         public Action<string> SetButtonTextCallback { get; set; }

@@ -634,7 +634,12 @@ namespace ReviewMovie
                         ? $"Đã hết ký tự hôm nay ({_voiceSourceInfo.DailyCharacterUsed:N0}/{_voiceSourceInfo.DailyCharacterLimit.Value:N0}). Vui lòng thử lại vào ngày mai."
                         : $"Đã hết ký tự gói ({_voiceSourceInfo.CharacterUsed:N0}/{_voiceSourceInfo.CharacterLimit.Value:N0}). Vui lòng nâng cấp gói.";
 
-                    UIThreadHelper.SetLabelText(lblstatus, limitMsg, Color.OrangeRed);
+                    string tooltipDetail = $"Tổng ký tự: {_voiceSourceInfo.CharacterUsed:N0}/{(_voiceSourceInfo.CharacterLimit.HasValue ? _voiceSourceInfo.CharacterLimit.Value.ToString("N0") : "Không giới hạn")}"
+                        + (_voiceSourceInfo.DailyCharacterLimit.HasValue
+                            ? $"\nHôm nay: {_voiceSourceInfo.DailyCharacterUsed:N0}/{_voiceSourceInfo.DailyCharacterLimit.Value:N0}"
+                            : "");
+
+                    UIThreadHelper.SetLabelText(lblstatus, limitMsg, Color.OrangeRed, toolTipPL, tooltipDetail);
                     UpdateAppTitle();
                     return;
                 }
@@ -1690,6 +1695,12 @@ namespace ReviewMovie
                 SetStatusCallback = (text, color) =>
                 {
                     UIThreadHelper.SetLabelText(lblstatus, text, color);
+                },
+
+                // Cập nhật trạng thái kèm tooltip chi tiết
+                SetStatusWithTooltipCallback = (text, color, tooltipText) =>
+                {
+                    UIThreadHelper.SetLabelText(lblstatus, text, color, toolTipPL, tooltipText);
                 },
 
                 // Thông báo (show MessageBox) khi batch khác đang chạy

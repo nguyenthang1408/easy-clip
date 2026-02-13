@@ -149,7 +149,12 @@ namespace EasyClip.Services
                         audioStatus = "Hết quota ký tự!";
                         context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
                         context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
-                        context.SetStatusCallback?.Invoke(serverMsg, Color.OrangeRed);
+
+                        // Hiển thị trên lblstatus kèm tooltip chi tiết
+                        if (context.SetStatusWithTooltipCallback != null)
+                            context.SetStatusWithTooltipCallback.Invoke(serverMsg, Color.OrangeRed, serverMsg);
+                        else
+                            context.SetStatusCallback?.Invoke(serverMsg, Color.OrangeRed);
                         return;
                     }
 
