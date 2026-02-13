@@ -311,6 +311,9 @@ namespace ReviewMovie
             // Load voice source info từ server
             await LoadVoiceSourceInfoAsync();
 
+            // Cập nhật title với thông tin character usage ngay sau khi có _voiceSourceInfo
+            UpdateAppTitle();
+
             DisplayItemDefault();
             // Không gọi loadApiKey() ở đây để giữ nguyên API KEY từ đăng nhập
             // Keys sẽ được load khi user chọn voice source khác
@@ -612,6 +615,26 @@ namespace ReviewMovie
                 if (_voiceSourceInfo == null || !_voiceSourceInfo.IsSuccess)
                 {
                     MessageBox.Show("Không thể tải thông tin voice source từ server!");
+                    return;
+                }
+
+                // Kiểm tra character limits trước khi load voice
+                // Khi hết quota, server trả voiceType rỗng + voiceKey null
+                bool isDailyLimitExceeded = _voiceSourceInfo.DailyCharacterLimit.HasValue
+                    && _voiceSourceInfo.DailyCharacterUsed >= _voiceSourceInfo.DailyCharacterLimit.Value;
+
+                bool isTotalLimitExceeded = _voiceSourceInfo.CharacterLimit.HasValue
+                    && _voiceSourceInfo.CharacterLimit.Value > 0
+                    && _voiceSourceInfo.CharacterUsed >= _voiceSourceInfo.CharacterLimit.Value;
+
+                if (isDailyLimitExceeded || isTotalLimitExceeded)
+                {
+                    string limitMsg = isDailyLimitExceeded
+                        ? $"Đã hết ký tự hôm nay ({_voiceSourceInfo.DailyCharacterUsed:N0}/{_voiceSourceInfo.DailyCharacterLimit.Value:N0}). Vui lòng thử lại vào ngày mai."
+                        : $"Đã hết ký tự gói ({_voiceSourceInfo.CharacterUsed:N0}/{_voiceSourceInfo.CharacterLimit.Value:N0}). Vui lòng nâng cấp gói.";
+
+                    UIThreadHelper.SetLabelText(lblstatus, limitMsg, Color.OrangeRed);
+                    UpdateAppTitle();
                     return;
                 }
 
