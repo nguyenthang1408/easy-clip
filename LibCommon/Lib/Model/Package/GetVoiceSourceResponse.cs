@@ -34,7 +34,7 @@ namespace LibCommon.Lib.Model.Package
         public string VoiceKey { get; set; }
 
         [JsonProperty("keyTs")]
-        public long KeyTs { get; set; }
+        public long? KeyTs { get; set; }
 
         [JsonProperty("keyVersion")]
         public string KeyVersion { get; set; }

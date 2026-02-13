@@ -422,6 +422,7 @@ namespace ReviewMovie
         {
             if (_voiceSourceInfo == null
                 || string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey)
+                || !_voiceSourceInfo.KeyTs.HasValue
                 || _packageInfo == null
                 || string.IsNullOrEmpty(_packageInfo.Email))
                 return null;
@@ -429,7 +430,7 @@ namespace ReviewMovie
             return VoiceKeyDecryptor.Decrypt(
                 _voiceSourceInfo.VoiceKey,
                 _packageInfo.Email,
-                _voiceSourceInfo.KeyTs);
+                _voiceSourceInfo.KeyTs.Value);
         }
 
         /// <summary>
