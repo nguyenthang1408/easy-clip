@@ -1,13 +1,17 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
 using Lib;
 using ReviewMovie.Infrastructure.Config;
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Net.Http;
+using System.ComponentModel;
 using System.Windows.Forms;
+using ReviewMovie.Base;
+using ReviewMovie.Base.Controls;
 
 namespace ReviewMovie
 {
@@ -16,18 +20,159 @@ namespace ReviewMovie
         private string AppVersion { get; } = "2.0.0"; // Định nghĩa phiên bản ứng dụng
         private readonly AppCodeService appCodeService;
         private readonly IConfigDataService _configService;
+        private bool _readOnlyFocusWired;
 
         public LoginApiKey()
         {
             InitializeComponent();
-            appCodeService = new AppCodeService(); // Khởi tạo service
-            _configService = new ConfigDataService();
+
+            // Designer safety: avoid running runtime services / IO in WinForms designer.
+            bool isDesignTime = LicenseManager.UsageMode == LicenseUsageMode.Designtime;
+
+            // Assign readonly fields on all paths (designer/runtime)
+            appCodeService = isDesignTime ? null : new AppCodeService(); // Khởi tạo service
+            _configService = isDesignTime ? null : new ConfigDataService();
+
+            if (isDesignTime)
+            {
+                SetupLoginUi();
+                return;
+            }
 
             DisplayAppCode();
             LoadApiKey();
 
             // Đặt sự kiện cho việc đóng form
             this.FormClosing += LoginApiKey_FormClosing;
+
+            // Smooth painting (gradient + shadow)
+            UiHelpers.EnableSmoothPainting(this);
+            DoubleBuffered = true;
+
+            // Allow dragging the borderless window from background
+            this.MouseDown += DragArea_MouseDown;
+
+            SetupLoginUi();
+        }
+
+        private void SetupLoginUi()
+        {
+            // Commonized UI setup (easy to maintain)
+            if (txAppCodeShow is UiTextBox appCode)
+            {
+                appCode.ReadOnly = true;
+                // Make it visually obvious it's read-only
+                appCode.BackgroundColor = ColorTranslator.FromHtml("#F1F5F9");
+                appCode.BorderColor = ColorTranslator.FromHtml("#E2E8F0");
+                appCode.InnerTextBox.ForeColor = ColorTranslator.FromHtml("#64748B");
+                appCode.InnerTextBox.Cursor = Cursors.Default;
+
+                // Prevent focusing/tabbing into AppCode field
+                appCode.TabStop = false;
+                appCode.InnerTextBox.TabStop = false;
+                if (!_readOnlyFocusWired)
+                {
+                    _readOnlyFocusWired = true;
+                    appCode.InnerTextBox.GotFocus += (_, __) =>
+                    {
+                        try { txInsertApiKey?.Focus(); } catch { }
+                    };
+                }
+            }
+
+            if (txInsertApiKey is UiTextBox apiKey)
+            {
+                apiKey.BackgroundColor = Color.White;
+                apiKey.BorderColor = ColorTranslator.FromHtml("#E2E8F0");
+            }
+
+            if (btnLoginApiKey is PrimaryButton primary)
+            {
+                // Facebook-style primary CTA
+                primary.FillColor = ColorTranslator.FromHtml("#1877F2");
+                primary.HoverFillColor = ColorTranslator.FromHtml("#166FE5");
+                primary.PressedFillColor = ColorTranslator.FromHtml("#145DBF");
+                primary.CornerRadius = UiTheme.ButtonRadius;
+                primary.ForeColor = Color.White;
+            }
+
+            if (btnClose is IconCircleButton close)
+            {
+                close.CornerRadius = UiTheme.CloseRadius;
+                close.NormalBackColor = Color.White;
+                close.HoverBackColor = UiTheme.CloseHover;
+                close.PressedBackColor = UiTheme.ClosePressed;
+            }
+        }
+
+        private void DragArea_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+            Win32.BeginDrag(this);
+        }
+
+        private void LoginApiKey_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
+        }
+
+        private void CenterCard()
+        {
+            if (cardPanel == null) return;
+            if (cardPanel.Dock == DockStyle.Fill)
+            {
+                ApplyRoundedRegions();
+                return;
+            }
+            int x = (ClientSize.Width - cardPanel.Width) / 2;
+            int y = (ClientSize.Height - cardPanel.Height) / 2;
+            cardPanel.Location = new Point(Math.Max(0, x), Math.Max(0, y));
+            ApplyRoundedRegions();
+            Invalidate();
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            CenterCard();
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            // Very light orange background (as requested)
+            e.Graphics.Clear(ColorTranslator.FromHtml("#FFF7ED"));
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            // Subtle border for rounded window
+            var rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            UiHelpers.DrawRoundedBorder(e.Graphics, rect, UiTheme.WindowRadius, UiTheme.WindowBorder);
+        }
+
+        private void ApplyRoundedRegions()
+        {
+            // Rounded window (requested)
+            UiHelpers.ApplyRoundRegion(this, UiTheme.WindowRadius);
+
+            // Card + logo (pills/buttons handle their own rounding)
+            UiHelpers.ApplyRoundRegion(pnlLogo, 14);
+        }
+
+        // Paint borders for card + pill panels (Designer-safe: standard Panels)
+        private void cardPanel_Paint(object sender, PaintEventArgs e)
+        {
+            // Intentionally empty: we only round the window (1 layer)
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private void DisplayAppCode()
@@ -144,7 +289,8 @@ namespace ReviewMovie
 
         private void LoginApiKey_Load(object sender, EventArgs e)
         {
-
+            CenterCard();
+            SetupLoginUi();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace ReviewMovie
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new TestControl());
+                Application.Run(new LoginApiKey());
                 mutex.ReleaseMutex();
             }
             else

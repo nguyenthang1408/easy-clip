@@ -52,6 +52,8 @@ namespace EasyClip
             this.rdoOptionA = new ReviewMovie.Base.Controls.UiRadioButton();
             this.rdoOptionB = new ReviewMovie.Base.Controls.UiRadioButton();
             this.grpButtons = new ReviewMovie.Base.Controls.UiGroupBox();
+            this.uiTextBox1 = new ReviewMovie.Base.Controls.UiTextBox();
+            this.uiNumericUpDown1 = new ReviewMovie.Base.Controls.UiNumericUpDown();
             this.tlpButtons = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
             this.btnPrimary = new ReviewMovie.Base.Controls.UiButton();
             this.btnSecondary = new ReviewMovie.Base.Controls.UiButton();
@@ -60,8 +62,6 @@ namespace EasyClip
             this.btnIcon = new ReviewMovie.Base.Controls.IconCircleButton();
             this.grpGrid = new ReviewMovie.Base.Controls.UiGroupBox();
             this.gridSample = new ReviewMovie.Base.Controls.UiDataGridView();
-            this.uiNumericUpDown1 = new ReviewMovie.Base.Controls.UiNumericUpDown();
-            this.uiTextBox1 = new ReviewMovie.Base.Controls.UiTextBox();
             this.tlpRoot.SuspendLayout();
             this.tlpBody.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
@@ -73,10 +73,10 @@ namespace EasyClip
             ((System.ComponentModel.ISupportInitialize)(this.numStandard)).BeginInit();
             this.pnlOptions.SuspendLayout();
             this.grpButtons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uiNumericUpDown1)).BeginInit();
             this.tlpButtons.SuspendLayout();
             this.grpGrid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridSample)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uiNumericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // tlpRoot
@@ -524,6 +524,76 @@ namespace EasyClip
             this.grpButtons.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
             this.grpButtons.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
+            // uiTextBox1
+            // 
+            this.uiTextBox1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.uiTextBox1.BackgroundColor = System.Drawing.Color.White;
+            this.uiTextBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.uiTextBox1.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.uiTextBox1.BorderRadius = 4;
+            this.uiTextBox1.DisableTextBox = false;
+            this.uiTextBox1.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.uiTextBox1.IconLeft = null;
+            this.uiTextBox1.IconRight = null;
+            this.uiTextBox1.IconSize = new System.Drawing.Size(18, 18);
+            this.uiTextBox1.Lines = new string[0];
+            this.uiTextBox1.Location = new System.Drawing.Point(66, 268);
+            this.uiTextBox1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.uiTextBox1.MaxLength = 32767;
+            this.uiTextBox1.Multiline = false;
+            this.uiTextBox1.Name = "uiTextBox1";
+            this.uiTextBox1.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
+            this.uiTextBox1.ReadOnly = false;
+            this.uiTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.uiTextBox1.SelectionLength = 0;
+            this.uiTextBox1.SelectionStart = 0;
+            this.uiTextBox1.Size = new System.Drawing.Size(271, 85);
+            this.uiTextBox1.TabIndex = 13;
+            this.uiTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.uiTextBox1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.uiTextBox1.UseSystemPasswordChar = false;
+            // 
+            // uiNumericUpDown1
+            // 
+            this.uiNumericUpDown1.BackColor = System.Drawing.Color.Transparent;
+            this.uiNumericUpDown1.BackgroundColor = System.Drawing.Color.White;
+            this.uiNumericUpDown1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.uiNumericUpDown1.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.uiNumericUpDown1.BorderRadius = 4;
+            this.uiNumericUpDown1.BorderSize = 1;
+            this.uiNumericUpDown1.ButtonColor = System.Drawing.Color.White;
+            this.uiNumericUpDown1.ButtonHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.uiNumericUpDown1.ButtonIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
+            this.uiNumericUpDown1.DecimalPlaces = 0;
+            this.uiNumericUpDown1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.uiNumericUpDown1.Location = new System.Drawing.Point(99, 354);
+            this.uiNumericUpDown1.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.uiNumericUpDown1.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.uiNumericUpDown1.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.uiNumericUpDown1.Name = "uiNumericUpDown1";
+            this.uiNumericUpDown1.Padding = new System.Windows.Forms.Padding(10, 6, 10, 6);
+            this.uiNumericUpDown1.Size = new System.Drawing.Size(137, 48);
+            this.uiNumericUpDown1.TabIndex = 12;
+            this.uiNumericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.uiNumericUpDown1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.uiNumericUpDown1.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // tlpButtons
             // 
             this.tlpButtons.AutoSize = true;
@@ -739,76 +809,6 @@ namespace EasyClip
             this.gridSample.Size = new System.Drawing.Size(1144, 140);
             this.gridSample.TabIndex = 0;
             // 
-            // uiNumericUpDown1
-            // 
-            this.uiNumericUpDown1.BackColor = System.Drawing.Color.Transparent;
-            this.uiNumericUpDown1.BackgroundColor = System.Drawing.Color.White;
-            this.uiNumericUpDown1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.uiNumericUpDown1.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.uiNumericUpDown1.BorderRadius = 4;
-            this.uiNumericUpDown1.BorderSize = 1;
-            this.uiNumericUpDown1.ButtonColor = System.Drawing.Color.White;
-            this.uiNumericUpDown1.ButtonHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
-            this.uiNumericUpDown1.ButtonIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
-            this.uiNumericUpDown1.DecimalPlaces = 0;
-            this.uiNumericUpDown1.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.uiNumericUpDown1.Location = new System.Drawing.Point(99, 354);
-            this.uiNumericUpDown1.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.uiNumericUpDown1.Maximum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.uiNumericUpDown1.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.uiNumericUpDown1.Name = "uiNumericUpDown1";
-            this.uiNumericUpDown1.Padding = new System.Windows.Forms.Padding(10, 6, 10, 6);
-            this.uiNumericUpDown1.Size = new System.Drawing.Size(137, 48);
-            this.uiNumericUpDown1.TabIndex = 12;
-            this.uiNumericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.uiNumericUpDown1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.uiNumericUpDown1.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            // 
-            // uiTextBox1
-            // 
-            this.uiTextBox1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.uiTextBox1.BackgroundColor = System.Drawing.Color.White;
-            this.uiTextBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.uiTextBox1.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.uiTextBox1.BorderRadius = 4;
-            this.uiTextBox1.DisableTextBox = false;
-            this.uiTextBox1.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
-            this.uiTextBox1.IconLeft = null;
-            this.uiTextBox1.IconRight = null;
-            this.uiTextBox1.IconSize = new System.Drawing.Size(18, 18);
-            this.uiTextBox1.Lines = new string[0];
-            this.uiTextBox1.Location = new System.Drawing.Point(66, 268);
-            this.uiTextBox1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
-            this.uiTextBox1.MaxLength = 32767;
-            this.uiTextBox1.Multiline = false;
-            this.uiTextBox1.Name = "uiTextBox1";
-            this.uiTextBox1.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
-            this.uiTextBox1.ReadOnly = false;
-            this.uiTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.uiTextBox1.SelectionLength = 0;
-            this.uiTextBox1.SelectionStart = 0;
-            this.uiTextBox1.Size = new System.Drawing.Size(271, 85);
-            this.uiTextBox1.TabIndex = 13;
-            this.uiTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.uiTextBox1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.uiTextBox1.UseSystemPasswordChar = false;
-            // 
             // TestControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -834,10 +834,10 @@ namespace EasyClip
             this.pnlOptions.PerformLayout();
             this.grpButtons.ResumeLayout(false);
             this.grpButtons.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uiNumericUpDown1)).EndInit();
             this.tlpButtons.ResumeLayout(false);
             this.grpGrid.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridSample)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uiNumericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
