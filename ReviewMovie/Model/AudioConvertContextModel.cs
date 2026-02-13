@@ -49,7 +49,7 @@ namespace ReviewMovie.Model
         /// <summary>
         /// ApiClientRequest instance để gọi API server
         /// </summary>
-        public ApiClientRequest ApiRequest { get; set; }
+        public Common.Services.ApiClientRequest ApiRequest { get; set; }
 
         /// <summary>
         /// Callback khi usage API trả về thành công: cập nhật characterUsed/characterLimit + rotate key
