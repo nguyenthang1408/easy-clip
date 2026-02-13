@@ -471,8 +471,47 @@ namespace ReviewMovie
                     }
                 }
 
+                // Thêm thông tin character usage (nếu có từ _voiceSourceInfo)
+                if (_voiceSourceInfo != null && _voiceSourceInfo.CharacterLimit.HasValue && _voiceSourceInfo.CharacterLimit.Value > 0)
+                {
+                    title += $" | {_voiceSourceInfo.CharacterUsed:N0}/{_voiceSourceInfo.CharacterLimit.Value:N0} ký tự";
+                }
+
                 this.Text = title;
             }
+        }
+
+        /// <summary>
+        /// Callback xử lý khi TTS usage API trả về thành công:
+        /// - Cập nhật characterUsed/characterLimit vào _voiceSourceInfo
+        /// - Rotate key in-memory nếu server trả key mới
+        /// - Update title hiển thị
+        /// </summary>
+        private void HandleTtsUsageUpdated(TtsUsageResponse usageResponse)
+        {
+            if (usageResponse == null || _voiceSourceInfo == null)
+                return;
+
+            // Cập nhật character usage
+            _voiceSourceInfo.CharacterUsed = usageResponse.CharacterUsed;
+            if (usageResponse.CharacterLimit.HasValue)
+                _voiceSourceInfo.CharacterLimit = usageResponse.CharacterLimit;
+
+            // Rotate key in-memory nếu server trả key mới
+            if (!string.IsNullOrEmpty(usageResponse.VoiceKey)
+                && (usageResponse.VoiceKey != _voiceSourceInfo.VoiceKey
+                    || usageResponse.KeyTs != _voiceSourceInfo.KeyTs))
+            {
+                _voiceSourceInfo.VoiceKey = usageResponse.VoiceKey;
+                _voiceSourceInfo.KeyTs = usageResponse.KeyTs;
+                _voiceSourceInfo.KeyVersion = usageResponse.KeyVersion;
+            }
+
+            // Update title trên UI thread
+            if (this.InvokeRequired)
+                this.Invoke(new Action(() => UpdateAppTitle()));
+            else
+                UpdateAppTitle();
         }
 
 
@@ -1580,6 +1619,13 @@ namespace ReviewMovie
                 AudioTempPath = _audioTempPath,
                 AppID = appIdToUse,
                 Token = txtToken.Text,
+
+                // TTS Usage Tracking
+                IsT2Psoft = selectedVoiceSource?.Value == ListVoiceSite.T2Psoft,
+                AppCode = _appcode,
+                ProductSlug = _appSlugID,
+                ApiRequest = _apiRequest,
+                OnTtsUsageUpdated = HandleTtsUsageUpdated,
 
                 // Lấy text input từ row index
                 GetInputTextByIndex = idx =>

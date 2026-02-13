@@ -1,4 +1,5 @@
-﻿using Lib;
+﻿using Common.Constant;
+using Lib;
 using Lib.VoiceServices.ElevenLabs;
 using Lib.VoiceServices.ElevenLabs.V1.Model;
 using Lib.VoiceServices.ElevenLabs.V1.Services;
@@ -115,11 +116,32 @@ namespace EasyClip.Services
 
             audioStatus = "Converting...";
             context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
-            // Có thể không cần update DB ở trạng thái "Converting..."
             context.SetStatusCallback?.Invoke($"Đang convert dòng {index}", Color.Green);
 
             try
             {
+                // Gọi usage API trước khi convert (chỉ khi dùng T2Psoft)
+                if (context.IsT2Psoft && context.ApiRequest != null)
+                {
+                    var usageResponse = await context.ApiRequest.LogTtsUsageAsync(
+                        context.AppCode,
+                        context.ProductSlug,
+                        inputText,
+                        LibConst.TtsSourceApp);
+
+                    if (usageResponse == null || !usageResponse.Success)
+                    {
+                        audioStatus = "Hết quota ký tự!";
+                        context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
+                        context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
+                        context.SetStatusCallback?.Invoke($"Dòng {index}: Không thể convert - hết quota hoặc lỗi server", Color.OrangeRed);
+                        return;
+                    }
+
+                    // Callback cập nhật characterUsed/characterLimit + rotate key in-memory
+                    context.OnTtsUsageUpdated?.Invoke(usageResponse);
+                }
+
                 switch (context.ManualSelected)
                 {
                     case ManualSelect.FptAI:
