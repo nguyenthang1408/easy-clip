@@ -477,6 +477,12 @@ namespace ReviewMovie
                     title += $" | {_voiceSourceInfo.CharacterUsed:N0}/{_voiceSourceInfo.CharacterLimit.Value:N0} ký tự";
                 }
 
+                // Thêm daily character usage (nếu gói có giới hạn daily)
+                if (_voiceSourceInfo != null && _voiceSourceInfo.DailyCharacterLimit.HasValue && _voiceSourceInfo.DailyCharacterLimit.Value > 0)
+                {
+                    title += $" | Hôm nay: {_voiceSourceInfo.DailyCharacterUsed:N0}/{_voiceSourceInfo.DailyCharacterLimit.Value:N0}";
+                }
+
                 this.Text = title;
             }
         }
@@ -492,10 +498,12 @@ namespace ReviewMovie
             if (usageResponse == null || _voiceSourceInfo == null)
                 return;
 
-            // Cập nhật character usage
+            // Cập nhật character usage (tổng + daily)
             _voiceSourceInfo.CharacterUsed = usageResponse.CharacterUsed;
             if (usageResponse.CharacterLimit.HasValue)
                 _voiceSourceInfo.CharacterLimit = usageResponse.CharacterLimit;
+            _voiceSourceInfo.DailyCharacterUsed = usageResponse.DailyCharacterUsed;
+            _voiceSourceInfo.DailyCharacterLimit = usageResponse.DailyCharacterLimit;
 
             // Rotate key in-memory nếu server trả key mới
             if (!string.IsNullOrEmpty(usageResponse.VoiceKey)

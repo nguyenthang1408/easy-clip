@@ -4,6 +4,7 @@ using Lib.VoiceServices.ElevenLabs;
 using Lib.VoiceServices.ElevenLabs.V1.Model;
 using Lib.VoiceServices.ElevenLabs.V1.Services;
 using Lib.VoiceServices.GoogleTTS;
+using LibCommon.Lib.Model.Package;
 using ReviewMovie.Infrastructure.Project;
 using ReviewMovie.Model;
 using System;
@@ -123,23 +124,37 @@ namespace EasyClip.Services
                 // Gọi usage API trước khi convert (chỉ khi dùng T2Psoft)
                 if (context.IsT2Psoft && context.ApiRequest != null)
                 {
-                    var usageResponse = await context.ApiRequest.LogTtsUsageAsync(
-                        context.AppCode,
-                        context.ProductSlug,
-                        inputText,
-                        LibConst.TtsSourceApp);
-
-                    if (usageResponse == null || !usageResponse.Success)
+                    ApiResponse<TtsUsageResponse> apiResponse;
+                    try
                     {
+                        apiResponse = await context.ApiRequest.LogTtsUsageAsync(
+                            context.AppCode,
+                            context.ProductSlug,
+                            inputText,
+                            LibConst.TtsSourceApp);
+                    }
+                    catch (Exception ex)
+                    {
+                        audioStatus = "Lỗi kết nối server!";
+                        context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
+                        context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
+                        context.SetStatusCallback?.Invoke($"Lỗi kết nối usage API: {ex.Message}", Color.OrangeRed);
+                        return;
+                    }
+
+                    // Server trả error (VD: daily limit exceeded, code 4005)
+                    if (apiResponse == null || apiResponse.Error || apiResponse.Data == null || !apiResponse.Data.Success)
+                    {
+                        string serverMsg = apiResponse?.Message ?? "Lỗi không xác định từ server";
                         audioStatus = "Hết quota ký tự!";
                         context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
                         context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
-                        context.SetStatusCallback?.Invoke($"Dòng {index}: Không thể convert - hết quota hoặc lỗi server", Color.OrangeRed);
+                        context.SetStatusCallback?.Invoke(serverMsg, Color.OrangeRed);
                         return;
                     }
 
                     // Callback cập nhật characterUsed/characterLimit + rotate key in-memory
-                    context.OnTtsUsageUpdated?.Invoke(usageResponse);
+                    context.OnTtsUsageUpdated?.Invoke(apiResponse.Data);
                 }
 
                 switch (context.ManualSelected)
