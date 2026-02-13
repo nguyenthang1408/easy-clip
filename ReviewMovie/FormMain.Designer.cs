@@ -142,10 +142,10 @@ namespace ReviewMovie
             this.btnRenderVideoPart = new ReviewMovie.Base.Controls.UiButton();
             this.btnConvertAudio = new ReviewMovie.Base.Controls.UiButton();
             this.btnSaveAudio = new ReviewMovie.Base.Controls.UiButton();
-            this.scMain = new System.Windows.Forms.SplitContainer();
-            this.scView = new System.Windows.Forms.SplitContainer();
+            this.scMain = new ReviewMovie.Base.Controls.UiSplitContainer();
+            this.scView = new ReviewMovie.Base.Controls.UiSplitContainer();
             this.btnExpand = new ReviewMovie.Base.Controls.UiButton();
-            this.scSetting = new System.Windows.Forms.SplitContainer();
+            this.scSetting = new ReviewMovie.Base.Controls.UiSplitContainer();
             this.btnCollapse = new ReviewMovie.Base.Controls.UiButton();
             this.rbCPUused = new ReviewMovie.Base.Controls.UiRadioButton();
             this.rbGPUused = new ReviewMovie.Base.Controls.UiRadioButton();
@@ -185,6 +185,7 @@ namespace ReviewMovie
             // ctMenu
             // 
             this.ctMenu.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ctMenu.Renderer = new ReviewMovie.Base.Controls.UiToolStripRenderer(new ReviewMovie.Base.Controls.UiToolStripColors());
             this.ctMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItemConvertTex2Speech,
             this.MenuItemDownAudio,
@@ -1177,6 +1178,7 @@ namespace ReviewMovie
             // tsMenuView
             // 
             this.tsMenuView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
+            this.tsMenuView.Renderer = new ReviewMovie.Base.Controls.UiToolStripRenderer(new ReviewMovie.Base.Controls.UiToolStripColors());
             this.tsMenuView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator6,
             this.btnSearch,
@@ -1773,11 +1775,11 @@ namespace ReviewMovie
         private ReviewMovie.Base.Controls.UiComboBox cbLanguageSelect;
         private ReviewMovie.Base.Controls.UiLabel label16;
         private ReviewMovie.Base.Controls.UiButton btnSaveVoiceSource;
-        private System.Windows.Forms.SplitContainer scMain;
+        private ReviewMovie.Base.Controls.UiSplitContainer scMain;
         private ReviewMovie.Base.Controls.UiButton btnCollapse;
         private ReviewMovie.Base.Controls.UiButton btnExpand;
-        private System.Windows.Forms.SplitContainer scView;
-        private System.Windows.Forms.SplitContainer scSetting;
+        private ReviewMovie.Base.Controls.UiSplitContainer scView;
+        private ReviewMovie.Base.Controls.UiSplitContainer scSetting;
         private ReviewMovie.Base.Controls.UiCheckBox ckRandomMoveLeftRight;
         private ReviewMovie.Base.Controls.UiButton btnSaveEffectSetting;
         private ReviewMovie.Base.Controls.UiComboBox cbSettingTemplate;
