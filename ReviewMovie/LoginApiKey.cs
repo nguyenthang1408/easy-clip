@@ -243,7 +243,7 @@ namespace ReviewMovie
                         // Nếu người dùng chọn No thì tiếp tục cho phép đăng nhập
                     }
                     // Đăng nhập thành công
-                    MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ShowLoginSuccessPopup("Đăng nhập thành công!");
 
                     // Mở form chính và đóng form đăng nhập
                     this.Hide();
@@ -285,6 +285,166 @@ namespace ReviewMovie
         private void linklbRegister_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://t2psoft.com/Home/Register");
+        }
+
+        private void ShowLoginSuccessPopup(string message)
+        {
+            using (var popup = new Form())
+            {
+                popup.FormBorderStyle = FormBorderStyle.None;
+                popup.StartPosition = FormStartPosition.CenterParent;
+                popup.ShowInTaskbar = false;
+                popup.TopMost = true;
+                popup.BackColor = Color.White;
+                popup.ClientSize = new Size(360, 190);
+                popup.Text = "Thông báo";
+                UiHelpers.EnableSmoothPainting(popup);
+
+                var panelRoot = new Panel
+                {
+                    Dock = DockStyle.Fill,
+                    BackColor = Color.White
+                };
+                popup.Controls.Add(panelRoot);
+
+                var panelHeader = new Panel
+                {
+                    Dock = DockStyle.Top,
+                    Height = 42,
+                    BackColor = Color.FromArgb(248, 249, 252)
+                };
+                panelRoot.Controls.Add(panelHeader);
+
+                var lblTitle = new Label
+                {
+                    AutoSize = true,
+                    Text = "Thông báo",
+                    Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point),
+                    ForeColor = Color.FromArgb(45, 53, 66),
+                    Location = new Point(14, 9)
+                };
+                panelHeader.Controls.Add(lblTitle);
+
+                var btnClose = new Button
+                {
+                    Text = "×",
+                    Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point),
+                    ForeColor = Color.FromArgb(110, 118, 133),
+                    FlatStyle = FlatStyle.Flat,
+                    Size = new Size(36, 30),
+                    Location = new Point(popup.ClientSize.Width - 44, 6),
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                    Cursor = Cursors.Hand,
+                    TabStop = false
+                };
+                btnClose.FlatAppearance.BorderSize = 0;
+                btnClose.FlatAppearance.MouseOverBackColor = Color.FromArgb(240, 243, 249);
+                btnClose.FlatAppearance.MouseDownBackColor = Color.FromArgb(226, 231, 241);
+                btnClose.Click += (_, __) =>
+                {
+                    popup.DialogResult = DialogResult.OK;
+                    popup.Close();
+                };
+                panelHeader.Controls.Add(btnClose);
+
+                var panelBody = new Panel
+                {
+                    Dock = DockStyle.Fill,
+                    BackColor = Color.White
+                };
+                panelRoot.Controls.Add(panelBody);
+
+                var iconCircle = new Panel
+                {
+                    Size = new Size(44, 44),
+                    Location = new Point(30, 36),
+                    BackColor = Color.FromArgb(24, 144, 255)
+                };
+                panelBody.Controls.Add(iconCircle);
+
+                var lblIcon = new Label
+                {
+                    Dock = DockStyle.Fill,
+                    Text = "i",
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point),
+                    ForeColor = Color.White
+                };
+                iconCircle.Controls.Add(lblIcon);
+
+                var lblMessage = new Label
+                {
+                    AutoSize = false,
+                    Text = message,
+                    Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point),
+                    ForeColor = Color.FromArgb(45, 53, 66),
+                    Location = new Point(88, 42),
+                    Size = new Size(245, 34),
+                    TextAlign = ContentAlignment.MiddleLeft
+                };
+                panelBody.Controls.Add(lblMessage);
+
+                var btnOk = new Button
+                {
+                    Text = "OK",
+                    Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point),
+                    ForeColor = Color.White,
+                    BackColor = Color.FromArgb(24, 119, 242),
+                    FlatStyle = FlatStyle.Flat,
+                    Size = new Size(104, 34),
+                    Location = new Point(popup.ClientSize.Width - 126, popup.ClientSize.Height - 50),
+                    Anchor = AnchorStyles.Bottom | AnchorStyles.Right,
+                    Cursor = Cursors.Hand,
+                    DialogResult = DialogResult.OK
+                };
+                btnOk.FlatAppearance.BorderSize = 0;
+                btnOk.FlatAppearance.MouseOverBackColor = Color.FromArgb(22, 111, 229);
+                btnOk.FlatAppearance.MouseDownBackColor = Color.FromArgb(20, 93, 191);
+                panelBody.Controls.Add(btnOk);
+                popup.AcceptButton = btnOk;
+                popup.CancelButton = btnOk;
+
+                panelRoot.Paint += (s, e) =>
+                {
+                    var rect = new Rectangle(0, 0, panelRoot.Width - 1, panelRoot.Height - 1);
+                    using (var pen = new Pen(Color.FromArgb(220, 226, 236), 1f))
+                    {
+                        e.Graphics.DrawRectangle(pen, rect);
+                    }
+                };
+                panelHeader.Paint += (s, e) =>
+                {
+                    using (var pen = new Pen(Color.FromArgb(228, 232, 240), 1f))
+                    {
+                        e.Graphics.DrawLine(pen, 0, panelHeader.Height - 1, panelHeader.Width, panelHeader.Height - 1);
+                    }
+                };
+
+                MouseEventHandler dragHandler = (s, e) =>
+                {
+                    if (e.Button != MouseButtons.Left) return;
+                    Win32.BeginDrag(popup);
+                };
+                panelHeader.MouseDown += dragHandler;
+                lblTitle.MouseDown += dragHandler;
+                panelBody.MouseDown += dragHandler;
+
+                popup.Shown += (s, e) =>
+                {
+                    UiHelpers.ApplyRoundRegion(popup, 12);
+                    UiHelpers.ApplyRoundRegion(iconCircle, iconCircle.Width / 2);
+                    UiHelpers.ApplyRoundRegion(btnOk, 8);
+                };
+                popup.Resize += (s, e) =>
+                {
+                    if (popup.Width > 0 && popup.Height > 0)
+                    {
+                        UiHelpers.ApplyRoundRegion(popup, 12);
+                    }
+                };
+
+                popup.ShowDialog(this);
+            }
         }
 
         private void LoginApiKey_Load(object sender, EventArgs e)
