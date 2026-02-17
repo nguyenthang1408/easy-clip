@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -66,7 +66,7 @@ namespace ReviewMovie
         }
 
 
-        public static void SetLabelText(Label label, string message, Color color)
+        public static void SetLabelText(Control label, string message, Color color)
         {
             if (label == null || label.IsDisposed) return;
 
