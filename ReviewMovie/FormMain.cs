@@ -1,4 +1,4 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Model;
 using Common.Services;
 using EasyClip.Base;
@@ -188,6 +188,18 @@ namespace ReviewMovie
             
             Init();
         }
+
+        private void HeaderArea_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+            Win32.BeginDrag(this);
+        }
+
+        private void btnHeaderClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             //CreateProjectPath();  // bỏ tạo project tại thư mục gốc
