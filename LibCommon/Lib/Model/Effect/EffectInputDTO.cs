@@ -25,6 +25,7 @@
     public class InputParamZoomV2Request
     {
         public string AppCode { get; set; }
+        public string ProductSlug { get; set; }
         public int Index { get; set; }
         public InputZoomFactor ZoomValueInput { get; set; }
         public string ZoomQualityInput { get; set; }
@@ -74,6 +75,7 @@
     public class BaseResponse
     {
         public bool IsSuccess { get; set; }
+        public int Code { get; set; }
         public string Message { get; set; }
     }
     public class CreateZoomResponse : BaseResponse {}
