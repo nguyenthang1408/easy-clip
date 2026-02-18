@@ -57,6 +57,7 @@
     <Compile Include="Services\ApiClientRequest.cs" />
     <Compile Include="Services\CheckVersionServices.cs" />
     <Compile Include="Services\CheckPackageService.cs" />
+    <Compile Include="Services\TtsUsageService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

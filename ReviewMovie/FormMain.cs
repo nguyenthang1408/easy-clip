@@ -311,6 +311,9 @@ namespace ReviewMovie
             // Load voice source info từ server
             await LoadVoiceSourceInfoAsync();
 
+            // Cập nhật title với thông tin character usage ngay sau khi có _voiceSourceInfo
+            UpdateAppTitle();
+
             DisplayItemDefault();
             // Không gọi loadApiKey() ở đây để giữ nguyên API KEY từ đăng nhập
             // Keys sẽ được load khi user chọn voice source khác
@@ -419,6 +422,7 @@ namespace ReviewMovie
         {
             if (_voiceSourceInfo == null
                 || string.IsNullOrEmpty(_voiceSourceInfo.VoiceKey)
+                || !_voiceSourceInfo.KeyTs.HasValue
                 || _packageInfo == null
                 || string.IsNullOrEmpty(_packageInfo.Email))
                 return null;
@@ -426,7 +430,7 @@ namespace ReviewMovie
             return VoiceKeyDecryptor.Decrypt(
                 _voiceSourceInfo.VoiceKey,
                 _packageInfo.Email,
-                _voiceSourceInfo.KeyTs);
+                _voiceSourceInfo.KeyTs.Value);
         }
 
         /// <summary>
@@ -471,8 +475,55 @@ namespace ReviewMovie
                     }
                 }
 
+                // Thêm thông tin character usage (nếu có từ _voiceSourceInfo)
+                if (_voiceSourceInfo != null && _voiceSourceInfo.CharacterLimit.HasValue && _voiceSourceInfo.CharacterLimit.Value > 0)
+                {
+                    title += $" | {_voiceSourceInfo.CharacterUsed:N0}/{_voiceSourceInfo.CharacterLimit.Value:N0} ký tự";
+                }
+
+                // Thêm daily character usage (nếu gói có giới hạn daily)
+                if (_voiceSourceInfo != null && _voiceSourceInfo.DailyCharacterLimit.HasValue && _voiceSourceInfo.DailyCharacterLimit.Value > 0)
+                {
+                    title += $" | Hôm nay: {_voiceSourceInfo.DailyCharacterUsed:N0}/{_voiceSourceInfo.DailyCharacterLimit.Value:N0}";
+                }
+
                 this.Text = title;
             }
+        }
+
+        /// <summary>
+        /// Callback xử lý khi TTS usage API trả về thành công:
+        /// - Cập nhật characterUsed/characterLimit vào _voiceSourceInfo
+        /// - Rotate key in-memory nếu server trả key mới
+        /// - Update title hiển thị
+        /// </summary>
+        private void HandleTtsUsageUpdated(TtsUsageResponse usageResponse)
+        {
+            if (usageResponse == null || _voiceSourceInfo == null)
+                return;
+
+            // Cập nhật character usage (tổng + daily)
+            _voiceSourceInfo.CharacterUsed = usageResponse.CharacterUsed;
+            if (usageResponse.CharacterLimit.HasValue)
+                _voiceSourceInfo.CharacterLimit = usageResponse.CharacterLimit;
+            _voiceSourceInfo.DailyCharacterUsed = usageResponse.DailyCharacterUsed;
+            _voiceSourceInfo.DailyCharacterLimit = usageResponse.DailyCharacterLimit;
+
+            // Rotate key in-memory nếu server trả key mới
+            if (!string.IsNullOrEmpty(usageResponse.VoiceKey)
+                && (usageResponse.VoiceKey != _voiceSourceInfo.VoiceKey
+                    || usageResponse.KeyTs != _voiceSourceInfo.KeyTs))
+            {
+                _voiceSourceInfo.VoiceKey = usageResponse.VoiceKey;
+                _voiceSourceInfo.KeyTs = usageResponse.KeyTs;
+                _voiceSourceInfo.KeyVersion = usageResponse.KeyVersion;
+            }
+
+            // Update title trên UI thread
+            if (this.InvokeRequired)
+                this.Invoke(new Action(() => UpdateAppTitle()));
+            else
+                UpdateAppTitle();
         }
 
 
@@ -565,6 +616,31 @@ namespace ReviewMovie
                 if (_voiceSourceInfo == null || !_voiceSourceInfo.IsSuccess)
                 {
                     MessageBox.Show("Không thể tải thông tin voice source từ server!");
+                    return;
+                }
+
+                // Kiểm tra character limits trước khi load voice
+                // Khi hết quota, server trả voiceType rỗng + voiceKey null
+                bool isDailyLimitExceeded = _voiceSourceInfo.DailyCharacterLimit.HasValue
+                    && _voiceSourceInfo.DailyCharacterUsed >= _voiceSourceInfo.DailyCharacterLimit.Value;
+
+                bool isTotalLimitExceeded = _voiceSourceInfo.CharacterLimit.HasValue
+                    && _voiceSourceInfo.CharacterLimit.Value > 0
+                    && _voiceSourceInfo.CharacterUsed >= _voiceSourceInfo.CharacterLimit.Value;
+
+                if (isDailyLimitExceeded || isTotalLimitExceeded)
+                {
+                    string limitMsg = isDailyLimitExceeded
+                        ? $"Đã hết ký tự hôm nay ({_voiceSourceInfo.DailyCharacterUsed:N0}/{_voiceSourceInfo.DailyCharacterLimit.Value:N0}). Vui lòng thử lại vào ngày mai."
+                        : $"Đã hết ký tự gói ({_voiceSourceInfo.CharacterUsed:N0}/{_voiceSourceInfo.CharacterLimit.Value:N0}). Vui lòng nâng cấp gói.";
+
+                    string tooltipDetail = $"Tổng ký tự: {_voiceSourceInfo.CharacterUsed:N0}/{(_voiceSourceInfo.CharacterLimit.HasValue ? _voiceSourceInfo.CharacterLimit.Value.ToString("N0") : "Không giới hạn")}"
+                        + (_voiceSourceInfo.DailyCharacterLimit.HasValue
+                            ? $"\nHôm nay: {_voiceSourceInfo.DailyCharacterUsed:N0}/{_voiceSourceInfo.DailyCharacterLimit.Value:N0}"
+                            : "");
+
+                    UIThreadHelper.SetLabelText(lblstatus, limitMsg, Color.OrangeRed, toolTipPL, tooltipDetail);
+                    UpdateAppTitle();
                     return;
                 }
 
@@ -1581,6 +1657,13 @@ namespace ReviewMovie
                 AppID = appIdToUse,
                 Token = txtToken.Text,
 
+                // TTS Usage Tracking
+                IsT2Psoft = selectedVoiceSource?.Value == ListVoiceSite.T2Psoft,
+                AppCode = _appcode,
+                ProductSlug = _appSlugID,
+                ApiRequest = _apiRequest,
+                OnTtsUsageUpdated = HandleTtsUsageUpdated,
+
                 // Lấy text input từ row index
                 GetInputTextByIndex = idx =>
                 {
@@ -1612,6 +1695,12 @@ namespace ReviewMovie
                 SetStatusCallback = (text, color) =>
                 {
                     UIThreadHelper.SetLabelText(lblstatus, text, color);
+                },
+
+                // Cập nhật trạng thái kèm tooltip chi tiết
+                SetStatusWithTooltipCallback = (text, color, tooltipText) =>
+                {
+                    UIThreadHelper.SetLabelText(lblstatus, text, color, toolTipPL, tooltipText);
                 },
 
                 // Thông báo (show MessageBox) khi batch khác đang chạy
