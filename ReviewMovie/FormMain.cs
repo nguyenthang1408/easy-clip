@@ -2662,6 +2662,7 @@ namespace ReviewMovie
                 var zoomParams = new InputParamZoomV2Request
                 {
                     AppCode = input.AppCode,
+                    ProductSlug = _appSlugID,
                     Index = input.Muted ? 0 : 1,
                     ZoomValueInput = new InputZoomFactor
                     {
@@ -2701,14 +2702,16 @@ namespace ReviewMovie
                     }
                     else
                     {
-                        message = "Server Error !";
+                        message = !string.IsNullOrEmpty(response.Message) ? response.Message : "Server Error !";
+                        UIThreadHelper.SetLabelText(lblstatus, message, Color.Red);
                         FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", message, Color.Red);
                         return;
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    message = "Server Error !";
+                    message = !string.IsNullOrEmpty(ex.Message) ? ex.Message : "Server Error !";
+                    UIThreadHelper.SetLabelText(lblstatus, message, Color.Red);
                     FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", message, Color.Red);
                     return;
                 }
@@ -2769,6 +2772,11 @@ namespace ReviewMovie
                 bool result = CFuncion.RunFFmpeg(Funcion.selectffmpegversion() + "\\ffmpeg.exe", argRender, token, progressCallback);
                 message = result ? "Done" : "Fail";
                 Color color = result ? Color.GreenYellow : Color.Red;
+
+                if (result)
+                    UIThreadHelper.SetLabelText(lblstatus, $"Part {input.Index + 1} render completed!", Color.GreenYellow);
+                else
+                    UIThreadHelper.SetLabelText(lblstatus, $"Part {input.Index + 1} render failed!", Color.Red);
 
                 FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", message, color);
             }
