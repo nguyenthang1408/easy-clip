@@ -2774,7 +2774,7 @@ namespace ReviewMovie
                 Color color = result ? Color.GreenYellow : Color.Red;
 
                 if (result)
-                    UIThreadHelper.SetLabelText(lblstatus, $"Part {input.Index + 1} render completed!", Color.GreenYellow);
+                    UIThreadHelper.SetLabelText(lblstatus, $"Part {input.Index + 1} render completed!", Color.DarkGreen);
                 else
                     UIThreadHelper.SetLabelText(lblstatus, $"Part {input.Index + 1} render failed!", Color.Red);
 
