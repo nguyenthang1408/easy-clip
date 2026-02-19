@@ -114,9 +114,15 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    lbstatus.Text = "API Key không hợp lệ, API cần được Kích Hoạt!";
+                    if (!string.IsNullOrEmpty(response.Message))
+                    {
+                        lbstatus.Text = response.Message;
+                    }
+                    else
+                    {
+                        lbstatus.Text = "API Key không hợp lệ, API cần được Kích Hoạt!";
+                    }
                     lbstatus.ForeColor = Color.Red;
-                    //MessageBox.Show("API Key không hợp lệ, API cần được Kích Hoạt!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch
