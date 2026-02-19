@@ -2773,6 +2773,11 @@ namespace ReviewMovie
                 message = result ? "Done" : "Fail";
                 Color color = result ? Color.GreenYellow : Color.Red;
 
+                if (result)
+                    UIThreadHelper.SetLabelText(lblstatus, $"Part {input.Index + 1} render completed!", Color.GreenYellow);
+                else
+                    UIThreadHelper.SetLabelText(lblstatus, $"Part {input.Index + 1} render failed!", Color.Red);
+
                 FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", message, color);
             }
             catch (OperationCanceledException)
