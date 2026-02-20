@@ -14,7 +14,10 @@ namespace Lib.VoiceServices.ElevenLabs
 
         public ApiClientRequest()
         {
-            _httpClient = new HttpClient();
+            _httpClient = new HttpClient
+            {
+                Timeout = NetworkConfig.Timeout
+            };
         }
 
         public async Task<HttpResponseMessage> GetAsync(string url, string apiKey)

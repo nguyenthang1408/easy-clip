@@ -1,18 +1,19 @@
-﻿using System;
+﻿using Lib;
+using LibCommon.Lib.Model.Package;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Lib;
-using System.Net.Http;
-using Common.Model;
 
 namespace Common.Services
 {
-    public class ApiClientRequest
+    public partial class ApiClientRequest
     {
         private readonly string _baseUrl;
         private readonly string _apiKey;
@@ -28,17 +29,23 @@ namespace Common.Services
             };
         }
 
-        public async Task<VersionResponse> ReviewMovieVersionAsync()
+        public async Task<GetVersionResponse> EasyClipVersionAsync(string appCode, string appSlugID)
         {
-            string requestUrl = _baseUrl + "/api/v1/GetVersion/ReviewMovie";
-            var response = await SendPostRequestAsync<VersionResponse>(_apiKey, requestUrl, null);
+            string requestUrl = _baseUrl + "/api/v1/GetVersion/EasyClip";
+            //string requestUrl = "http://localhost:3000/api/check";
+            var requestBody = new GetVersionRequest
+            {
+                AppCode = appCode,
+                ProductSlug = appSlugID
+            };
+            var response = await SendPostRequestAsync<GetVersionResponse>(_apiKey, requestUrl, requestBody);
             return response;
         }
 
-        public async Task<VersionResponse> CutVideoVersionAsync()
+        public async Task<GetVersionResponse> CutVideoVersionAsync()
         {
             string requestUrl = _baseUrl + "/api/v1/GetVersion/CutVideo";
-            var response = await SendPostRequestAsync<VersionResponse>(_apiKey, requestUrl, null);
+            var response = await SendPostRequestAsync<GetVersionResponse>(_apiKey, requestUrl, null);
             return response;
         }
 
@@ -58,7 +65,7 @@ namespace Common.Services
                 _httpClient.DefaultRequestHeaders.Add("X-Version", "1.0");
                 _httpClient.DefaultRequestHeaders.Add("X-API-KEY", apikey);
 
-                string jsonBody = requestBody != null ? JsonConvert.SerializeObject(new { requestBody }) : string.Empty;
+                string jsonBody = requestBody != null ? JsonConvert.SerializeObject(requestBody) : string.Empty;
                 HttpContent content = string.IsNullOrEmpty(jsonBody) ? null : new StringContent(jsonBody, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await _httpClient.PostAsync(requestUrl, content);
 

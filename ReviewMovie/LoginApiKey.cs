@@ -2,18 +2,16 @@
 using Common.Services;
 using EasyClip.Infrastructure.Config;
 using Lib;
-using ReviewMovie.Infrastructure.Config;
+using LibCommon.Lib;
 using System;
 using System.Drawing;
-using System.IO;
-using System.Net.Http;
 using System.Windows.Forms;
 
 namespace ReviewMovie
 {
     public partial class LoginApiKey : Form
     {
-        private string AppVersion { get; } = "2.0.0"; // Định nghĩa phiên bản ứng dụng
+        private string AppVersion { get; } = "1.0.1"; // Định nghĩa phiên bản ứng dụng
         private readonly AppCodeService appCodeService;
         private readonly IConfigDataService _configService;
 
@@ -73,10 +71,22 @@ namespace ReviewMovie
 
             try
             {
+                // Lấy appCode từ service
+                string appCode = appCodeService.GetAppCode();
+                string appSlugID = "easy-clip101"; // Mã SlugID của product - {101 là v1.0.1}, confirm admin nếu thấy thay đổi version
+
                 var request = new ApiClientRequest(LibConst.UrlServer, apiKey);
-                var response = await request.ReviewMovieVersionAsync();
+                var response = await request.EasyClipVersionAsync(appCode, appSlugID);
                 if (response.IsSuccess)
                 {
+                    // Code 2001: Tài khoản hợp lệ nhưng chưa kích hoạt gói hoặc gói đã hết hạn
+                    if (response.Code == VersionMessageHelper.CodeSuccessNoSubscription)
+                    {
+                        lbstatus.Text = VersionMessageHelper.GetVietnameseMessage(response.Code);
+                        lbstatus.ForeColor = Color.OrangeRed;
+                        return;
+                    }
+
                     string currentVersion = AppVersion;
                     string latestVersion = response.Version;
                     var checkver = new CheckVersionServices();
@@ -100,9 +110,9 @@ namespace ReviewMovie
                     // Đăng nhập thành công
                     MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Mở form chính và đóng form đăng nhập
+                    // Mở form chính và đóng form đăng nhập, truyền response để tránh gọi API lần 2
                     this.Hide();
-                    FormMain mainForm = new FormMain(txAppCodeShow.Text, txInsertApiKey.Text);
+                    FormMain mainForm = new FormMain(appCode, appSlugID, txInsertApiKey.Text, response);
 
                     mainForm.ShowDialog();
                     // Sau khi đóng form chính, thoát ứng dụng
@@ -110,9 +120,9 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    lbstatus.Text = "API Key không hợp lệ, API cần được Kích Hoạt!";
+                    // Hiển thị thông báo tiếng Việt dựa trên mã code từ server
+                    lbstatus.Text = VersionMessageHelper.GetVietnameseMessage(response.Code);
                     lbstatus.ForeColor = Color.Red;
-                    //MessageBox.Show("API Key không hợp lệ, API cần được Kích Hoạt!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch

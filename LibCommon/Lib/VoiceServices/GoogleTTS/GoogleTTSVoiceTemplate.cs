@@ -35,6 +35,7 @@ namespace Lib.VoiceServices.GoogleTTS
                     .Distinct()
                     .ToList();
 
+                string languageString = string.Join(", ", languages);
                 // Tạo danh sách ComboBoxItem
                 var comboBoxItems = new List<ComboboxModel>();
                 foreach (var languageCode in languages)

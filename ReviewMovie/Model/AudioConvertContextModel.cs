@@ -1,8 +1,10 @@
-﻿using Lib;
+﻿using Common.Services;
+using Lib;
 using Lib.VoiceServices.ElevenLabs;
 using Lib.VoiceServices.ElevenLabs.V1;
 using Lib.VoiceServices.ElevenLabs.V1.Model;
 using Lib.VoiceServices.ElevenLabs.V1.Services;
+using LibCommon.Lib.Model.Package;
 using ReviewMovie.Infrastructure.Project;
 using System;
 using System.Collections.Generic;
@@ -27,6 +29,33 @@ namespace ReviewMovie.Model
         public string AppID { get; set; }
         public string Token { get; set; }
 
+        // --- TTS Usage Tracking (chỉ dùng khi IsT2Psoft = true) ---
+
+        /// <summary>
+        /// True nếu đang dùng nguồn T2Psoft (cần gọi usage API trước khi convert)
+        /// </summary>
+        public bool IsT2Psoft { get; set; }
+
+        /// <summary>
+        /// App code (hard disk serial) để gửi lên server
+        /// </summary>
+        public string AppCode { get; set; }
+
+        /// <summary>
+        /// Product slug (VD: "easy-clip101") để gửi lên server
+        /// </summary>
+        public string ProductSlug { get; set; }
+
+        /// <summary>
+        /// ApiClientRequest instance để gọi API server
+        /// </summary>
+        public Common.Services.ApiClientRequest ApiRequest { get; set; }
+
+        /// <summary>
+        /// Callback khi usage API trả về thành công: cập nhật characterUsed/characterLimit + rotate key
+        /// </summary>
+        public Action<TtsUsageResponse> OnTtsUsageUpdated { get; set; }
+
         /// <summary>
         /// Truy xuất input text theo index dòng (index => inputText)
         /// </summary>
@@ -41,6 +70,11 @@ namespace ReviewMovie.Model
         /// Cập nhật status tổng thể (text, color)
         /// </summary>
         public Action<string, Color> SetStatusCallback { get; set; }
+
+        /// <summary>
+        /// Cập nhật status kèm tooltip chi tiết (text, color, tooltipText)
+        /// </summary>
+        public Action<string, Color, string> SetStatusWithTooltipCallback { get; set; }
 
         /// <summary>
         /// (Tùy chọn) Cập nhật text cho button/label nếu muốn
