@@ -1,4 +1,6 @@
-﻿using Google.Apis.Auth.OAuth2;
+﻿using Google.Api.Gax;
+using Google.Api.Gax.Grpc;
+using Google.Apis.Auth.OAuth2;
 using Google.Cloud.TextToSpeech.V1;
 using Grpc.Auth;
 using Grpc.Core;
@@ -57,9 +59,20 @@ namespace Lib.VoiceServices.GoogleTTS
             }
         }
 
+        // Timeout cho gRPC calls tránh treo app khi mất mạng
+        private static readonly CallSettings _callSettings = CallSettings.FromExpiration(
+            Expiration.FromTimeout(NetworkConfig.Timeout));
+
         public ListVoicesResponse listVoicesResponse(TextToSpeechClient client)
         {
-            return client?.ListVoices(new ListVoicesRequest()) ?? null;
+            try
+            {
+                return client?.ListVoices(new ListVoicesRequest(), _callSettings);
+            }
+            catch (RpcException)
+            {
+                return null;
+            }
         }
 
         public ConversionResult ConvertTextToSpeech(string jsonData, string textInput, string voiceCode, string savePath)
@@ -92,8 +105,8 @@ namespace Lib.VoiceServices.GoogleTTS
                     AudioEncoding = AudioEncoding.Mp3
                 };
 
-                // Gửi yêu cầu đến API và nhận phản hồi
-                var response = client.SynthesizeSpeech(synthesisInput, voiceParams, audioConfig);
+                // Gửi yêu cầu đến API và nhận phản hồi (timeout 7s)
+                var response = client.SynthesizeSpeech(synthesisInput, voiceParams, audioConfig, _callSettings);
 
                 // Kiểm tra dữ liệu âm thanh trả về
                 if (response.AudioContent == null || response.AudioContent.Length == 0)
@@ -113,7 +126,7 @@ namespace Lib.VoiceServices.GoogleTTS
 
         private string GetLanguageCodeFromVoice(TextToSpeechClient client, string voiceName)
         {
-            var response = client.ListVoices(new ListVoicesRequest());
+            var response = client.ListVoices(new ListVoicesRequest(), _callSettings);
             var voice = response.Voices.FirstOrDefault(v => v.Name == voiceName);
             return voice?.LanguageCodes.FirstOrDefault() ?? "en-US"; // Mặc định là tiếng Anh (Mỹ)
         }

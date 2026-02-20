@@ -1,4 +1,4 @@
-﻿
+
 namespace Common.Constant
 {
     public class LibConst
@@ -13,6 +13,11 @@ namespace Common.Constant
         public const string AppName = "EasyClip";
         public const string DBName = "config.db";
         public const string DBNameBackup = "config_backup.bak";
+
+        /// <summary>
+        /// Source identifier gửi lên server khi log TTS usage
+        /// </summary>
+        public const string TtsSourceApp = "easy-clip101";
     }
 
 }

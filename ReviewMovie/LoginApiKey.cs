@@ -2,11 +2,9 @@
 using Common.Services;
 using EasyClip.Infrastructure.Config;
 using Lib;
-using ReviewMovie.Infrastructure.Config;
+using LibCommon.Lib;
 using System;
 using System.Drawing;
-using System.IO;
-using System.Net.Http;
 using System.Windows.Forms;
 
 namespace ReviewMovie
@@ -81,6 +79,14 @@ namespace ReviewMovie
                 var response = await request.EasyClipVersionAsync(appCode, appSlugID);
                 if (response.IsSuccess)
                 {
+                    // Code 2001: Tài khoản hợp lệ nhưng chưa kích hoạt gói hoặc gói đã hết hạn
+                    if (response.Code == VersionMessageHelper.CodeSuccessNoSubscription)
+                    {
+                        lbstatus.Text = VersionMessageHelper.GetVietnameseMessage(response.Code);
+                        lbstatus.ForeColor = Color.OrangeRed;
+                        return;
+                    }
+
                     string currentVersion = AppVersion;
                     string latestVersion = response.Version;
                     var checkver = new CheckVersionServices();
@@ -114,9 +120,9 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    lbstatus.Text = "API Key không hợp lệ, API cần được Kích Hoạt!";
+                    // Hiển thị thông báo tiếng Việt dựa trên mã code từ server
+                    lbstatus.Text = VersionMessageHelper.GetVietnameseMessage(response.Code);
                     lbstatus.ForeColor = Color.Red;
-                    //MessageBox.Show("API Key không hợp lệ, API cần được Kích Hoạt!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch

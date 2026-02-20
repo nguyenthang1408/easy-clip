@@ -66,7 +66,7 @@ namespace ReviewMovie
         }
 
 
-        public static void SetLabelText(Label label, string message, Color color)
+        public static void SetLabelText(Label label, string message, Color color, ToolTip toolTip = null, string tooltipText = null)
         {
             if (label == null || label.IsDisposed) return;
 
@@ -80,6 +80,8 @@ namespace ReviewMovie
                         {
                             label.ForeColor = color;
                             label.Text = message;
+                            if (toolTip != null)
+                                toolTip.SetToolTip(label, tooltipText ?? string.Empty);
                         }
                     }));
                 }
@@ -87,6 +89,8 @@ namespace ReviewMovie
                 {
                     label.ForeColor = color;
                     label.Text = message;
+                    if (toolTip != null)
+                        toolTip.SetToolTip(label, tooltipText ?? string.Empty);
                 }
             }
             catch (ObjectDisposedException)
