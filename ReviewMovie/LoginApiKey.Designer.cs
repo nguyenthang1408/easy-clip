@@ -46,7 +46,7 @@
             this.btnLoginApiKey.Depth = 0;
             this.btnLoginApiKey.HighEmphasis = true;
             this.btnLoginApiKey.Icon = null;
-            this.btnLoginApiKey.Location = new System.Drawing.Point(168, 244);
+            this.btnLoginApiKey.Location = new System.Drawing.Point(168, 264);
             this.btnLoginApiKey.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnLoginApiKey.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnLoginApiKey.Name = "btnLoginApiKey";
@@ -123,7 +123,7 @@
             this.lkHelp.AutoSize = true;
             this.lkHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lkHelp.LinkColor = System.Drawing.Color.Blue;
-            this.lkHelp.Location = new System.Drawing.Point(350, 268);
+            this.lkHelp.Location = new System.Drawing.Point(350, 288);
             this.lkHelp.Name = "lkHelp";
             this.lkHelp.Size = new System.Drawing.Size(82, 20);
             this.lkHelp.TabIndex = 7;
@@ -133,11 +133,10 @@
             // 
             // lbstatus
             // 
-            this.lbstatus.AutoSize = false;
+            this.lbstatus.AutoSize = true;
             this.lbstatus.MaximumSize = new System.Drawing.Size(312, 0);
-            this.lbstatus.Size = new System.Drawing.Size(312, 30);
             this.lbstatus.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lbstatus.Location = new System.Drawing.Point(64, 208);
+            this.lbstatus.Location = new System.Drawing.Point(67, 208);
             this.lbstatus.Name = "lbstatus";
             this.lbstatus.TabIndex = 8;
             this.lbstatus.Text = "_";
@@ -147,7 +146,7 @@
             this.linklbRegister.AutoSize = true;
             this.linklbRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linklbRegister.LinkColor = System.Drawing.Color.Red;
-            this.linklbRegister.Location = new System.Drawing.Point(350, 244);
+            this.linklbRegister.Location = new System.Drawing.Point(350, 264);
             this.linklbRegister.Name = "linklbRegister";
             this.linklbRegister.Size = new System.Drawing.Size(79, 20);
             this.linklbRegister.TabIndex = 9;
@@ -159,9 +158,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(441, 301);
-            this.Controls.Add(this.linklbRegister);
+            this.ClientSize = new System.Drawing.Size(441, 321);
             this.Controls.Add(this.lbstatus);
+            this.Controls.Add(this.linklbRegister);
             this.Controls.Add(this.lkHelp);
             this.Controls.Add(this.materialLabel2);
             this.Controls.Add(this.txInsertApiKey);
