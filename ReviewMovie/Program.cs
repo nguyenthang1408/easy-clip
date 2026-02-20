@@ -1,4 +1,6 @@
-﻿using System;
+using LibCommon.Lib;
+using ReviewMovie.Localization;
+using System;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -9,20 +11,15 @@ namespace ReviewMovie
         // Mutex để kiểm tra xem ứng dụng đã chạy hay chưa
         static Mutex mutex = new Mutex(true, "{868B3366-2A9A-40B5-9BB8-64475CC34735}");
 
-        ///// <summary>
-        ///// The main entry point for the application.
-        ///// </summary>
-        //[STAThread]
-        //static void Main()
-        //{
-        //    Application.EnableVisualStyles();
-        //    Application.SetCompatibleTextRenderingDefault(false);
-        //    Application.Run(new FormMain());
-        //}
-
         [STAThread]
         static void Main()
         {
+            // Load ngôn ngữ đã lưu
+            LanguageManager.LoadSavedLanguage();
+
+            // Wire up VersionMessageHelper localization delegate
+            VersionMessageHelper.GetLocalizedText = LanguageManager.Get;
+
             // Kiểm tra xem ứng dụng đã chạy hay chưa
             if (mutex.WaitOne(TimeSpan.Zero, true))
             {
@@ -35,8 +32,8 @@ namespace ReviewMovie
             {
                 // Nếu ứng dụng đã chạy, hiển thị hộp thoại xác nhận
                 DialogResult result = MessageBox.Show(
-                    "Ứng dụng đã chạy. Bạn có muốn mở thêm một phiên bản không?",
-                    "Thông báo",
+                    LanguageManager.Get(LangKeys.Program_AlreadyRunning),
+                    LanguageManager.Get(LangKeys.Common_Notice),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
 

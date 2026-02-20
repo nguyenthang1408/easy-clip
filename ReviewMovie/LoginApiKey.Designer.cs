@@ -1,4 +1,4 @@
-﻿namespace ReviewMovie
+namespace ReviewMovie
 {
     partial class LoginApiKey
     {
@@ -37,10 +37,24 @@
             this.lkHelp = new System.Windows.Forms.LinkLabel();
             this.lbstatus = new System.Windows.Forms.Label();
             this.linklbRegister = new System.Windows.Forms.LinkLabel();
+            this.cbAppLanguage = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
-            // 
+            //
+            // cbAppLanguage
+            //
+            this.cbAppLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAppLanguage.FormattingEnabled = true;
+            this.cbAppLanguage.Items.AddRange(new object[] {
+            "Tiếng Việt",
+            "English"});
+            this.cbAppLanguage.Location = new System.Drawing.Point(33, 264);
+            this.cbAppLanguage.Name = "cbAppLanguage";
+            this.cbAppLanguage.Size = new System.Drawing.Size(120, 21);
+            this.cbAppLanguage.TabIndex = 10;
+            this.cbAppLanguage.SelectedIndexChanged += new System.EventHandler(this.cbAppLanguage_SelectedIndexChanged);
+            //
             // btnLoginApiKey
-            // 
+            //
             this.btnLoginApiKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnLoginApiKey.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnLoginApiKey.Depth = 0;
@@ -58,9 +72,9 @@
             this.btnLoginApiKey.UseAccentColor = false;
             this.btnLoginApiKey.UseVisualStyleBackColor = true;
             this.btnLoginApiKey.Click += new System.EventHandler(this.btnLoginApiKey_Click);
-            // 
+            //
             // txAppCodeShow
-            // 
+            //
             this.txAppCodeShow.AnimateReadOnly = false;
             this.txAppCodeShow.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txAppCodeShow.Depth = 0;
@@ -76,9 +90,9 @@
             this.txAppCodeShow.TabIndex = 2;
             this.txAppCodeShow.Text = "";
             this.txAppCodeShow.TrailingIcon = null;
-            // 
+            //
             // materialLabel1
-            // 
+            //
             this.materialLabel1.AutoSize = true;
             this.materialLabel1.Depth = 0;
             this.materialLabel1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -88,9 +102,9 @@
             this.materialLabel1.Size = new System.Drawing.Size(76, 19);
             this.materialLabel1.TabIndex = 4;
             this.materialLabel1.Text = "APP CODE";
-            // 
+            //
             // txInsertApiKey
-            // 
+            //
             this.txInsertApiKey.AnimateReadOnly = false;
             this.txInsertApiKey.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txInsertApiKey.Depth = 0;
@@ -105,9 +119,9 @@
             this.txInsertApiKey.TabIndex = 5;
             this.txInsertApiKey.Text = "";
             this.txInsertApiKey.TrailingIcon = null;
-            // 
+            //
             // materialLabel2
-            // 
+            //
             this.materialLabel2.AutoSize = true;
             this.materialLabel2.Depth = 0;
             this.materialLabel2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -117,9 +131,9 @@
             this.materialLabel2.Size = new System.Drawing.Size(58, 19);
             this.materialLabel2.TabIndex = 6;
             this.materialLabel2.Text = "API KEY";
-            // 
+            //
             // lkHelp
-            // 
+            //
             this.lkHelp.AutoSize = true;
             this.lkHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lkHelp.LinkColor = System.Drawing.Color.Blue;
@@ -130,9 +144,9 @@
             this.lkHelp.TabStop = true;
             this.lkHelp.Text = "Trợ Giúp";
             this.lkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lkHelp_LinkClicked);
-            // 
+            //
             // lbstatus
-            // 
+            //
             this.lbstatus.AutoSize = true;
             this.lbstatus.MaximumSize = new System.Drawing.Size(312, 0);
             this.lbstatus.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -140,9 +154,9 @@
             this.lbstatus.Name = "lbstatus";
             this.lbstatus.TabIndex = 8;
             this.lbstatus.Text = "_";
-            // 
+            //
             // linklbRegister
-            // 
+            //
             this.linklbRegister.AutoSize = true;
             this.linklbRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linklbRegister.LinkColor = System.Drawing.Color.Red;
@@ -153,12 +167,13 @@
             this.linklbRegister.TabStop = true;
             this.linklbRegister.Text = "Đăng Ký";
             this.linklbRegister.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklbRegister_LinkClicked);
-            // 
+            //
             // LoginApiKey
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(441, 321);
+            this.Controls.Add(this.cbAppLanguage);
             this.Controls.Add(this.lbstatus);
             this.Controls.Add(this.linklbRegister);
             this.Controls.Add(this.lkHelp);
@@ -190,5 +205,6 @@
         private System.Windows.Forms.LinkLabel lkHelp;
         private System.Windows.Forms.Label lbstatus;
         private System.Windows.Forms.LinkLabel linklbRegister;
+        private System.Windows.Forms.ComboBox cbAppLanguage;
     }
 }

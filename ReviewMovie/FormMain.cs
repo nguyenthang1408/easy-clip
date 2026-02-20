@@ -18,6 +18,7 @@ using LibCommon.Lib.Security;
 using ReviewMovie.Base;
 using ReviewMovie.Infrastructure.Config;
 using ReviewMovie.Infrastructure.Project;
+using ReviewMovie.Localization;
 using ReviewMovie.Model;
 using ReviewMovie.Services;
 using SubtitlesParser;
@@ -36,7 +37,7 @@ using System.Windows.Forms;
 
 namespace ReviewMovie
 {
-    public partial class FormMain : Form
+    public partial class FormMain : Form, ILocalizable
     {
         private readonly IClipPlayerService _clipPlayerService = new ClipPlayerService();
 
@@ -61,8 +62,8 @@ namespace ReviewMovie
 
         #region Const_Variable
 
-        const string ERR_PROJECT_EMPTY = "Nhập Đường Dẫn & Khởi Tạo Project !";
-        const string ERR_ROW_INDEX = "Chọn 1 Row để nạp thông tin !";
+        static string ERR_PROJECT_EMPTY => LanguageManager.Get(LangKeys.Main_ErrProjectEmpty);
+        static string ERR_ROW_INDEX => LanguageManager.Get(LangKeys.Main_ErrRowIndex);
 
         const long MAX_SIZE_BYTES = 1 * 1024 * 1024; // 1 MB = 1,048,576 bytes
 
@@ -200,7 +201,11 @@ namespace ReviewMovie
             // Khởi tạo config nếu chưa có (chưa chứa project)
             _loadConfig = new LoadConfigDataServices(_configService, _projectService);
             _loadConfig.InitOrUpdateBaseConfig(_apikey, (_voiceSourceInfo != null ? _voiceSourceInfo.VoiceKey : "???"), (_voiceSourceInfo != null ? _voiceSourceInfo.VoiceKey : "???"), txtToken.Text);
-            
+
+            // Subscribe language change and apply
+            LanguageManager.LanguageChanged += ApplyLanguage;
+            ApplyLanguage();
+
             Init();
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -297,6 +302,78 @@ namespace ReviewMovie
             }
             return true;
         }
+
+        public void ApplyLanguage()
+        {
+            // Settings panel
+            grboxSetting.Text = LanguageManager.Get(LangKeys.Main_Settings);
+            label2.Text = LanguageManager.Get(LangKeys.Main_Project);
+            btnOpenProject.Text = LanguageManager.Get(LangKeys.Main_Create);
+            grbConfigVoice.Text = LanguageManager.Get(LangKeys.Main_VoiceSettings);
+            label1.Text = LanguageManager.Get(LangKeys.Main_VoiceSource);
+            btnSaveVoiceSource.Text = LanguageManager.Get(LangKeys.Common_Save);
+
+            // Effect settings
+            grbConfigRender.Text = LanguageManager.Get(LangKeys.Main_EffectSettings);
+            label9.Text = LanguageManager.Get(LangKeys.Main_ZoomUp);
+            label11.Text = LanguageManager.Get(LangKeys.Main_ZQuality);
+            label7.Text = LanguageManager.Get(LangKeys.Main_Quality);
+            label5.Text = LanguageManager.Get(LangKeys.Main_VoiceType);
+            label6.Text = LanguageManager.Get(LangKeys.Main_SpeechSpeed);
+            label10.Text = LanguageManager.Get(LangKeys.Main_FpsInput);
+            label13.Text = LanguageManager.Get(LangKeys.Main_Thread);
+            label12.Text = LanguageManager.Get(LangKeys.Main_SelectionMode);
+            label8.Text = LanguageManager.Get(LangKeys.Main_EffectType);
+            CkZoom.Text = LanguageManager.Get(LangKeys.Main_ZoomVideo);
+            ckRotate.Text = LanguageManager.Get(LangKeys.Main_RotateVideo);
+            ckHflip.Text = LanguageManager.Get(LangKeys.Main_FlipVideo);
+            ckHflipRandom.Text = LanguageManager.Get(LangKeys.Main_FlipRandom);
+            ckRandomMoveLeftRight.Text = LanguageManager.Get(LangKeys.Main_LayerAutoMove);
+            label15.Text = LanguageManager.Get(LangKeys.Main_AudioScale);
+            label4.Text = LanguageManager.Get(LangKeys.Main_OriginalVolume);
+            ckNotUseAudio.Text = LanguageManager.Get(LangKeys.Main_NoAudio);
+            label16.Text = LanguageManager.Get(LangKeys.Main_Language);
+            label17.Text = LanguageManager.Get(LangKeys.Main_Config);
+            ckOpenPlayer.Text = LanguageManager.Get(LangKeys.Main_AutoOpenPlayer);
+            btnSaveEffectSetting.Text = LanguageManager.Get(LangKeys.Common_Save);
+
+            // Render section
+            grbActionRender.Text = LanguageManager.Get(LangKeys.Main_PublishVideo);
+            btnAddAll.Text = LanguageManager.Get(LangKeys.Main_MergeClips);
+
+            // Content header
+            grViewHeader.Text = LanguageManager.Get(LangKeys.Main_MicIn);
+            lbHeaderInputMedia.Text = LanguageManager.Get(LangKeys.Main_DragDropMedia);
+            lbHeaderText.Text = LanguageManager.Get(LangKeys.Main_InputTextHeader);
+
+            // Toolbar
+            lbTitle.Text = LanguageManager.Get(LangKeys.Main_SelectTask);
+            btnSelectAll.Text = LanguageManager.Get(LangKeys.Main_SelectDeselectAll);
+            btnAddRow.Text = LanguageManager.Get(LangKeys.Main_AddNewRow);
+            btnImportSubtitle.Text = LanguageManager.Get(LangKeys.Main_ImportSubtitle);
+            btnDestroyAction.Text = LanguageManager.Get(LangKeys.Main_CancelAllOps);
+            txtTim.ToolTipText = LanguageManager.Get(LangKeys.Main_SearchTooltip);
+
+            // Context menu
+            MenuItemConvertTex2Speech.Text = LanguageManager.Get(LangKeys.Main_ConvertText2Voice);
+            MenuItemDownAudio.Text = LanguageManager.Get(LangKeys.Main_DownloadConvertedAudio);
+            MenuItemPartRender.Text = LanguageManager.Get(LangKeys.Main_CreateVideoFromMedia);
+            MenuItemReloadVideoTime.Text = LanguageManager.Get(LangKeys.Main_ReloadVideoTime);
+            tsMenuDeleteRow.Text = LanguageManager.Get(LangKeys.Main_DeleteSelectedRows);
+
+            // Context menu sub-items
+            ConvertTex2SpeechAll.Text = LanguageManager.Get(LangKeys.Common_SelectAll);
+            ConvertTex2SpeechSelect.Text = LanguageManager.Get(LangKeys.Common_SelectGroup);
+            DownAudioAll.Text = LanguageManager.Get(LangKeys.Common_SelectAll);
+            DownAudioAllSelect.Text = LanguageManager.Get(LangKeys.Common_SelectGroup);
+            PartRenderAll.Text = LanguageManager.Get(LangKeys.Common_SelectAll);
+            PartRenderSelect.Text = LanguageManager.Get(LangKeys.Common_SelectGroup);
+            tsMAll.Text = LanguageManager.Get(LangKeys.Common_SelectAll);
+            tsMSelected.Text = LanguageManager.Get(LangKeys.Common_SelectGroup);
+
+            // Update title
+            UpdateAppTitle();
+        }
         private async void Init()
         {
             // Set flag để prevent event handlers chạy trước khi init xong
@@ -345,8 +422,8 @@ namespace ReviewMovie
                     if (!_packageInfo.IsDataValid())
                     {
                         MessageBox.Show(
-                            "Dữ liệu từ server không hợp lệ. Vui lòng liên hệ hỗ trợ.",
-                            "Lỗi dữ liệu",
+                            LanguageManager.Get(LangKeys.Main_InvalidServerData),
+                            LanguageManager.Get(LangKeys.Main_InvalidServerDataTitle),
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
                         Environment.Exit(0);
@@ -362,8 +439,8 @@ namespace ReviewMovie
                 else
                 {
                     MessageBox.Show(
-                        "Xác thực tài khoản thất bại. Vui lòng đăng nhập lại.",
-                        "Lỗi xác thực",
+                        LanguageManager.Get(LangKeys.Main_AuthFailed),
+                        LanguageManager.Get(LangKeys.Main_AuthFailedTitle),
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     Environment.Exit(0);
@@ -374,8 +451,8 @@ namespace ReviewMovie
             {
                 Console.WriteLine($"Error loading package info: {ex.Message}");
                 MessageBox.Show(
-                    "Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng và thử lại.",
-                    "Lỗi kết nối",
+                    LanguageManager.Get(LangKeys.Main_ConnectionError),
+                    LanguageManager.Get(LangKeys.Main_ConnectionErrorTitle),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 Environment.Exit(0);
@@ -395,8 +472,8 @@ namespace ReviewMovie
                 if (_voiceSourceInfo == null || !_voiceSourceInfo.IsSuccess)
                 {
                     MessageBox.Show(
-                        "Không thể lấy thông tin voice source từ server.",
-                        "Lỗi dữ liệu",
+                        LanguageManager.Get(LangKeys.Main_CannotLoadVoiceSource),
+                        LanguageManager.Get(LangKeys.Main_InvalidServerDataTitle),
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     Environment.Exit(0);
@@ -406,8 +483,8 @@ namespace ReviewMovie
             catch (Exception)
             {
                 MessageBox.Show(
-                    "Nguồn Âm Thanh bị lỗi. Khởi động lại App !",
-                    "Lỗi kết nối",
+                    LanguageManager.Get(LangKeys.Main_VoiceSourceError),
+                    LanguageManager.Get(LangKeys.Main_VoiceSourceErrorTitle),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 Environment.Exit(0);
@@ -463,28 +540,28 @@ namespace ReviewMovie
                     int daysRemaining = _packageInfo.GetDaysRemaining();
                     if (daysRemaining > 0)
                     {
-                        title += $" - {daysRemaining} ngày còn lại";
+                        title += " - " + LanguageManager.GetFormat(LangKeys.Main_DaysRemaining, daysRemaining);
                     }
                     else if (daysRemaining == 0)
                     {
-                        title += " - Hết hạn hôm nay";
+                        title += " - " + LanguageManager.Get(LangKeys.Main_ExpiryToday);
                     }
                     else
                     {
-                        title += " - Đã hết hạn";
+                        title += " - " + LanguageManager.Get(LangKeys.Main_Expired);
                     }
                 }
 
                 // Thêm thông tin character usage (nếu có từ _voiceSourceInfo)
                 if (_voiceSourceInfo != null && _voiceSourceInfo.CharacterLimit.HasValue && _voiceSourceInfo.CharacterLimit.Value > 0)
                 {
-                    title += $" | {_voiceSourceInfo.CharacterUsed:N0}/{_voiceSourceInfo.CharacterLimit.Value:N0} ký tự";
+                    title += $" | " + LanguageManager.GetFormat(LangKeys.Main_Characters, _voiceSourceInfo.CharacterUsed.ToString("N0"), _voiceSourceInfo.CharacterLimit.Value.ToString("N0"));
                 }
 
                 // Thêm daily character usage (nếu gói có giới hạn daily)
                 if (_voiceSourceInfo != null && _voiceSourceInfo.DailyCharacterLimit.HasValue && _voiceSourceInfo.DailyCharacterLimit.Value > 0)
                 {
-                    title += $" | Hôm nay: {_voiceSourceInfo.DailyCharacterUsed:N0}/{_voiceSourceInfo.DailyCharacterLimit.Value:N0}";
+                    title += $" | " + LanguageManager.GetFormat(LangKeys.Main_Today, _voiceSourceInfo.DailyCharacterUsed.ToString("N0"), _voiceSourceInfo.DailyCharacterLimit.Value.ToString("N0"));
                 }
 
                 this.Text = title;
@@ -615,7 +692,7 @@ namespace ReviewMovie
                 // Kiểm tra voiceSourceInfo
                 if (_voiceSourceInfo == null || !_voiceSourceInfo.IsSuccess)
                 {
-                    MessageBox.Show("Không thể tải thông tin voice source từ server!");
+                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoiceSource));
                     return;
                 }
 
@@ -674,7 +751,7 @@ namespace ReviewMovie
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi xử lý T2Psoft voice source: {ex.Message}");
+                MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_T2PsoftVoiceError, ex.Message));
             }
         }
 
@@ -698,7 +775,7 @@ namespace ReviewMovie
 
                     if (filteredLanguages == null || filteredLanguages.Count == 0)
                     {
-                        MessageBox.Show("Không thể tải danh sách giọng đọc. Kiểm tra kết nối mạng và thử lại.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoices), LanguageManager.Get(LangKeys.Main_CannotLoadVoicesTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         cbLanguageSelect.DataSource = null;
                         return;
                     }
@@ -717,7 +794,7 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    MessageBox.Show("VoiceKey từ T2Psoft bị lỗi!");
+                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_VoiceKeyError));
                     cbLanguageSelect.DataSource = null;
                 }
             }
@@ -759,7 +836,7 @@ namespace ReviewMovie
 
                 if (listVoice == null)
                 {
-                    MessageBox.Show("VoiceKey từ T2Psoft bị lỗi!");
+                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_VoiceKeyError));
                     cbLanguageSelect.SelectedIndexChanged -= cbLanguageSelect_SelectedIndexChanged;
                     cbLanguageSelect.DataSource = null;
                     cbLanguageSelect.SelectedIndex = -1;
@@ -925,7 +1002,7 @@ namespace ReviewMovie
                 if(!isSubtitleError)
                 {
                     RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
-                    ShowMessage("File SubTitle sai định dạng!", "Thông báo");
+                    ShowMessage(LanguageManager.Get(LangKeys.Main_SubtitleFormatError), LanguageManager.Get(LangKeys.Common_Notice));
                     return;
                 }   
                 
@@ -935,7 +1012,7 @@ namespace ReviewMovie
                 if(_indexRowMax == 0 || !File.Exists(filePathTtile))
                 {
                     RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
-                    ShowMessage("File SubTitle không có dữ liệu!", "Thông báo");
+                    ShowMessage(LanguageManager.Get(LangKeys.Main_SubtitleNoData), LanguageManager.Get(LangKeys.Common_Notice));
                     return;
                 }    
 
@@ -1009,14 +1086,14 @@ namespace ReviewMovie
                 if (countFileError == _indexRowMax)
                 {
                     RestoreOldData(oldListData, oldListSubtitleData, oldAllInfoRender);
-                    ShowMessage("Chọn thư mục chứa media . Không Chọn file !", "Thông báo");
+                    ShowMessage(LanguageManager.Get(LangKeys.Main_SelectMediaFolder), LanguageManager.Get(LangKeys.Common_Notice));
                     return;
                 }
 
                 // CHọn file không đúng định dạng
                 if (countFileError > 0)
                 {
-                    ShowMessage($"Thư mục có {countFileError} file không đúng định dạng!", "Thông báo");
+                    ShowMessage(LanguageManager.GetFormat(LangKeys.Main_FileFormatError, countFileError), LanguageManager.Get(LangKeys.Common_Notice));
                 }
 
                 // Clear trước khi load mới
@@ -1091,7 +1168,7 @@ namespace ReviewMovie
             {
                 this.Invoke((Action)(() =>
                 {
-                    MessageBox.Show("ClipPlayer trả về đường dẫn không tồn tại:\n" + message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_ClipPlayerPathError) + message, LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     _sessionMerge = false;
                 }));
                 return;
@@ -1102,7 +1179,7 @@ namespace ReviewMovie
                 _videoMerge = message;
                 _sessionMerge = true;
 
-                MessageBox.Show("VideoMerge:\n" + message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("VideoMerge:\n" + message, LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 InSertInputMediaData(_videoMerge, _indexRowSelect);
             }));
         }
@@ -1127,7 +1204,7 @@ namespace ReviewMovie
 
             // Đợi tất cả các nhóm video hoàn thành
             await Task.WhenAll(tasks);
-            UIThreadHelper.SetLabelText(lblstatus, "Cập nhật TimeVideo xong !", Color.Green);
+            UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_UpdateTimeVideoDone), Color.Green);
         }
 
         private async Task GrAsync_InsertAllinfoMedia(List<int> listLine, int totalIdx, CancellationToken token)
@@ -1145,7 +1222,7 @@ namespace ReviewMovie
                         token.ThrowIfCancellationRequested();
                         var reloadFilePath = dgvMainView.Rows[index].Cells["Column_filemediapath"].Value?.ToString();
                         InSertInputMediaData(reloadFilePath, index);
-                        UIThreadHelper.SetLabelText(lblstatus, $"Đang Reload Line {InsertInfoSubtitleCount}/{totalIdx} Subtitle.", Color.Red);
+                        UIThreadHelper.SetLabelText(lblstatus, LanguageManager.GetFormat(LangKeys.Main_ReloadingSubtitle, InsertInfoSubtitleCount, totalIdx), Color.Red);
                         Interlocked.Increment(ref InsertInfoSubtitleCount);
                     }, token));
                 }
@@ -1421,7 +1498,7 @@ namespace ReviewMovie
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi dữ liệu cũ, hãy xóa đi!\n" + ex.Message);
+                MessageBox.Show(LanguageManager.Get(LangKeys.Main_DataError) + ex.Message);
             }
         }
 
@@ -1706,7 +1783,7 @@ namespace ReviewMovie
                 // Thông báo (show MessageBox) khi batch khác đang chạy
                 ShowAlertCallback = msg =>
                 {
-                    MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(msg, LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 },
 
                 // Lưu vào database mỗi lần convert xong 1 dòng
@@ -1750,15 +1827,15 @@ namespace ReviewMovie
             }
             catch (OperationCanceledException) when (_convertSingleCTS?.IsCancellationRequested == true)
             {
-                UIThreadHelper.SetLabelText(lblstatus, "Đã huỷ convert dòng.", Color.OrangeRed);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_CancelledConvertRow), Color.OrangeRed);
             }
             catch (OperationCanceledException)
             {
-                UIThreadHelper.SetLabelText(lblstatus, "Convert timeout - kiểm tra kết nối mạng.", Color.OrangeRed);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_ConvertTimeout), Color.OrangeRed);
             }
             catch (System.Net.Http.HttpRequestException)
             {
-                UIThreadHelper.SetLabelText(lblstatus, "Lỗi kết nối mạng khi convert.", Color.OrangeRed);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_NetworkErrorConvert), Color.OrangeRed);
             }
             finally
             {
@@ -1774,7 +1851,7 @@ namespace ReviewMovie
             PrepareAudioConvertContext();
 
             await _audioConvertService.ConvertTextToSpeechBatchAsync(
-                modeLabel: "Toàn bộ",
+                modeLabel: LanguageManager.Get(LangKeys.Main_BatchAll),
                 isOtherRunning: () => _isConvertingSelected, // Nếu batch select đang chạy thì báo alert
                 getTargetIndexes: () => Enumerable.Range(0, _indexRowMax).ToArray(),
                 getIsRunning: () => _isConvertingAll,
@@ -1782,8 +1859,8 @@ namespace ReviewMovie
                 getCTS: () => _convertAllCTS,
                 setCTS: val => _convertAllCTS = val,
                 setTextAction: text => Invoke(new Action(() => menuItem.Text = text)),
-                startText: "Chọn Hết",
-                cancelText: "Huỷ Chọn Hết",
+                startText: LanguageManager.Get(LangKeys.Common_SelectAll),
+                cancelText: LanguageManager.Get(LangKeys.Common_CancelSelectAll),
                 context: _audioConvertContext
             );
         }
@@ -1793,7 +1870,7 @@ namespace ReviewMovie
             PrepareAudioConvertContext();
 
             await _audioConvertService.ConvertTextToSpeechBatchAsync(
-                modeLabel: "Dòng đã chọn",
+                modeLabel: LanguageManager.Get(LangKeys.Main_BatchSelected),
                 isOtherRunning: () => _isConvertingAll, // Nếu batch all đang chạy thì báo alert
                 getTargetIndexes: () =>
                 {
@@ -1807,8 +1884,8 @@ namespace ReviewMovie
                 getCTS: () => _convertSelectedCTS,
                 setCTS: val => _convertSelectedCTS = val,
                 setTextAction: text => Invoke(new Action(() => menuItem.Text = text)),
-                startText: "Chọn Nhóm",
-                cancelText: "Huỷ Chọn Nhóm",
+                startText: LanguageManager.Get(LangKeys.Common_SelectGroup),
+                cancelText: LanguageManager.Get(LangKeys.Common_CancelSelectGroup),
                 context: _audioConvertContext
             );
         }
@@ -1868,7 +1945,7 @@ namespace ReviewMovie
                     },
                     ShowAlertCallback = msg =>
                     {
-                        MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(msg, LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     },
                     OnAfterRecord = (idx, audiolink, audiostatus) =>
                     {
@@ -1929,15 +2006,15 @@ namespace ReviewMovie
             }
             catch (OperationCanceledException) when (_downloadSingleCTS?.IsCancellationRequested == true)
             {
-                UIThreadHelper.SetLabelText(lblstatus, "Đã huỷ download audio dòng.", Color.OrangeRed);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_CancelledDownloadRow), Color.OrangeRed);
             }
             catch (OperationCanceledException)
             {
-                UIThreadHelper.SetLabelText(lblstatus, "Download timeout - kiểm tra kết nối mạng.", Color.OrangeRed);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_DownloadTimeout), Color.OrangeRed);
             }
             catch (System.Net.Http.HttpRequestException)
             {
-                UIThreadHelper.SetLabelText(lblstatus, "Lỗi kết nối mạng khi download.", Color.OrangeRed);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_NetworkErrorDownload), Color.OrangeRed);
             }
             finally
             {
@@ -1959,7 +2036,7 @@ namespace ReviewMovie
 
             _isDownloadingAll = true;
             _downloadAllCTS = new CancellationTokenSource();
-            UIThreadHelper.SetMenuItemText(menuItem, "Hủy Chọn Hết", Color.Red);
+            UIThreadHelper.SetMenuItemText(menuItem, LanguageManager.Get(LangKeys.Common_CancelSelectAll), Color.Red);
             await Task.Delay(50);
 
             try
@@ -1973,14 +2050,14 @@ namespace ReviewMovie
             }
             catch (OperationCanceledException)
             {
-                UIThreadHelper.SetLabelText(lblstatus, "Đã huỷ tải toàn bộ audio.", Color.OrangeRed);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_CancelledDownloadAll), Color.OrangeRed);
             }
             finally
             {
                 _isDownloadingAll = false;
                 _downloadAllCTS?.Dispose();
                 _downloadAllCTS = null;
-                UIThreadHelper.SetMenuItemText(menuItem, "Chọn Hết", Color.Black);
+                UIThreadHelper.SetMenuItemText(menuItem, LanguageManager.Get(LangKeys.Common_SelectAll), Color.Black);
             }
         }
 
@@ -1995,7 +2072,7 @@ namespace ReviewMovie
 
             _isDownloadingSelected = true;
             _downloadSelectedCTS = new CancellationTokenSource();
-            UIThreadHelper.SetMenuItemText(menuItem, "Hủy Chọn Nhóm", Color.Red);
+            UIThreadHelper.SetMenuItemText(menuItem, LanguageManager.Get(LangKeys.Common_CancelSelectGroup), Color.Red);
             await Task.Delay(50);
 
             try
@@ -2010,14 +2087,14 @@ namespace ReviewMovie
             }
             catch (OperationCanceledException)
             {
-                UIThreadHelper.SetLabelText(lblstatus, "Đã huỷ tải những dòng audio đã chọn.", Color.OrangeRed);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_CancelledDownloadSelected), Color.OrangeRed);
             }
             finally
             {
                 _isDownloadingSelected = false;
                 _downloadSelectedCTS?.Dispose();
                 _downloadSelectedCTS = null;
-                UIThreadHelper.SetMenuItemText(menuItem, "Chọn Nhóm", Color.Black);
+                UIThreadHelper.SetMenuItemText(menuItem, LanguageManager.Get(LangKeys.Common_SelectGroup), Color.Black);
             }
         }
 
@@ -2034,7 +2111,7 @@ namespace ReviewMovie
             ManualSelect provider = _manualSelected;
 
             FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", "Start Download ...", Color.Yellow);
-            UIThreadHelper.SetLabelText(lblstatus, string.Format("Download part thứ {0}/{1}", index, rowCount), Color.Green);
+            UIThreadHelper.SetLabelText(lblstatus, LanguageManager.GetFormat(LangKeys.Main_DownloadingPart, index, rowCount), Color.Green);
 
             token.ThrowIfCancellationRequested();
 
@@ -2056,17 +2133,17 @@ namespace ReviewMovie
                     var output = await api.GetLinkaudioAsync(input);
                     token.ThrowIfCancellationRequested();
                     downloadAddress = output?.result?.audio_link;
-                    if (downloadAddress == null) errorMessage = "Không Tải được Audio !";
+                    if (downloadAddress == null) errorMessage = LanguageManager.Get(LangKeys.Main_CannotDownloadAudio);
                 }
                 else if (provider == ManualSelect.FptAI)
                 {
                     downloadAddress = audioLink;
-                    if (string.IsNullOrEmpty(downloadAddress)) errorMessage = "Không Có Link Convert Speech !";
+                    if (string.IsNullOrEmpty(downloadAddress)) errorMessage = LanguageManager.Get(LangKeys.Main_NoConvertLink);
                 }
                 else if (provider == ManualSelect.Google)
                 {
                     downloadAddress = audioLink;
-                    if (string.IsNullOrEmpty(downloadAddress)) errorMessage = "Không Có Link File Download !";
+                    if (string.IsNullOrEmpty(downloadAddress)) errorMessage = LanguageManager.Get(LangKeys.Main_NoDownloadLink);
                 }
                 else if (provider == ManualSelect.Elevenlab)
                 {
@@ -2138,7 +2215,7 @@ namespace ReviewMovie
             }
             else
             {
-                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", "Không Tải được Audio !", Color.Red);
+                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", LanguageManager.Get(LangKeys.Main_CannotDownloadAudio), Color.Red);
             }
 
             UIThreadHelper.SetButtonText(ibtn, "Save Audio", Color.Black);
@@ -2154,7 +2231,7 @@ namespace ReviewMovie
             }
             else
             {
-                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", "Không Có HistoryID", Color.Red);
+                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", LanguageManager.Get(LangKeys.Main_NoHistoryID), Color.Red);
             }
         }
 
@@ -2168,7 +2245,7 @@ namespace ReviewMovie
             }
             else
             {
-                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", "Không Có Link Convert Speech !", Color.Red);
+                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", LanguageManager.Get(LangKeys.Main_NoConvertLink), Color.Red);
             }
         }
     
@@ -2182,7 +2259,7 @@ namespace ReviewMovie
             }
             else
             {
-                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", "Không Có Link File Download !", Color.Red);
+                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", LanguageManager.Get(LangKeys.Main_NoDownloadLink), Color.Red);
             }
         }
 
@@ -2269,7 +2346,7 @@ namespace ReviewMovie
 
             SaveEffectSetting();
             UIThreadHelper.SetButtonText(btnRenderVideoPart, "Stop", Color.Black);
-            UIThreadHelper.SetLabelText(lblstatus, $"Render part thứ {rowIndex + 1}/{dgvMainView.RowCount}", Color.Black);
+            UIThreadHelper.SetLabelText(lblstatus, LanguageManager.GetFormat(LangKeys.Main_RenderingPart, rowIndex + 1, dgvMainView.RowCount), Color.Black);
 
             try
             {
@@ -2280,11 +2357,11 @@ namespace ReviewMovie
             }
             catch (OperationCanceledException)
             {
-                UIThreadHelper.SetLabelText(lblstatus, $"Đã huỷ render video part {rowIndex}.", Color.OrangeRed);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.GetFormat(LangKeys.Main_CancelledRenderPart, rowIndex), Color.OrangeRed);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi render: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_RenderError, ex.Message), LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -2320,25 +2397,25 @@ namespace ReviewMovie
 
             _isRenderingAll = true;
             _renderAllCTS = new CancellationTokenSource();
-            UIThreadHelper.SetMenuItemText(menuItem, "Hủy Chọn Hết", Color.Red);
+            UIThreadHelper.SetMenuItemText(menuItem, LanguageManager.Get(LangKeys.Common_CancelSelectAll), Color.Red);
             await Task.Delay(50);
 
             try
             {
                 List<int> listRender = RVFuncion.GenerateList(_indexRowMax);
                 await Pr_RenderAll(listRender, _indexRowMax, _renderAllCTS.Token);
-                UIThreadHelper.SetLabelText(lblstatus, "Render xong tất cả đoạn video!", Color.Green);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_RenderAllDone), Color.Green);
             }
             catch (OperationCanceledException)
             {
-                UIThreadHelper.SetLabelText(lblstatus, "Đã huỷ render toàn bộ.", Color.OrangeRed);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_CancelledRenderAll), Color.OrangeRed);
             }
             finally
             {
                 _isRenderingAll = false;
                 _renderAllCTS?.Dispose();
                 _renderAllCTS = null;
-                UIThreadHelper.SetMenuItemText(menuItem, "Chọn Hết", Color.Black);
+                UIThreadHelper.SetMenuItemText(menuItem, LanguageManager.Get(LangKeys.Common_SelectAll), Color.Black);
             }
         }
 
@@ -2363,7 +2440,7 @@ namespace ReviewMovie
 
             if (listNumber.Count == 0)
             {
-                MessageBox.Show("Không có dòng nào được chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(LanguageManager.Get(LangKeys.Main_NoRowSelected), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -2375,24 +2452,24 @@ namespace ReviewMovie
 
             _isRenderingSelected = true;
             _renderSelectCTS = new CancellationTokenSource();
-            UIThreadHelper.SetMenuItemText(menuItem, "Hủy Chọn Nhóm", Color.Red);
+            UIThreadHelper.SetMenuItemText(menuItem, LanguageManager.Get(LangKeys.Common_CancelSelectGroup), Color.Red);
             await Task.Delay(50);
 
             try
             {
                 await Pr_RenderAll(listNumber, listNumber.Count, _renderSelectCTS.Token);
-                UIThreadHelper.SetLabelText(lblstatus, "Render xong các dòng đã chọn!", Color.Green);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_RenderSelectedDone), Color.Green);
             }
             catch (OperationCanceledException)
             {
-                UIThreadHelper.SetLabelText(lblstatus, "Đã huỷ render nhóm chọn.", Color.OrangeRed);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_CancelledRenderSelected), Color.OrangeRed);
             }
             finally
             {
                 _isRenderingSelected = false;
                 _renderSelectCTS?.Dispose();
                 _renderSelectCTS = null;
-                UIThreadHelper.SetMenuItemText(menuItem, "Chọn Nhóm", Color.Black);
+                UIThreadHelper.SetMenuItemText(menuItem, LanguageManager.Get(LangKeys.Common_SelectGroup), Color.Black);
             }
         }
 
@@ -2431,7 +2508,7 @@ namespace ReviewMovie
                         token.ThrowIfCancellationRequested();
 
                         //if (token.IsCancellationRequested) return;
-                        UIThreadHelper.SetLabelText(lblstatus, $"Đang Render Part {renderedVideoCount}/{totalIdx} videos.", Color.Red);
+                        UIThreadHelper.SetLabelText(lblstatus, LanguageManager.GetFormat(LangKeys.Main_RenderingPart, renderedVideoCount, totalIdx), Color.Red);
                         ThreadRenderVideoPart(index, token);
                         // Tăng giá trị của biến đếm video đã được render
                         Interlocked.Increment(ref renderedVideoCount);
@@ -2471,13 +2548,13 @@ namespace ReviewMovie
 
             if (!File.Exists(audioFilePath) && !ckNotUseAudio.Checked)
             {
-                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_renderstatus", "Thiếu Audio , Render part Lỗi !", Color.Red);
+                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_renderstatus", LanguageManager.Get(LangKeys.Main_MissingAudio), Color.Red);
                 return;
             }
 
             if (!File.Exists(renderInfo.MediaPath))
             {
-                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_renderstatus", "Thiếu Video , Render part Lỗi !", Color.Red);
+                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_renderstatus", LanguageManager.Get(LangKeys.Main_MissingVideo), Color.Red);
                 return;
             }
 
@@ -2524,7 +2601,7 @@ namespace ReviewMovie
             }
             catch
             {
-                UIThreadHelper.SetLabelText(lblstatus, "Lỗi, Kiểm Tra Hoặc Nhập lại Media ", Color.Red);
+                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_ErrorCheckMedia), Color.Red);
             }
 
             // Cập nhật render status chính xác bằng NoID
@@ -2989,8 +3066,8 @@ namespace ReviewMovie
                 if (wasTrimmed)
                 {
                     MessageBox.Show(
-                        $"Text quá dài! Chỉ cho phép tối đa {RwConstant.MaxLengthText} ký tự.",
-                        "Thông báo",
+                        $"Text too long! Max {RwConstant.MaxLengthText} chars.",
+                        LanguageManager.Get(LangKeys.Common_Notice),
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information
                     );
@@ -3357,8 +3434,8 @@ namespace ReviewMovie
             {
                 Invoke(new MethodInvoker(delegate ()
                 {
-                    lblstatus.Text = "Đã hủy ghép video";
-                    MessageBox.Show("Đã hủy quá trình ghép video.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    lblstatus.Text = LanguageManager.Get(LangKeys.Main_MergeCancelled);
+                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_MergeCancelled), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }));
             }
             catch (Exception ex)
@@ -3446,8 +3523,8 @@ namespace ReviewMovie
                 {
                     MessageBox.Show(
                         this,
-                        "Không có file nào trong thư mục Video Render!",
-                        "Thông báo",
+                        LanguageManager.Get(LangKeys.Main_MergeNoVideo),
+                        LanguageManager.Get(LangKeys.Common_Notice),
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning
                     );
@@ -3562,7 +3639,7 @@ namespace ReviewMovie
                 {
                     Invoke(new MethodInvoker(delegate ()
                     {
-                        lblstatus.Text = "Đã hủy ghép video";
+                        lblstatus.Text = LanguageManager.Get(LangKeys.Main_MergeCancelled);
                     }));
                     return; // User chọn NO, kết thúc
                 }
@@ -4328,7 +4405,7 @@ namespace ReviewMovie
 
                     if (fileSize > MAX_SIZE_BYTES)
                     {
-                        ShowMessage("File subtitle vượt quá 1MB! Vui lòng chọn file nhỏ hơn.", "Thông báo");
+                        ShowMessage("Subtitle file exceeds 1MB!", LanguageManager.Get(LangKeys.Common_Notice));
                         return;
                     }
                     using (OpenFileDialog openFolderDialog = new OpenFileDialog()) // Không dùng FolderBrowserDialog vì nó hạn chế giao diện lựa chọn
@@ -4353,13 +4430,13 @@ namespace ReviewMovie
                             var files = System.IO.Directory.GetFiles(subtitleMediaPath);
                             if (files.Length == 0)
                             {
-                                ShowMessage("Thư mục không có media . Hãy chọn lại !", "Thông báo");
+                                ShowMessage(LanguageManager.Get(LangKeys.Main_SelectMediaFolder), LanguageManager.Get(LangKeys.Common_Notice));
                                 return;
                             }
                         }
                         else
                         {
-                            ShowMessage("Chưa chọn thư mục chứa media. Hãy chọn lại !", "Thông báo");
+                            ShowMessage(LanguageManager.Get(LangKeys.Main_SelectMediaFolder), LanguageManager.Get(LangKeys.Common_Notice));
                             return;
                         }
                     }
@@ -4458,8 +4535,8 @@ namespace ReviewMovie
                 {
                     UIThreadHelper.ShowMessageBoxSafe(
                     this,
-                    "Không có tiến trình nào đang chạy!",
-                    "Thông báo",
+                    "No running processes!",
+                    LanguageManager.Get(LangKeys.Common_Notice),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
                 }
@@ -4702,7 +4779,7 @@ namespace ReviewMovie
 
                         if (filteredLanguages == null || filteredLanguages.Count == 0)
                         {
-                            MessageBox.Show("Không thể tải danh sách giọng đọc. Kiểm tra kết nối mạng và thử lại.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoices), LanguageManager.Get(LangKeys.Main_CannotLoadVoicesTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             cbLanguageSelect.DataSource = null;
                         }
                         else
@@ -4757,7 +4834,7 @@ namespace ReviewMovie
             }
             catch (System.Net.Http.HttpRequestException)
             {
-                MessageBox.Show("Không thể kết nối đến server. Vui lòng kiểm tra mạng và thử lại.", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(LanguageManager.Get(LangKeys.Main_ConnectionError), LanguageManager.Get(LangKeys.Main_ConnectionErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {
@@ -5304,6 +5381,9 @@ namespace ReviewMovie
                     e.Cancel = true;   // Không cho đóng form
                     return;
                 }
+
+                // Unsubscribe language change
+                LanguageManager.LanguageChanged -= ApplyLanguage;
 
                 // Chỉ khi đã cancel xong (hoặc không có task) mới lưu và thoát
                 SaveCurrentRowAndProject();

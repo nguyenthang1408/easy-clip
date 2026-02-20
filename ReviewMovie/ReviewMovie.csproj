@@ -105,6 +105,11 @@
     <Compile Include="Base\Enum.cs" />
     <Compile Include="Base\GpuDetectionMessages.cs" />
     <Compile Include="Base\GpuDetectionResult.cs" />
+    <Compile Include="Localization\ILocalizable.cs" />
+    <Compile Include="Localization\LanguageManager.cs" />
+    <Compile Include="Localization\LangKeys.cs" />
+    <Compile Include="Localization\Resources\Lang_vi.cs" />
+    <Compile Include="Localization\Resources\Lang_en.cs" />
     <Compile Include="Base\RVFuncion.cs" />
     <Compile Include="Base\TextProcessUtil.cs" />
     <Compile Include="Base\UIThreadHelper.cs" />
