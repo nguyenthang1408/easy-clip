@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace LibCommon.Lib.Model.Package
+namespace LibCommon.Lib
 {
     /// <summary>
     /// Helper chuyển đổi mã code từ server sang thông báo tiếng Việt cho người dùng.

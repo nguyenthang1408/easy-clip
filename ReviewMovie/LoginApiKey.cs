@@ -2,12 +2,9 @@
 using Common.Services;
 using EasyClip.Infrastructure.Config;
 using Lib;
-using LibCommon.Lib.Model.Package;
-using ReviewMovie.Infrastructure.Config;
+using LibCommon.Lib;
 using System;
 using System.Drawing;
-using System.IO;
-using System.Net.Http;
 using System.Windows.Forms;
 
 namespace ReviewMovie
