@@ -140,6 +140,7 @@
     <Compile Include="Funcion\Excute.cs" />
     <Compile Include="Model\Package\TtsUsageRequest.cs" />
     <Compile Include="Model\Package\TtsUsageResponse.cs" />
+    <Compile Include="Extension\VersionMessageHelper.cs" />
     <Compile Include="VoiceServices\ElevenLabs\Common\ApiClientRequest.cs" />
     <Compile Include="VoiceServices\ElevenLabs\Common\ApiClientRequestV2.cs" />
     <Compile Include="VoiceServices\ElevenLabs\Common\ElevenLabsModelId.cs" />
