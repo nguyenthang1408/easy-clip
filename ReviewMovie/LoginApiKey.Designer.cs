@@ -133,11 +133,12 @@
             // 
             // lbstatus
             // 
-            this.lbstatus.AutoSize = true;
+            this.lbstatus.AutoSize = false;
+            this.lbstatus.MaximumSize = new System.Drawing.Size(312, 0);
+            this.lbstatus.Size = new System.Drawing.Size(312, 30);
             this.lbstatus.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lbstatus.Location = new System.Drawing.Point(64, 208);
             this.lbstatus.Name = "lbstatus";
-            this.lbstatus.Size = new System.Drawing.Size(14, 15);
             this.lbstatus.TabIndex = 8;
             this.lbstatus.Text = "_";
             // 
