@@ -4,6 +4,7 @@ using Google.Apis.Auth.OAuth2;
 using Google.Cloud.TextToSpeech.V1;
 using Grpc.Auth;
 using Grpc.Core;
+using LibCommon.Lib.Localization;
 using System;
 using System.IO;
 using System.Linq;
@@ -80,10 +81,10 @@ namespace Lib.VoiceServices.GoogleTTS
             try
             {
                 // Kiểm tra các tham số đầu vào
-                if (string.IsNullOrEmpty(jsonData)) return new ConversionResult(false, "JSON Data không được để trống.");
-                if (string.IsNullOrEmpty(textInput)) return new ConversionResult(false, "Nội dung chuyển đổi không được để trống.");
-                if (string.IsNullOrEmpty(voiceCode)) return new ConversionResult(false, "Voice code không được để trống.");
-                if (string.IsNullOrEmpty(savePath)) return new ConversionResult(false, "Đường dẫn lưu file không được để trống.");
+                if (string.IsNullOrEmpty(jsonData)) return new ConversionResult(false, LibLocalizer.Get("Lib_JsonDataEmpty"));
+                if (string.IsNullOrEmpty(textInput)) return new ConversionResult(false, LibLocalizer.Get("Lib_TextInputEmpty"));
+                if (string.IsNullOrEmpty(voiceCode)) return new ConversionResult(false, LibLocalizer.Get("Lib_VoiceCodeEmpty"));
+                if (string.IsNullOrEmpty(savePath)) return new ConversionResult(false, LibLocalizer.Get("Lib_SavePathEmpty"));
 
                 // Thiết lập Google Text-to-Speech client
                 var client = textToSpeechClient(jsonData);
@@ -110,17 +111,17 @@ namespace Lib.VoiceServices.GoogleTTS
 
                 // Kiểm tra dữ liệu âm thanh trả về
                 if (response.AudioContent == null || response.AudioContent.Length == 0)
-                    return new ConversionResult(false, "Không nhận được dữ liệu âm thanh từ API.");
+                    return new ConversionResult(false, LibLocalizer.Get("Lib_NoAudioData"));
 
                 // Lưu file MP3
                 File.WriteAllBytes(savePath, response.AudioContent.ToByteArray());
 
-                return new ConversionResult(true, "Tải xuống thành công."); // Trạng thái tải xuống thành công
+                return new ConversionResult(true, LibLocalizer.Get("Lib_ConvertDownloadSuccess"));
             }
             catch (Exception ex)
             {
                 // Xử lý lỗi
-                return new ConversionResult(false, $"Lỗi: {ex.Message}"); // Trạng thái tải xuống thất bại cùng với thông báo lỗi
+                return new ConversionResult(false, LibLocalizer.GetFormat("Lib_ErrorFormat", ex.Message));
             }
         }
 

@@ -213,6 +213,70 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_Cancelled, "Cancelled" },
             { LangKeys.Main_BatchAll, "All" },
             { LangKeys.Main_BatchSelected, "Selected rows" },
+
+            // ========== Services - AudioConvertService ==========
+            { LangKeys.Svc_ConvertAlreadyRunning, "Another Text2Speech conversion is already running." },
+            { LangKeys.Svc_ConvertError, "Conversion error!" },
+            { LangKeys.Svc_ConvertComplete, "Conversion complete ({0})" },
+            { LangKeys.Svc_ConvertCancelled, "Convert2Speech cancelled ({0})" },
+            { LangKeys.Svc_NoContent, "No content" },
+            { LangKeys.Svc_ConvertingRow, "Converting row {0}" },
+            { LangKeys.Svc_ServerConnectionError, "Server connection error!" },
+            { LangKeys.Svc_UsageApiError, "Usage API connection error: {0}" },
+            { LangKeys.Svc_UnknownServerError, "Unknown error from server" },
+            { LangKeys.Svc_QuotaExceeded, "Character quota exceeded!" },
+            { LangKeys.Svc_CancelConvertRow, "Row {0} conversion cancelled" },
+            { LangKeys.Svc_ConvertRowError, "Row {0} conversion error: {1}" },
+
+            // ========== Services - AudioDownloadService ==========
+            { LangKeys.Svc_RecordSuccess, "Recording successful! [AudioTime:{0}s]" },
+            { LangKeys.Svc_DownloadSuccess, "Download successful! [AudioTime:{0}s]" },
+            { LangKeys.Svc_RecordFailed, "Recording failed!" },
+            { LangKeys.Svc_DownloadFailed, "Download failed!" },
+            { LangKeys.Svc_ConversionNotReady, "Conversion not ready, try again later!" },
+
+            // ========== Services - AudioRecordService ==========
+            { LangKeys.Svc_Recording, "Recording..." },
+            { LangKeys.Svc_RecordDone, "Recording complete." },
+            { LangKeys.Svc_RecordStartFailed, "Cannot start recording." },
+            { LangKeys.Svc_RecordError, "Recording error!" },
+            { LangKeys.Svc_RecordCellError, "Record error" },
+
+            // ========== Services - VideoMergeService ==========
+            { LangKeys.Svc_MergingProgress, "Merging {0} videos - Time: {1}{2}" },
+
+            // ========== Services - ClipPlayerService ==========
+            { LangKeys.Svc_ClipPlayerNotFound, "ClipPlayer.exe not found" },
+
+            // ========== Services - LoadingService ==========
+            { LangKeys.Svc_Processing, "Processing..." },
+
+            // ========== Services - CustomTextBox ==========
+            { LangKeys.Svc_TextPlaceholder, "Enter text here!" },
+
+            // ========== LibCommon - APIGoogleTTS ==========
+            { LangKeys.Lib_JsonDataEmpty, "JSON Data cannot be empty." },
+            { LangKeys.Lib_TextInputEmpty, "Text content cannot be empty." },
+            { LangKeys.Lib_VoiceCodeEmpty, "Voice code cannot be empty." },
+            { LangKeys.Lib_SavePathEmpty, "File save path cannot be empty." },
+            { LangKeys.Lib_NoAudioData, "No audio data received from API." },
+            { LangKeys.Lib_ConvertDownloadSuccess, "Download successful." },
+            { LangKeys.Lib_ErrorFormat, "Error: {0}" },
+
+            // ========== LibCommon - Component (Effects) ==========
+            { LangKeys.Lib_EffectZoomIn, "ZoomIn 4 corners" },
+            { LangKeys.Lib_EffectZoomOut, "ZoomOut 4 corners" },
+            { LangKeys.Lib_EffectMoveVertical, "Move vertically" },
+            { LangKeys.Lib_EffectMoveHorizontal, "Move horizontally" },
+            { LangKeys.Lib_Zoom25Short, "25% - Short bypass" },
+            { LangKeys.Lib_Zoom75Normal, "75% - Normal bypass" },
+
+            // ========== LibCommon - EffectConfig ==========
+            { LangKeys.Lib_ConfigDefault, "Standard Default" },
+            { LangKeys.Lib_ConfigCustom, "Custom" },
+
+            // ========== LibCommon - PackageType ==========
+            { LangKeys.Lib_PackageDisplayFormat, "{0} - {1} months" },
         };
     }
 }

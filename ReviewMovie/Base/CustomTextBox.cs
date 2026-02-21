@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReviewMovie.Localization;
+using System;
 using System.Drawing;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -8,7 +9,7 @@ namespace ReviewMovie.Base
     public partial class CustomTextBox : System.Windows.Forms.TextBox
     {
         private bool isPlaceHolder = true;
-        private string placeHolderText= "Nhập text vào đây !";
+        private string placeHolderText = LanguageManager.Get(LangKeys.Svc_TextPlaceholder);
 
         public string PlaceHolderText
         {

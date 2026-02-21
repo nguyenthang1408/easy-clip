@@ -213,6 +213,70 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_Cancelled, "Đã huỷ" },
             { LangKeys.Main_BatchAll, "Toàn bộ" },
             { LangKeys.Main_BatchSelected, "Dòng đã chọn" },
+
+            // ========== Services - AudioConvertService ==========
+            { LangKeys.Svc_ConvertAlreadyRunning, "Đang có tiến trình Convert Text2Speech khác đang chạy." },
+            { LangKeys.Svc_ConvertError, "Lỗi chuyển đổi!" },
+            { LangKeys.Svc_ConvertComplete, "Hoàn thành chuyển đổi ({0})" },
+            { LangKeys.Svc_ConvertCancelled, "Đã huỷ Convert2Speech ({0})" },
+            { LangKeys.Svc_NoContent, "Không có nội dung" },
+            { LangKeys.Svc_ConvertingRow, "Đang chuyển đổi dòng {0}" },
+            { LangKeys.Svc_ServerConnectionError, "Lỗi kết nối server!" },
+            { LangKeys.Svc_UsageApiError, "Lỗi kết nối usage API: {0}" },
+            { LangKeys.Svc_UnknownServerError, "Lỗi không xác định từ server" },
+            { LangKeys.Svc_QuotaExceeded, "Hết quota ký tự!" },
+            { LangKeys.Svc_CancelConvertRow, "Huỷ chuyển đổi dòng {0}" },
+            { LangKeys.Svc_ConvertRowError, "Lỗi chuyển đổi dòng {0}: {1}" },
+
+            // ========== Services - AudioDownloadService ==========
+            { LangKeys.Svc_RecordSuccess, "Thu âm thành công! [AudioTime:{0}s]" },
+            { LangKeys.Svc_DownloadSuccess, "Tải xuống thành công! [AudioTime:{0}s]" },
+            { LangKeys.Svc_RecordFailed, "Thu âm thất bại!" },
+            { LangKeys.Svc_DownloadFailed, "Tải xuống thất bại!" },
+            { LangKeys.Svc_ConversionNotReady, "Chưa chuyển âm xong, thử lại sau!" },
+
+            // ========== Services - AudioRecordService ==========
+            { LangKeys.Svc_Recording, "Đang ghi âm..." },
+            { LangKeys.Svc_RecordDone, "Đã ghi âm xong." },
+            { LangKeys.Svc_RecordStartFailed, "Không bắt đầu được ghi âm." },
+            { LangKeys.Svc_RecordError, "Lỗi ghi âm!" },
+            { LangKeys.Svc_RecordCellError, "Lỗi ghi âm" },
+
+            // ========== Services - VideoMergeService ==========
+            { LangKeys.Svc_MergingProgress, "Đang ghép {0} video - Time: {1}{2}" },
+
+            // ========== Services - ClipPlayerService ==========
+            { LangKeys.Svc_ClipPlayerNotFound, "Không tìm thấy ClipPlayer.exe" },
+
+            // ========== Services - LoadingService ==========
+            { LangKeys.Svc_Processing, "Đang xử lý..." },
+
+            // ========== Services - CustomTextBox ==========
+            { LangKeys.Svc_TextPlaceholder, "Nhập text vào đây!" },
+
+            // ========== LibCommon - APIGoogleTTS ==========
+            { LangKeys.Lib_JsonDataEmpty, "JSON Data không được để trống." },
+            { LangKeys.Lib_TextInputEmpty, "Nội dung chuyển đổi không được để trống." },
+            { LangKeys.Lib_VoiceCodeEmpty, "Voice code không được để trống." },
+            { LangKeys.Lib_SavePathEmpty, "Đường dẫn lưu file không được để trống." },
+            { LangKeys.Lib_NoAudioData, "Không nhận được dữ liệu âm thanh từ API." },
+            { LangKeys.Lib_ConvertDownloadSuccess, "Tải xuống thành công." },
+            { LangKeys.Lib_ErrorFormat, "Lỗi: {0}" },
+
+            // ========== LibCommon - Component (Effects) ==========
+            { LangKeys.Lib_EffectZoomIn, "ZoomIn 4 góc" },
+            { LangKeys.Lib_EffectZoomOut, "ZoomOut 4 góc" },
+            { LangKeys.Lib_EffectMoveVertical, "Di chuyển dọc" },
+            { LangKeys.Lib_EffectMoveHorizontal, "Di chuyển ngang" },
+            { LangKeys.Lib_Zoom25Short, "25% - Lách Short" },
+            { LangKeys.Lib_Zoom75Normal, "75% - Lách Normal" },
+
+            // ========== LibCommon - EffectConfig ==========
+            { LangKeys.Lib_ConfigDefault, "Mặc Định Tiêu Chuẩn" },
+            { LangKeys.Lib_ConfigCustom, "Tùy Chỉnh" },
+
+            // ========== LibCommon - PackageType ==========
+            { LangKeys.Lib_PackageDisplayFormat, "{0} - {1} tháng" },
         };
     }
 }

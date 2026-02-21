@@ -196,3 +196,77 @@ Sử dụng `Properties.Settings.Default` (có sẵn trong project) để lưu l
 - **Giữ nguyên layout** - chỉ thêm ComboBox ngôn ngữ ở Login
 - Text format có biến (`$"Bạn đang sử dụng phiên bản {currentVersion}..."`) sẽ dùng `string.Format()` với placeholder
 - Một số text kỹ thuật (tên button "Save", "Record", "Render Part") có thể giữ nguyên tiếng Anh ở cả 2 ngôn ngữ nếu phù hợp
+
+---
+
+## 7. Tiến độ thực hiện (Progress Log)
+
+### Đợt 0: Core infrastructure + UI Forms (Hoàn thành)
+- Tạo `Localization/LanguageManager.cs`, `ILocalizable.cs`, `LangKeys.cs`
+- Tạo `Localization/Resources/Lang_vi.cs`, `Lang_en.cs`
+- Localize `LoginApiKey.cs/.Designer.cs` - form đăng nhập + ComboBox ngôn ngữ
+- Localize `FormMain.cs/.Designer.cs` - form chính (~130 keys)
+- Localize `FormLoadingCancel.cs` - loading dialog
+- Localize `Program.cs` - startup messages
+- Localize `VersionMessageHelper.cs` - API response messages (delegate pattern)
+- Localize `GpuDetectionMessages.cs` - GPU detection messages
+- Thêm `Language` setting vào `Properties.Settings`
+
+### Đợt 1: Services + LibCommon nhóm CAO & TRUNG BÌNH (Hoàn thành)
+
+**Hạ tầng mới:**
+- Tạo `LibCommon/Lib/Localization/LibLocalizer.cs` - static localizer cho LibCommon (delegate pattern, wire up từ Program.cs)
+
+**42 chuỗi đã localize, 12 files thay đổi:**
+
+| File | Số chuỗi | Mô tả |
+|------|----------|-------|
+| `ReviewMovie/Services/AudioConvertService.cs` | 12 | Convert text-to-speech: status, lỗi, huỷ |
+| `ReviewMovie/Services/AudioDownloadService.cs` | 5 | Download/record audio: thành công, thất bại |
+| `ReviewMovie/Services/AudioRecordService.cs` | 5 | Ghi âm: status, lỗi |
+| `ReviewMovie/Services/VideoMergeService.cs` | 1 | Ghép video: progress |
+| `ReviewMovie/Services/ClipPlayerService.cs` | 1 | ClipPlayer not found |
+| `ReviewMovie/Services/Popup/LoadingService.cs` | 1 | "Đang xử lý..." default text |
+| `ReviewMovie/Base/CustomTextBox.cs` | 1 | Placeholder text |
+| `LibCommon/Lib/VoiceServices/GoogleTTS/APIGoogleTTS.cs` | 7 | Validation + result messages |
+| `LibCommon/Lib/Constant/Component.cs` | 6 | Effect names + zoom ratio labels |
+| `LibCommon/Lib/Constant/EffectConfig.cs` | 2 | Config names (Mặc Định / Tùy Chỉnh) |
+| `LibCommon/Lib/Model/Package/PackageType.cs` | 1 | Package display "{N} tháng/months" |
+| `ReviewMovie/Program.cs` | 0 | Wire up `LibLocalizer.GetText = LanguageManager.Get` |
+
+**Keys mới thêm vào LangKeys.cs:** `Svc_*` (26 keys) + `Lib_*` (16 keys) = 42 keys
+
+**Kỹ thuật:**
+- ReviewMovie/Services: dùng trực tiếp `LanguageManager.Get()` / `LanguageManager.GetFormat()`
+- LibCommon: dùng `LibLocalizer.Get()` / `LibLocalizer.GetFormat()` (delegate wired trong Program.cs)
+- Component.cs / EffectConfig.cs: đổi `const string` → `static string` property (getter gọi `LibLocalizer.Get()`)
+
+### Đợt 2: Voice Display Names nhóm THẤP (Hoàn thành)
+
+**Hạ tầng bổ sung:**
+- Thêm `GetCurrentLanguage` delegate + `IsEnglish` property vào `LibLocalizer.cs`
+- Wire `LibLocalizer.GetCurrentLanguage` trong `Program.cs`
+
+**~109 chuỗi đã localize, 3 files thay đổi:**
+
+| File | Số chuỗi | Mô tả |
+|------|----------|-------|
+| `LibCommon/Lib/VoiceServices/GoogleTTS/GoogleTTSVoiceCode.cs` | 63 | Tên ngôn ngữ (2 dictionary Vi/En, chọn theo `LibLocalizer.IsEnglish`) |
+| `LibCommon/Lib/VoiceServices/Vbee/VbeeVoiceCode.cs` | 36 | 12 tên ngôn ngữ + 9 giọng VN + 10 giọng UK + 5 giọng US |
+| `LibCommon/Lib/VoiceServices/FptAI/FptAIVoiceCode.cs` | 10 | 1 tên ngôn ngữ + 9 giọng VN |
+
+**Kỹ thuật:**
+- GoogleTTSVoiceCode: 2 dictionaries (`LanguageMapVi` / `LanguageMapEn`), `GetLanguageDisplayName()` chọn map theo ngôn ngữ
+- VbeeVoiceCode / FptAIVoiceCode: đổi `const string _Des` → `static string _Des` property với ternary `LibLocalizer.IsEnglish ? "EN" : "VI"`
+- Chỉ đổi các _Des field có text tiếng Việt; giữ nguyên tên quốc tế (Brune, Akemi, Moon, etc.)
+
+---
+
+### Tổng kết toàn bộ
+
+| Đợt | Số chuỗi | Files changed |
+|-----|----------|---------------|
+| Đợt 0 (Core + UI) | ~180 | 15 files |
+| Đợt 1 (Services + LibCommon CAO/TB) | 42 | 12 files |
+| Đợt 2 (Voice display names) | 109 | 3 files |
+| **Tổng** | **~331** | **~30 files** |

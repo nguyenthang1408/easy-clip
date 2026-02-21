@@ -1,5 +1,6 @@
 ﻿using Lib;
 using Lib.VoiceServices.ElevenLabs.V1.Services;
+using ReviewMovie.Localization;
 using ReviewMovie.Model;
 using System;
 using System.Collections.Generic;
@@ -69,9 +70,9 @@ namespace EasyClip.Services
 
                     string downloadstatus = timeaudio > 0
                         ? recordStatus
-                            ? $"Thu Âm Thành công ! [AudioTime:{timeaudio:0.000}s ]"
-                            : $"Download Thành công ! [AudioTime:{timeaudio:0.000}s ]"
-                        : recordStatus ? "Thu Âm Thất Bại !" : "Download Thất Bại !";
+                            ? LanguageManager.GetFormat(LangKeys.Svc_RecordSuccess, $"{timeaudio:0.000}")
+                            : LanguageManager.GetFormat(LangKeys.Svc_DownloadSuccess, $"{timeaudio:0.000}")
+                        : recordStatus ? LanguageManager.Get(LangKeys.Svc_RecordFailed) : LanguageManager.Get(LangKeys.Svc_DownloadFailed);
 
                     if (timeaudio > 0)
                     {
@@ -109,12 +110,12 @@ namespace EasyClip.Services
                 }
                 else
                 {
-                    ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audiostatus", "Download thất bại !", Color.OrangeRed);
+                    ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audiostatus", LanguageManager.Get(LangKeys.Svc_DownloadFailed), Color.OrangeRed);
                 }
             }
             else
             {
-                ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audiostatus", "Chưa chuyển âm xong , Thử lại sau !", Color.Orange);
+                ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audiostatus", LanguageManager.Get(LangKeys.Svc_ConversionNotReady), Color.Orange);
             }
         }
     }

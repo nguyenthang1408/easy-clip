@@ -209,5 +209,69 @@ namespace ReviewMovie.Localization
         public const string Main_Cancelled = "Main_Cancelled";
         public const string Main_BatchAll = "Main_BatchAll";
         public const string Main_BatchSelected = "Main_BatchSelected";
+
+        // ========== Services - AudioConvertService ==========
+        public const string Svc_ConvertAlreadyRunning = "Svc_ConvertAlreadyRunning";
+        public const string Svc_ConvertError = "Svc_ConvertError";
+        public const string Svc_ConvertComplete = "Svc_ConvertComplete";
+        public const string Svc_ConvertCancelled = "Svc_ConvertCancelled";
+        public const string Svc_NoContent = "Svc_NoContent";
+        public const string Svc_ConvertingRow = "Svc_ConvertingRow";
+        public const string Svc_ServerConnectionError = "Svc_ServerConnectionError";
+        public const string Svc_UsageApiError = "Svc_UsageApiError";
+        public const string Svc_UnknownServerError = "Svc_UnknownServerError";
+        public const string Svc_QuotaExceeded = "Svc_QuotaExceeded";
+        public const string Svc_CancelConvertRow = "Svc_CancelConvertRow";
+        public const string Svc_ConvertRowError = "Svc_ConvertRowError";
+
+        // ========== Services - AudioDownloadService ==========
+        public const string Svc_RecordSuccess = "Svc_RecordSuccess";
+        public const string Svc_DownloadSuccess = "Svc_DownloadSuccess";
+        public const string Svc_RecordFailed = "Svc_RecordFailed";
+        public const string Svc_DownloadFailed = "Svc_DownloadFailed";
+        public const string Svc_ConversionNotReady = "Svc_ConversionNotReady";
+
+        // ========== Services - AudioRecordService ==========
+        public const string Svc_Recording = "Svc_Recording";
+        public const string Svc_RecordDone = "Svc_RecordDone";
+        public const string Svc_RecordStartFailed = "Svc_RecordStartFailed";
+        public const string Svc_RecordError = "Svc_RecordError";
+        public const string Svc_RecordCellError = "Svc_RecordCellError";
+
+        // ========== Services - VideoMergeService ==========
+        public const string Svc_MergingProgress = "Svc_MergingProgress";
+
+        // ========== Services - ClipPlayerService ==========
+        public const string Svc_ClipPlayerNotFound = "Svc_ClipPlayerNotFound";
+
+        // ========== Services - LoadingService ==========
+        public const string Svc_Processing = "Svc_Processing";
+
+        // ========== Services - CustomTextBox ==========
+        public const string Svc_TextPlaceholder = "Svc_TextPlaceholder";
+
+        // ========== LibCommon - APIGoogleTTS ==========
+        public const string Lib_JsonDataEmpty = "Lib_JsonDataEmpty";
+        public const string Lib_TextInputEmpty = "Lib_TextInputEmpty";
+        public const string Lib_VoiceCodeEmpty = "Lib_VoiceCodeEmpty";
+        public const string Lib_SavePathEmpty = "Lib_SavePathEmpty";
+        public const string Lib_NoAudioData = "Lib_NoAudioData";
+        public const string Lib_ConvertDownloadSuccess = "Lib_ConvertDownloadSuccess";
+        public const string Lib_ErrorFormat = "Lib_ErrorFormat";
+
+        // ========== LibCommon - Component (Effects) ==========
+        public const string Lib_EffectZoomIn = "Lib_EffectZoomIn";
+        public const string Lib_EffectZoomOut = "Lib_EffectZoomOut";
+        public const string Lib_EffectMoveVertical = "Lib_EffectMoveVertical";
+        public const string Lib_EffectMoveHorizontal = "Lib_EffectMoveHorizontal";
+        public const string Lib_Zoom25Short = "Lib_Zoom25Short";
+        public const string Lib_Zoom75Normal = "Lib_Zoom75Normal";
+
+        // ========== LibCommon - EffectConfig ==========
+        public const string Lib_ConfigDefault = "Lib_ConfigDefault";
+        public const string Lib_ConfigCustom = "Lib_ConfigCustom";
+
+        // ========== LibCommon - PackageType ==========
+        public const string Lib_PackageDisplayFormat = "Lib_PackageDisplayFormat";
     }
 }

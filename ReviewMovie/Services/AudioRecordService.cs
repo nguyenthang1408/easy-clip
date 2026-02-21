@@ -1,4 +1,5 @@
 ﻿using Lib;
+using ReviewMovie.Localization;
 using ReviewMovie.Model;
 using System.IO;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace EasyClip.Services
 
             // Báo UI: bắt đầu record
             context.UpdateRowCallback?.Invoke(context.RowIndex, "", "Start Recording ...");
-            context.SetStatusCallback?.Invoke("Đang ghi âm...", Color.Yellow);
+            context.SetStatusCallback?.Invoke(LanguageManager.Get(LangKeys.Svc_Recording), Color.Yellow);
         }
 
         public void StopRecord()
@@ -56,9 +57,9 @@ namespace EasyClip.Services
                 _checkrecord = RecordAudio.StartRecord();
                 if (!_checkrecord)
                 {
-                    status = "Lỗi record";
+                    status = LanguageManager.Get(LangKeys.Svc_RecordCellError);
                     context.UpdateRowCallback?.Invoke(context.RowIndex, "", status);
-                    context.SetStatusCallback?.Invoke("Không bắt đầu được ghi âm.", Color.Red);
+                    context.SetStatusCallback?.Invoke(LanguageManager.Get(LangKeys.Svc_RecordStartFailed), Color.Red);
                     context.OnAfterRecord?.Invoke(context.RowIndex, "", status);
                     return;
                 }
@@ -71,16 +72,16 @@ namespace EasyClip.Services
                 _checkrecord = false;
                 status = "End Record";
                 context.UpdateRowCallback?.Invoke(context.RowIndex, fullpath, status);
-                context.SetStatusCallback?.Invoke("Đã ghi âm xong.", Color.Green);
+                context.SetStatusCallback?.Invoke(LanguageManager.Get(LangKeys.Svc_RecordDone), Color.Green);
                 context.OnAfterRecord?.Invoke(context.RowIndex, fullpath, status);
 
             }
             catch
             {
                 RecordAudio.DestroyRecord();
-                status = "Lỗi record";
+                status = LanguageManager.Get(LangKeys.Svc_RecordCellError);
                 context.UpdateRowCallback?.Invoke(context.RowIndex, "", status);
-                context.SetStatusCallback?.Invoke("Lỗi ghi âm!", Color.Red);
+                context.SetStatusCallback?.Invoke(LanguageManager.Get(LangKeys.Svc_RecordError), Color.Red);
                 context.OnAfterRecord?.Invoke(context.RowIndex, "", status);
             }
             finally

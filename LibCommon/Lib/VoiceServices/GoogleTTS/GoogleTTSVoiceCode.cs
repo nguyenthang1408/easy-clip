@@ -1,4 +1,5 @@
-﻿using System;
+using LibCommon.Lib.Localization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,7 @@ namespace Lib.VoiceServices.GoogleTTS
 {
     public static class GoogleTTSVoiceCode
     {
-        // Từ điển tĩnh chứa mã ngôn ngữ và tên hiển thị (chỉ tạo 1 lần duy nhất)
-        // Google TTS API chỉ trả về language code (en-US, vi-VN), không có tên tiếng Việt
-        // Nên cần dictionary này để map code sang tên hiển thị
-        private static readonly Dictionary<string, string> LanguageMap = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> LanguageMapVi = new Dictionary<string, string>
         {
             { "af-ZA", "Tiếng Afrikaans (Nam Phi)" },
             { "am-ET", "Tiếng Amharic (Ethiopia)" },
@@ -78,10 +76,77 @@ namespace Lib.VoiceServices.GoogleTTS
             { "yue-HK", "Tiếng Quảng Đông (Hồng Kông)" }
         };
 
+        private static readonly Dictionary<string, string> LanguageMapEn = new Dictionary<string, string>
+        {
+            { "af-ZA", "Afrikaans (South Africa)" },
+            { "am-ET", "Amharic (Ethiopia)" },
+            { "ar-XA", "Arabic" },
+            { "bg-BG", "Bulgarian" },
+            { "bn-IN", "Bengali (India)" },
+            { "ca-ES", "Catalan (Spain)" },
+            { "cmn-CN", "Mandarin Chinese (China)" },
+            { "cmn-TW", "Mandarin Chinese (Taiwan)" },
+            { "cs-CZ", "Czech (Czech Republic)" },
+            { "da-DK", "Danish" },
+            { "de-DE", "German" },
+            { "el-GR", "Greek" },
+            { "en-AU", "English (Australia)" },
+            { "en-GB", "English (UK)" },
+            { "en-IN", "English (India)" },
+            { "en-US", "English (US)" },
+            { "es-ES", "Spanish (Spain)" },
+            { "es-US", "Spanish (US)" },
+            { "et-EE", "Estonian" },
+            { "eu-ES", "Basque (Spain)" },
+            { "fi-FI", "Finnish" },
+            { "fil-PH", "Filipino (Philippines)" },
+            { "fr-CA", "French (Canada)" },
+            { "fr-FR", "French (France)" },
+            { "gl-ES", "Galician (Spain)" },
+            { "gu-IN", "Gujarati (India)" },
+            { "he-IL", "Hebrew (Israel)" },
+            { "hi-IN", "Hindi (India)" },
+            { "hr-HR", "Croatian (Croatia)" },
+            { "hu-HU", "Hungarian" },
+            { "id-ID", "Indonesian" },
+            { "is-IS", "Icelandic" },
+            { "it-IT", "Italian" },
+            { "ja-JP", "Japanese" },
+            { "kn-IN", "Kannada (India)" },
+            { "ko-KR", "Korean" },
+            { "lt-LT", "Lithuanian" },
+            { "lv-LV", "Latvian" },
+            { "ml-IN", "Malayalam (India)" },
+            { "mr-IN", "Marathi (India)" },
+            { "ms-MY", "Malay" },
+            { "nb-NO", "Norwegian (Bokmål)" },
+            { "nl-BE", "Dutch (Belgium)" },
+            { "nl-NL", "Dutch (Netherlands)" },
+            { "pa-IN", "Punjabi (India)" },
+            { "pl-PL", "Polish" },
+            { "pt-BR", "Portuguese (Brazil)" },
+            { "pt-PT", "Portuguese (Portugal)" },
+            { "ro-RO", "Romanian" },
+            { "ru-RU", "Russian" },
+            { "sk-SK", "Slovak" },
+            { "sl-SI", "Slovenian" },
+            { "sr-RS", "Serbian" },
+            { "sv-SE", "Swedish" },
+            { "sw-KE", "Swahili" },
+            { "ta-IN", "Tamil (India)" },
+            { "te-IN", "Telugu (India)" },
+            { "th-TH", "Thai" },
+            { "tr-TR", "Turkish" },
+            { "uk-UA", "Ukrainian" },
+            { "ur-IN", "Urdu (India)" },
+            { "vi-VN", "Vietnamese" },
+            { "yue-HK", "Cantonese (Hong Kong)" }
+        };
+
         public static string GetLanguageDisplayName(string languageCode)
         {
-            // Kiểm tra và trả về tên hiển thị hoặc mã ngôn ngữ nếu không tìm thấy
-            return LanguageMap.TryGetValue(languageCode, out var name) ? name : languageCode;
+            var map = LibLocalizer.IsEnglish ? LanguageMapEn : LanguageMapVi;
+            return map.TryGetValue(languageCode, out var name) ? name : languageCode;
         }
     }
 }

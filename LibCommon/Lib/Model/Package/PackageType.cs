@@ -1,3 +1,5 @@
+using LibCommon.Lib.Localization;
+
 namespace LibCommon.Lib.Model.Package
 {
     /// <summary>
@@ -75,7 +77,7 @@ namespace LibCommon.Lib.Model.Package
         {
             int months = GetMonthsFromPackageId(packageId);
             if (months > 0)
-                return $"{packageType} - {months} tháng";
+                return LibLocalizer.GetFormat("Lib_PackageDisplayFormat", packageType, months);
 
             return packageType ?? "Trial";
         }

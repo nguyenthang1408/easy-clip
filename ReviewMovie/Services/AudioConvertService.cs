@@ -6,6 +6,7 @@ using Lib.VoiceServices.ElevenLabs.V1.Services;
 using Lib.VoiceServices.GoogleTTS;
 using LibCommon.Lib.Model.Package;
 using ReviewMovie.Infrastructure.Project;
+using ReviewMovie.Localization;
 using ReviewMovie.Model;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace EasyClip.Services
                 if (isOtherRunning())
                 {
                     context.ShowAlertCallback?.Invoke(
-                        "Đang có tiến trình Convert Text2Speech khác đang chạy.");
+                        LanguageManager.Get(LangKeys.Svc_ConvertAlreadyRunning));
                     return;
                 }
 
@@ -73,17 +74,17 @@ namespace EasyClip.Services
                         {
                             // Lỗi bất ngờ ngoài try/catch của ConvertText2SpeechAsync (hiếm)
                             string inputText = context.GetInputTextByIndex?.Invoke(index) ?? string.Empty;
-                            context.UpdateRowCallback?.Invoke(index, "", "Lỗi Converted !", inputText);
-                            context.OnAfterRowConverted?.Invoke(index, "", "Lỗi Converted !", inputText);
+                            context.UpdateRowCallback?.Invoke(index, "", LanguageManager.Get(LangKeys.Svc_ConvertError), inputText);
+                            context.OnAfterRowConverted?.Invoke(index, "", LanguageManager.Get(LangKeys.Svc_ConvertError), inputText);
                             // Có thể log thêm lỗi ex nếu muốn
                         }
                         await Task.Delay(300, cts.Token);
                     }
-                    context.SetStatusCallback?.Invoke($"Hoàn thành convert ({modeLabel})", Color.Green);
+                    context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_ConvertComplete, modeLabel), Color.Green);
                 }
                 catch (OperationCanceledException)
                 {
-                    context.SetStatusCallback?.Invoke($"Đã huỷ Convert2Speech ({modeLabel})", Color.OrangeRed);
+                    context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_ConvertCancelled, modeLabel), Color.OrangeRed);
                 }
                 finally
                 {
@@ -109,7 +110,7 @@ namespace EasyClip.Services
 
             if (string.IsNullOrWhiteSpace(inputText))
             {
-                audioStatus = "Không có nội dung";
+                audioStatus = LanguageManager.Get(LangKeys.Svc_NoContent);
                 context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
                 context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
                 return;
@@ -117,7 +118,7 @@ namespace EasyClip.Services
 
             audioStatus = "Converting...";
             context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
-            context.SetStatusCallback?.Invoke($"Đang convert dòng {index}", Color.Green);
+            context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_ConvertingRow, index), Color.Green);
 
             try
             {
@@ -135,18 +136,18 @@ namespace EasyClip.Services
                     }
                     catch (Exception ex)
                     {
-                        audioStatus = "Lỗi kết nối server!";
+                        audioStatus = LanguageManager.Get(LangKeys.Svc_ServerConnectionError);
                         context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
                         context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
-                        context.SetStatusCallback?.Invoke($"Lỗi kết nối usage API: {ex.Message}", Color.OrangeRed);
+                        context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_UsageApiError, ex.Message), Color.OrangeRed);
                         return;
                     }
 
                     // Server trả error (VD: daily limit exceeded, code 4005)
                     if (apiResponse == null || apiResponse.Error || apiResponse.Data == null || !apiResponse.Data.Success)
                     {
-                        string serverMsg = apiResponse?.Message ?? "Lỗi không xác định từ server";
-                        audioStatus = "Hết quota ký tự!";
+                        string serverMsg = apiResponse?.Message ?? LanguageManager.Get(LangKeys.Svc_UnknownServerError);
+                        audioStatus = LanguageManager.Get(LangKeys.Svc_QuotaExceeded);
                         context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
                         context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
 
@@ -208,25 +209,25 @@ namespace EasyClip.Services
                 }
                 else
                 {
-                    audioStatus = "Lỗi Converted !";
+                    audioStatus = LanguageManager.Get(LangKeys.Svc_ConvertError);
                 }
                 context.UpdateRowCallback?.Invoke(index, requestID, audioStatus, inputText);
                 context.OnAfterRowConverted?.Invoke(index, requestID, audioStatus, inputText);
             }
             catch (OperationCanceledException)
             {
-                audioStatus = "Đã huỷ";
+                audioStatus = LanguageManager.Get(LangKeys.Main_Cancelled);
                 context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
                 context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
-                context.SetStatusCallback?.Invoke($"Huỷ convert dòng {index}", Color.OrangeRed);
+                context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_CancelConvertRow, index), Color.OrangeRed);
                 throw;
             }
             catch (Exception ex)
             {
-                audioStatus = "Lỗi Converted !";
+                audioStatus = LanguageManager.Get(LangKeys.Svc_ConvertError);
                 context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
                 context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
-                context.SetStatusCallback?.Invoke($"Lỗi convert dòng {index}: {ex.Message}", Color.Red);
+                context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_ConvertRowError, index, ex.Message), Color.Red);
             }
         }
 

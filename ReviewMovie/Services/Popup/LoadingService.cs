@@ -1,4 +1,5 @@
 ﻿using EasyClip.Services.Popup;
+using ReviewMovie.Localization;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -23,14 +24,14 @@ namespace EasyClip.Services
         /// <summary>
         /// Hiện popup loading (modeless). Không khóa mainform.
         /// </summary>
-        public void Show(string statusText = "Đang xử lý...", int timeoutMilliseconds = 0, Action onTimeout = null)
+        public void Show(string statusText = null, int timeoutMilliseconds = 0, Action onTimeout = null)
         {
             if (_dialog != null) return; // Đã mở, bỏ qua
 
             _isTimeout = false;
             _onTimeout = onTimeout;
             _dialog = _dialogFactory();
-            _dialog.Show(statusText);
+            _dialog.Show(statusText ?? LanguageManager.Get(LangKeys.Svc_Processing));
 
             if (timeoutMilliseconds > 0)
             {

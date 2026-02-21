@@ -1,4 +1,5 @@
 using LibCommon.Lib;
+using LibCommon.Lib.Localization;
 using ReviewMovie.Localization;
 using System;
 using System.Threading;
@@ -17,8 +18,10 @@ namespace ReviewMovie
             // Load ngôn ngữ đã lưu
             LanguageManager.LoadSavedLanguage();
 
-            // Wire up VersionMessageHelper localization delegate
+            // Wire up localization delegates
             VersionMessageHelper.GetLocalizedText = LanguageManager.Get;
+            LibLocalizer.GetText = LanguageManager.Get;
+            LibLocalizer.GetCurrentLanguage = () => LanguageManager.CurrentLanguage == LanguageManager.Language.En ? "en" : "vi";
 
             // Kiểm tra xem ứng dụng đã chạy hay chưa
             if (mutex.WaitOne(TimeSpan.Zero, true))
