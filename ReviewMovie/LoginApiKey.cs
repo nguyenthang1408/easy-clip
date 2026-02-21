@@ -308,7 +308,7 @@ namespace ReviewMovie
                 popup.ShowInTaskbar = false;
                 popup.TopMost = true;
                 popup.BackColor = Color.FromArgb(243, 246, 252);
-                popup.ClientSize = new Size(320, 170);
+                popup.ClientSize = new Size(360, 190);
                 popup.Padding = new Padding(8);
                 popup.Text = "Thông báo";
                 UiHelpers.EnableSmoothPainting(popup);
@@ -323,7 +323,7 @@ namespace ReviewMovie
                 var panelHeader = new Panel
                 {
                     Dock = DockStyle.Top,
-                    Height = 38,
+                    Height = 42,
                     BackColor = Color.FromArgb(248, 250, 255)
                 };
                 panelCard.Controls.Add(panelHeader);
@@ -332,9 +332,9 @@ namespace ReviewMovie
                 {
                     AutoSize = true,
                     Text = "Thông báo",
-                    Font = new Font("Segoe UI", 10.5F, FontStyle.Bold, GraphicsUnit.Point),
+                    Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point),
                     ForeColor = Color.FromArgb(45, 53, 66),
-                    Location = new Point(12, 8)
+                    Location = new Point(12, 9)
                 };
                 panelHeader.Controls.Add(lblTitle);
 
@@ -345,7 +345,7 @@ namespace ReviewMovie
                     ForeColor = Color.FromArgb(118, 126, 140),
                     FlatStyle = FlatStyle.Flat,
                     Size = new Size(32, 28),
-                    Location = new Point(popup.ClientSize.Width - 52, 6),
+                    Location = new Point(popup.ClientSize.Width - 52, 7),
                     Anchor = AnchorStyles.Top | AnchorStyles.Right,
                     Cursor = Cursors.Hand,
                     TabStop = false
@@ -367,13 +367,29 @@ namespace ReviewMovie
                 };
                 panelCard.Controls.Add(panelBody);
 
+                var bodyLayout = new TableLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    ColumnCount = 2,
+                    RowCount = 3,
+                    Padding = new Padding(20, 14, 20, 14),
+                    BackColor = Color.White
+                };
+                bodyLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 56F));
+                bodyLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+                bodyLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 58F));
+                bodyLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+                bodyLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+                panelBody.Controls.Add(bodyLayout);
+
                 var iconCircle = new Panel
                 {
                     Size = new Size(40, 40),
-                    Location = new Point(24, 30),
-                    BackColor = Color.FromArgb(43, 123, 234)
+                    Dock = DockStyle.Fill,
+                    BackColor = Color.FromArgb(43, 123, 234),
+                    Margin = new Padding(0, 8, 12, 8)
                 };
-                panelBody.Controls.Add(iconCircle);
+                bodyLayout.Controls.Add(iconCircle, 0, 0);
 
                 var lblIcon = new Label
                 {
@@ -391,11 +407,12 @@ namespace ReviewMovie
                     Text = message,
                     Font = new Font("Segoe UI", 10.5F, FontStyle.Bold, GraphicsUnit.Point),
                     ForeColor = Color.FromArgb(45, 53, 66),
-                    Location = new Point(76, 34),
-                    Size = new Size(220, 30),
-                    TextAlign = ContentAlignment.MiddleLeft
+                    Dock = DockStyle.Fill,
+                    Margin = new Padding(0, 8, 0, 8),
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    AutoEllipsis = true
                 };
-                panelBody.Controls.Add(lblMessage);
+                bodyLayout.Controls.Add(lblMessage, 1, 0);
 
                 var btnOk = new Button
                 {
@@ -405,15 +422,15 @@ namespace ReviewMovie
                     BackColor = Color.FromArgb(43, 123, 234),
                     FlatStyle = FlatStyle.Flat,
                     Size = new Size(96, 34),
-                    Location = new Point(200, 72),
-                    Anchor = AnchorStyles.Bottom | AnchorStyles.Right,
+                    Anchor = AnchorStyles.Right,
+                    Margin = new Padding(0, 4, 0, 0),
                     Cursor = Cursors.Hand,
                     DialogResult = DialogResult.OK
                 };
                 btnOk.FlatAppearance.BorderSize = 0;
                 btnOk.FlatAppearance.MouseOverBackColor = Color.FromArgb(38, 111, 214);
                 btnOk.FlatAppearance.MouseDownBackColor = Color.FromArgb(33, 98, 190);
-                panelBody.Controls.Add(btnOk);
+                bodyLayout.Controls.Add(btnOk, 1, 2);
                 popup.AcceptButton = btnOk;
                 popup.CancelButton = btnOk;
 
