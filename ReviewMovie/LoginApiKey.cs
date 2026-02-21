@@ -90,8 +90,13 @@ namespace ReviewMovie
 
             if (txInsertApiKey is UiTextBox apiKey)
             {
-                apiKey.BackgroundColor = Color.White;
-                apiKey.BorderColor = ColorTranslator.FromHtml("#E2E8F0");
+                // Keep API key field prominent on dark login theme.
+                apiKey.BackgroundColor = ColorTranslator.FromHtml("#1E2028");
+                apiKey.BorderColor = ColorTranslator.FromHtml("#4A4F61");
+                apiKey.BorderFocusColor = ColorTranslator.FromHtml("#61B0FF");
+                apiKey.HoverColor = ColorTranslator.FromHtml("#313544");
+                apiKey.TextColor = ColorTranslator.FromHtml("#F2F6FF");
+                apiKey.InnerTextBox.ForeColor = ColorTranslator.FromHtml("#F2F6FF");
             }
 
             if (btnLoginApiKey is PrimaryButton primary)
