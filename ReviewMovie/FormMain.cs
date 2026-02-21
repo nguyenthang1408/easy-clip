@@ -1306,11 +1306,18 @@ namespace ReviewMovie
 
                 // load % ZQuality
                 var zoomQualityList = ComboboxZoomQuality.ZoomQualityTemplate();
-                int zoomQualityDefaultIdx = zoomQualityList.FindIndex(x => x.Display.Equals(ZoomQualitytName.ZoomQuality_Medium_Des));
-                ComboBoxFuncion.CbBlinding(cbZoomQuality
-                            , zoomQualityList.ToList()
-                            , stdefault ? zoomQualityDefaultIdx
-                                        : Math.Max(zoomQualityList.FindIndex(x => x.Display.Equals(valEffectSettup.SzoomQuality)), zoomQualityDefaultIdx));
+                int zoomQualityDefaultIdx = Math.Max(zoomQualityList.FindIndex(x => x.Display.Equals(ZoomQualitytName.ZoomQuality_Medium_Des)), 0);
+                int zoomQualityIdx = zoomQualityDefaultIdx;
+                if (!stdefault)
+                {
+                    // Try match by Value first (new format), then by Display (old format)
+                    zoomQualityIdx = zoomQualityList.FindIndex(x => x.Value.Equals(valEffectSettup.SzoomQuality));
+                    if (zoomQualityIdx < 0)
+                        zoomQualityIdx = zoomQualityList.FindIndex(x => x.Display.Equals(valEffectSettup.SzoomQuality));
+                    if (zoomQualityIdx < 0)
+                        zoomQualityIdx = zoomQualityDefaultIdx;
+                }
+                ComboBoxFuncion.CbBlinding(cbZoomQuality, zoomQualityList.ToList(), zoomQualityIdx);
 
                 // load Chất lượng
                 ComboBoxFuncion.CbBlinding(cbxVideoQuality
@@ -1687,7 +1694,7 @@ namespace ReviewMovie
             {
                 Active = true,
                 SzoomRatio = cbZoomRatio?.Text ?? string.Empty,
-                SzoomQuality = cbZoomQuality?.Text ?? string.Empty,
+                SzoomQuality = cbZoomQuality?.SelectedValue?.ToString() ?? string.Empty,
                 Sfps = (int)nFPS.Value,
                 Sthread = (int)nbThread.Value,
                 SvideoQuality = cbxVideoQuality?.Text ?? string.Empty,
