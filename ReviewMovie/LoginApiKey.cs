@@ -161,8 +161,11 @@ namespace ReviewMovie
 
         private void ApplyRoundedRegions()
         {
-            // Rounded window (requested)
-            UiHelpers.ApplyRoundRegion(this, UiTheme.WindowRadius);
+            // Keep outer window corners not rounded.
+            if (Region != null)
+            {
+                Region = null;
+            }
 
             // Card + logo (pills/buttons handle their own rounding)
             UiHelpers.ApplyRoundRegion(pnlLogo, 14);
@@ -171,7 +174,7 @@ namespace ReviewMovie
         // Paint borders for card + pill panels (Designer-safe: standard Panels)
         private void cardPanel_Paint(object sender, PaintEventArgs e)
         {
-            // Intentionally empty: we only round the window (1 layer)
+            // Intentionally empty.
         }
 
         private void btnClose_Click(object sender, EventArgs e)
