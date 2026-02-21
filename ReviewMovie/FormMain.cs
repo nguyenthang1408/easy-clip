@@ -340,6 +340,7 @@ namespace ReviewMovie
             // Rebind comboboxes that have localized Display text
             RebindComboBoxPreserveSelection(cbEffectType, ComboboxEffectType.EffectTypeTemplate().ToList());
             RebindComboBoxPreserveSelection(cbxVideoQuality, ComboboxSizeVideo.SizeVideoTemplate().ToList());
+            RebindComboBoxPreserveSelection(cbZoomQuality, ComboboxZoomQuality.ZoomQualityTemplate().ToList());
 
             // Render section
             grbActionRender.Text = LanguageManager.Get(LangKeys.Main_PublishVideo);
@@ -4946,23 +4947,15 @@ namespace ReviewMovie
         }
         private void cbZoomQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (cbZoomQuality.Text)
-            {
-                case ZoomQualitytName.ZoomQuality_Low_Des:
-                    _zoomQuality = ZoomQualitytName.ZoomQuality_Low_Val;
-                    break;
-                case ZoomQualitytName.ZoomQuality_Normal_Des:
-                    _zoomQuality = ZoomQualitytName.ZoomQuality_Normal_Val;
-                    break;
-                case ZoomQualitytName.ZoomQuality_Medium_Des:
-                    _zoomQuality = ZoomQualitytName.ZoomQuality_Medium_Val;
-                    break;
-                case ZoomQualitytName.ZoomQuality_High_Des:
-                    _zoomQuality = ZoomQualitytName.ZoomQuality_High_Val;
-                    break;
-                default:
-                    break;
-            }
+            var qualityText = cbZoomQuality.Text;
+            if (qualityText == ZoomQualitytName.ZoomQuality_Low_Des)
+                _zoomQuality = ZoomQualitytName.ZoomQuality_Low_Val;
+            else if (qualityText == ZoomQualitytName.ZoomQuality_Normal_Des)
+                _zoomQuality = ZoomQualitytName.ZoomQuality_Normal_Val;
+            else if (qualityText == ZoomQualitytName.ZoomQuality_Medium_Des)
+                _zoomQuality = ZoomQualitytName.ZoomQuality_Medium_Val;
+            else if (qualityText == ZoomQualitytName.ZoomQuality_High_Des)
+                _zoomQuality = ZoomQualitytName.ZoomQuality_High_Val;
         }
         private void cbxVideoQuality_SelectedIndexChanged(object sender, EventArgs e)
         {

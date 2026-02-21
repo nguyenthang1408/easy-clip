@@ -124,16 +124,16 @@ namespace Lib
 
     public static class ZoomQualitytName
     {
-        public const string ZoomQuality_Low_Des = "Low";
+        public static string ZoomQuality_Low_Des => LibLocalizer.IsEnglish ? "Low" : "Thấp";
         public const string ZoomQuality_Low_Val = "3000";
 
-        public const string ZoomQuality_Normal_Des = "Normal";
+        public static string ZoomQuality_Normal_Des => LibLocalizer.IsEnglish ? "Normal" : "Bình thường";
         public const string ZoomQuality_Normal_Val = "4000";
 
-        public const string ZoomQuality_Medium_Des = "Medium";
+        public static string ZoomQuality_Medium_Des => LibLocalizer.IsEnglish ? "Medium" : "Trung bình";
         public const string ZoomQuality_Medium_Val = "6000";
 
-        public const string ZoomQuality_High_Des = "High";
+        public static string ZoomQuality_High_Des => LibLocalizer.IsEnglish ? "High" : "Cao";
         public const string ZoomQuality_High_Val = "8000";
 
     }
