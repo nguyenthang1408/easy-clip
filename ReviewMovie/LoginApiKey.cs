@@ -381,11 +381,13 @@ namespace ReviewMovie
                 bodyLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
                 panelBody.Controls.Add(bodyLayout);
 
-                var iconCircle = new Panel
+                var iconCircle = new RoundedPanel
                 {
                     Size = new Size(40, 40),
                     Dock = DockStyle.Fill,
-                    BackColor = Color.FromArgb(43, 123, 234),
+                    FillColor = Color.FromArgb(43, 123, 234),
+                    BorderThickness = 0,
+                    CornerRadius = 20,
                     Margin = new Padding(0, 12, 12, 6)
                 };
                 bodyLayout.Controls.Add(iconCircle, 0, 0);
@@ -396,7 +398,8 @@ namespace ReviewMovie
                     Text = "i",
                     TextAlign = ContentAlignment.MiddleCenter,
                     Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point),
-                    ForeColor = Color.White
+                    ForeColor = Color.White,
+                    BackColor = Color.Transparent
                 };
                 iconCircle.Controls.Add(lblIcon);
 
@@ -413,22 +416,21 @@ namespace ReviewMovie
                 };
                 bodyLayout.Controls.Add(lblMessage, 1, 0);
 
-                var btnOk = new Button
+                var btnOk = new PrimaryButton
                 {
                     Text = "OK",
                     Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point),
                     ForeColor = Color.White,
-                    BackColor = Color.FromArgb(43, 123, 234),
-                    FlatStyle = FlatStyle.Flat,
+                    FillColor = Color.FromArgb(43, 123, 234),
+                    HoverFillColor = Color.FromArgb(38, 111, 214),
+                    PressedFillColor = Color.FromArgb(33, 98, 190),
+                    CornerRadius = 8,
                     Size = new Size(96, 34),
                     Anchor = AnchorStyles.Right,
                     Margin = new Padding(0, 4, 0, 0),
                     Cursor = Cursors.Hand,
                     DialogResult = DialogResult.OK
                 };
-                btnOk.FlatAppearance.BorderSize = 0;
-                btnOk.FlatAppearance.MouseOverBackColor = Color.FromArgb(38, 111, 214);
-                btnOk.FlatAppearance.MouseDownBackColor = Color.FromArgb(33, 98, 190);
                 bodyLayout.Controls.Add(btnOk, 1, 2);
                 popup.AcceptButton = btnOk;
                 popup.CancelButton = btnOk;
@@ -462,8 +464,6 @@ namespace ReviewMovie
                 popup.Shown += (s, e) =>
                 {
                     UiHelpers.ApplyRoundRegion(panelCard, 10);
-                    UiHelpers.ApplyRoundRegion(iconCircle, iconCircle.Width / 2);
-                    UiHelpers.ApplyRoundRegion(btnOk, 8);
                 };
                 popup.Resize += (s, e) =>
                 {
