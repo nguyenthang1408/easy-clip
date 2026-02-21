@@ -329,7 +329,7 @@ namespace ReviewMovie
             ckHflip.Text = LanguageManager.Get(LangKeys.Main_FlipVideo);
             ckHflipRandom.Text = LanguageManager.Get(LangKeys.Main_FlipRandom);
             ckRandomMoveLeftRight.Text = LanguageManager.Get(LangKeys.Main_LayerAutoMove);
-            label15.Text = LanguageManager.Get(LangKeys.Main_AudioScale);
+            label14.Text = LanguageManager.Get(LangKeys.Main_AudioScale);
             label4.Text = LanguageManager.Get(LangKeys.Main_OriginalVolume);
             ckNotUseAudio.Text = LanguageManager.Get(LangKeys.Main_NoAudio);
             label16.Text = LanguageManager.Get(LangKeys.Main_Language);

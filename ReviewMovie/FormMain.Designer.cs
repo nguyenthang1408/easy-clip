@@ -503,7 +503,7 @@ namespace ReviewMovie
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(247, 244);
+            this.label15.Location = new System.Drawing.Point(248, 244);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(16, 13);
             this.label15.TabIndex = 119;
@@ -546,7 +546,7 @@ namespace ReviewMovie
             0,
             0,
             65536});
-            this.nScaleAudioRangeStart.Location = new System.Drawing.Point(199, 240);
+            this.nScaleAudioRangeStart.Location = new System.Drawing.Point(201, 240);
             this.nScaleAudioRangeStart.Maximum = new decimal(new int[] {
             18,
             0,
@@ -571,11 +571,11 @@ namespace ReviewMovie
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(133, 244);
+            this.label14.Location = new System.Drawing.Point(130, 244);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(64, 13);
+            this.label14.Size = new System.Drawing.Size(69, 13);
             this.label14.TabIndex = 116;
-            this.label14.Text = "Audio Scale";
+            this.label14.Text = "Hệ số tốc độ";
             // 
             // ckHflipRandom
             // 
@@ -1341,7 +1341,7 @@ namespace ReviewMovie
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.76289F));
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 81.23711F));
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
-            this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
+            this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 176F));
             this.tlpViewHeader.Controls.Add(this.tlpImportMedia, 2, 0);
             this.tlpViewHeader.Controls.Add(this.btnRecord, 0, 0);
             this.tlpViewHeader.Controls.Add(this.tlpText, 1, 0);
@@ -1362,7 +1362,7 @@ namespace ReviewMovie
             this.tlpImportMedia.Controls.Add(this.txtImPortMedia, 0, 1);
             this.tlpImportMedia.Controls.Add(this.lbHeaderInputMedia, 0, 0);
             this.tlpImportMedia.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpImportMedia.Location = new System.Drawing.Point(536, 3);
+            this.tlpImportMedia.Location = new System.Drawing.Point(535, 3);
             this.tlpImportMedia.Name = "tlpImportMedia";
             this.tlpImportMedia.RowCount = 2;
             this.tlpImportMedia.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
@@ -1430,7 +1430,7 @@ namespace ReviewMovie
             this.tlpText.RowCount = 2;
             this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
-            this.tlpText.Size = new System.Drawing.Size(427, 147);
+            this.tlpText.Size = new System.Drawing.Size(426, 147);
             this.tlpText.TabIndex = 1;
             // 
             // lbHeaderText
@@ -1444,7 +1444,7 @@ namespace ReviewMovie
             this.lbHeaderText.Location = new System.Drawing.Point(1, 1);
             this.lbHeaderText.Margin = new System.Windows.Forms.Padding(1);
             this.lbHeaderText.Name = "lbHeaderText";
-            this.lbHeaderText.Size = new System.Drawing.Size(425, 20);
+            this.lbHeaderText.Size = new System.Drawing.Size(424, 20);
             this.lbHeaderText.TabIndex = 0;
             this.lbHeaderText.Text = "Nhập Text | Hoặc Kéo Audio File Vào !";
             this.lbHeaderText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1456,7 +1456,7 @@ namespace ReviewMovie
             this.txtTextInput.Location = new System.Drawing.Point(3, 25);
             this.txtTextInput.Multiline = true;
             this.txtTextInput.Name = "txtTextInput";
-            this.txtTextInput.Size = new System.Drawing.Size(421, 119);
+            this.txtTextInput.Size = new System.Drawing.Size(420, 119);
             this.txtTextInput.TabIndex = 1;
             this.txtTextInput.TextChanged += new System.EventHandler(this.txtTextInput_TextChanged);
             this.txtTextInput.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtTextInput_DragDrop);
@@ -1471,14 +1471,14 @@ namespace ReviewMovie
             this.tlpHeaderButton.Controls.Add(this.btnConvertAudio, 0, 0);
             this.tlpHeaderButton.Controls.Add(this.btnSaveAudio, 0, 1);
             this.tlpHeaderButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpHeaderButton.Location = new System.Drawing.Point(692, 3);
+            this.tlpHeaderButton.Location = new System.Drawing.Point(691, 3);
             this.tlpHeaderButton.Name = "tlpHeaderButton";
             this.tlpHeaderButton.RowCount = 3;
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpHeaderButton.Size = new System.Drawing.Size(170, 147);
+            this.tlpHeaderButton.Size = new System.Drawing.Size(171, 147);
             this.tlpHeaderButton.TabIndex = 3;
             // 
             // btnRenderVideoPart
@@ -1489,7 +1489,7 @@ namespace ReviewMovie
             this.btnRenderVideoPart.Location = new System.Drawing.Point(4, 104);
             this.btnRenderVideoPart.Margin = new System.Windows.Forms.Padding(4);
             this.btnRenderVideoPart.Name = "btnRenderVideoPart";
-            this.btnRenderVideoPart.Size = new System.Drawing.Size(162, 39);
+            this.btnRenderVideoPart.Size = new System.Drawing.Size(163, 39);
             this.btnRenderVideoPart.TabIndex = 3;
             this.btnRenderVideoPart.Text = "Render Part";
             this.btnRenderVideoPart.UseVisualStyleBackColor = false;
@@ -1503,7 +1503,7 @@ namespace ReviewMovie
             this.btnConvertAudio.Location = new System.Drawing.Point(4, 4);
             this.btnConvertAudio.Margin = new System.Windows.Forms.Padding(4);
             this.btnConvertAudio.Name = "btnConvertAudio";
-            this.btnConvertAudio.Size = new System.Drawing.Size(162, 42);
+            this.btnConvertAudio.Size = new System.Drawing.Size(163, 42);
             this.btnConvertAudio.TabIndex = 1;
             this.btnConvertAudio.Text = "Convert Audio";
             this.btnConvertAudio.UseVisualStyleBackColor = false;
@@ -1517,7 +1517,7 @@ namespace ReviewMovie
             this.btnSaveAudio.Location = new System.Drawing.Point(4, 54);
             this.btnSaveAudio.Margin = new System.Windows.Forms.Padding(4);
             this.btnSaveAudio.Name = "btnSaveAudio";
-            this.btnSaveAudio.Size = new System.Drawing.Size(162, 42);
+            this.btnSaveAudio.Size = new System.Drawing.Size(163, 42);
             this.btnSaveAudio.TabIndex = 2;
             this.btnSaveAudio.Text = "Save Audio";
             this.btnSaveAudio.UseVisualStyleBackColor = false;

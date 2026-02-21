@@ -58,7 +58,7 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_FlipVideo, "Flip video" },
             { LangKeys.Main_FlipRandom, "Random flip" },
             { LangKeys.Main_LayerAutoMove, "Auto layer move Left <-> Right" },
-            { LangKeys.Main_AudioScale, "->" },
+            { LangKeys.Main_AudioScale, "Audio Scale :" },
             { LangKeys.Main_OriginalVolume, "Org. volume :" },
             { LangKeys.Main_NoAudio, "No audio" },
             { LangKeys.Main_Language, "Language :" },
