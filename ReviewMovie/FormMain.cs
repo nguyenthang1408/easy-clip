@@ -1362,7 +1362,7 @@ namespace ReviewMovie
         public static class DefaultEffectSetting
         {
             public const string ZoomRatio = ZoomRatiotName.ZoomRatio10_Des;
-            public const string ZoomQuality = ZoomQualitytName.ZoomQuality_Medium_Des;
+            public static string ZoomQuality => ZoomQualitytName.ZoomQuality_Medium_Des;
             public const string VideoQuality = SizeVideo.Quality1080_Des;
             public const string Effect = EffectName.EffectRandom_Des;
             public const string Mode = ModeName.Mode_ScaleAll_Des;
