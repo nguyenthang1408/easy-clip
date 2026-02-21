@@ -67,7 +67,7 @@ namespace ReviewMovie
             this.cardPanel.Controls.Add(this.pnlTopAccent);
             this.cardPanel.Location = new System.Drawing.Point(0, 0);
             this.cardPanel.Name = "cardPanel";
-            this.cardPanel.Size = new System.Drawing.Size(560, 760);
+            this.cardPanel.Size = new System.Drawing.Size(450, 600);
             this.cardPanel.TabIndex = 0;
             this.cardPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
@@ -79,7 +79,7 @@ namespace ReviewMovie
             this.linklbRegister.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.linklbRegister.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(94)))), ((int)(((byte)(255)))));
             this.linklbRegister.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.linklbRegister.Location = new System.Drawing.Point(433, 638);
+            this.linklbRegister.Location = new System.Drawing.Point(347, 486);
             this.linklbRegister.Name = "linklbRegister";
             this.linklbRegister.Size = new System.Drawing.Size(57, 17);
             this.linklbRegister.TabIndex = 10;
@@ -95,7 +95,7 @@ namespace ReviewMovie
             this.lkHelp.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lkHelp.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(150)))));
             this.lkHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lkHelp.Location = new System.Drawing.Point(70, 638);
+            this.lkHelp.Location = new System.Drawing.Point(44, 486);
             this.lkHelp.Name = "lkHelp";
             this.lkHelp.Size = new System.Drawing.Size(36, 17);
             this.lkHelp.TabIndex = 11;
@@ -107,17 +107,17 @@ namespace ReviewMovie
             // 
             this.lbstatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbstatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.lbstatus.Location = new System.Drawing.Point(70, 450);
+            this.lbstatus.Location = new System.Drawing.Point(44, 390);
             this.lbstatus.Name = "lbstatus";
-            this.lbstatus.Size = new System.Drawing.Size(420, 30);
+            this.lbstatus.Size = new System.Drawing.Size(332, 30);
             this.lbstatus.TabIndex = 8;
             // 
             // materialLabel2
             // 
             this.materialLabel2.AutoSize = true;
             this.materialLabel2.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(93)))), ((int)(((byte)(170)))));
-            this.materialLabel2.Location = new System.Drawing.Point(70, 362);
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(101)))), ((int)(((byte)(186)))));
+            this.materialLabel2.Location = new System.Drawing.Point(44, 294);
             this.materialLabel2.Name = "materialLabel2";
             this.materialLabel2.Size = new System.Drawing.Size(58, 19);
             this.materialLabel2.TabIndex = 6;
@@ -127,8 +127,8 @@ namespace ReviewMovie
             // 
             this.materialLabel1.AutoSize = true;
             this.materialLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(93)))), ((int)(((byte)(170)))));
-            this.materialLabel1.Location = new System.Drawing.Point(70, 270);
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(101)))), ((int)(((byte)(186)))));
+            this.materialLabel1.Location = new System.Drawing.Point(44, 212);
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(75, 19);
             this.materialLabel1.TabIndex = 4;
@@ -138,9 +138,9 @@ namespace ReviewMovie
             // 
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(150)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(70, 228);
+            this.lblSubtitle.Location = new System.Drawing.Point(44, 164);
             this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(420, 0);
+            this.lblSubtitle.Size = new System.Drawing.Size(332, 0);
             this.lblSubtitle.TabIndex = 3;
             this.lblSubtitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
@@ -148,9 +148,9 @@ namespace ReviewMovie
             // 
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Black;
-            this.lblTitle.Location = new System.Drawing.Point(70, 176);
+            this.lblTitle.Location = new System.Drawing.Point(44, 124);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(420, 38);
+            this.lblTitle.Size = new System.Drawing.Size(332, 38);
             this.lblTitle.TabIndex = 2;
             this.lblTitle.Text = "Review Movie";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -160,7 +160,7 @@ namespace ReviewMovie
             // 
             this.pnlLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(252)))));
             this.pnlLogo.Controls.Add(this.lblLogoIcon);
-            this.pnlLogo.Location = new System.Drawing.Point(248, 86);
+            this.pnlLogo.Location = new System.Drawing.Point(193, 54);
             this.pnlLogo.Name = "pnlLogo";
             this.pnlLogo.Size = new System.Drawing.Size(64, 64);
             this.pnlLogo.TabIndex = 1;
@@ -189,7 +189,7 @@ namespace ReviewMovie
             this.pnlTopAccent.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTopAccent.Location = new System.Drawing.Point(0, 0);
             this.pnlTopAccent.Name = "pnlTopAccent";
-            this.pnlTopAccent.Size = new System.Drawing.Size(420, 0);
+            this.pnlTopAccent.Size = new System.Drawing.Size(450, 0);
             this.pnlTopAccent.TabIndex = 0;
             this.pnlTopAccent.Visible = false;
             this.pnlTopAccent.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
@@ -203,10 +203,10 @@ namespace ReviewMovie
             this.btnLoginApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 11.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoginApiKey.ForeColor = System.Drawing.Color.White;
             this.btnLoginApiKey.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(111)))), ((int)(((byte)(229)))));
-            this.btnLoginApiKey.Location = new System.Drawing.Point(70, 550);
+            this.btnLoginApiKey.Location = new System.Drawing.Point(44, 430);
             this.btnLoginApiKey.Name = "btnLoginApiKey";
             this.btnLoginApiKey.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(93)))), ((int)(((byte)(191)))));
-            this.btnLoginApiKey.Size = new System.Drawing.Size(420, 60);
+            this.btnLoginApiKey.Size = new System.Drawing.Size(332, 52);
             this.btnLoginApiKey.TabIndex = 9;
             this.btnLoginApiKey.Text = "Login  ➜";
             this.btnLoginApiKey.UseVisualStyleBackColor = false;
@@ -221,7 +221,7 @@ namespace ReviewMovie
             this.btnClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(145)))), ((int)(((byte)(165)))));
             this.btnClose.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(518, 12);
+            this.btnClose.Location = new System.Drawing.Point(408, 12);
             this.btnClose.Name = "btnClose";
             this.btnClose.NormalBackColor = System.Drawing.Color.White;
             this.btnClose.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
@@ -244,7 +244,7 @@ namespace ReviewMovie
             this.txInsertApiKey.IconRight = null;
             this.txInsertApiKey.IconSize = new System.Drawing.Size(18, 18);
             this.txInsertApiKey.Lines = new string[0];
-            this.txInsertApiKey.Location = new System.Drawing.Point(70, 386);
+            this.txInsertApiKey.Location = new System.Drawing.Point(44, 316);
             this.txInsertApiKey.MaxLength = 32767;
             this.txInsertApiKey.Multiline = false;
             this.txInsertApiKey.Name = "txInsertApiKey";
@@ -253,7 +253,7 @@ namespace ReviewMovie
             this.txInsertApiKey.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txInsertApiKey.SelectionLength = 0;
             this.txInsertApiKey.SelectionStart = 0;
-            this.txInsertApiKey.Size = new System.Drawing.Size(420, 56);
+            this.txInsertApiKey.Size = new System.Drawing.Size(332, 52);
             this.txInsertApiKey.TabIndex = 7;
             this.txInsertApiKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txInsertApiKey.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -272,7 +272,7 @@ namespace ReviewMovie
             this.txAppCodeShow.IconRight = null;
             this.txAppCodeShow.IconSize = new System.Drawing.Size(18, 18);
             this.txAppCodeShow.Lines = new string[0];
-            this.txAppCodeShow.Location = new System.Drawing.Point(70, 294);
+            this.txAppCodeShow.Location = new System.Drawing.Point(44, 234);
             this.txAppCodeShow.MaxLength = 32767;
             this.txAppCodeShow.Multiline = false;
             this.txAppCodeShow.Name = "txAppCodeShow";
@@ -281,7 +281,7 @@ namespace ReviewMovie
             this.txAppCodeShow.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txAppCodeShow.SelectionLength = 0;
             this.txAppCodeShow.SelectionStart = 0;
-            this.txAppCodeShow.Size = new System.Drawing.Size(420, 56);
+            this.txAppCodeShow.Size = new System.Drawing.Size(332, 52);
             this.txAppCodeShow.TabIndex = 1;
             this.txAppCodeShow.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txAppCodeShow.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -291,7 +291,7 @@ namespace ReviewMovie
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(560, 760);
+            this.ClientSize = new System.Drawing.Size(450, 600);
             this.Controls.Add(this.cardPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
