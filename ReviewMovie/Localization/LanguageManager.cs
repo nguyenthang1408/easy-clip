@@ -1,6 +1,7 @@
+using EasyClip.Infrastructure.Config;
+using ReviewMovie.Localization.Resources;
 using System;
 using System.Collections.Generic;
-using ReviewMovie.Localization.Resources;
 
 namespace ReviewMovie.Localization
 {
@@ -11,6 +12,8 @@ namespace ReviewMovie.Localization
         public static Language CurrentLanguage { get; private set; } = Language.Vi;
 
         public static event Action LanguageChanged;
+
+        private static readonly IConfigDataService _configService = new ConfigDataService();
 
         public static void SetLanguage(Language lang)
         {
@@ -43,7 +46,7 @@ namespace ReviewMovie.Localization
         {
             try
             {
-                var saved = EasyClip.Properties.Settings.Default.Language;
+                var saved = _configService.GetLanguage();
                 if (!string.IsNullOrEmpty(saved) && saved == "en")
                     CurrentLanguage = Language.En;
                 else
@@ -59,8 +62,7 @@ namespace ReviewMovie.Localization
         {
             try
             {
-                EasyClip.Properties.Settings.Default.Language = lang == Language.En ? "en" : "vi";
-                EasyClip.Properties.Settings.Default.Save();
+                _configService.UpdateLanguage(lang == Language.En ? "en" : "vi");
             }
             catch
             {

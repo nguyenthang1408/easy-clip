@@ -18,6 +18,7 @@ namespace ReviewMovie.Infrastructure.Config
         //public List<InfoProject> InfoProjects { get; set; }
 
         public List<ProjectName> ProjectNames { get; set; }
+        public string Language { get; set; } = "vi";
         public bool IsEmpty { get; set; } = true;
     }
     public class ProjectName
