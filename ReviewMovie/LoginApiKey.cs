@@ -326,8 +326,6 @@ namespace ReviewMovie
                     Height = 42,
                     BackColor = Color.FromArgb(248, 250, 255)
                 };
-                panelCard.Controls.Add(panelHeader);
-
                 var lblTitle = new Label
                 {
                     AutoSize = true,
@@ -366,13 +364,14 @@ namespace ReviewMovie
                     BackColor = Color.White
                 };
                 panelCard.Controls.Add(panelBody);
+                panelCard.Controls.Add(panelHeader);
 
                 var bodyLayout = new TableLayoutPanel
                 {
                     Dock = DockStyle.Fill,
                     ColumnCount = 2,
                     RowCount = 3,
-                    Padding = new Padding(20, 14, 20, 14),
+                    Padding = new Padding(20, 18, 20, 14),
                     BackColor = Color.White
                 };
                 bodyLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 56F));
@@ -387,7 +386,7 @@ namespace ReviewMovie
                     Size = new Size(40, 40),
                     Dock = DockStyle.Fill,
                     BackColor = Color.FromArgb(43, 123, 234),
-                    Margin = new Padding(0, 8, 12, 8)
+                    Margin = new Padding(0, 12, 12, 6)
                 };
                 bodyLayout.Controls.Add(iconCircle, 0, 0);
 
@@ -408,7 +407,7 @@ namespace ReviewMovie
                     Font = new Font("Segoe UI", 10.5F, FontStyle.Bold, GraphicsUnit.Point),
                     ForeColor = Color.FromArgb(45, 53, 66),
                     Dock = DockStyle.Fill,
-                    Margin = new Padding(0, 8, 0, 8),
+                    Margin = new Padding(0, 12, 0, 6),
                     TextAlign = ContentAlignment.MiddleLeft,
                     AutoEllipsis = true
                 };
