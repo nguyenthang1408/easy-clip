@@ -3984,20 +3984,16 @@ namespace ReviewMovie
                 var ckSetting = _infoProject?.EffectSettup;
                 if (_manualSelected == ManualSelect.FptAI)
                 {
-                    switch (cbLanguageSelect.Text)
+                    if (cbLanguageSelect.Text == FptAIVoiceLanguage.VietNam_Des)
                     {
-                        case FptAIVoiceLanguage.VietNam_Des:
-                            var fptVoices = ApiFptAI.FptAIVoiceCodeTemplate().ToList();
-                            var limitedFptVoices = LimitVoicesByPackage(fptVoices);
+                        var fptVoices = ApiFptAI.FptAIVoiceCodeTemplate().ToList();
+                        var limitedFptVoices = LimitVoicesByPackage(fptVoices);
 
-                            ComboBoxFuncion.CbBlinding(cbxSpeechType
-                                , limitedFptVoices
-                                , !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                                    ? Math.Max(limitedFptVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
-                                    : 0);
-                            break;
-                        default:
-                            break;
+                        ComboBoxFuncion.CbBlinding(cbxSpeechType
+                            , limitedFptVoices
+                            , !string.IsNullOrEmpty(ckSetting?.SspeechType)
+                                ? Math.Max(limitedFptVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
+                                : 0);
                     }
                 }
                 else if (_manualSelected == ManualSelect.Google)
@@ -4900,35 +4896,23 @@ namespace ReviewMovie
         }
         private void cbZoomRatio_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (cbZoomRatio.Text)
-            {
-                case ZoomRatiotName.ZoomRatio0_Des:
-                    _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio0_Val);
-                    break;
-                case ZoomRatiotName.ZoomRatio10_Des:
-                    _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio10_Val);
-                    break;
-                case ZoomRatiotName.ZoomRatio25_Des:
-                    _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio25_Val);
-                    break;
-                case ZoomRatiotName.ZoomRatio50_Des:
-                    _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio50_Val);
-                    break;
-                case ZoomRatiotName.ZoomRatio75_Des:
-                    _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio75_Val);
-                    break;
-                case ZoomRatiotName.ZoomRatio100_Des:
-                    _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio100_Val);
-                    break;
-                case ZoomRatiotName.ZoomRatio125_Des:
-                    _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio125_Val);
-                    break;
-                case ZoomRatiotName.ZoomRatio150_Des:
-                    _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio150_Val);
-                    break;
-                default:
-                    break;
-            }
+            var zoomText = cbZoomRatio.Text;
+            if (zoomText == ZoomRatiotName.ZoomRatio0_Des)
+                _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio0_Val);
+            else if (zoomText == ZoomRatiotName.ZoomRatio10_Des)
+                _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio10_Val);
+            else if (zoomText == ZoomRatiotName.ZoomRatio25_Des)
+                _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio25_Val);
+            else if (zoomText == ZoomRatiotName.ZoomRatio50_Des)
+                _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio50_Val);
+            else if (zoomText == ZoomRatiotName.ZoomRatio75_Des)
+                _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio75_Val);
+            else if (zoomText == ZoomRatiotName.ZoomRatio100_Des)
+                _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio100_Val);
+            else if (zoomText == ZoomRatiotName.ZoomRatio125_Des)
+                _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio125_Val);
+            else if (zoomText == ZoomRatiotName.ZoomRatio150_Des)
+                _zoomRatio = Convert.ToDecimal(ZoomRatiotName.ZoomRatio150_Val);
         }
         private void cbZoomQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
