@@ -162,9 +162,9 @@ namespace ReviewMovie
             // 
             this.pnlLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(252)))));
             this.pnlLogo.Controls.Add(this.lblLogoIcon);
-            this.pnlLogo.Location = new System.Drawing.Point(183, 48);
+            this.pnlLogo.Location = new System.Drawing.Point(177, 40);
             this.pnlLogo.Name = "pnlLogo";
-            this.pnlLogo.Size = new System.Drawing.Size(84, 84);
+            this.pnlLogo.Size = new System.Drawing.Size(96, 96);
             this.pnlLogo.TabIndex = 1;
             this.pnlLogo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
@@ -173,11 +173,11 @@ namespace ReviewMovie
             this.lblLogoIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblLogoIcon.Font = new System.Drawing.Font("Segoe UI Emoji", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLogoIcon.Font = new System.Drawing.Font("Segoe UI Emoji", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLogoIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(94)))), ((int)(((byte)(255)))));
             this.lblLogoIcon.Location = new System.Drawing.Point(0, 0);
             this.lblLogoIcon.Name = "lblLogoIcon";
-            this.lblLogoIcon.Size = new System.Drawing.Size(84, 84);
+            this.lblLogoIcon.Size = new System.Drawing.Size(96, 96);
             this.lblLogoIcon.TabIndex = 0;
             this.lblLogoIcon.Text = "🎬";
             this.lblLogoIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
