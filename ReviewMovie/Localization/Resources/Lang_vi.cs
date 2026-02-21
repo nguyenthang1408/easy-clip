@@ -285,6 +285,111 @@ namespace ReviewMovie.Localization.Resources
 
             // ========== LibCommon - PackageType ==========
             { LangKeys.Lib_PackageDisplayFormat, "{0} - {1} tháng" },
+
+            // ========== Common - Additional ==========
+            { LangKeys.Common_Success, "Thành Công" },
+            { LangKeys.Common_Confirm, "Xác Nhận" },
+
+            // ========== FormMain - Delete Row ==========
+            { LangKeys.Main_SelectRowToDelete, "Vui lòng chọn một dòng để xóa." },
+            { LangKeys.Main_CannotGetRowId, "Không lấy được ID dòng cần xóa." },
+            { LangKeys.Main_OnlyDeleteLastRow, "Chỉ được xóa dòng cuối cùng." },
+            { LangKeys.Main_DeleteRowError, "Lỗi khi xóa dòng: {0}" },
+
+            // ========== FormMain - Text Validation ==========
+            { LangKeys.Main_TextTooLong, "Nhập quá {0} ký tự!" },
+            { LangKeys.Main_CharWordCount, "{0} 'Ký Tự' | {1} Chữ" },
+
+            // ========== FormMain - Media/Audio ==========
+            { LangKeys.Main_ImportMediaTitle, "Import Media" },
+            { LangKeys.Main_InputMustBeAudio, "Nhập vào phải là File âm thanh !" },
+            { LangKeys.Main_PictureError, "Lỗi Ảnh !" },
+            { LangKeys.Main_VideoError, "Lỗi Video!" },
+
+            // ========== FormMain - Button States ==========
+            { LangKeys.Main_Stop, "Dừng" },
+            { LangKeys.Main_MergeCancellingBtn, "Đang hủy..." },
+            { LangKeys.Main_CancelMerge, "Hủy ghép" },
+            { LangKeys.Main_MergeVideoBtn, "Ghép Video" },
+            { LangKeys.Main_StopLoading, "Dừng Tải" },
+
+            // ========== FormMain - Status ==========
+            { LangKeys.Main_ConvertDone, "Chuyển đổi xong" },
+            { LangKeys.Main_StatusError, "Lỗi!" },
+            { LangKeys.Main_MergeDone, "Ghép xong" },
+            { LangKeys.Main_MergeFailedStatus, "Ghép video thất bại!" },
+
+            // ========== FormMain - Merge Video Messages ==========
+            { LangKeys.Main_CheckingVideo, "Đang kiểm tra video {0}/{1}..." },
+            { LangKeys.Main_MergingValidVideos, "Đang ghép {0} video hợp lệ..." },
+            { LangKeys.Main_NoValidVideoToMerge, "Không có video hợp lệ để ghép!" },
+            { LangKeys.Main_AllVideoCorrupt, "Tất cả video đều bị lỗi:\n\n" },
+            { LangKeys.Main_MergeErrorTitle, "Lỗi - Không thể ghép video" },
+            { LangKeys.Main_CorruptedVideoHeader, "⚠️ Phát hiện {0} video lỗi:\n\n" },
+            { LangKeys.Main_CorruptedVideoMore, "\n... và {0} video khác" },
+            { LangKeys.Main_ValidVideoCount, "\n\n✅ Video hợp lệ: {0}/{1}" },
+            { LangKeys.Main_ContinueMergeQuestion, "\n\n❓ Bạn có muốn tiếp tục ghép {0} video hợp lệ không?" },
+            { LangKeys.Main_MergeResultTitle, "Kết quả ghép video" },
+            { LangKeys.Main_MergeReport, "✅ Ghép video hoàn tất!\n\n📊 Thống kê:\n- Tổng số video: {0}\n- Video hợp lệ: {1}\n- Video lỗi: {2}\n\n📁 Thư mục: {3}\n📹 Video: {4}" },
+            { LangKeys.Main_MergeReportLog, "\n📝 Log: {0}" },
+            { LangKeys.Main_MergeFfmpegError, "Lỗi khi ghép video!\n\nFFmpeg bị lỗi hoặc không thể chạy." },
+            { LangKeys.Main_MergeFfmpegExitCode, "Lỗi khi ghép video!\n\nFFmpeg Exit Code: {0}" },
+
+            // ========== FormMain - Check File ==========
+            { LangKeys.Main_CheckFileRenamed, "Kiểm tra File đã đổi tên thành số chưa ?" },
+
+            // ========== FormMain - Project Operations ==========
+            { LangKeys.Main_ProjectNotFound, "Không Tìm thấy Project !" },
+            { LangKeys.Main_ConfirmDeleteProject, "Bạn Xóa Project này ? \n Project : {0}" },
+            { LangKeys.Main_ConfirmOpenProject, "Bạn muốn mở Project này ? \n Project : {0}" },
+            { LangKeys.Main_ProjectInputEmpty, "Mục Nhập 'Project' không được trống !" },
+            { LangKeys.Main_ProjectExists, "Project đã tồn tại. Vui lòng chọn tên khác hoặc kiểm tra danh sách!" },
+            { LangKeys.Main_CriticalDataError, "Dữ liệu đang gặp lỗi, hệ thống sẽ tắt ứng dụng!" },
+            { LangKeys.Main_CriticalErrorTitle, "Lỗi nghiêm trọng" },
+            { LangKeys.Main_CreateProjectError, "Lỗi khi tạo project:\r\n{0}" },
+
+            // ========== FormMain - Subtitle ==========
+            { LangKeys.Main_SelectSubtitleFile, "Chọn File Subtitle để Split video !" },
+            { LangKeys.Main_SubtitleTooLarge, "File Subtitle vượt quá 1MB!" },
+            { LangKeys.Main_SubtitleCancelled, "Đã huỷ tải phụ đề." },
+            { LangKeys.Main_ThreadError, "Lỗi luồng hoạt động." },
+            { LangKeys.Main_SelectMediaFolderTitle, "Chọn thư mục media" },
+
+            // ========== FormMain - API Errors ==========
+            { LangKeys.Main_ElevenlabError, "Elevenlab bị lỗi !" },
+            { LangKeys.Main_JsonDataError, "JsonData bị lỗi !" },
+            { LangKeys.Main_ConnectionTimeout, "Kết nối bị timeout. Vui lòng kiểm tra mạng và thử lại." },
+            { LangKeys.Main_SaveKeySuccess, "Lưu Key Thành Công!" },
+
+            // ========== FormMain - Effect Settings ==========
+            { LangKeys.Main_ConfirmChangeConfig, "Bạn muốn thay đổi cấu hình tùy chỉnh?\nChọn 'Có' để lưu, 'Không' để hủy." },
+            { LangKeys.Main_SaveEffectSuccess, "Lưu Cấu Hình Hiệu Ứng Thành Công!" },
+            { LangKeys.Main_SaveEffectError, "Lỗi khi lưu cấu hình! Vui lòng thử lại." },
+
+            // ========== FormMain - Reload Confirm ==========
+            { LangKeys.Main_ConfirmReloadAll, "Bạn có chắc chắn muốn reload toàn bộ dữ liệu?" },
+            { LangKeys.Main_ConfirmReloadSelected, "Bạn có chắc chắn muốn reload nhiều dòng đã chọn?" },
+
+            // ========== FormMain - Convert Video Status ==========
+            { LangKeys.Main_ProcessingVideo, "Đang xử lý {0}/{1} videos." },
+            { LangKeys.Main_ProcessingComplete, "Xử lý hoàn tất {0}/{1} videos." },
+
+            // ========== FormMain - Cancel All Tasks ==========
+            { LangKeys.Main_TaskReloadSelected, "Reload Media: Dòng Được chọn." },
+            { LangKeys.Main_TaskReloadAll, "Reload Media: Toàn bộ Danh sách." },
+            { LangKeys.Main_TaskConvertAll, "Convert Text2Speech: Toàn bộ Danh sách." },
+            { LangKeys.Main_TaskConvertSelected, "Convert Text2Speech: Dòng Được chọn." },
+            { LangKeys.Main_TaskConvertSingle, "Convert Text2Speech: Dòng hiện tại." },
+            { LangKeys.Main_TaskDownloadAll, "Download Audio: Toàn bộ Danh sách." },
+            { LangKeys.Main_TaskDownloadSelected, "Download Audio: Dòng Được chọn." },
+            { LangKeys.Main_TaskDownloadSingle, "Download Audio: Dòng hiện tại." },
+            { LangKeys.Main_TaskRecord, "Record Audio: Dòng hiện tại." },
+            { LangKeys.Main_TaskRenderAll, "Render Part Video: Toàn bộ Danh sách." },
+            { LangKeys.Main_TaskRenderSelected, "Render Part Video: Dòng Được chọn." },
+            { LangKeys.Main_TaskRenderRow, "Render Part Video: Dòng {0}." },
+            { LangKeys.Main_NoRunningProcesses, "Không có tiến trình nào đang chạy!" },
+            { LangKeys.Main_CancelAllConfirm, "Các tiến trình sau đang chạy:\n- {0}\n\nBạn có muốn huỷ tất cả không?" },
+            { LangKeys.Main_CancelAllTitle, "Xác nhận huỷ tiến trình" },
         };
     }
 }

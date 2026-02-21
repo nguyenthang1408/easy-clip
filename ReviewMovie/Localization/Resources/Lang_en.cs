@@ -285,6 +285,111 @@ namespace ReviewMovie.Localization.Resources
 
             // ========== LibCommon - PackageType ==========
             { LangKeys.Lib_PackageDisplayFormat, "{0} - {1} months" },
+
+            // ========== Common - Additional ==========
+            { LangKeys.Common_Success, "Success" },
+            { LangKeys.Common_Confirm, "Confirm" },
+
+            // ========== FormMain - Delete Row ==========
+            { LangKeys.Main_SelectRowToDelete, "Please select a row to delete." },
+            { LangKeys.Main_CannotGetRowId, "Cannot get the ID of the row to delete." },
+            { LangKeys.Main_OnlyDeleteLastRow, "Can only delete the last row." },
+            { LangKeys.Main_DeleteRowError, "Error deleting row: {0}" },
+
+            // ========== FormMain - Text Validation ==========
+            { LangKeys.Main_TextTooLong, "Text too long! Max {0} chars." },
+            { LangKeys.Main_CharWordCount, "{0} Chars | {1} Words" },
+
+            // ========== FormMain - Media/Audio ==========
+            { LangKeys.Main_ImportMediaTitle, "Import Media" },
+            { LangKeys.Main_InputMustBeAudio, "Input must be an audio file!" },
+            { LangKeys.Main_PictureError, "Picture Error!" },
+            { LangKeys.Main_VideoError, "Video Error!" },
+
+            // ========== FormMain - Button States ==========
+            { LangKeys.Main_Stop, "Stop" },
+            { LangKeys.Main_MergeCancellingBtn, "Cancelling..." },
+            { LangKeys.Main_CancelMerge, "Cancel merge" },
+            { LangKeys.Main_MergeVideoBtn, "Merge Video" },
+            { LangKeys.Main_StopLoading, "Stop Loading" },
+
+            // ========== FormMain - Status ==========
+            { LangKeys.Main_ConvertDone, "Convert Done" },
+            { LangKeys.Main_StatusError, "Error!" },
+            { LangKeys.Main_MergeDone, "Merge Done" },
+            { LangKeys.Main_MergeFailedStatus, "Video merge failed!" },
+
+            // ========== FormMain - Merge Video Messages ==========
+            { LangKeys.Main_CheckingVideo, "Checking video {0}/{1}..." },
+            { LangKeys.Main_MergingValidVideos, "Merging {0} valid videos..." },
+            { LangKeys.Main_NoValidVideoToMerge, "No valid video to merge!" },
+            { LangKeys.Main_AllVideoCorrupt, "All videos are corrupted:\n\n" },
+            { LangKeys.Main_MergeErrorTitle, "Error - Cannot merge video" },
+            { LangKeys.Main_CorruptedVideoHeader, "⚠️ Found {0} corrupted videos:\n\n" },
+            { LangKeys.Main_CorruptedVideoMore, "\n... and {0} more videos" },
+            { LangKeys.Main_ValidVideoCount, "\n\n✅ Valid videos: {0}/{1}" },
+            { LangKeys.Main_ContinueMergeQuestion, "\n\n❓ Do you want to continue merging {0} valid videos?" },
+            { LangKeys.Main_MergeResultTitle, "Merge video result" },
+            { LangKeys.Main_MergeReport, "✅ Video merge complete!\n\n📊 Statistics:\n- Total videos: {0}\n- Valid videos: {1}\n- Corrupted videos: {2}\n\n📁 Folder: {3}\n📹 Video: {4}" },
+            { LangKeys.Main_MergeReportLog, "\n📝 Log: {0}" },
+            { LangKeys.Main_MergeFfmpegError, "Error merging video!\n\nFFmpeg error or cannot run." },
+            { LangKeys.Main_MergeFfmpegExitCode, "Error merging video!\n\nFFmpeg Exit Code: {0}" },
+
+            // ========== FormMain - Check File ==========
+            { LangKeys.Main_CheckFileRenamed, "Check if files have been renamed to numbers?" },
+
+            // ========== FormMain - Project Operations ==========
+            { LangKeys.Main_ProjectNotFound, "Project not found!" },
+            { LangKeys.Main_ConfirmDeleteProject, "Delete this project? \n Project: {0}" },
+            { LangKeys.Main_ConfirmOpenProject, "Open this project? \n Project: {0}" },
+            { LangKeys.Main_ProjectInputEmpty, "Project name cannot be empty!" },
+            { LangKeys.Main_ProjectExists, "Project already exists. Please choose another name or check the list!" },
+            { LangKeys.Main_CriticalDataError, "Data error, the system will close the application!" },
+            { LangKeys.Main_CriticalErrorTitle, "Critical Error" },
+            { LangKeys.Main_CreateProjectError, "Error creating project:\r\n{0}" },
+
+            // ========== FormMain - Subtitle ==========
+            { LangKeys.Main_SelectSubtitleFile, "Select Subtitle file to split video!" },
+            { LangKeys.Main_SubtitleTooLarge, "Subtitle file exceeds 1MB!" },
+            { LangKeys.Main_SubtitleCancelled, "Subtitle loading cancelled." },
+            { LangKeys.Main_ThreadError, "Thread operation error." },
+            { LangKeys.Main_SelectMediaFolderTitle, "Select media folder" },
+
+            // ========== FormMain - API Errors ==========
+            { LangKeys.Main_ElevenlabError, "Elevenlab error!" },
+            { LangKeys.Main_JsonDataError, "JsonData error!" },
+            { LangKeys.Main_ConnectionTimeout, "Connection timeout. Please check network and try again." },
+            { LangKeys.Main_SaveKeySuccess, "Key saved successfully!" },
+
+            // ========== FormMain - Effect Settings ==========
+            { LangKeys.Main_ConfirmChangeConfig, "Do you want to change custom configuration?\nSelect 'Yes' to save, 'No' to cancel." },
+            { LangKeys.Main_SaveEffectSuccess, "Effect settings saved successfully!" },
+            { LangKeys.Main_SaveEffectError, "Error saving settings! Please try again." },
+
+            // ========== FormMain - Reload Confirm ==========
+            { LangKeys.Main_ConfirmReloadAll, "Are you sure you want to reload all data?" },
+            { LangKeys.Main_ConfirmReloadSelected, "Are you sure you want to reload selected rows?" },
+
+            // ========== FormMain - Convert Video Status ==========
+            { LangKeys.Main_ProcessingVideo, "Processing {0}/{1} videos." },
+            { LangKeys.Main_ProcessingComplete, "Processing complete {0}/{1} videos." },
+
+            // ========== FormMain - Cancel All Tasks ==========
+            { LangKeys.Main_TaskReloadSelected, "Reload Media: Selected rows." },
+            { LangKeys.Main_TaskReloadAll, "Reload Media: All rows." },
+            { LangKeys.Main_TaskConvertAll, "Convert Text2Speech: All rows." },
+            { LangKeys.Main_TaskConvertSelected, "Convert Text2Speech: Selected rows." },
+            { LangKeys.Main_TaskConvertSingle, "Convert Text2Speech: Current row." },
+            { LangKeys.Main_TaskDownloadAll, "Download Audio: All rows." },
+            { LangKeys.Main_TaskDownloadSelected, "Download Audio: Selected rows." },
+            { LangKeys.Main_TaskDownloadSingle, "Download Audio: Current row." },
+            { LangKeys.Main_TaskRecord, "Record Audio: Current row." },
+            { LangKeys.Main_TaskRenderAll, "Render Part Video: All rows." },
+            { LangKeys.Main_TaskRenderSelected, "Render Part Video: Selected rows." },
+            { LangKeys.Main_TaskRenderRow, "Render Part Video: Row {0}." },
+            { LangKeys.Main_NoRunningProcesses, "No running processes!" },
+            { LangKeys.Main_CancelAllConfirm, "The following processes are running:\n- {0}\n\nDo you want to cancel all?" },
+            { LangKeys.Main_CancelAllTitle, "Confirm cancel processes" },
         };
     }
 }

@@ -281,5 +281,110 @@ namespace ReviewMovie.Localization
 
         // ========== LibCommon - PackageType ==========
         public const string Lib_PackageDisplayFormat = "Lib_PackageDisplayFormat";
+
+        // ========== Common - Additional ==========
+        public const string Common_Success = "Common_Success";
+        public const string Common_Confirm = "Common_Confirm";
+
+        // ========== FormMain - Delete Row ==========
+        public const string Main_SelectRowToDelete = "Main_SelectRowToDelete";
+        public const string Main_CannotGetRowId = "Main_CannotGetRowId";
+        public const string Main_OnlyDeleteLastRow = "Main_OnlyDeleteLastRow";
+        public const string Main_DeleteRowError = "Main_DeleteRowError";
+
+        // ========== FormMain - Text Validation ==========
+        public const string Main_TextTooLong = "Main_TextTooLong";
+        public const string Main_CharWordCount = "Main_CharWordCount";
+
+        // ========== FormMain - Media/Audio ==========
+        public const string Main_ImportMediaTitle = "Main_ImportMediaTitle";
+        public const string Main_InputMustBeAudio = "Main_InputMustBeAudio";
+        public const string Main_PictureError = "Main_PictureError";
+        public const string Main_VideoError = "Main_VideoError";
+
+        // ========== FormMain - Button States ==========
+        public const string Main_Stop = "Main_Stop";
+        public const string Main_MergeCancellingBtn = "Main_MergeCancellingBtn";
+        public const string Main_CancelMerge = "Main_CancelMerge";
+        public const string Main_MergeVideoBtn = "Main_MergeVideoBtn";
+        public const string Main_StopLoading = "Main_StopLoading";
+
+        // ========== FormMain - Status ==========
+        public const string Main_ConvertDone = "Main_ConvertDone";
+        public const string Main_StatusError = "Main_StatusError";
+        public const string Main_MergeDone = "Main_MergeDone";
+        public const string Main_MergeFailedStatus = "Main_MergeFailedStatus";
+
+        // ========== FormMain - Merge Video Messages ==========
+        public const string Main_CheckingVideo = "Main_CheckingVideo";
+        public const string Main_MergingValidVideos = "Main_MergingValidVideos";
+        public const string Main_NoValidVideoToMerge = "Main_NoValidVideoToMerge";
+        public const string Main_AllVideoCorrupt = "Main_AllVideoCorrupt";
+        public const string Main_MergeErrorTitle = "Main_MergeErrorTitle";
+        public const string Main_CorruptedVideoHeader = "Main_CorruptedVideoHeader";
+        public const string Main_CorruptedVideoMore = "Main_CorruptedVideoMore";
+        public const string Main_ValidVideoCount = "Main_ValidVideoCount";
+        public const string Main_ContinueMergeQuestion = "Main_ContinueMergeQuestion";
+        public const string Main_MergeResultTitle = "Main_MergeResultTitle";
+        public const string Main_MergeReport = "Main_MergeReport";
+        public const string Main_MergeReportLog = "Main_MergeReportLog";
+        public const string Main_MergeFfmpegError = "Main_MergeFfmpegError";
+        public const string Main_MergeFfmpegExitCode = "Main_MergeFfmpegExitCode";
+
+        // ========== FormMain - Check File ==========
+        public const string Main_CheckFileRenamed = "Main_CheckFileRenamed";
+
+        // ========== FormMain - Project Operations ==========
+        public const string Main_ProjectNotFound = "Main_ProjectNotFound";
+        public const string Main_ConfirmDeleteProject = "Main_ConfirmDeleteProject";
+        public const string Main_ConfirmOpenProject = "Main_ConfirmOpenProject";
+        public const string Main_ProjectInputEmpty = "Main_ProjectInputEmpty";
+        public const string Main_ProjectExists = "Main_ProjectExists";
+        public const string Main_CriticalDataError = "Main_CriticalDataError";
+        public const string Main_CriticalErrorTitle = "Main_CriticalErrorTitle";
+        public const string Main_CreateProjectError = "Main_CreateProjectError";
+
+        // ========== FormMain - Subtitle ==========
+        public const string Main_SelectSubtitleFile = "Main_SelectSubtitleFile";
+        public const string Main_SubtitleTooLarge = "Main_SubtitleTooLarge";
+        public const string Main_SubtitleCancelled = "Main_SubtitleCancelled";
+        public const string Main_ThreadError = "Main_ThreadError";
+        public const string Main_SelectMediaFolderTitle = "Main_SelectMediaFolderTitle";
+
+        // ========== FormMain - API Errors ==========
+        public const string Main_ElevenlabError = "Main_ElevenlabError";
+        public const string Main_JsonDataError = "Main_JsonDataError";
+        public const string Main_ConnectionTimeout = "Main_ConnectionTimeout";
+        public const string Main_SaveKeySuccess = "Main_SaveKeySuccess";
+
+        // ========== FormMain - Effect Settings ==========
+        public const string Main_ConfirmChangeConfig = "Main_ConfirmChangeConfig";
+        public const string Main_SaveEffectSuccess = "Main_SaveEffectSuccess";
+        public const string Main_SaveEffectError = "Main_SaveEffectError";
+
+        // ========== FormMain - Reload Confirm ==========
+        public const string Main_ConfirmReloadAll = "Main_ConfirmReloadAll";
+        public const string Main_ConfirmReloadSelected = "Main_ConfirmReloadSelected";
+
+        // ========== FormMain - Convert Video Status ==========
+        public const string Main_ProcessingVideo = "Main_ProcessingVideo";
+        public const string Main_ProcessingComplete = "Main_ProcessingComplete";
+
+        // ========== FormMain - Cancel All Tasks ==========
+        public const string Main_TaskReloadSelected = "Main_TaskReloadSelected";
+        public const string Main_TaskReloadAll = "Main_TaskReloadAll";
+        public const string Main_TaskConvertAll = "Main_TaskConvertAll";
+        public const string Main_TaskConvertSelected = "Main_TaskConvertSelected";
+        public const string Main_TaskConvertSingle = "Main_TaskConvertSingle";
+        public const string Main_TaskDownloadAll = "Main_TaskDownloadAll";
+        public const string Main_TaskDownloadSelected = "Main_TaskDownloadSelected";
+        public const string Main_TaskDownloadSingle = "Main_TaskDownloadSingle";
+        public const string Main_TaskRecord = "Main_TaskRecord";
+        public const string Main_TaskRenderAll = "Main_TaskRenderAll";
+        public const string Main_TaskRenderSelected = "Main_TaskRenderSelected";
+        public const string Main_TaskRenderRow = "Main_TaskRenderRow";
+        public const string Main_NoRunningProcesses = "Main_NoRunningProcesses";
+        public const string Main_CancelAllConfirm = "Main_CancelAllConfirm";
+        public const string Main_CancelAllTitle = "Main_CancelAllTitle";
     }
 }
