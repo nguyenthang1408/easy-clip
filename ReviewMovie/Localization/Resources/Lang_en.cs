@@ -390,6 +390,10 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_NoRunningProcesses, "No running processes!" },
             { LangKeys.Main_CancelAllConfirm, "The following processes are running:\n- {0}\n\nDo you want to cancel all?" },
             { LangKeys.Main_CancelAllTitle, "Confirm cancel processes" },
+
+            // ========== FormMain - Loading Popup ==========
+            { LangKeys.Main_CancellingProcesses, "Cancelling processes!" },
+            { LangKeys.Main_LoadingVoice, "Loading Voice..." },
         };
     }
 }

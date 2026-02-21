@@ -390,6 +390,10 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_NoRunningProcesses, "Không có tiến trình nào đang chạy!" },
             { LangKeys.Main_CancelAllConfirm, "Các tiến trình sau đang chạy:\n- {0}\n\nBạn có muốn huỷ tất cả không?" },
             { LangKeys.Main_CancelAllTitle, "Xác nhận huỷ tiến trình" },
+
+            // ========== FormMain - Loading Popup ==========
+            { LangKeys.Main_CancellingProcesses, "Đang huỷ tiến trình!" },
+            { LangKeys.Main_LoadingVoice, "Đang tải Voice..." },
         };
     }
 }

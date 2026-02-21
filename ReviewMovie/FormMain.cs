@@ -4597,7 +4597,7 @@ namespace ReviewMovie
 
             // Show loading popup modeless
             BlockUIShowPopup();
-            _loadingService.Show("Đang huỷ tiến trình!");
+            _loadingService.Show(LanguageManager.Get(LangKeys.Main_CancellingProcesses));
 
             // Chờ tiến trình thật sự kết thúc (flag + token)
             bool finished = await WaitUntilAllTasksStoppedAsync(runningTasks, timeoutMs: 15000);
@@ -4692,7 +4692,7 @@ namespace ReviewMovie
 
             // Hiện loading và disable combobox để tránh user thao tác khi đang tải
             cboSiteNguon.Enabled = false;
-            _loadingService.Show("Đang tải Voice...");
+            _loadingService.Show(LanguageManager.Get(LangKeys.Main_LoadingVoice));
             try
             {
                 switch (selectedItem.Value)

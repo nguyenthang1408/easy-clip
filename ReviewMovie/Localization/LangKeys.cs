@@ -386,5 +386,9 @@ namespace ReviewMovie.Localization
         public const string Main_NoRunningProcesses = "Main_NoRunningProcesses";
         public const string Main_CancelAllConfirm = "Main_CancelAllConfirm";
         public const string Main_CancelAllTitle = "Main_CancelAllTitle";
+
+        // ========== FormMain - Loading Popup ==========
+        public const string Main_CancellingProcesses = "Main_CancellingProcesses";
+        public const string Main_LoadingVoice = "Main_LoadingVoice";
     }
 }
