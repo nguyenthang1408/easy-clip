@@ -1305,10 +1305,12 @@ namespace ReviewMovie
                                                 .FindIndex(x => x.Display.Equals(stdefault ? ZoomRatiotName.ZoomRatio10_Des : valEffectSettup.SzoomRatio)));
 
                 // load % ZQuality
+                var zoomQualityList = ComboboxZoomQuality.ZoomQualityTemplate();
+                int zoomQualityDefaultIdx = zoomQualityList.FindIndex(x => x.Display.Equals(ZoomQualitytName.ZoomQuality_Medium_Des));
                 ComboBoxFuncion.CbBlinding(cbZoomQuality
-                            , ComboboxZoomQuality.ZoomQualityTemplate().ToList()
-                            , ComboboxZoomQuality.ZoomQualityTemplate()
-                                                  .FindIndex(x => x.Display.Equals(stdefault ? ZoomQualitytName.ZoomQuality_Medium_Des : valEffectSettup.SzoomQuality)));
+                            , zoomQualityList.ToList()
+                            , stdefault ? zoomQualityDefaultIdx
+                                        : Math.Max(zoomQualityList.FindIndex(x => x.Display.Equals(valEffectSettup.SzoomQuality)), zoomQualityDefaultIdx));
 
                 // load Chất lượng
                 ComboBoxFuncion.CbBlinding(cbxVideoQuality
@@ -1577,9 +1579,10 @@ namespace ReviewMovie
                          , ComboboxZoomRatio.ZoomRatioTemplate().FindIndex(x => x.Display.Equals(ZoomRatiotName.ZoomRatio10_Des)));
 
             // load % ZQuality
+            var defaultZoomQuality = ComboboxZoomQuality.ZoomQualityTemplate();
             ComboBoxFuncion.CbBlinding(cbZoomQuality
-                        , ComboboxZoomQuality.ZoomQualityTemplate().ToList()
-                        , ComboboxZoomQuality.ZoomQualityTemplate().FindIndex(x => x.Display.Equals(ZoomQualitytName.ZoomQuality_Medium_Des)));
+                        , defaultZoomQuality.ToList()
+                        , Math.Max(defaultZoomQuality.FindIndex(x => x.Display.Equals(ZoomQualitytName.ZoomQuality_Medium_Des)), 0));
 
             // load Chất lượng
             ComboBoxFuncion.CbBlinding(cbxVideoQuality
