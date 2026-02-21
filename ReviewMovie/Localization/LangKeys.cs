@@ -65,6 +65,14 @@ namespace ReviewMovie.Localization
         public const string Main_PublishVideo = "Main_PublishVideo";
         public const string Main_MergeClips = "Main_MergeClips";
 
+        // ========== Main Form - Action Buttons ==========
+        public const string Main_Record = "Main_Record";
+        public const string Main_ConvertAudio = "Main_ConvertAudio";
+        public const string Main_SaveAudio = "Main_SaveAudio";
+        public const string Main_RenderPart = "Main_RenderPart";
+        public const string Main_UseCPU = "Main_UseCPU";
+        public const string Main_UseGPU = "Main_UseGPU";
+
         // ========== Main Form - Content Header ==========
         public const string Main_MicIn = "Main_MicIn";
         public const string Main_DragDropMedia = "Main_DragDropMedia";

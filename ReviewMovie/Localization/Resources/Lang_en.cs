@@ -69,6 +69,14 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_PublishVideo, "Publish Video" },
             { LangKeys.Main_MergeClips, "MERGE CLIPS" },
 
+            // ========== Main Form - Action Buttons ==========
+            { LangKeys.Main_Record, "Record" },
+            { LangKeys.Main_ConvertAudio, "Convert Audio" },
+            { LangKeys.Main_SaveAudio, "Save Audio" },
+            { LangKeys.Main_RenderPart, "Render Part" },
+            { LangKeys.Main_UseCPU, "Use CPU" },
+            { LangKeys.Main_UseGPU, "Use GPU" },
+
             // ========== Main Form - Content Header ==========
             { LangKeys.Main_MicIn, "Mic In" },
             { LangKeys.Main_DragDropMedia, "Drag & Drop (Image, Video)" },

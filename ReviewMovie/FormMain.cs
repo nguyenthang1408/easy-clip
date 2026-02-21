@@ -340,6 +340,14 @@ namespace ReviewMovie
             // Render section
             grbActionRender.Text = LanguageManager.Get(LangKeys.Main_PublishVideo);
             btnAddAll.Text = LanguageManager.Get(LangKeys.Main_MergeClips);
+            rbCPUused.Text = LanguageManager.Get(LangKeys.Main_UseCPU);
+            rbGPUused.Text = LanguageManager.Get(LangKeys.Main_UseGPU);
+
+            // Action buttons
+            btnRecord.Text = LanguageManager.Get(LangKeys.Main_Record);
+            btnConvertAudio.Text = LanguageManager.Get(LangKeys.Main_ConvertAudio);
+            btnSaveAudio.Text = LanguageManager.Get(LangKeys.Main_SaveAudio);
+            btnRenderVideoPart.Text = LanguageManager.Get(LangKeys.Main_RenderPart);
 
             // Content header
             grViewHeader.Text = LanguageManager.Get(LangKeys.Main_MicIn);

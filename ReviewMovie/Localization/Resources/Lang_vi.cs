@@ -10,7 +10,7 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Common_Notice, "Thông báo" },
             { LangKeys.Common_Error, "Lỗi" },
             { LangKeys.Common_Warning, "Cảnh báo" },
-            { LangKeys.Common_Save, "Save" },
+            { LangKeys.Common_Save, "Lưu" },
             { LangKeys.Common_Cancel, "Hủy" },
             { LangKeys.Common_SelectAll, "Chọn Hết" },
             { LangKeys.Common_SelectGroup, "Chọn Nhóm" },
@@ -38,7 +38,7 @@ namespace ReviewMovie.Localization.Resources
             // ========== Main Form - Settings ==========
             { LangKeys.Main_Settings, "Cài Đặt " },
             { LangKeys.Main_Project, "Dự Án" },
-            { LangKeys.Main_Create, "Create" },
+            { LangKeys.Main_Create, "Tạo Mới" },
             { LangKeys.Main_VoiceSettings, "Cài Đặt Voice" },
             { LangKeys.Main_VoiceSource, "Nguồn Voice" },
 
@@ -68,6 +68,14 @@ namespace ReviewMovie.Localization.Resources
             // ========== Main Form - Render ==========
             { LangKeys.Main_PublishVideo, "Xuất Bản Video" },
             { LangKeys.Main_MergeClips, "GHÉP CÁC ĐOẠN" },
+
+            // ========== Main Form - Action Buttons ==========
+            { LangKeys.Main_Record, "Thu Âm" },
+            { LangKeys.Main_ConvertAudio, "Chuyển Đổi Audio" },
+            { LangKeys.Main_SaveAudio, "Lưu Audio" },
+            { LangKeys.Main_RenderPart, "Render Đoạn" },
+            { LangKeys.Main_UseCPU, "Dùng CPU" },
+            { LangKeys.Main_UseGPU, "Dùng GPU" },
 
             // ========== Main Form - Content Header ==========
             { LangKeys.Main_MicIn, "Mic In" },
