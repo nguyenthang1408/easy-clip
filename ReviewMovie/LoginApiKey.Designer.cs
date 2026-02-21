@@ -73,11 +73,11 @@ namespace ReviewMovie
             // 
             // linklbRegister
             // 
-            this.linklbRegister.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(94)))), ((int)(((byte)(255)))));
+            this.linklbRegister.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(59)))), ((int)(((byte)(238)))));
             this.linklbRegister.AutoSize = true;
             this.linklbRegister.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linklbRegister.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linklbRegister.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(94)))), ((int)(((byte)(255)))));
+            this.linklbRegister.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(59)))), ((int)(((byte)(238)))));
             this.linklbRegister.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.linklbRegister.Location = new System.Drawing.Point(349, 514);
             this.linklbRegister.Name = "linklbRegister";
@@ -85,15 +85,16 @@ namespace ReviewMovie
             this.linklbRegister.TabIndex = 10;
             this.linklbRegister.TabStop = true;
             this.linklbRegister.Text = "Register";
+            this.linklbRegister.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(59)))), ((int)(((byte)(238)))));
             this.linklbRegister.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklbRegister_LinkClicked);
             // 
             // lkHelp
             // 
-            this.lkHelp.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(94)))), ((int)(((byte)(255)))));
+            this.lkHelp.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(95)))), ((int)(((byte)(197)))));
             this.lkHelp.AutoSize = true;
             this.lkHelp.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lkHelp.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lkHelp.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(150)))));
+            this.lkHelp.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(95)))), ((int)(((byte)(197)))));
             this.lkHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lkHelp.Location = new System.Drawing.Point(44, 514);
             this.lkHelp.Name = "lkHelp";
@@ -101,6 +102,7 @@ namespace ReviewMovie
             this.lkHelp.TabIndex = 11;
             this.lkHelp.TabStop = true;
             this.lkHelp.Text = "Help";
+            this.lkHelp.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(95)))), ((int)(((byte)(197)))));
             this.lkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lkHelp_LinkClicked);
             // 
             // lbstatus
@@ -147,7 +149,7 @@ namespace ReviewMovie
             // lblTitle
             // 
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.ForeColor = System.Drawing.Color.Black;
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(60)))), ((int)(((byte)(147)))));
             this.lblTitle.Location = new System.Drawing.Point(44, 150);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(362, 38);
@@ -171,15 +173,13 @@ namespace ReviewMovie
             this.lblLogoIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblLogoIcon.Font = new System.Drawing.Font("Segoe UI Emoji", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLogoIcon.Font = new System.Drawing.Font("Segoe UI Emoji", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLogoIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(94)))), ((int)(((byte)(255)))));
-            this.lblLogoIcon.BackgroundImage = global::EasyClip.Properties.Resources.quick_edit;
-            this.lblLogoIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.lblLogoIcon.Location = new System.Drawing.Point(0, 0);
             this.lblLogoIcon.Name = "lblLogoIcon";
             this.lblLogoIcon.Size = new System.Drawing.Size(84, 84);
             this.lblLogoIcon.TabIndex = 0;
-            this.lblLogoIcon.Text = "";
+            this.lblLogoIcon.Text = "🎬";
             this.lblLogoIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblLogoIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
