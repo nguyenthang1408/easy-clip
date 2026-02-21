@@ -79,7 +79,7 @@ namespace ReviewMovie
             this.linklbRegister.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.linklbRegister.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(94)))), ((int)(((byte)(255)))));
             this.linklbRegister.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.linklbRegister.Location = new System.Drawing.Point(347, 486);
+            this.linklbRegister.Location = new System.Drawing.Point(349, 514);
             this.linklbRegister.Name = "linklbRegister";
             this.linklbRegister.Size = new System.Drawing.Size(57, 17);
             this.linklbRegister.TabIndex = 10;
@@ -95,7 +95,7 @@ namespace ReviewMovie
             this.lkHelp.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lkHelp.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(150)))));
             this.lkHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lkHelp.Location = new System.Drawing.Point(44, 486);
+            this.lkHelp.Location = new System.Drawing.Point(44, 514);
             this.lkHelp.Name = "lkHelp";
             this.lkHelp.Size = new System.Drawing.Size(36, 17);
             this.lkHelp.TabIndex = 11;
@@ -107,9 +107,9 @@ namespace ReviewMovie
             // 
             this.lbstatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbstatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.lbstatus.Location = new System.Drawing.Point(44, 390);
+            this.lbstatus.Location = new System.Drawing.Point(44, 398);
             this.lbstatus.Name = "lbstatus";
-            this.lbstatus.Size = new System.Drawing.Size(332, 30);
+            this.lbstatus.Size = new System.Drawing.Size(362, 30);
             this.lbstatus.TabIndex = 8;
             // 
             // materialLabel2
@@ -117,7 +117,7 @@ namespace ReviewMovie
             this.materialLabel2.AutoSize = true;
             this.materialLabel2.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(101)))), ((int)(((byte)(186)))));
-            this.materialLabel2.Location = new System.Drawing.Point(44, 294);
+            this.materialLabel2.Location = new System.Drawing.Point(44, 314);
             this.materialLabel2.Name = "materialLabel2";
             this.materialLabel2.Size = new System.Drawing.Size(58, 19);
             this.materialLabel2.TabIndex = 6;
@@ -128,7 +128,7 @@ namespace ReviewMovie
             this.materialLabel1.AutoSize = true;
             this.materialLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(101)))), ((int)(((byte)(186)))));
-            this.materialLabel1.Location = new System.Drawing.Point(44, 212);
+            this.materialLabel1.Location = new System.Drawing.Point(44, 228);
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(75, 19);
             this.materialLabel1.TabIndex = 4;
@@ -138,9 +138,9 @@ namespace ReviewMovie
             // 
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(150)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(44, 164);
+            this.lblSubtitle.Location = new System.Drawing.Point(44, 188);
             this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(332, 0);
+            this.lblSubtitle.Size = new System.Drawing.Size(362, 0);
             this.lblSubtitle.TabIndex = 3;
             this.lblSubtitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
@@ -148,9 +148,9 @@ namespace ReviewMovie
             // 
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Black;
-            this.lblTitle.Location = new System.Drawing.Point(44, 124);
+            this.lblTitle.Location = new System.Drawing.Point(44, 150);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(332, 38);
+            this.lblTitle.Size = new System.Drawing.Size(362, 38);
             this.lblTitle.TabIndex = 2;
             this.lblTitle.Text = "Review Movie";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -160,9 +160,9 @@ namespace ReviewMovie
             // 
             this.pnlLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(252)))));
             this.pnlLogo.Controls.Add(this.lblLogoIcon);
-            this.pnlLogo.Location = new System.Drawing.Point(193, 54);
+            this.pnlLogo.Location = new System.Drawing.Point(183, 48);
             this.pnlLogo.Name = "pnlLogo";
-            this.pnlLogo.Size = new System.Drawing.Size(64, 64);
+            this.pnlLogo.Size = new System.Drawing.Size(84, 84);
             this.pnlLogo.TabIndex = 1;
             this.pnlLogo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
@@ -173,11 +173,11 @@ namespace ReviewMovie
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLogoIcon.Font = new System.Drawing.Font("Segoe UI Emoji", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLogoIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(94)))), ((int)(((byte)(255)))));
-            this.lblLogoIcon.Image = global::EasyClip.Properties.Resources.quick_edit;
-            this.lblLogoIcon.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblLogoIcon.BackgroundImage = global::EasyClip.Properties.Resources.quick_edit;
+            this.lblLogoIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.lblLogoIcon.Location = new System.Drawing.Point(0, 0);
             this.lblLogoIcon.Name = "lblLogoIcon";
-            this.lblLogoIcon.Size = new System.Drawing.Size(64, 64);
+            this.lblLogoIcon.Size = new System.Drawing.Size(84, 84);
             this.lblLogoIcon.TabIndex = 0;
             this.lblLogoIcon.Text = "";
             this.lblLogoIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -203,10 +203,10 @@ namespace ReviewMovie
             this.btnLoginApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 11.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoginApiKey.ForeColor = System.Drawing.Color.White;
             this.btnLoginApiKey.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(111)))), ((int)(((byte)(229)))));
-            this.btnLoginApiKey.Location = new System.Drawing.Point(44, 430);
+            this.btnLoginApiKey.Location = new System.Drawing.Point(44, 448);
             this.btnLoginApiKey.Name = "btnLoginApiKey";
             this.btnLoginApiKey.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(93)))), ((int)(((byte)(191)))));
-            this.btnLoginApiKey.Size = new System.Drawing.Size(332, 52);
+            this.btnLoginApiKey.Size = new System.Drawing.Size(362, 54);
             this.btnLoginApiKey.TabIndex = 9;
             this.btnLoginApiKey.Text = "Login  ➜";
             this.btnLoginApiKey.UseVisualStyleBackColor = false;
@@ -244,7 +244,8 @@ namespace ReviewMovie
             this.txInsertApiKey.IconRight = null;
             this.txInsertApiKey.IconSize = new System.Drawing.Size(18, 18);
             this.txInsertApiKey.Lines = new string[0];
-            this.txInsertApiKey.Location = new System.Drawing.Point(44, 316);
+            this.txInsertApiKey.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txInsertApiKey.Location = new System.Drawing.Point(44, 336);
             this.txInsertApiKey.MaxLength = 32767;
             this.txInsertApiKey.Multiline = false;
             this.txInsertApiKey.Name = "txInsertApiKey";
@@ -253,7 +254,7 @@ namespace ReviewMovie
             this.txInsertApiKey.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txInsertApiKey.SelectionLength = 0;
             this.txInsertApiKey.SelectionStart = 0;
-            this.txInsertApiKey.Size = new System.Drawing.Size(332, 52);
+            this.txInsertApiKey.Size = new System.Drawing.Size(362, 54);
             this.txInsertApiKey.TabIndex = 7;
             this.txInsertApiKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txInsertApiKey.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -272,7 +273,8 @@ namespace ReviewMovie
             this.txAppCodeShow.IconRight = null;
             this.txAppCodeShow.IconSize = new System.Drawing.Size(18, 18);
             this.txAppCodeShow.Lines = new string[0];
-            this.txAppCodeShow.Location = new System.Drawing.Point(44, 234);
+            this.txAppCodeShow.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txAppCodeShow.Location = new System.Drawing.Point(44, 250);
             this.txAppCodeShow.MaxLength = 32767;
             this.txAppCodeShow.Multiline = false;
             this.txAppCodeShow.Name = "txAppCodeShow";
@@ -281,7 +283,7 @@ namespace ReviewMovie
             this.txAppCodeShow.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txAppCodeShow.SelectionLength = 0;
             this.txAppCodeShow.SelectionStart = 0;
-            this.txAppCodeShow.Size = new System.Drawing.Size(332, 52);
+            this.txAppCodeShow.Size = new System.Drawing.Size(362, 54);
             this.txAppCodeShow.TabIndex = 1;
             this.txAppCodeShow.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txAppCodeShow.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
