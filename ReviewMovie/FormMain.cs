@@ -337,6 +337,10 @@ namespace ReviewMovie
             ckOpenPlayer.Text = LanguageManager.Get(LangKeys.Main_AutoOpenPlayer);
             btnSaveEffectSetting.Text = LanguageManager.Get(LangKeys.Common_Save);
 
+            // Rebind comboboxes that have localized Display text
+            RebindComboBoxPreserveSelection(cbEffectType, ComboboxEffectType.EffectTypeTemplate().ToList());
+            RebindComboBoxPreserveSelection(cbxVideoQuality, ComboboxSizeVideo.SizeVideoTemplate().ToList());
+
             // Render section
             grbActionRender.Text = LanguageManager.Get(LangKeys.Main_PublishVideo);
             btnAddAll.Text = LanguageManager.Get(LangKeys.Main_MergeClips);
@@ -382,6 +386,24 @@ namespace ReviewMovie
             // Update title
             UpdateAppTitle();
         }
+
+        private void RebindComboBoxPreserveSelection(ComboBox cb, object dataSource)
+        {
+            var selectedValue = cb.SelectedValue?.ToString();
+            ComboBoxFuncion.CbBlinding(cb, dataSource, 0);
+            if (!string.IsNullOrEmpty(selectedValue))
+            {
+                for (int i = 0; i < cb.Items.Count; i++)
+                {
+                    if (cb.Items[i] is ComboboxModel item && item.Value == selectedValue)
+                    {
+                        cb.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+
         private async void Init()
         {
             // Set flag để prevent event handlers chạy trước khi init xong
