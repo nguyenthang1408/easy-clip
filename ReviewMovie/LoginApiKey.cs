@@ -57,6 +57,14 @@ namespace ReviewMovie
 
         private void SetupLoginUi()
         {
+            // Remove outer frame: let the card occupy full form.
+            if (cardPanel != null)
+            {
+                cardPanel.Dock = DockStyle.Fill;
+                cardPanel.Location = Point.Empty;
+                cardPanel.Margin = Padding.Empty;
+            }
+
             // Commonized UI setup (easy to maintain)
             if (txAppCodeShow is UiTextBox appCode)
             {
@@ -142,17 +150,13 @@ namespace ReviewMovie
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            // Very light orange background (as requested)
-            e.Graphics.Clear(ColorTranslator.FromHtml("#FFF7ED"));
+            // Keep a clean white canvas to avoid outer-looking border.
+            e.Graphics.Clear(Color.White);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-
-            // Subtle border for rounded window
-            var rect = new Rectangle(0, 0, Width - 1, Height - 1);
-            UiHelpers.DrawRoundedBorder(e.Graphics, rect, UiTheme.WindowRadius, UiTheme.WindowBorder);
         }
 
         private void ApplyRoundedRegions()
