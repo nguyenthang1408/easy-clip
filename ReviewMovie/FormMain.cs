@@ -318,8 +318,8 @@ namespace ReviewMovie
             label9.Text = LanguageManager.Get(LangKeys.Main_ZoomUp);
             label11.Text = LanguageManager.Get(LangKeys.Main_ZQuality);
             label7.Text = LanguageManager.Get(LangKeys.Main_Quality);
-            label5.Text = LanguageManager.Get(LangKeys.Main_VoiceType);
-            label6.Text = LanguageManager.Get(LangKeys.Main_SpeechSpeed);
+            label6.Text = LanguageManager.Get(LangKeys.Main_VoiceType);
+            label5.Text = LanguageManager.Get(LangKeys.Main_SpeechSpeed);
             label10.Text = LanguageManager.Get(LangKeys.Main_FpsInput);
             label13.Text = LanguageManager.Get(LangKeys.Main_Thread);
             label12.Text = LanguageManager.Get(LangKeys.Main_SelectionMode);
