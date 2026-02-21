@@ -55,7 +55,7 @@ namespace ReviewMovie
             //
             // btnLoginApiKey
             //
-            this.btnLoginApiKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnLoginApiKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
             this.btnLoginApiKey.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnLoginApiKey.Depth = 0;
             this.btnLoginApiKey.HighEmphasis = true;
