@@ -11,11 +11,12 @@ namespace ReviewMovie.Base.Controls
     {
         private bool _userCustomizedColors;
         private int _borderRadius = 4;
+        private bool _disableHoverEffects = true;
 
         public UiComboBox()
         {
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            FlatStyle = FlatStyle.Flat;
+            FlatStyle = FlatStyle.Standard;
             IntegralHeight = false;
 
             ApplyThemeDefaults();
@@ -45,6 +46,14 @@ namespace ReviewMovie.Base.Controls
             }
         }
 
+        [Category("Behavior")]
+        [DefaultValue(true)]
+        public bool DisableHoverEffects
+        {
+            get => _disableHoverEffects;
+            set => _disableHoverEffects = value;
+        }
+
         private void ApplyThemeDefaults()
         {
             BackColor = ThemeManager.Current.SurfaceColor;
@@ -61,6 +70,21 @@ namespace ReviewMovie.Base.Controls
         {
             base.OnResize(e);
             ApplyRoundRegionIfNeeded();
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_MOUSEMOVE = 0x0200;
+            const int WM_MOUSEHOVER = 0x02A1;
+            const int WM_MOUSELEAVE = 0x02A3;
+
+            if (_disableHoverEffects &&
+                (m.Msg == WM_MOUSEMOVE || m.Msg == WM_MOUSEHOVER || m.Msg == WM_MOUSELEAVE))
+            {
+                return;
+            }
+
+            base.WndProc(ref m);
         }
 
         private void ApplyRoundRegionIfNeeded()
