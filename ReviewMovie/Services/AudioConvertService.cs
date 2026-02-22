@@ -209,6 +209,8 @@ namespace EasyClip.Services
                         throw new NotSupportedException("Provider TTS chưa được hỗ trợ.");
                 }
 
+                token.ThrowIfCancellationRequested();
+
                 if (!string.IsNullOrEmpty(requestID))
                 {
                     audioStatus = LanguageManager.Get(LangKeys.Svc_Converted);

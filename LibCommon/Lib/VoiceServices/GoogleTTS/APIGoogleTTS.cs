@@ -122,6 +122,7 @@ namespace Lib.VoiceServices.GoogleTTS
 
                 return new ConversionResult(true, LibLocalizer.Get("Lib_ConvertDownloadSuccess"));
             }
+            catch (OperationCanceledException) { throw; }
             catch (Exception ex)
             {
                 // Xử lý lỗi
