@@ -3012,6 +3012,157 @@ namespace ReviewMovie
 
         private bool _isCheckingAndCancelingProjectChange = false;
 
+        private DialogResult ShowProjectSwitchConfirmDialog(string projectPath)
+        {
+            using (var popup = new Form())
+            {
+                popup.FormBorderStyle = FormBorderStyle.None;
+                popup.StartPosition = FormStartPosition.CenterParent;
+                popup.ShowInTaskbar = false;
+                popup.TopMost = true;
+                popup.BackColor = Color.FromArgb(238, 243, 251);
+                popup.ClientSize = new Size(390, 176);
+                popup.Padding = new Padding(8);
+                UiHelpers.EnableSmoothPainting(popup);
+
+                var panelCard = new Panel
+                {
+                    Dock = DockStyle.Fill,
+                    BackColor = Color.White
+                };
+                popup.Controls.Add(panelCard);
+
+                var panelHeader = new Panel
+                {
+                    Dock = DockStyle.Top,
+                    Height = 40,
+                    BackColor = Color.FromArgb(246, 249, 255)
+                };
+                panelCard.Controls.Add(panelHeader);
+
+                var lblTitle = new Label
+                {
+                    AutoSize = true,
+                    Text = "Thông Báo !",
+                    Font = new Font("Segoe UI", 10.5F, FontStyle.Bold, GraphicsUnit.Point),
+                    ForeColor = Color.FromArgb(38, 48, 63),
+                    Location = new Point(12, 9)
+                };
+                panelHeader.Controls.Add(lblTitle);
+
+                var btnClose = new Button
+                {
+                    Text = "x",
+                    Font = new Font("Segoe UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point),
+                    ForeColor = Color.FromArgb(120, 128, 142),
+                    FlatStyle = FlatStyle.Flat,
+                    Size = new Size(32, 26),
+                    Location = new Point(popup.ClientSize.Width - 50, 7),
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                    Cursor = Cursors.Hand,
+                    TabStop = false
+                };
+                btnClose.FlatAppearance.BorderSize = 0;
+                btnClose.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 241, 251);
+                btnClose.FlatAppearance.MouseDownBackColor = Color.FromArgb(224, 233, 246);
+                btnClose.Click += (_, __) =>
+                {
+                    popup.DialogResult = DialogResult.No;
+                    popup.Close();
+                };
+                panelHeader.Controls.Add(btnClose);
+
+                var bodyLayout = new TableLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    ColumnCount = 1,
+                    RowCount = 2,
+                    Padding = new Padding(14, 12, 14, 12),
+                    BackColor = Color.White
+                };
+                bodyLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+                bodyLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 42F));
+                panelCard.Controls.Add(bodyLayout);
+
+                var lblMessage = new Label
+                {
+                    Dock = DockStyle.Fill,
+                    AutoSize = false,
+                    Text = $"Bạn muốn mở Project này ?\r\nProject : {projectPath}",
+                    Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point),
+                    ForeColor = Color.FromArgb(35, 45, 59),
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    AutoEllipsis = true
+                };
+                bodyLayout.Controls.Add(lblMessage, 0, 0);
+
+                var buttonLayout = new TableLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    ColumnCount = 2
+                };
+                buttonLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+                buttonLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+                bodyLayout.Controls.Add(buttonLayout, 0, 1);
+
+                var btnYes = new Button
+                {
+                    Text = "Yes",
+                    DialogResult = DialogResult.Yes,
+                    Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point),
+                    ForeColor = Color.White,
+                    BackColor = Color.FromArgb(44, 124, 235),
+                    FlatStyle = FlatStyle.Flat,
+                    Size = new Size(98, 30),
+                    Anchor = AnchorStyles.Right,
+                    Margin = new Padding(0, 4, 6, 0),
+                    Cursor = Cursors.Hand
+                };
+                btnYes.FlatAppearance.BorderSize = 0;
+                btnYes.FlatAppearance.MouseOverBackColor = Color.FromArgb(37, 111, 216);
+                btnYes.FlatAppearance.MouseDownBackColor = Color.FromArgb(32, 99, 197);
+
+                var btnNo = new Button
+                {
+                    Text = "No",
+                    DialogResult = DialogResult.No,
+                    Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point),
+                    ForeColor = Color.FromArgb(46, 58, 74),
+                    BackColor = Color.FromArgb(241, 244, 249),
+                    FlatStyle = FlatStyle.Flat,
+                    Size = new Size(98, 30),
+                    Anchor = AnchorStyles.Left,
+                    Margin = new Padding(6, 4, 0, 0),
+                    Cursor = Cursors.Hand
+                };
+                btnNo.FlatAppearance.BorderColor = Color.FromArgb(214, 221, 232);
+                btnNo.FlatAppearance.MouseOverBackColor = Color.FromArgb(231, 237, 246);
+                btnNo.FlatAppearance.MouseDownBackColor = Color.FromArgb(220, 229, 242);
+
+                buttonLayout.Controls.Add(btnYes, 0, 0);
+                buttonLayout.Controls.Add(btnNo, 1, 0);
+
+                popup.AcceptButton = btnYes;
+                popup.CancelButton = btnNo;
+
+                popup.Shown += (s, e) =>
+                {
+                    UiHelpers.ApplyRoundRegion(panelCard, 10);
+                    UiHelpers.ApplyRoundRegion(btnYes, 8);
+                    UiHelpers.ApplyRoundRegion(btnNo, 8);
+                };
+                popup.Resize += (s, e) =>
+                {
+                    if (panelCard.Width > 0 && panelCard.Height > 0)
+                    {
+                        UiHelpers.ApplyRoundRegion(panelCard, 10);
+                    }
+                };
+
+                return popup.ShowDialog(this);
+            }
+        }
+
         private async void cbProjectName_SelectedIndexChanged(object sender, EventArgs e)
         {
             var combo = (ComboBox)sender;
@@ -3078,7 +3229,7 @@ namespace ReviewMovie
                 }
 
                 // ==== 5. Mở project nếu người dùng xác nhận ====
-                if (MessageBox.Show($"Bạn muốn mở Project này ? \n Project : {selectPath}", "Thông Báo !", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (ShowProjectSwitchConfirmDialog(selectPath) == DialogResult.Yes)
                 {
                     _infoProject = tempProject;
                     DefaultProjectData();
