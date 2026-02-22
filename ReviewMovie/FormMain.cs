@@ -741,6 +741,7 @@ namespace ReviewMovie
                 // Kiểm tra voiceSourceInfo
                 if (_voiceSourceInfo == null || !_voiceSourceInfo.IsSuccess)
                 {
+                    _loadingService.Close();
                     MsgBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoiceSource));
                     return;
                 }
@@ -800,6 +801,7 @@ namespace ReviewMovie
             }
             catch (Exception ex)
             {
+                _loadingService.Close();
                 MsgBox.Show(LanguageManager.GetFormat(LangKeys.Main_T2PsoftVoiceError, ex.Message));
             }
         }
@@ -824,6 +826,7 @@ namespace ReviewMovie
 
                     if (filteredLanguages == null || filteredLanguages.Count == 0)
                     {
+                        _loadingService.Close();
                         MsgBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoices), LanguageManager.Get(LangKeys.Main_CannotLoadVoicesTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         cbLanguageSelect.DataSource = null;
                         return;
@@ -843,6 +846,7 @@ namespace ReviewMovie
                 }
                 else
                 {
+                    _loadingService.Close();
                     MsgBox.Show(LanguageManager.Get(LangKeys.Main_VoiceKeyError));
                     cbLanguageSelect.DataSource = null;
                 }
@@ -4827,6 +4831,7 @@ namespace ReviewMovie
 
                         if (filteredLanguages == null || filteredLanguages.Count == 0)
                         {
+                            _loadingService.Close();
                             MsgBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoices), LanguageManager.Get(LangKeys.Main_CannotLoadVoicesTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             cbLanguageSelect.DataSource = null;
                         }
@@ -4841,6 +4846,7 @@ namespace ReviewMovie
                     }
                     else
                     {
+                        _loadingService.Close();
                         MsgBox.Show(LanguageManager.Get(LangKeys.Main_JsonDataError));
                         cbLanguageSelect.DataSource = null;
                     }
@@ -4878,12 +4884,14 @@ namespace ReviewMovie
             }
             catch (TaskCanceledException)
             {
+                _loadingService.Close();
                 MsgBox.Show(LanguageManager.Get(LangKeys.Main_ConnectionTimeout)
                     , LanguageManager.Get(LangKeys.Main_ConnectionErrorTitle)
                     , MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (System.Net.Http.HttpRequestException)
             {
+                _loadingService.Close();
                 MsgBox.Show(LanguageManager.Get(LangKeys.Main_ConnectionError)
                     , LanguageManager.Get(LangKeys.Main_ConnectionErrorTitle)
                     , MessageBoxButtons.OK, MessageBoxIcon.Warning);
