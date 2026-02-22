@@ -151,12 +151,19 @@
     <Compile Include="Services\RenderDataSyncService.cs" />
     <Compile Include="Services\VideoMergeService.cs" />
     <Compile Include="Services\VideoValidationService.cs" />
+    <Compile Include="View\DialogMessage\DialogMsg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\DialogMessage\DialogMsg.Designer.cs">
+      <DependentUpon>DialogMsg.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\DialogMessage\FormLoadingCancel.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\DialogMessage\FormLoadingCancel.Designer.cs">
       <DependentUpon>FormLoadingCancel.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\DialogMessage\MsgBox.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

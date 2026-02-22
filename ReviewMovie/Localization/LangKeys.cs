@@ -8,6 +8,9 @@ namespace ReviewMovie.Localization
         public const string Common_Warning = "Common_Warning";
         public const string Common_Save = "Common_Save";
         public const string Common_Cancel = "Common_Cancel";
+        public const string Common_Yes = "Common_Yes";
+        public const string Common_No = "Common_No";
+        public const string Common_OK = "Common_OK";
         public const string Common_SelectAll = "Common_SelectAll";
         public const string Common_SelectGroup = "Common_SelectGroup";
         public const string Common_CancelSelectAll = "Common_CancelSelectAll";
