@@ -104,7 +104,7 @@ namespace ReviewMovie.Base.Controls
             if (_numeric.Controls.Count <= 0) return;
             foreach (Control child in _numeric.Controls)
             {
-                if (child == null || !child.GetType().Name.Contains("UpDownButtons", StringComparison.Ordinal))
+                if (child == null || child.GetType().Name.IndexOf("UpDownButtons", StringComparison.Ordinal) < 0)
                     continue;
 
                 var buttons = child;
