@@ -4397,40 +4397,6 @@ namespace ReviewMovie
         {
             e.ItemHeight = cbProjectName.ItemHeight; // Đặt chiều cao mục tùy chỉnh
         }
-        private void cbProjectName_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (cbProjectName.DroppedDown)
-            {
-                int index = GetIndexUnderMouse(cbProjectName, e.Location);
-
-                if (index >= 0 && index < cbProjectName.Items.Count)
-                {
-                    string text = cbProjectName.Items[index].ToString();
-                    toolTipPL.SetToolTip(cbProjectName, text);
-                }
-                else
-                {
-                    toolTipPL.SetToolTip(cbProjectName, string.Empty);
-                }
-            }
-        }
-        private int GetIndexUnderMouse(ComboBox comboBox, Point mouseLocation)
-        {
-            // Lấy tọa độ của ComboBox trên màn hình
-            Point comboBoxLocation = comboBox.PointToScreen(Point.Empty);
-            // Tính toán vị trí tương đối của chuột so với ComboBox
-            int relativeY = mouseLocation.Y - comboBoxLocation.Y - comboBox.ItemHeight; // Trừ chiều cao của mục hiện tại
-
-            // Tính toán chỉ số mục dựa trên vị trí Y tương đối của chuột
-            if (relativeY >= 0)
-            {
-                int index = relativeY / comboBox.ItemHeight;
-                return index;
-            }
-
-            return -1;
-        }
-
         private bool _isCheckingAndCancelingOnClose = false;
         private async void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {

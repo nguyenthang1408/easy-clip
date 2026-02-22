@@ -10,7 +10,7 @@ namespace ReviewMovie.Base.Controls
     public class UiComboBox : ComboBox
     {
         private bool _userCustomizedColors;
-        private int _borderRadius;
+        private int _borderRadius = 4;
 
         public UiComboBox()
         {
@@ -33,7 +33,7 @@ namespace ReviewMovie.Base.Controls
         }
 
         [Category("Appearance")]
-        [DefaultValue(0)]
+        [DefaultValue(4)]
         public int BorderRadius
         {
             get => _borderRadius;
