@@ -3888,8 +3888,10 @@ namespace ReviewMovie
 
                 if (tempProject.IsEmpty)
                 {
-                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_ProjectNotFound));
-                    var result = MsgBox.Show(LanguageManager.GetFormat(LangKeys.Main_ConfirmDeleteProject, selectPath), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.YesNo);
+                    string warnMsg = LanguageManager.Get(LangKeys.Main_ProjectNotFound)
+                        + "\n\n"
+                        + LanguageManager.GetFormat(LangKeys.Main_ConfirmDeleteProject, selectPath);
+                    var result = MsgBox.Show(warnMsg, LanguageManager.Get(LangKeys.Common_Warning), MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (result == DialogResult.Yes)
                     {
                         _previousText = string.Empty;
