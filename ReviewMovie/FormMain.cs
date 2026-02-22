@@ -741,6 +741,7 @@ namespace ReviewMovie
                 // Kiểm tra voiceSourceInfo
                 if (_voiceSourceInfo == null || !_voiceSourceInfo.IsSuccess)
                 {
+                    _loadingService.Close();
                     MsgBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoiceSource));
                     return;
                 }
@@ -800,6 +801,7 @@ namespace ReviewMovie
             }
             catch (Exception ex)
             {
+                _loadingService.Close();
                 MsgBox.Show(LanguageManager.GetFormat(LangKeys.Main_T2PsoftVoiceError, ex.Message));
             }
         }
@@ -812,41 +814,47 @@ namespace ReviewMovie
             nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioGoogleTTS ? nbSpeechRatio.Value : _speechratioGoogleTTS;
 
             string decryptedKey = GetDecryptedVoiceKey();
-            if (!string.IsNullOrEmpty(decryptedKey))
+            if (string.IsNullOrEmpty(decryptedKey))
             {
-                var serviceGoogleTTS = await GetOrCreateGoogleTTSAsync(decryptedKey);
-                if (serviceGoogleTTS.CheckClient())
-                {
-                    var allLanguages = serviceGoogleTTS.GetListLanguage()?.ToList();
-
-                    // Filter theo allowedLanguages nếu là gói Trial
-                    var filteredLanguages = FilterLanguagesByPackage(allLanguages);
-
-                    if (filteredLanguages == null || filteredLanguages.Count == 0)
-                    {
-                        MsgBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoices), LanguageManager.Get(LangKeys.Main_CannotLoadVoicesTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        cbLanguageSelect.DataSource = null;
-                        return;
-                    }
-
-                    // Tạm unsubscribe event để tránh cascading trigger network call
-                    cbLanguageSelect.SelectedIndexChanged -= cbLanguageSelect_SelectedIndexChanged;
-                    ComboBoxFuncion.CbBlinding(cbLanguageSelect,
-                        filteredLanguages,
-                        !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                            ? Math.Max(filteredLanguages.FindIndex(x => x.Value.Equals(checkSaveST.SlanguageSelect) || x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
-                            : 0);
-                    cbLanguageSelect.SelectedIndexChanged += cbLanguageSelect_SelectedIndexChanged;
-
-                    // Gọi lại cbLanguageSelect handler để load voices cho language được chọn
-                    cbLanguageSelect_SelectedIndexChanged(cbLanguageSelect, EventArgs.Empty);
-                }
-                else
-                {
-                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_VoiceKeyError));
-                    cbLanguageSelect.DataSource = null;
-                }
+                cbLanguageSelect.DataSource = null;
+                _loadingService.Close();
+                MsgBox.Show(LanguageManager.Get(LangKeys.Main_GoogleError), LanguageManager.Get(LangKeys.Main_GoogleErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            var serviceGoogleTTS = await GetOrCreateGoogleTTSAsync(decryptedKey);
+            if (!serviceGoogleTTS.CheckClient())
+            {
+                cbLanguageSelect.DataSource = null;
+                _loadingService.Close();
+                MsgBox.Show(LanguageManager.Get(LangKeys.Main_GoogleError), LanguageManager.Get(LangKeys.Main_GoogleErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var allLanguages = serviceGoogleTTS.GetListLanguage()?.ToList();
+
+            // Filter theo allowedLanguages nếu là gói Trial
+            var filteredLanguages = FilterLanguagesByPackage(allLanguages);
+
+            if (filteredLanguages == null || filteredLanguages.Count == 0)
+            {
+                _loadingService.Close();
+                MsgBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoices), LanguageManager.Get(LangKeys.Main_CannotLoadVoicesTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cbLanguageSelect.DataSource = null;
+                return;
+            }
+
+            // Tạm unsubscribe event để tránh cascading trigger network call
+            cbLanguageSelect.SelectedIndexChanged -= cbLanguageSelect_SelectedIndexChanged;
+            ComboBoxFuncion.CbBlinding(cbLanguageSelect,
+                filteredLanguages,
+                !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
+                    ? Math.Max(filteredLanguages.FindIndex(x => x.Value.Equals(checkSaveST.SlanguageSelect) || x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                    : 0);
+            cbLanguageSelect.SelectedIndexChanged += cbLanguageSelect_SelectedIndexChanged;
+
+            // Gọi lại cbLanguageSelect handler để load voices cho language được chọn
+            cbLanguageSelect_SelectedIndexChanged(cbLanguageSelect, EventArgs.Empty);
         }
 
         /// <summary>
@@ -876,34 +884,43 @@ namespace ReviewMovie
             nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioElevenlab ? nbSpeechRatio.Value : _speechratioElevenlab;
 
             string decryptedKey = GetDecryptedVoiceKey();
-            if (!string.IsNullOrEmpty(decryptedKey))
+            if (string.IsNullOrEmpty(decryptedKey))
             {
-                // [V2-UPDATE] Chuyển sang VoicesV2Endpoint (API /v2/voices) thay cho VoicesEndpoint (API /v1/voices)
-                // V1 VoicesEndpoint vẫn giữ nguyên, không ảnh hưởng các chỗ khác
-                VoicesV2Endpoint voiceServices = new VoicesV2Endpoint(decryptedKey);
-                var listVoice = await voiceServices.GetAllVoicesAsync();
+                cbLanguageSelect.SelectedIndexChanged -= cbLanguageSelect_SelectedIndexChanged;
+                cbLanguageSelect.DataSource = null;
+                cbLanguageSelect.SelectedIndex = -1;
+                cbLanguageSelect.SelectedIndexChanged += cbLanguageSelect_SelectedIndexChanged;
+                _loadingService.Close();
+                MsgBox.Show(LanguageManager.Get(LangKeys.Main_ElevenlabError), LanguageManager.Get(LangKeys.Main_ElevenlabErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                if (listVoice == null)
-                {
-                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_VoiceKeyError));
-                    cbLanguageSelect.SelectedIndexChanged -= cbLanguageSelect_SelectedIndexChanged;
-                    cbLanguageSelect.DataSource = null;
-                    cbLanguageSelect.SelectedIndex = -1;
-                    cbLanguageSelect.SelectedIndexChanged += cbLanguageSelect_SelectedIndexChanged;
-                }
-                else
-                {
-                    _listVoice = listVoice?.ToList();
+            // [V2-UPDATE] Chuyển sang VoicesV2Endpoint (API /v2/voices) thay cho VoicesEndpoint (API /v1/voices)
+            // V1 VoicesEndpoint vẫn giữ nguyên, không ảnh hưởng các chỗ khác
+            VoicesV2Endpoint voiceServices = new VoicesV2Endpoint(decryptedKey);
+            var listVoice = await voiceServices.GetAllVoicesAsync();
 
-                    var allLanguages = _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null;
+            if (listVoice == null)
+            {
+                cbLanguageSelect.SelectedIndexChanged -= cbLanguageSelect_SelectedIndexChanged;
+                cbLanguageSelect.DataSource = null;
+                cbLanguageSelect.SelectedIndex = -1;
+                cbLanguageSelect.SelectedIndexChanged += cbLanguageSelect_SelectedIndexChanged;
+                _loadingService.Close();
+                MsgBox.Show(LanguageManager.Get(LangKeys.Main_ElevenlabError), LanguageManager.Get(LangKeys.Main_ElevenlabErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                _listVoice = listVoice?.ToList();
 
-                    // ElevenLabs: chưa hỗ trợ filter language theo allowedLanguages (format khác Google TTS code)
-                    ComboBoxFuncion.CbBlinding(cbLanguageSelect,
-                        allLanguages,
-                        allLanguages != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                            ? Math.Max(allLanguages.FindIndex(x => x.Value.Equals(checkSaveST.SlanguageSelect) || x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
-                            : 0);
-                }
+                var allLanguages = _listVoice != null ? GetVoiceTemplate.ElevenLabsLanguageTemplate(_listVoice).ToList() : null;
+
+                // ElevenLabs: chưa hỗ trợ filter language theo allowedLanguages (format khác Google TTS code)
+                ComboBoxFuncion.CbBlinding(cbLanguageSelect,
+                    allLanguages,
+                    allLanguages != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
+                        ? Math.Max(allLanguages.FindIndex(x => x.Value.Equals(checkSaveST.SlanguageSelect) || x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                        : 0);
             }
         }
 
@@ -4787,10 +4804,10 @@ namespace ReviewMovie
                     var listVoice = await voiceServices.GetAllVoicesAsync();
                     if(listVoice == null)
                     {
-                        MsgBox.Show(LanguageManager.Get(LangKeys.Main_ElevenlabError));
-
                         cbLanguageSelect.DataSource = null;
                         cbLanguageSelect.SelectedIndex = -1;
+                        _loadingService.Close();
+                        MsgBox.Show(LanguageManager.Get(LangKeys.Main_ElevenlabError), LanguageManager.Get(LangKeys.Main_ElevenlabErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
@@ -4830,6 +4847,7 @@ namespace ReviewMovie
 
                         if (filteredLanguages == null || filteredLanguages.Count == 0)
                         {
+                            _loadingService.Close();
                             MsgBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoices), LanguageManager.Get(LangKeys.Main_CannotLoadVoicesTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             cbLanguageSelect.DataSource = null;
                         }
@@ -4844,7 +4862,8 @@ namespace ReviewMovie
                     }
                     else
                     {
-                        MsgBox.Show(LanguageManager.Get(LangKeys.Main_JsonDataError));
+                        _loadingService.Close();
+                        MsgBox.Show(LanguageManager.Get(LangKeys.Main_JsonDataError), LanguageManager.Get(LangKeys.Main_JsonDataErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         cbLanguageSelect.DataSource = null;
                     }
                 }
@@ -4881,12 +4900,14 @@ namespace ReviewMovie
             }
             catch (TaskCanceledException)
             {
+                _loadingService.Close();
                 MsgBox.Show(LanguageManager.Get(LangKeys.Main_ConnectionTimeout)
                     , LanguageManager.Get(LangKeys.Main_ConnectionErrorTitle)
                     , MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (System.Net.Http.HttpRequestException)
             {
+                _loadingService.Close();
                 MsgBox.Show(LanguageManager.Get(LangKeys.Main_ConnectionError)
                     , LanguageManager.Get(LangKeys.Main_ConnectionErrorTitle)
                     , MessageBoxButtons.OK, MessageBoxIcon.Warning);

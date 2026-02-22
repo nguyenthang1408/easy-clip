@@ -359,8 +359,12 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_SelectMediaFolderTitle, "Select media folder" },
 
             // ========== FormMain - API Errors ==========
-            { LangKeys.Main_ElevenlabError, "Elevenlab error!" },
+            { LangKeys.Main_ElevenlabError, "ApiKey Elevenlab Error!" },
+            { LangKeys.Main_ElevenlabErrorTitle, "Elevenlab Error" },
+            { LangKeys.Main_GoogleError, "ApiKey Google Error!" },
+            { LangKeys.Main_GoogleErrorTitle, "Google Error" },
             { LangKeys.Main_JsonDataError, "JsonData error!" },
+            { LangKeys.Main_JsonDataErrorTitle, "JsonData Error" },
             { LangKeys.Main_ConnectionTimeout, "Connection timeout. Please check network and try again." },
             { LangKeys.Main_SaveKeySuccess, "Key saved successfully!" },
 
