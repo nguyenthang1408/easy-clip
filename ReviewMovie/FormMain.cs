@@ -2354,7 +2354,7 @@ namespace ReviewMovie
             }
             catch (OperationCanceledException)
             {
-                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.GetFormat(LangKeys.Main_CancelledRenderPart, rowIndex), Color.OrangeRed);
+                // Task.Run bị cancel trước khi bắt đầu (token đã cancel lúc start)
             }
             catch (Exception ex)
             {
@@ -2362,6 +2362,12 @@ namespace ReviewMovie
             }
             finally
             {
+                // Hiển thị cancel message nếu đã bị hủy
+                if (cts.IsCancellationRequested)
+                {
+                    UIThreadHelper.SetLabelText(lblstatus, LanguageManager.GetFormat(LangKeys.Main_CancelledRenderPart, rowIndex), Color.OrangeRed);
+                }
+
                 // Xóa row khỏi dictionary khi hoàn thành (dùng rowIndex local, không dùng _indexRowSelect)
                 lock (_renderingRows)
                 {
@@ -2401,7 +2407,11 @@ namespace ReviewMovie
             {
                 List<int> listRender = RVFuncion.GenerateList(_indexRowMax);
                 await Pr_RenderAll(listRender, _indexRowMax, _renderAllCTS.Token);
-                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_RenderAllDone), Color.Green);
+
+                if (_renderAllCTS.IsCancellationRequested)
+                    UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_CancelledRenderAll), Color.OrangeRed);
+                else
+                    UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_RenderAllDone), Color.Green);
             }
             catch (OperationCanceledException)
             {
@@ -2457,7 +2467,11 @@ namespace ReviewMovie
             try
             {
                 await Pr_RenderAll(listNumber, listNumber.Count, _renderSelectCTS.Token);
-                UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_RenderSelectedDone), Color.Green);
+
+                if (_renderSelectCTS.IsCancellationRequested)
+                    UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_CancelledRenderSelected), Color.OrangeRed);
+                else
+                    UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_RenderSelectedDone), Color.Green);
             }
             catch (OperationCanceledException)
             {
@@ -2596,28 +2610,26 @@ namespace ReviewMovie
             }
             catch (OperationCanceledException)
             {
-                throw;
+                // Rendervideo đã cập nhật cell với cancel status, không cần throw
             }
             catch
             {
                 UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_ErrorCheckMedia), Color.Red);
             }
-            finally
-            {
-                // Cập nhật render status chính xác bằng NoID
-                var updatedRow = dgvMainView.Rows
-                    .Cast<DataGridViewRow>()
-                    .FirstOrDefault(r => Convert.ToInt32(r.Cells["Column_index"].Value) == noId);
-                if (updatedRow != null)
-                {
-                    var status = updatedRow.Cells["Column_renderstatus"].Value?.ToString();
-                    if (!string.IsNullOrEmpty(status))
-                        renderInfo.RenderStatus = status;
-                }
 
-                // Đồng bộ lại vào project
-                _renderSyncService.UpdateProjectRenderList(_infoProject, _infoProject.InfoRenders, _allInfoRender);
+            // Cập nhật render status chính xác bằng NoID
+            var updatedRow = dgvMainView.Rows
+                .Cast<DataGridViewRow>()
+                .FirstOrDefault(r => Convert.ToInt32(r.Cells["Column_index"].Value) == noId);
+            if (updatedRow != null)
+            {
+                var status = updatedRow.Cells["Column_renderstatus"].Value?.ToString();
+                if (!string.IsNullOrEmpty(status))
+                    renderInfo.RenderStatus = status;
             }
+
+            // Đồng bộ lại vào project
+            _renderSyncService.UpdateProjectRenderList(_infoProject, _infoProject.InfoRenders, _allInfoRender);
         }
 
         /// <summary>
@@ -2865,7 +2877,6 @@ namespace ReviewMovie
             catch (OperationCanceledException)
             {
                 FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", LanguageManager.Get(LangKeys.Svc_RenderCancelledCell), Color.OrangeRed);
-                throw;
             }
             catch
             {
