@@ -809,7 +809,7 @@ namespace ReviewMovie
         /// </summary>
         private async Task HandleT2PsoftGoogleTTS(EffectSetting checkSaveST)
         {
-            nbSpeechRatio.Value = _speechratioGoogleTTS;
+            nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioGoogleTTS ? nbSpeechRatio.Value : _speechratioGoogleTTS;
 
             string decryptedKey = GetDecryptedVoiceKey();
             if (!string.IsNullOrEmpty(decryptedKey))
@@ -854,7 +854,7 @@ namespace ReviewMovie
         /// </summary>
         private void HandleT2PsoftFptAI(EffectSetting checkSaveST)
         {
-            nbSpeechRatio.Value = _speechratioFptAI;
+            nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioFptAI ? nbSpeechRatio.Value : _speechratioFptAI;
 
             var allLanguages = ApiFptAI.FptAILanguageTemplate().ToList();
 
@@ -873,7 +873,7 @@ namespace ReviewMovie
         /// </summary>
         private async Task HandleT2PsoftElevenLab(EffectSetting checkSaveST)
         {
-            nbSpeechRatio.Value = _speechratioElevenlab;
+            nbSpeechRatio.Value = nbSpeechRatio.Value != _speechratioElevenlab ? nbSpeechRatio.Value : _speechratioElevenlab;
 
             string decryptedKey = GetDecryptedVoiceKey();
             if (!string.IsNullOrEmpty(decryptedKey))
