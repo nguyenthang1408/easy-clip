@@ -3970,7 +3970,7 @@ namespace ReviewMovie
                 }
                 else // User không muốn mở → gợi ý xóa
                 {
-                    var result = MsgBox.Show(LanguageManager.GetFormat(LangKeys.Main_ConfirmDeleteProject, selectPath), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.YesNo);
+                    var result = MsgBox.Show(LanguageManager.GetFormat(LangKeys.Main_ConfirmDeleteProject, selectPath), LanguageManager.Get(LangKeys.Common_Warning), MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (result == DialogResult.Yes)
                     {
                         _previousText = string.Empty;
