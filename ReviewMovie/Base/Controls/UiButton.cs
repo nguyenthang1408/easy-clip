@@ -22,7 +22,7 @@ namespace ReviewMovie.Base.Controls
         private Color _borderColor = Color.Transparent;
         private Color _borderHoverColor = Color.Transparent;
         private int _borderSize;
-        private int _borderRadius = 16;
+        private int _borderRadius = 12;
         private UiBorderStyle _borderStyle = UiBorderStyle.None;
 
         private Image _iconImage;
@@ -112,7 +112,7 @@ namespace ReviewMovie.Base.Controls
         }
 
         [Category("Appearance")]
-        [DefaultValue(16)]
+        [DefaultValue(12)]
         public int BorderRadius
         {
             get => _borderRadius;
