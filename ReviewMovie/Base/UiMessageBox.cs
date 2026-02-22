@@ -56,7 +56,6 @@ namespace ReviewMovie.Base
                     Height = 40,
                     BackColor = Color.FromArgb(246, 249, 255)
                 };
-                panelCard.Controls.Add(panelHeader);
 
                 var lblTitle = new Label
                 {
@@ -90,12 +89,13 @@ namespace ReviewMovie.Base
                     Dock = DockStyle.Fill,
                     ColumnCount = 1,
                     RowCount = 2,
-                    Padding = new Padding(14, 10, 14, 10),
+                    Padding = new Padding(14, 16, 14, 10),
                     BackColor = Color.White
                 };
                 bodyLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
                 bodyLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 46F));
                 panelCard.Controls.Add(bodyLayout);
+                panelCard.Controls.Add(panelHeader);
 
                 var contentLayout = new TableLayoutPanel
                 {
@@ -115,7 +115,7 @@ namespace ReviewMovie.Base
                     FillColor = ResolveIconBackColor(icon),
                     BorderThickness = 0,
                     CornerRadius = 15,
-                    Margin = new Padding(0, 8, 10, 0)
+                    Margin = new Padding(0, 12, 10, 0)
                 };
                 contentLayout.Controls.Add(iconCircle, 0, 0);
 
