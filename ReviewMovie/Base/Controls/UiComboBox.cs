@@ -14,7 +14,7 @@ namespace ReviewMovie.Base.Controls
         private bool _userCustomizedBorderColors;
         private int _borderRadius = 1;
         private bool _disableHoverEffects = true;
-        private bool _centerTextInItems = true;
+        private bool _centerTextInItems = false;
         private bool _focused;
         private Color _borderColor = ThemeManager.Current.Border;
         private Color _borderFocusColor = ThemeManager.Current.BorderFocus;
@@ -99,7 +99,7 @@ namespace ReviewMovie.Base.Controls
         }
 
         [Category("Layout")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool CenterTextInItems
         {
             get => _centerTextInItems;
@@ -188,7 +188,7 @@ namespace ReviewMovie.Base.Controls
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
             // Keep existing custom owner-draw behavior for project combobox.
-            if (!_centerTextInItems || string.Equals(Name, "cbProjectName", StringComparison.Ordinal))
+            if (string.Equals(Name, "cbProjectName", StringComparison.Ordinal))
             {
                 base.OnDrawItem(e);
                 return;
@@ -197,11 +197,10 @@ namespace ReviewMovie.Base.Controls
             if (e.Index < 0)
             {
                 e.DrawBackground();
-                var flagsCurrent = TextFormatFlags.HorizontalCenter |
-                                   TextFormatFlags.VerticalCenter |
-                                   TextFormatFlags.EndEllipsis;
+                var flagsCurrent = GetItemTextFlags();
+                var bounds = GetItemTextBounds(e.Bounds);
                 var currentFore = Enabled ? ForeColor : SystemColors.GrayText;
-                TextRenderer.DrawText(e.Graphics, Text ?? string.Empty, Font, e.Bounds, currentFore, flagsCurrent);
+                TextRenderer.DrawText(e.Graphics, Text ?? string.Empty, Font, bounds, currentFore, flagsCurrent);
                 e.DrawFocusRectangle();
                 return;
             }
@@ -215,12 +214,24 @@ namespace ReviewMovie.Base.Controls
             e.DrawBackground();
 
             var fore = Enabled ? ForeColor : SystemColors.GrayText;
-            var flags = TextFormatFlags.HorizontalCenter |
-                        TextFormatFlags.VerticalCenter |
-                        TextFormatFlags.EndEllipsis;
+            var flags = GetItemTextFlags();
+            var boundsItem = GetItemTextBounds(e.Bounds);
             string text = GetItemText(Items[e.Index]);
-            TextRenderer.DrawText(e.Graphics, text ?? string.Empty, Font, e.Bounds, fore, flags);
+            TextRenderer.DrawText(e.Graphics, text ?? string.Empty, Font, boundsItem, fore, flags);
             e.DrawFocusRectangle();
+        }
+
+        private TextFormatFlags GetItemTextFlags()
+        {
+            return (_centerTextInItems ? TextFormatFlags.HorizontalCenter : TextFormatFlags.Left)
+                   | TextFormatFlags.VerticalCenter
+                   | TextFormatFlags.EndEllipsis;
+        }
+
+        private Rectangle GetItemTextBounds(Rectangle bounds)
+        {
+            if (_centerTextInItems) return bounds;
+            return new Rectangle(bounds.X + 4, bounds.Y, Math.Max(0, bounds.Width - 6), bounds.Height);
         }
 
         private void DrawComboBorder()
