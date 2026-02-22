@@ -105,15 +105,13 @@ namespace EasyClip.View.DialogMessage
         {
             switch (icon)
             {
-                case MessageBoxIcon.Error:
+                case MessageBoxIcon.Error:     // = 16, same as Hand/Stop
                     return DialogMsg.MsgType.Error;
-                case MessageBoxIcon.Warning:
-                case MessageBoxIcon.Exclamation:
+                case MessageBoxIcon.Warning:   // = 48, same as Exclamation
                     return DialogMsg.MsgType.Warning;
-                case MessageBoxIcon.Question:
+                case MessageBoxIcon.Question:  // = 32
                     return DialogMsg.MsgType.Confirm;
-                case MessageBoxIcon.Information:
-                case MessageBoxIcon.Asterisk:
+                case MessageBoxIcon.Information: // = 64, same as Asterisk
                     return DialogMsg.MsgType.Info;
                 default:
                     return DialogMsg.MsgType.Info;
