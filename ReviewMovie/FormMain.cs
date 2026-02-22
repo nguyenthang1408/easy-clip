@@ -3039,7 +3039,6 @@ namespace ReviewMovie
                     Height = 40,
                     BackColor = Color.FromArgb(246, 249, 255)
                 };
-                panelCard.Controls.Add(panelHeader);
 
                 var lblTitle = new Label
                 {
@@ -3078,12 +3077,13 @@ namespace ReviewMovie
                     Dock = DockStyle.Fill,
                     ColumnCount = 1,
                     RowCount = 2,
-                    Padding = new Padding(14, 12, 14, 12),
+                    Padding = new Padding(14, 16, 14, 12),
                     BackColor = Color.White
                 };
                 bodyLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
                 bodyLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 42F));
                 panelCard.Controls.Add(bodyLayout);
+                panelCard.Controls.Add(panelHeader);
 
                 var lblMessage = new Label
                 {
