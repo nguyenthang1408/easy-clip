@@ -3251,6 +3251,9 @@ namespace ReviewMovie
                         {
                             dgvMainView.CurrentCell = dgvMainView.Rows[0].Cells[0];
                             dgvMainView.Rows[0].Selected = true;
+                            txtTextInput.ReadOnly = false;
+                            txtTextInput.Text = dgvMainView.Rows[0].Cells["Column_inputtext"].Value?.ToString();
+                            txtImPortMedia.Text = dgvMainView.Rows[0].Cells["Column_filemediapath"].Value?.ToString();
                         }
 
                         GenProjectData();
