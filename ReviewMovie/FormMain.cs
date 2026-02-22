@@ -1795,8 +1795,8 @@ namespace ReviewMovie
                 UpdateRowCallback = (idx, audiolink, audiostatus, inputtext) =>
                 {
                     FuncDataGridView.UpdateDataGridViewCell(dgvMainView, idx, "Column_audiolink", audiolink, Color.White);
-                    Color color = audiostatus == "Converted" ? Color.GreenYellow
-                                : audiostatus == "Converting..." ? Color.Yellow
+                    Color color = audiostatus == LanguageManager.Get(LangKeys.Svc_Converted) ? Color.GreenYellow
+                                : audiostatus == LanguageManager.Get(LangKeys.Svc_Converting) ? Color.Yellow
                                 : audiostatus == LanguageManager.Get(LangKeys.Main_Cancelled) ? Color.Red
                                 : Color.OrangeRed;
                     FuncDataGridView.UpdateDataGridViewCell(dgvMainView, idx, "Column_audiostatus", audiostatus, color);
@@ -1969,8 +1969,8 @@ namespace ReviewMovie
                     {
                         FuncDataGridView.UpdateDataGridViewCell(dgvMainView, idx, "Column_audiolink", audiolink, Color.White);
 
-                        Color color = audiostatus == "End Record" ? Color.GreenYellow
-                                    : audiostatus == "Start Recording ..." ? Color.Yellow
+                        Color color = audiostatus == LanguageManager.Get(LangKeys.Svc_EndRecord) ? Color.GreenYellow
+                                    : audiostatus == LanguageManager.Get(LangKeys.Svc_StartRecording) ? Color.Yellow
                                     : audiostatus == LanguageManager.Get(LangKeys.Main_Cancelled) ? Color.Red
                                     : Color.OrangeRed;
 
@@ -3158,7 +3158,7 @@ namespace ReviewMovie
                     catch
                     {
                         // File giả / FFmpeg lỗi => xử lý như Media Missing
-                        SetMediaError(info, index, "Media Error!");
+                        SetMediaError(info, index, LanguageManager.Get(LangKeys.Main_MediaError));
 
                         // Đồng bộ lại vào project giống luồng bình thường
                         _renderSyncService.UpdateProjectRenderList(_infoProject, _infoProject.InfoRenders, _allInfoRender);
@@ -3232,7 +3232,7 @@ namespace ReviewMovie
             else
             {
                 //MessageBox.Show("Nhập vào phải là Ảnh hoặc Video. ");
-                SetMediaError(info, index, "Media Missing!");
+                SetMediaError(info, index, LanguageManager.Get(LangKeys.Main_MediaMissing));
             }
 
             // Đồng bộ lại vào project
@@ -4556,8 +4556,8 @@ namespace ReviewMovie
             {
                 UIThreadHelper.ShowMessageBoxSafe(
                     this,
-                    "Một số tiến trình vẫn chưa kết thúc (có thể bị treo). Vui lòng kiểm tra lại!",
-                    "Cảnh báo",
+                    LanguageManager.Get(LangKeys.Main_TasksStillRunning),
+                    LanguageManager.Get(LangKeys.Common_Warning),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );

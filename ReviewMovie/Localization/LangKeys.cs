@@ -403,5 +403,18 @@ namespace ReviewMovie.Localization
         public const string Main_RenderPartFailed = "Main_RenderPartFailed";
         public const string Main_RenderSettingFail = "Main_RenderSettingFail";
         public const string Main_StartDownload = "Main_StartDownload";
+
+        // ========== Services - Audio Convert/Record Status ==========
+        public const string Svc_Converted = "Svc_Converted";
+        public const string Svc_Converting = "Svc_Converting";
+        public const string Svc_EndRecord = "Svc_EndRecord";
+        public const string Svc_StartRecording = "Svc_StartRecording";
+
+        // ========== FormMain - Media Errors ==========
+        public const string Main_MediaError = "Main_MediaError";
+        public const string Main_MediaMissing = "Main_MediaMissing";
+
+        // ========== FormMain - Cancel Tasks Warning ==========
+        public const string Main_TasksStillRunning = "Main_TasksStillRunning";
     }
 }

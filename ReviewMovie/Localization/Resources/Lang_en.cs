@@ -407,6 +407,19 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_RenderPartFailed, "Part {0} render failed!" },
             { LangKeys.Main_RenderSettingFail, "Setting Fail !" },
             { LangKeys.Main_StartDownload, "Downloading ..." },
+
+            // ========== Services - Audio Convert/Record Status ==========
+            { LangKeys.Svc_Converted, "Converted" },
+            { LangKeys.Svc_Converting, "Converting..." },
+            { LangKeys.Svc_EndRecord, "End Record" },
+            { LangKeys.Svc_StartRecording, "Start Recording ..." },
+
+            // ========== FormMain - Media Errors ==========
+            { LangKeys.Main_MediaError, "Media Error!" },
+            { LangKeys.Main_MediaMissing, "Media Missing!" },
+
+            // ========== FormMain - Cancel Tasks Warning ==========
+            { LangKeys.Main_TasksStillRunning, "Some processes have not finished (may be stuck). Please check again!" },
         };
     }
 }

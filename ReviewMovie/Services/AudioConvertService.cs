@@ -116,7 +116,7 @@ namespace EasyClip.Services
                 return;
             }
 
-            audioStatus = "Converting...";
+            audioStatus = LanguageManager.Get(LangKeys.Svc_Converting);
             context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
             context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_ConvertingRow, index), Color.Green);
 
@@ -205,7 +205,7 @@ namespace EasyClip.Services
 
                 if (!string.IsNullOrEmpty(requestID))
                 {
-                    audioStatus = "Converted";
+                    audioStatus = LanguageManager.Get(LangKeys.Svc_Converted);
                 }
                 else
                 {

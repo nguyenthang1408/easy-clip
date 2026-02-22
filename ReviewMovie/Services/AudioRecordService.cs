@@ -39,7 +39,7 @@ namespace EasyClip.Services
             _recordThread.Start();
 
             // Báo UI: bắt đầu record
-            context.UpdateRowCallback?.Invoke(context.RowIndex, "", "Start Recording ...");
+            context.UpdateRowCallback?.Invoke(context.RowIndex, "", LanguageManager.Get(LangKeys.Svc_StartRecording));
             context.SetStatusCallback?.Invoke(LanguageManager.Get(LangKeys.Svc_Recording), Color.Yellow);
         }
 
@@ -70,7 +70,7 @@ namespace EasyClip.Services
 
                 RecordAudio.EndRecord(fullpath);
                 _checkrecord = false;
-                status = "End Record";
+                status = LanguageManager.Get(LangKeys.Svc_EndRecord);
                 context.UpdateRowCallback?.Invoke(context.RowIndex, fullpath, status);
                 context.SetStatusCallback?.Invoke(LanguageManager.Get(LangKeys.Svc_RecordDone), Color.Green);
                 context.OnAfterRecord?.Invoke(context.RowIndex, fullpath, status);

@@ -407,6 +407,19 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_RenderPartFailed, "Phần {0} render lỗi!" },
             { LangKeys.Main_RenderSettingFail, "Lỗi Cấu Hình !" },
             { LangKeys.Main_StartDownload, "Đang Tải ..." },
+
+            // ========== Services - Audio Convert/Record Status ==========
+            { LangKeys.Svc_Converted, "Đã chuyển đổi" },
+            { LangKeys.Svc_Converting, "Đang chuyển đổi..." },
+            { LangKeys.Svc_EndRecord, "Kết thúc ghi" },
+            { LangKeys.Svc_StartRecording, "Đang ghi âm ..." },
+
+            // ========== FormMain - Media Errors ==========
+            { LangKeys.Main_MediaError, "Lỗi Media!" },
+            { LangKeys.Main_MediaMissing, "Thiếu Media!" },
+
+            // ========== FormMain - Cancel Tasks Warning ==========
+            { LangKeys.Main_TasksStillRunning, "Một số tiến trình vẫn chưa kết thúc (có thể bị treo). Vui lòng kiểm tra lại!" },
         };
     }
 }
