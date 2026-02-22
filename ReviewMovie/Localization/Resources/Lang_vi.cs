@@ -361,7 +361,10 @@ namespace ReviewMovie.Localization.Resources
             // ========== FormMain - API Errors ==========
             { LangKeys.Main_ElevenlabError, "ApiKey Elevenlab Lỗi !" },
             { LangKeys.Main_ElevenlabErrorTitle, "Lỗi Elevenlab" },
+            { LangKeys.Main_GoogleError, "ApiKey Google Lỗi !" },
+            { LangKeys.Main_GoogleErrorTitle, "Lỗi Google" },
             { LangKeys.Main_JsonDataError, "JsonData bị lỗi !" },
+            { LangKeys.Main_JsonDataErrorTitle, "Lỗi JsonData" },
             { LangKeys.Main_ConnectionTimeout, "Kết nối bị timeout. Vui lòng kiểm tra mạng và thử lại." },
             { LangKeys.Main_SaveKeySuccess, "Lưu Key Thành Công!" },
 
