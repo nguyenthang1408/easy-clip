@@ -23,6 +23,7 @@ namespace EasyClip.View.DialogMessage
 
         public void ApplyLanguage()
         {
+            lblTitle.Text = LanguageManager.Get(LangKeys.Svc_Processing);
             lblStatus.Text = LanguageManager.Get(LangKeys.Loading_Cancelling);
             btnCancel.Text = LanguageManager.Get(LangKeys.Common_Cancel);
         }
