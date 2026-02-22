@@ -2195,7 +2195,7 @@ namespace ReviewMovie
                         token = vbeeToken,
                         requestID = audioLink
                     };
-                    var output = await api.GetLinkaudioAsync(input);
+                    var output = await api.GetLinkaudioAsync(input, token);
                     token.ThrowIfCancellationRequested();
                     downloadAddress = output?.result?.audio_link;
                     if (downloadAddress == null) errorMessage = LanguageManager.Get(LangKeys.Main_CannotDownloadAudio);

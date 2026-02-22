@@ -21,14 +21,15 @@ namespace Lib.VoiceServices.ElevenLabs
             };
         }
 
-        public async Task<HttpResponseMessage> GetAsync(string url, string apiKey)
+        public async Task<HttpResponseMessage> GetAsync(string url, string apiKey, CancellationToken cancellationToken = default)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Add("xi-api-key", apiKey);
-                HttpResponseMessage response = await _httpClient.GetAsync(url);
+                HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
                 return response;
             }
+            catch (OperationCanceledException) { throw; }
             catch
             {
                 return null;

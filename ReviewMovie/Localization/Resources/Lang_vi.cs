@@ -423,6 +423,7 @@ namespace ReviewMovie.Localization.Resources
 
             // ========== Services - Cancel Cell Status ==========
             { LangKeys.Svc_ConvertCancelledCell, "Đã huỷ Convert" },
+            { LangKeys.Svc_DownloadCancelledCell, "Đã huỷ Download" },
         };
     }
 }

@@ -186,11 +186,11 @@ namespace Lib
             return output?.result?.request_id ?? string.Empty;
         }
 
-        public async Task<GetaudioModelOutput> GetLinkaudioAsync(GetaudioModelInput input)
+        public async Task<GetaudioModelOutput> GetLinkaudioAsync(GetaudioModelInput input, CancellationToken cancellationToken = default)
         {
-            if (input == null 
-                || string.IsNullOrWhiteSpace(input.linksite) 
-                || string.IsNullOrWhiteSpace(input.token) 
+            if (input == null
+                || string.IsNullOrWhiteSpace(input.linksite)
+                || string.IsNullOrWhiteSpace(input.token)
                 || string.IsNullOrWhiteSpace(input.requestID))
                 return null;
 
@@ -202,7 +202,7 @@ namespace Lib
                         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", input.token);
 
                     string requestUrl = $"{input.linksite}/{input.requestID}";
-                    var response = await client.GetAsync(requestUrl);
+                    var response = await client.GetAsync(requestUrl, cancellationToken);
 
                     if (!response.IsSuccessStatusCode)
                         return null;
@@ -213,6 +213,7 @@ namespace Lib
                     return output;
                 }
             }
+            catch (OperationCanceledException) { throw; }
             catch
             {
                 return null;

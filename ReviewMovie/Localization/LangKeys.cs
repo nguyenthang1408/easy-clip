@@ -419,5 +419,6 @@ namespace ReviewMovie.Localization
 
         // ========== Services - Cancel Cell Status ==========
         public const string Svc_ConvertCancelledCell = "Svc_ConvertCancelledCell";
+        public const string Svc_DownloadCancelledCell = "Svc_DownloadCancelledCell";
     }
 }
