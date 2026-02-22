@@ -1131,7 +1131,7 @@ namespace ReviewMovie
             this.Column_check.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Column_check.ToolTipText = "Check";
             this.Column_check.TrueValue = "1";
-            this.Column_check.Width = 45;
+            this.Column_check.Width = 58;
             // 
             // Column_id
             // 
@@ -1151,7 +1151,7 @@ namespace ReviewMovie
             this.Column_index.HeaderText = "No.";
             this.Column_index.Name = "Column_index";
             this.Column_index.ReadOnly = true;
-            this.Column_index.Width = 40;
+            this.Column_index.Width = 46;
             // 
             // Column_textlength
             // 
@@ -1161,7 +1161,7 @@ namespace ReviewMovie
             this.Column_textlength.HeaderText = "Length";
             this.Column_textlength.Name = "Column_textlength";
             this.Column_textlength.ReadOnly = true;
-            this.Column_textlength.Width = 55;
+            this.Column_textlength.Width = 72;
             // 
             // Column_audiolink
             // 

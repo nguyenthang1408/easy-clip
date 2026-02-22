@@ -97,7 +97,7 @@ namespace ReviewMovie.Base.Controls
             ColumnHeadersDefaultCellStyle.ForeColor = _headerForeColor;
             ColumnHeadersDefaultCellStyle.Font = _headerFont;
             ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            ColumnHeadersDefaultCellStyle.Padding = new Padding(0, 0, 18, 0);
+            ColumnHeadersDefaultCellStyle.Padding = new Padding(4, 0, 6, 0);
             ColumnHeadersHeight = _headerHeight;
 
             RowTemplate.Height = _rowHeight;
