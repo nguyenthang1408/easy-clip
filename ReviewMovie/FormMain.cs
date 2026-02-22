@@ -3961,18 +3961,8 @@ namespace ReviewMovie
                     var voiceSources = GetVoiceSourcesByPackageType();
                     int selectedIndex = 0;
 
-                    // Nếu là Premium, luôn chọn T2PSOFT
-                    if (_currentPackageType == PackageType.Premium)
+                    if (!string.IsNullOrEmpty(voiceSite))
                     {
-                        int t2psoftIndex = voiceSources.FindIndex(x => x.Value == ListVoiceSite.T2Psoft);
-                        if (t2psoftIndex >= 0)
-                        {
-                            selectedIndex = t2psoftIndex;
-                        }
-                    }
-                    else if (!string.IsNullOrEmpty(voiceSite))
-                    {
-                        // Nếu không phải Premium, restore lại voice source đã lưu
                         int savedIndex = voiceSources.FindIndex(x =>
                             string.Equals(x.Value, voiceSite, StringComparison.OrdinalIgnoreCase));
                         if (savedIndex >= 0)
