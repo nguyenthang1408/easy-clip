@@ -357,6 +357,11 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_SubtitleCancelled, "Đã huỷ tải phụ đề." },
             { LangKeys.Main_ThreadError, "Lỗi luồng hoạt động." },
             { LangKeys.Main_SelectMediaFolderTitle, "Chọn thư mục media" },
+            { LangKeys.Main_ExportSubtitleTitle, "Lưu File Subtitle" },
+            { LangKeys.Main_ExportSubtitleNoData, "Không có dữ liệu subtitle để xuất!" },
+            { LangKeys.Main_ExportSubtitleNoOriginal, "Chưa import subtitle. Vui lòng import subtitle trước khi xuất!" },
+            { LangKeys.Main_ExportSubtitleSuccess, "Xuất subtitle thành công!" },
+            { LangKeys.Main_ExportSubtitleError, "Lỗi khi xuất subtitle!" },
 
             // ========== FormMain - API Errors ==========
             { LangKeys.Main_ElevenlabError, "ApiKey Elevenlab Lỗi !" },

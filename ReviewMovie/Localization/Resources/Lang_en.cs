@@ -357,6 +357,11 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_SubtitleCancelled, "Subtitle loading cancelled." },
             { LangKeys.Main_ThreadError, "Thread operation error." },
             { LangKeys.Main_SelectMediaFolderTitle, "Select media folder" },
+            { LangKeys.Main_ExportSubtitleTitle, "Save Subtitle File" },
+            { LangKeys.Main_ExportSubtitleNoData, "No subtitle data to export!" },
+            { LangKeys.Main_ExportSubtitleNoOriginal, "No subtitle imported. Please import a subtitle before exporting!" },
+            { LangKeys.Main_ExportSubtitleSuccess, "Subtitle exported successfully!" },
+            { LangKeys.Main_ExportSubtitleError, "Error exporting subtitle!" },
 
             // ========== FormMain - API Errors ==========
             { LangKeys.Main_ElevenlabError, "ApiKey Elevenlab Error!" },

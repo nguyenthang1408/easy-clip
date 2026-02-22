@@ -353,6 +353,11 @@ namespace ReviewMovie.Localization
         public const string Main_SubtitleCancelled = "Main_SubtitleCancelled";
         public const string Main_ThreadError = "Main_ThreadError";
         public const string Main_SelectMediaFolderTitle = "Main_SelectMediaFolderTitle";
+        public const string Main_ExportSubtitleTitle = "Main_ExportSubtitleTitle";
+        public const string Main_ExportSubtitleNoData = "Main_ExportSubtitleNoData";
+        public const string Main_ExportSubtitleNoOriginal = "Main_ExportSubtitleNoOriginal";
+        public const string Main_ExportSubtitleSuccess = "Main_ExportSubtitleSuccess";
+        public const string Main_ExportSubtitleError = "Main_ExportSubtitleError";
 
         // ========== FormMain - API Errors ==========
         public const string Main_ElevenlabError = "Main_ElevenlabError";
