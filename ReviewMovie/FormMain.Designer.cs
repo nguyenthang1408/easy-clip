@@ -1823,7 +1823,7 @@ namespace ReviewMovie
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1294, 736);
+            this.ClientSize = new System.Drawing.Size(1294, 782);
             this.Controls.Add(this.scMain);
             this.Controls.Add(this.pnlHeaderTitle);
             this.DoubleBuffered = true;
