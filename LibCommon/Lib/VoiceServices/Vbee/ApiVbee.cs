@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http;
@@ -134,7 +135,7 @@ namespace Lib
         }
         // End check
 
-        public async Task<TextToSpeechModelOutput> PostTextToSpeechAsync(TextToSpeechModelInput input)
+        public async Task<TextToSpeechModelOutput> PostTextToSpeechAsync(TextToSpeechModelInput input, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -155,20 +156,21 @@ namespace Lib
                         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", input.token);
 
                     var content = new StringContent(postData, Encoding.UTF8, "application/json");
-                    var response = await client.PostAsync(input.linksite, content);
+                    var response = await client.PostAsync(input.linksite, content, cancellationToken);
                     var responseString = await response.Content.ReadAsStringAsync();
 
                     var output = JsonConvert.DeserializeObject<TextToSpeechModelOutput>(responseString);
                     return output;
                 }
             }
+            catch (OperationCanceledException) { throw; }
             catch
             {
                 return null;
             }
         }
 
-        public async Task<string> ConvertText2SpeechAsync(string iAppID, string iToken, string ivoidcode, string iSpeedrate, string inputtext)
+        public async Task<string> ConvertText2SpeechAsync(string iAppID, string iToken, string ivoidcode, string iSpeedrate, string inputtext, CancellationToken cancellationToken = default)
         {
             var input = new TextToSpeechModelInput
             {
@@ -180,7 +182,7 @@ namespace Lib
                 inputText = inputtext
             };
 
-            var output = await PostTextToSpeechAsync(input);
+            var output = await PostTextToSpeechAsync(input, cancellationToken);
             return output?.result?.request_id ?? string.Empty;
         }
 

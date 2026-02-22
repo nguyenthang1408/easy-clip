@@ -122,6 +122,8 @@ namespace EasyClip.Services
 
             try
             {
+                token.ThrowIfCancellationRequested();
+
                 // Gọi usage API trước khi convert (chỉ khi dùng T2Psoft)
                 if (context.IsT2Psoft && context.ApiRequest != null)
                 {
@@ -132,8 +134,10 @@ namespace EasyClip.Services
                             context.AppCode,
                             context.ProductSlug,
                             inputText,
-                            LibConst.TtsSourceApp);
+                            LibConst.TtsSourceApp,
+                            token);
                     }
+                    catch (OperationCanceledException) { throw; }
                     catch (Exception ex)
                     {
                         audioStatus = LanguageManager.Get(LangKeys.Svc_ServerConnectionError);
@@ -163,11 +167,13 @@ namespace EasyClip.Services
                     context.OnTtsUsageUpdated?.Invoke(apiResponse.Data);
                 }
 
+                token.ThrowIfCancellationRequested();
+
                 switch (context.ManualSelected)
                 {
                     case ManualSelect.FptAI:
                         requestID = await new ApiFptAI().FptAIConvertText2SpeechAsync(
-                            context.AppID, context.VoiceCode, context.SpeechRatio.ToString("0.0"), inputText.Replace("\"", " "));
+                            context.AppID, context.VoiceCode, context.SpeechRatio.ToString("0.0"), inputText.Replace("\"", " "), token);
                         break;
 
                     case ManualSelect.Elevenlab:
@@ -179,14 +185,14 @@ namespace EasyClip.Services
                             VoiceSettings = context.VoiceSetting // class đúng ElevenLabs
                         };
                         var convertResponse = await elevenLabRequest.SendTextToSpeechRequestAsync(
-                            context.VoiceCode, text2speechRequest, OutputFormat.MP3_44100_32);
+                            context.VoiceCode, text2speechRequest, OutputFormat.MP3_44100_32, true, token);
                         requestID = convertResponse?.HistoryItemId ?? string.Empty;
                         break;
 
                     case ManualSelect.Vbee:
                         requestID = await new ApiVbee().ConvertText2SpeechAsync(
                             context.AppID, context.Token, context.VoiceCode,
-                            context.SpeechRatio.ToString("0.0"), inputText.Replace("\"", " "));
+                            context.SpeechRatio.ToString("0.0"), inputText.Replace("\"", " "), token);
                         break;
 
                     case ManualSelect.Google:
@@ -194,7 +200,7 @@ namespace EasyClip.Services
                         var client = new APIGoogleTTS();
                         var result = client.ConvertTextToSpeech(
                             context.AppID, inputText.Replace("\"", " "),
-                            context.VoiceCode, fullpath);
+                            context.VoiceCode, fullpath, token);
                         if (result.IsSuccess)
                             requestID = fullpath;
                         break;

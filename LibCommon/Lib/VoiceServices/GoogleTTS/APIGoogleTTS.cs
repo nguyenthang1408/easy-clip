@@ -8,6 +8,7 @@ using LibCommon.Lib.Localization;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Lib.VoiceServices.GoogleTTS
@@ -76,7 +77,7 @@ namespace Lib.VoiceServices.GoogleTTS
             }
         }
 
-        public ConversionResult ConvertTextToSpeech(string jsonData, string textInput, string voiceCode, string savePath)
+        public ConversionResult ConvertTextToSpeech(string jsonData, string textInput, string voiceCode, string savePath, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -85,6 +86,8 @@ namespace Lib.VoiceServices.GoogleTTS
                 if (string.IsNullOrEmpty(textInput)) return new ConversionResult(false, LibLocalizer.Get("Lib_TextInputEmpty"));
                 if (string.IsNullOrEmpty(voiceCode)) return new ConversionResult(false, LibLocalizer.Get("Lib_VoiceCodeEmpty"));
                 if (string.IsNullOrEmpty(savePath)) return new ConversionResult(false, LibLocalizer.Get("Lib_SavePathEmpty"));
+
+                cancellationToken.ThrowIfCancellationRequested();
 
                 // Thiết lập Google Text-to-Speech client
                 var client = textToSpeechClient(jsonData);
@@ -106,8 +109,9 @@ namespace Lib.VoiceServices.GoogleTTS
                     AudioEncoding = AudioEncoding.Mp3
                 };
 
-                // Gửi yêu cầu đến API và nhận phản hồi (timeout 7s)
-                var response = client.SynthesizeSpeech(synthesisInput, voiceParams, audioConfig, _callSettings);
+                // Gửi yêu cầu đến API và nhận phản hồi (timeout 7s) - truyền cancellationToken qua CallSettings
+                var callSettingsWithCancel = _callSettings.WithCancellationToken(cancellationToken);
+                var response = client.SynthesizeSpeech(synthesisInput, voiceParams, audioConfig, callSettingsWithCancel);
 
                 // Kiểm tra dữ liệu âm thanh trả về
                 if (response.AudioContent == null || response.AudioContent.Length == 0)
