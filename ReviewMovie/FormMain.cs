@@ -2848,6 +2848,10 @@ namespace ReviewMovie
                 };
 
                 bool result = CFuncion.RunFFmpeg(Funcion.selectffmpegversion() + "\\ffmpeg.exe", argRender, token, progressCallback);
+
+                // Kiểm tra cancel sau khi RunFFmpeg trả về (RunFFmpeg trả false khi cancel)
+                token.ThrowIfCancellationRequested();
+
                 message = result ? LanguageManager.Get(LangKeys.Main_RenderDone) : LanguageManager.Get(LangKeys.Main_RenderFail);
                 Color color = result ? Color.GreenYellow : Color.Red;
 
