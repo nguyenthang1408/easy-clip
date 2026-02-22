@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using ReviewMovie.Base;
 using ReviewMovie.Base.Controls;
+using MessageBox = ReviewMovie.Base.UiMessageBox;
 
 namespace ReviewMovie
 {

@@ -164,6 +164,7 @@
     <Compile Include="Base\TextProcessUtil.cs" />
     <Compile Include="Base\UiBorder.cs" />
     <Compile Include="Base\UiHelpers.cs" />
+    <Compile Include="Base\UiMessageBox.cs" />
     <Compile Include="Base\UiTheme.cs" />
     <Compile Include="Base\UIThreadHelper.cs" />
     <Compile Include="Base\VideoMergeConfig.cs" />

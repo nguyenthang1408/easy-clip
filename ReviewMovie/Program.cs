@@ -1,7 +1,8 @@
-﻿using EasyClip;
+using EasyClip;
 using System;
 using System.Threading;
 using System.Windows.Forms;
+using MessageBox = ReviewMovie.Base.UiMessageBox;
 
 namespace ReviewMovie
 {

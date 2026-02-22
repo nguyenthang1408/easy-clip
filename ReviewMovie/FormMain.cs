@@ -36,6 +36,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MessageBox = ReviewMovie.Base.UiMessageBox;
 
 namespace ReviewMovie
 {
@@ -3148,8 +3149,8 @@ namespace ReviewMovie
                 popup.Shown += (s, e) =>
                 {
                     UiHelpers.ApplyRoundRegion(panelCard, 10);
-                    UiHelpers.ApplyRoundRegion(btnYes, 8);
-                    UiHelpers.ApplyRoundRegion(btnNo, 8);
+                    UiHelpers.ApplyRoundRegion(btnYes, 1);
+                    UiHelpers.ApplyRoundRegion(btnNo, 1);
                 };
                 popup.Resize += (s, e) =>
                 {
