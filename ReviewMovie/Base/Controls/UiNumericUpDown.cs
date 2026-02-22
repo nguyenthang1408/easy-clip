@@ -153,6 +153,12 @@ namespace ReviewMovie.Base.Controls
             }
 
             int textY = y + Math.Max(0, (innerH - textHeight) / 2);
+            // Small visual nudge so numeric glyphs are centered vertically.
+            if (_centerContent)
+            {
+                int maxTextY = Math.Max(0, Height - textHeight);
+                textY = Math.Min(maxTextY, textY + 1);
+            }
 
             int buttonWidth = Math.Max(22, innerH / 2);
             buttonWidth = Math.Min(buttonWidth, Math.Max(22, innerW / 2));
@@ -386,11 +392,6 @@ namespace ReviewMovie.Base.Controls
                     {
                         e.Graphics.FillRectangle(hb, bottomRect);
                     }
-                }
-
-                using (var pen = new Pen(ControlPaint.Dark(ButtonColor, 0.1f), 1f))
-                {
-                    e.Graphics.DrawLine(pen, 0, bottomRect.Top, Width, bottomRect.Top);
                 }
 
                 int triW = Math.Max(6, Math.Min(Width, Height / 2) / 3);
