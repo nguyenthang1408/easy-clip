@@ -356,6 +356,7 @@ namespace ReviewMovie.Localization
 
         // ========== FormMain - API Errors ==========
         public const string Main_ElevenlabError = "Main_ElevenlabError";
+        public const string Main_ElevenlabErrorTitle = "Main_ElevenlabErrorTitle";
         public const string Main_JsonDataError = "Main_JsonDataError";
         public const string Main_ConnectionTimeout = "Main_ConnectionTimeout";
         public const string Main_SaveKeySuccess = "Main_SaveKeySuccess";

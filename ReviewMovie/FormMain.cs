@@ -893,6 +893,8 @@ namespace ReviewMovie
                     cbLanguageSelect.DataSource = null;
                     cbLanguageSelect.SelectedIndex = -1;
                     cbLanguageSelect.SelectedIndexChanged += cbLanguageSelect_SelectedIndexChanged;
+                    _loadingService.Close();
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_ElevenlabError), LanguageManager.Get(LangKeys.Main_ElevenlabErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
