@@ -134,9 +134,6 @@ namespace ReviewMovie
                         }
                         // Nếu người dùng chọn No thì tiếp tục cho phép đăng nhập
                     }
-                    // Đăng nhập thành công
-                    MessageBox.Show(LanguageManager.Get(LangKeys.Login_Success), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                     // Mở form chính và đóng form đăng nhập, truyền response để tránh gọi API lần 2
                     this.Hide();
                     FormMain mainForm = new FormMain(appCode, appSlugID, txInsertApiKey.Text, response);
