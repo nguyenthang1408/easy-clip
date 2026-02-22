@@ -87,11 +87,27 @@ namespace ReviewMovie.Base.Controls
         {
             BackgroundColor = _gridBackColor;
             GridColor = _gridLineColor;
+
+            // Keep selection colors consistent across normal/alternating rows.
+            var selectionBack = DefaultCellStyle.SelectionBackColor.IsEmpty
+                ? ThemeManager.Current.SelectionBackColor
+                : DefaultCellStyle.SelectionBackColor;
+            var selectionFore = DefaultCellStyle.SelectionForeColor.IsEmpty
+                ? ThemeManager.Current.SelectionForeColor
+                : DefaultCellStyle.SelectionForeColor;
+
             DefaultCellStyle.BackColor = _cellBackColor;
             DefaultCellStyle.ForeColor = _cellForeColor;
             DefaultCellStyle.Font = _cellFont;
-            DefaultCellStyle.SelectionBackColor = ThemeManager.Current.SelectionBackColor;
-            DefaultCellStyle.SelectionForeColor = ThemeManager.Current.SelectionForeColor;
+            DefaultCellStyle.SelectionBackColor = selectionBack;
+            DefaultCellStyle.SelectionForeColor = selectionFore;
+
+            RowsDefaultCellStyle.SelectionBackColor = selectionBack;
+            RowsDefaultCellStyle.SelectionForeColor = selectionFore;
+            AlternatingRowsDefaultCellStyle.SelectionBackColor = selectionBack;
+            AlternatingRowsDefaultCellStyle.SelectionForeColor = selectionFore;
+            RowTemplate.DefaultCellStyle.SelectionBackColor = selectionBack;
+            RowTemplate.DefaultCellStyle.SelectionForeColor = selectionFore;
 
             ColumnHeadersDefaultCellStyle.BackColor = _headerBackColor;
             ColumnHeadersDefaultCellStyle.ForeColor = _headerForeColor;
