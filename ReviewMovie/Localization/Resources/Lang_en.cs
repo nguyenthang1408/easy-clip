@@ -394,6 +394,19 @@ namespace ReviewMovie.Localization.Resources
             // ========== FormMain - Loading Popup ==========
             { LangKeys.Main_CancellingProcesses, "Cancelling processes!" },
             { LangKeys.Main_LoadingVoice, "Loading Voice..." },
+
+            // ========== FormMain - Render Video Status ==========
+            { LangKeys.Main_RenderInputError, "Input Error" },
+            { LangKeys.Main_RenderVideoMissing, "Video Missing" },
+            { LangKeys.Main_RenderAudioMissing, "Audio Missing" },
+            { LangKeys.Main_RenderServerError, "Server Error !" },
+            { LangKeys.Main_RenderProgress, "Render part {0} - Speed: {1}" },
+            { LangKeys.Main_RenderDone, "Done" },
+            { LangKeys.Main_RenderFail, "Fail" },
+            { LangKeys.Main_RenderPartCompleted, "Part {0} render completed!" },
+            { LangKeys.Main_RenderPartFailed, "Part {0} render failed!" },
+            { LangKeys.Main_RenderSettingFail, "Setting Fail !" },
+            { LangKeys.Main_StartDownload, "Downloading ..." },
         };
     }
 }

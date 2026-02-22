@@ -2151,7 +2151,7 @@ namespace ReviewMovie
             int rowCount = dgvMainView.RowCount;
             ManualSelect provider = _manualSelected;
 
-            FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", "Start Download ...", Color.Yellow);
+            FuncDataGridView.UpdateDataGridViewCell(dgvMainView, index, "Column_audiostatus", LanguageManager.Get(LangKeys.Main_StartDownload), Color.Yellow);
             UIThreadHelper.SetLabelText(lblstatus, LanguageManager.GetFormat(LangKeys.Main_DownloadingPart, index, rowCount), Color.Green);
 
             token.ThrowIfCancellationRequested();
@@ -2608,20 +2608,20 @@ namespace ReviewMovie
 
                 if (input == null)
                 {
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, -1, "Column_renderstatus", "Input Error", Color.Red);
+                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, -1, "Column_renderstatus", LanguageManager.Get(LangKeys.Main_RenderInputError), Color.Red);
                     return;
                 }
 
                 if (!File.Exists(input.MediaFile))
                 {
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", "Video Missing", Color.Red);
+                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", LanguageManager.Get(LangKeys.Main_RenderVideoMissing), Color.Red);
                     return;
                 }
 
                 var mtime = _allInfoRender?.Find(c => c.NoID == input.Index);
                 if ((mtime == null || mtime.Audiotime == null) && !input.Muted)
                 {
-                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", "Audio Missing", Color.Red);
+                    FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", LanguageManager.Get(LangKeys.Main_RenderAudioMissing), Color.Red);
                     return;
                 }
 
@@ -2752,7 +2752,7 @@ namespace ReviewMovie
                     }
                     else
                     {
-                        message = !string.IsNullOrEmpty(response.Message) ? response.Message : "Server Error !";
+                        message = !string.IsNullOrEmpty(response.Message) ? response.Message : LanguageManager.Get(LangKeys.Main_RenderServerError);
                         UIThreadHelper.SetLabelText(lblstatus, message, Color.Red);
                         FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", message, Color.Red);
                         return;
@@ -2760,7 +2760,7 @@ namespace ReviewMovie
                 }
                 catch (Exception ex)
                 {
-                    message = !string.IsNullOrEmpty(ex.Message) ? ex.Message : "Server Error !";
+                    message = !string.IsNullOrEmpty(ex.Message) ? ex.Message : LanguageManager.Get(LangKeys.Main_RenderServerError);
                     UIThreadHelper.SetLabelText(lblstatus, message, Color.Red);
                     FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", message, Color.Red);
                     return;
@@ -2814,19 +2814,19 @@ namespace ReviewMovie
                 {
                     try
                     {
-                        UIThreadHelper.SetLabelText(lblstatus, $"Render part {input.Index + 1} - Speed: {speed}", Color.Blue);
+                        UIThreadHelper.SetLabelText(lblstatus, LanguageManager.GetFormat(LangKeys.Main_RenderProgress, input.Index + 1, speed), Color.Blue);
                     }
                     catch { }
                 };
 
                 bool result = CFuncion.RunFFmpeg(Funcion.selectffmpegversion() + "\\ffmpeg.exe", argRender, token, progressCallback);
-                message = result ? "Done" : "Fail";
+                message = result ? LanguageManager.Get(LangKeys.Main_RenderDone) : LanguageManager.Get(LangKeys.Main_RenderFail);
                 Color color = result ? Color.GreenYellow : Color.Red;
 
                 if (result)
-                    UIThreadHelper.SetLabelText(lblstatus, $"Part {input.Index + 1} render completed!", Color.DarkGreen);
+                    UIThreadHelper.SetLabelText(lblstatus, LanguageManager.GetFormat(LangKeys.Main_RenderPartCompleted, input.Index + 1), Color.DarkGreen);
                 else
-                    UIThreadHelper.SetLabelText(lblstatus, $"Part {input.Index + 1} render failed!", Color.Red);
+                    UIThreadHelper.SetLabelText(lblstatus, LanguageManager.GetFormat(LangKeys.Main_RenderPartFailed, input.Index + 1), Color.Red);
 
                 FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", message, color);
             }
@@ -2836,7 +2836,7 @@ namespace ReviewMovie
             }
             catch
             {
-                message = "Setting Fail !";
+                message = LanguageManager.Get(LangKeys.Main_RenderSettingFail);
                 FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", message, Color.Red);
             }
         }

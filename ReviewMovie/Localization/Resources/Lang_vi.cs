@@ -394,6 +394,19 @@ namespace ReviewMovie.Localization.Resources
             // ========== FormMain - Loading Popup ==========
             { LangKeys.Main_CancellingProcesses, "Đang huỷ tiến trình!" },
             { LangKeys.Main_LoadingVoice, "Đang tải Voice..." },
+
+            // ========== FormMain - Render Video Status ==========
+            { LangKeys.Main_RenderInputError, "Lỗi đầu vào" },
+            { LangKeys.Main_RenderVideoMissing, "Thiếu Video" },
+            { LangKeys.Main_RenderAudioMissing, "Thiếu Audio" },
+            { LangKeys.Main_RenderServerError, "Lỗi Server !" },
+            { LangKeys.Main_RenderProgress, "Render phần {0} - Tốc độ: {1}" },
+            { LangKeys.Main_RenderDone, "Xong" },
+            { LangKeys.Main_RenderFail, "Lỗi" },
+            { LangKeys.Main_RenderPartCompleted, "Phần {0} render xong!" },
+            { LangKeys.Main_RenderPartFailed, "Phần {0} render lỗi!" },
+            { LangKeys.Main_RenderSettingFail, "Lỗi Cấu Hình !" },
+            { LangKeys.Main_StartDownload, "Đang Tải ..." },
         };
     }
 }

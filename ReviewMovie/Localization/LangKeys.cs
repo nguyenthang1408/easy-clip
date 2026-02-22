@@ -390,5 +390,18 @@ namespace ReviewMovie.Localization
         // ========== FormMain - Loading Popup ==========
         public const string Main_CancellingProcesses = "Main_CancellingProcesses";
         public const string Main_LoadingVoice = "Main_LoadingVoice";
+
+        // ========== FormMain - Render Video Status ==========
+        public const string Main_RenderInputError = "Main_RenderInputError";
+        public const string Main_RenderVideoMissing = "Main_RenderVideoMissing";
+        public const string Main_RenderAudioMissing = "Main_RenderAudioMissing";
+        public const string Main_RenderServerError = "Main_RenderServerError";
+        public const string Main_RenderProgress = "Main_RenderProgress";
+        public const string Main_RenderDone = "Main_RenderDone";
+        public const string Main_RenderFail = "Main_RenderFail";
+        public const string Main_RenderPartCompleted = "Main_RenderPartCompleted";
+        public const string Main_RenderPartFailed = "Main_RenderPartFailed";
+        public const string Main_RenderSettingFail = "Main_RenderSettingFail";
+        public const string Main_StartDownload = "Main_StartDownload";
     }
 }
