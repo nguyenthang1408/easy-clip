@@ -1317,11 +1317,20 @@ namespace ReviewMovie
             var valEffectSettup = info.EffectSettup;  // Chuyển vào phần chọn Project list
             if (valEffectSettup != null && valEffectSettup.Active)
             {
-                // load % ZoomUp 
-                ComboBoxFuncion.CbBlinding(cbZoomRatio
-                             , ComboboxZoomRatio.ZoomRatioTemplate().ToList()
-                             , ComboboxZoomRatio.ZoomRatioTemplate()
-                                                .FindIndex(x => x.Display.Equals(stdefault ? ZoomRatiotName.ZoomRatio10_Des : valEffectSettup.SzoomRatio)));
+                // load % ZoomUp
+                var zoomRatioList = ComboboxZoomRatio.ZoomRatioTemplate().ToList();
+                int zoomRatioDefaultIdx = Math.Max(zoomRatioList.FindIndex(x => x.Value.Equals(ZoomRatiotName.ZoomRatio10_Val)), 0);
+                int zoomRatioIdx = zoomRatioDefaultIdx;
+                if (!stdefault)
+                {
+                    // Try match by Value first (new format), then by Display (old format)
+                    zoomRatioIdx = zoomRatioList.FindIndex(x => x.Value.Equals(valEffectSettup.SzoomRatio));
+                    if (zoomRatioIdx < 0)
+                        zoomRatioIdx = zoomRatioList.FindIndex(x => x.Display.Equals(valEffectSettup.SzoomRatio));
+                    if (zoomRatioIdx < 0)
+                        zoomRatioIdx = zoomRatioDefaultIdx;
+                }
+                ComboBoxFuncion.CbBlinding(cbZoomRatio, zoomRatioList, zoomRatioIdx);
 
                 // load % ZQuality
                 var zoomQualityList = ComboboxZoomQuality.ZoomQualityTemplate();
@@ -1354,9 +1363,19 @@ namespace ReviewMovie
                                 : modeTypeTemplate.FindIndex(x => x.Display.Equals(valEffectSettup.Smode)));
 
                 // load Hiệu ứng
-                ComboBoxFuncion.CbBlinding(cbEffectType
-                                , ComboboxEffectType.EffectTypeTemplate().ToList()
-                                , ComboboxEffectType.EffectTypeTemplate().FindIndex(x => x.Display.Equals(stdefault ? EffectName.EffectRandom_Des : valEffectSettup.SeffectType)));
+                var effectTypeList = ComboboxEffectType.EffectTypeTemplate().ToList();
+                int effectTypeDefaultIdx = Math.Max(effectTypeList.FindIndex(x => x.Value.Equals(EffectName.EffectRandom_Val)), 0);
+                int effectTypeIdx = effectTypeDefaultIdx;
+                if (!stdefault)
+                {
+                    // Try match by Value first (new format), then by Display (old format)
+                    effectTypeIdx = effectTypeList.FindIndex(x => x.Value.Equals(valEffectSettup.SeffectType));
+                    if (effectTypeIdx < 0)
+                        effectTypeIdx = effectTypeList.FindIndex(x => x.Display.Equals(valEffectSettup.SeffectType));
+                    if (effectTypeIdx < 0)
+                        effectTypeIdx = effectTypeDefaultIdx;
+                }
+                ComboBoxFuncion.CbBlinding(cbEffectType, effectTypeList, effectTypeIdx);
 
                 nFPS.Value = stdefault ? 30 : valEffectSettup.Sfps;
                 nbThread.Value = stdefault ? 2 : valEffectSettup.Sthread;
@@ -1714,14 +1733,14 @@ namespace ReviewMovie
             _infoProject.EffectSettup = new EffectSetting
             {
                 Active = true,
-                SzoomRatio = cbZoomRatio?.Text ?? string.Empty,
+                SzoomRatio = cbZoomRatio?.SelectedValue?.ToString() ?? string.Empty,
                 SzoomQuality = cbZoomQuality?.SelectedValue?.ToString() ?? string.Empty,
                 Sfps = (int)nFPS.Value,
                 Sthread = (int)nbThread.Value,
                 SvideoQuality = cbxVideoQuality?.Text ?? string.Empty,
                 SvideoShort = _videoShort,
                 Smode = cbMode?.Text ?? string.Empty,
-                SeffectType = cbEffectType?.Text ?? string.Empty,
+                SeffectType = cbEffectType?.SelectedValue?.ToString() ?? string.Empty,
                 SckZoom = _statusZoom,
                 SckRotate = _statusRotate,
                 SckHflip = _statusFlip,
@@ -1733,7 +1752,7 @@ namespace ReviewMovie
                 SspeechRatio = nbSpeechRatio.Value.ToString("0.0"),
                 SckNotUseAudio = _statusMuted,
                 SlanguageSelect = (cbLanguageSelect?.SelectedItem as ComboboxModel)?.Value ?? string.Empty,
-                SspeechType = cbxSpeechType?.Text ?? string.Empty
+                SspeechType = cbxSpeechType?.SelectedValue?.ToString() ?? string.Empty
             };
 
             return _projectService.InsertInfoProjectList(_infoProject);
@@ -4005,11 +4024,17 @@ namespace ReviewMovie
                         var fptVoices = ApiFptAI.FptAIVoiceCodeTemplate().ToList();
                         var limitedFptVoices = LimitVoicesByPackage(fptVoices);
 
-                        ComboBoxFuncion.CbBlinding(cbxSpeechType
-                            , limitedFptVoices
-                            , !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                                ? Math.Max(limitedFptVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
-                                : 0);
+                        int fptIdx = 0;
+                        if (!string.IsNullOrEmpty(ckSetting?.SspeechType))
+                        {
+                            // Try match by Value first (new format), then by Display (old format)
+                            fptIdx = limitedFptVoices.FindIndex(x => x.Value.Equals(ckSetting.SspeechType));
+                            if (fptIdx < 0)
+                                fptIdx = limitedFptVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType));
+                            if (fptIdx < 0)
+                                fptIdx = 0;
+                        }
+                        ComboBoxFuncion.CbBlinding(cbxSpeechType, limitedFptVoices, fptIdx);
                     }
                 }
                 else if (_manualSelected == ManualSelect.Google)
@@ -4026,22 +4051,34 @@ namespace ReviewMovie
                     var googleVoices = serviceGoogleTTS.GetVoicesByLanguage(languageCode);
                     var limitedGoogleVoices = LimitVoicesByPackage(googleVoices);
 
-                    ComboBoxFuncion.CbBlinding(cbxSpeechType
-                              , limitedGoogleVoices
-                              , limitedGoogleVoices != null && !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                                  ? Math.Max(limitedGoogleVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
-                                  : 0);
+                    int googleIdx = 0;
+                    if (limitedGoogleVoices != null && !string.IsNullOrEmpty(ckSetting?.SspeechType))
+                    {
+                        // Try match by Value first (new format), then by Display (old format)
+                        googleIdx = limitedGoogleVoices.FindIndex(x => x.Value.Equals(ckSetting.SspeechType));
+                        if (googleIdx < 0)
+                            googleIdx = limitedGoogleVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType));
+                        if (googleIdx < 0)
+                            googleIdx = 0;
+                    }
+                    ComboBoxFuncion.CbBlinding(cbxSpeechType, limitedGoogleVoices, googleIdx);
                 }
                 else if (_manualSelected == ManualSelect.Elevenlab)
                 {
                     // ElevenLabs: chưa hỗ trợ limit voices theo package
                     var elevenLabVoices = GetVoiceTemplate.SearchVoicesByLanguageAccent(_listVoice, cbLanguageSelect.Text);
 
-                    ComboBoxFuncion.CbBlinding(cbxSpeechType
-                           , elevenLabVoices
-                           , !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                               ? Math.Max(elevenLabVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
-                               : 0);
+                    int elevenIdx = 0;
+                    if (!string.IsNullOrEmpty(ckSetting?.SspeechType))
+                    {
+                        // Try match by Value first (new format), then by Display (old format)
+                        elevenIdx = elevenLabVoices.FindIndex(x => x.Value.Equals(ckSetting.SspeechType));
+                        if (elevenIdx < 0)
+                            elevenIdx = elevenLabVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType));
+                        if (elevenIdx < 0)
+                            elevenIdx = 0;
+                    }
+                    ComboBoxFuncion.CbBlinding(cbxSpeechType, elevenLabVoices, elevenIdx);
                 }
                 else if (_manualSelected == ManualSelect.Vbee)
                 {
@@ -4051,11 +4088,17 @@ namespace ReviewMovie
                     var vietnamVoices = ApiVbee.VbeeVoiceTemplate().Where(x => x.Language == languageCode).ToList();
                     var limitedVbeeVoices = LimitVbeeVoicesByPackage(vietnamVoices);
 
-                    ComboBoxFuncion.CbBlinding(cbxSpeechType
-                          , limitedVbeeVoices
-                          , !string.IsNullOrEmpty(ckSetting?.SspeechType)
-                              ? Math.Max(limitedVbeeVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType)), 0)
-                              : 0);
+                    int vbeeIdx = 0;
+                    if (!string.IsNullOrEmpty(ckSetting?.SspeechType))
+                    {
+                        // Try match by Value first (new format), then by Display (old format)
+                        vbeeIdx = limitedVbeeVoices.FindIndex(x => x.Value.Equals(ckSetting.SspeechType));
+                        if (vbeeIdx < 0)
+                            vbeeIdx = limitedVbeeVoices.FindIndex(x => x.Display.Equals(ckSetting.SspeechType));
+                        if (vbeeIdx < 0)
+                            vbeeIdx = 0;
+                    }
+                    ComboBoxFuncion.CbBlinding(cbxSpeechType, limitedVbeeVoices, vbeeIdx);
                 }
             }
             catch {}
