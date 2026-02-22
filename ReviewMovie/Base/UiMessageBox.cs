@@ -310,44 +310,28 @@ namespace ReviewMovie.Base
 
         private static Color ResolveIconBackColor(MessageBoxIcon icon)
         {
-            switch (icon)
-            {
-                case MessageBoxIcon.Error:
-                case MessageBoxIcon.Hand:
-                case MessageBoxIcon.Stop:
-                    return Color.FromArgb(224, 74, 93);
-                case MessageBoxIcon.Warning:
-                case MessageBoxIcon.Exclamation:
-                    return Color.FromArgb(240, 165, 55);
-                case MessageBoxIcon.Question:
-                    return Color.FromArgb(43, 123, 234);
-                case MessageBoxIcon.Information:
-                case MessageBoxIcon.Asterisk:
-                    return Color.FromArgb(62, 136, 245);
-                default:
-                    return Color.FromArgb(43, 123, 234);
-            }
+            if (icon == MessageBoxIcon.Error || icon == MessageBoxIcon.Hand || icon == MessageBoxIcon.Stop)
+                return Color.FromArgb(224, 74, 93);
+
+            if (icon == MessageBoxIcon.Warning || icon == MessageBoxIcon.Exclamation)
+                return Color.FromArgb(240, 165, 55);
+
+            if (icon == MessageBoxIcon.Question)
+                return Color.FromArgb(43, 123, 234);
+
+            if (icon == MessageBoxIcon.Information || icon == MessageBoxIcon.Asterisk)
+                return Color.FromArgb(62, 136, 245);
+
+            return Color.FromArgb(43, 123, 234);
         }
 
         private static string ResolveIconGlyph(MessageBoxIcon icon)
         {
-            switch (icon)
-            {
-                case MessageBoxIcon.Error:
-                case MessageBoxIcon.Hand:
-                case MessageBoxIcon.Stop:
-                    return "!";
-                case MessageBoxIcon.Warning:
-                case MessageBoxIcon.Exclamation:
-                    return "!";
-                case MessageBoxIcon.Question:
-                    return "?";
-                case MessageBoxIcon.Information:
-                case MessageBoxIcon.Asterisk:
-                    return "i";
-                default:
-                    return "i";
-            }
+            if (icon == MessageBoxIcon.Question) return "?";
+            if (icon == MessageBoxIcon.Error || icon == MessageBoxIcon.Hand || icon == MessageBoxIcon.Stop) return "!";
+            if (icon == MessageBoxIcon.Warning || icon == MessageBoxIcon.Exclamation) return "!";
+            if (icon == MessageBoxIcon.Information || icon == MessageBoxIcon.Asterisk) return "i";
+            return "i";
         }
     }
 }
