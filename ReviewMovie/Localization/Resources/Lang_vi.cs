@@ -359,7 +359,7 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_SelectMediaFolderTitle, "Chọn thư mục media" },
 
             // ========== FormMain - API Errors ==========
-            { LangKeys.Main_ElevenlabError, "Elevenlab bị lỗi !" },
+            { LangKeys.Main_ElevenlabError, "ApiKey Elevenlab Lỗi !" },
             { LangKeys.Main_ElevenlabErrorTitle, "Lỗi Elevenlab" },
             { LangKeys.Main_JsonDataError, "JsonData bị lỗi !" },
             { LangKeys.Main_ConnectionTimeout, "Kết nối bị timeout. Vui lòng kiểm tra mạng và thử lại." },
