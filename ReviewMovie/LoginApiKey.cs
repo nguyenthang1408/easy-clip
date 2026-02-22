@@ -1,6 +1,7 @@
 using Common.Constant;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
+using EasyClip.View.DialogMessage;
 using Lib;
 using LibCommon.Lib;
 using ReviewMovie.Localization;
@@ -75,7 +76,7 @@ namespace ReviewMovie
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(LanguageManager.Get(LangKeys.Login_CannotGetKey) + ex.Message, LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Login_CannotGetKey) + ex.Message, LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -91,7 +92,7 @@ namespace ReviewMovie
             string apiKey = txInsertApiKey.Text.Trim();
             if (string.IsNullOrEmpty(apiKey))
             {
-                MessageBox.Show(LanguageManager.Get(LangKeys.Login_EnterApiKey), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MsgBox.Show(LanguageManager.Get(LangKeys.Login_EnterApiKey), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 btnLoginApiKey.Enabled = true; // Bật lại nút nếu lỗi
                 return;
             }
@@ -119,7 +120,7 @@ namespace ReviewMovie
                     var checkver = new CheckVersionServices();
                     if (checkver.IsNewerVersion(latestVersion, currentVersion))
                     {
-                        DialogResult result = MessageBox.Show(
+                        DialogResult result = MsgBox.Show(
                            LanguageManager.GetFormat(LangKeys.Login_VersionUpdate, currentVersion, latestVersion),
                            LanguageManager.Get(LangKeys.Login_VersionUpdateTitle),
                            MessageBoxButtons.YesNo,

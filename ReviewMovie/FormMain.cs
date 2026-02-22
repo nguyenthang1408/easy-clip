@@ -259,7 +259,7 @@ namespace ReviewMovie
                 if (_gpuDetectionService.CheckGpuAvailability())
                 {
                     // GPU khả dụng - đề xuất sử dụng
-                    var result = MessageBox.Show(
+                    var result = MsgBox.Show(
                         GpuDetectionMessages.DETECT_GPU_AVAILABLE_MESSAGE,
                         GpuDetectionMessages.DETECT_GPU_AVAILABLE_TITLE,
                         MessageBoxButtons.YesNo,
@@ -289,7 +289,7 @@ namespace ReviewMovie
                     // Lấy thông báo lỗi chi tiết từ service
                     string errorMessage = _gpuDetectionService.GetUserFriendlyErrorMessage();
 
-                    MessageBox.Show(
+                    MsgBox.Show(
                         errorMessage,
                         GpuDetectionMessages.VALIDATE_GPU_FAILED_TITLE,
                         MessageBoxButtons.OK,
@@ -472,7 +472,7 @@ namespace ReviewMovie
                     // Validate dữ liệu trả về có đầy đủ không
                     if (!_packageInfo.IsDataValid())
                     {
-                        MessageBox.Show(
+                        MsgBox.Show(
                             LanguageManager.Get(LangKeys.Main_InvalidServerData),
                             LanguageManager.Get(LangKeys.Main_InvalidServerDataTitle),
                             MessageBoxButtons.OK,
@@ -489,7 +489,7 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    MessageBox.Show(
+                    MsgBox.Show(
                         LanguageManager.Get(LangKeys.Main_AuthFailed),
                         LanguageManager.Get(LangKeys.Main_AuthFailedTitle),
                         MessageBoxButtons.OK,
@@ -500,7 +500,7 @@ namespace ReviewMovie
             }
             catch (Exception)
             {
-                MessageBox.Show(
+                MsgBox.Show(
                     LanguageManager.Get(LangKeys.Main_ConnectionError),
                     LanguageManager.Get(LangKeys.Main_ConnectionErrorTitle),
                     MessageBoxButtons.OK,
@@ -521,7 +521,7 @@ namespace ReviewMovie
 
                 if (_voiceSourceInfo == null || !_voiceSourceInfo.IsSuccess)
                 {
-                    MessageBox.Show(
+                    MsgBox.Show(
                         LanguageManager.Get(LangKeys.Main_CannotLoadVoiceSource),
                         LanguageManager.Get(LangKeys.Main_InvalidServerDataTitle),
                         MessageBoxButtons.OK,
@@ -532,7 +532,7 @@ namespace ReviewMovie
             }
             catch (Exception)
             {
-                MessageBox.Show(
+                MsgBox.Show(
                     LanguageManager.Get(LangKeys.Main_VoiceSourceError),
                     LanguageManager.Get(LangKeys.Main_VoiceSourceErrorTitle),
                     MessageBoxButtons.OK,
@@ -741,7 +741,7 @@ namespace ReviewMovie
                 // Kiểm tra voiceSourceInfo
                 if (_voiceSourceInfo == null || !_voiceSourceInfo.IsSuccess)
                 {
-                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoiceSource));
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoiceSource));
                     return;
                 }
 
@@ -800,7 +800,7 @@ namespace ReviewMovie
             }
             catch (Exception ex)
             {
-                MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_T2PsoftVoiceError, ex.Message));
+                MsgBox.Show(LanguageManager.GetFormat(LangKeys.Main_T2PsoftVoiceError, ex.Message));
             }
         }
 
@@ -824,7 +824,7 @@ namespace ReviewMovie
 
                     if (filteredLanguages == null || filteredLanguages.Count == 0)
                     {
-                        MessageBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoices), LanguageManager.Get(LangKeys.Main_CannotLoadVoicesTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MsgBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoices), LanguageManager.Get(LangKeys.Main_CannotLoadVoicesTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         cbLanguageSelect.DataSource = null;
                         return;
                     }
@@ -843,7 +843,7 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_VoiceKeyError));
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_VoiceKeyError));
                     cbLanguageSelect.DataSource = null;
                 }
             }
@@ -885,7 +885,7 @@ namespace ReviewMovie
 
                 if (listVoice == null)
                 {
-                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_VoiceKeyError));
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_VoiceKeyError));
                     cbLanguageSelect.SelectedIndexChanged -= cbLanguageSelect_SelectedIndexChanged;
                     cbLanguageSelect.DataSource = null;
                     cbLanguageSelect.SelectedIndex = -1;
@@ -1185,7 +1185,7 @@ namespace ReviewMovie
         // Hàm gọi show message Thông báo
         private void ShowMessage(string message, string tileMessage)
         {
-            MessageBox.Show(message, tileMessage, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MsgBox.Show(message, tileMessage, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void PrepareSubtitleData(int i, string textCmt, string mediaFilePath)
@@ -1219,7 +1219,7 @@ namespace ReviewMovie
             {
                 this.Invoke((Action)(() =>
                 {
-                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_ClipPlayerPathError) + message, LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_ClipPlayerPathError) + message, LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     _sessionMerge = false;
                 }));
                 return;
@@ -1230,7 +1230,7 @@ namespace ReviewMovie
                 _videoMerge = message;
                 _sessionMerge = true;
 
-                MessageBox.Show("VideoMerge:\n" + message, LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MsgBox.Show("VideoMerge:\n" + message, LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 InSertInputMediaData(_videoMerge, _indexRowSelect);
             }));
         }
@@ -1557,7 +1557,7 @@ namespace ReviewMovie
             }
             catch (Exception ex)
             {
-                MessageBox.Show(LanguageManager.Get(LangKeys.Main_DataError) + ex.Message);
+                MsgBox.Show(LanguageManager.Get(LangKeys.Main_DataError) + ex.Message);
             }
         }
 
@@ -1846,7 +1846,7 @@ namespace ReviewMovie
                 // Thông báo (show MessageBox) khi batch khác đang chạy
                 ShowAlertCallback = msg =>
                 {
-                    MessageBox.Show(msg, LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MsgBox.Show(msg, LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 },
 
                 // Lưu vào database mỗi lần convert xong 1 dòng
@@ -1865,7 +1865,7 @@ namespace ReviewMovie
         {
             if (_indexRowSelect < 0 || string.IsNullOrEmpty(_projectName))
             {
-                MessageBox.Show(ERR_ROW_INDEX);
+                MsgBox.Show(ERR_ROW_INDEX);
                 return;
             }
 
@@ -1972,7 +1972,7 @@ namespace ReviewMovie
         {
             if (_indexRowSelect < 0 || string.IsNullOrEmpty(_projectName))
             {
-                MessageBox.Show(ERR_ROW_INDEX);
+                MsgBox.Show(ERR_ROW_INDEX);
                 return;
             }
 
@@ -2010,7 +2010,7 @@ namespace ReviewMovie
                     },
                     ShowAlertCallback = msg =>
                     {
-                        MessageBox.Show(msg, LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MsgBox.Show(msg, LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     },
                     OnAfterRecord = (idx, audiolink, audiostatus) =>
                     {
@@ -2050,7 +2050,7 @@ namespace ReviewMovie
         {
             if (_indexRowSelect < 0 || string.IsNullOrEmpty(_projectName))
             {
-                MessageBox.Show(ERR_ROW_INDEX);
+                MsgBox.Show(ERR_ROW_INDEX);
                 return;
             }
 
@@ -2305,7 +2305,7 @@ namespace ReviewMovie
         {
             if (_indexRowSelect < 0 || string.IsNullOrEmpty(_projectName))
             {
-                MessageBox.Show(ERR_ROW_INDEX);
+                MsgBox.Show(ERR_ROW_INDEX);
                 return;
             }
 
@@ -2358,7 +2358,7 @@ namespace ReviewMovie
             }
             catch (Exception ex)
             {
-                MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_RenderError, ex.Message), LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox.Show(LanguageManager.GetFormat(LangKeys.Main_RenderError, ex.Message), LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -2447,7 +2447,7 @@ namespace ReviewMovie
 
             if (listNumber.Count == 0)
             {
-                MessageBox.Show(LanguageManager.Get(LangKeys.Main_NoRowSelected)
+                MsgBox.Show(LanguageManager.Get(LangKeys.Main_NoRowSelected)
                     , LanguageManager.Get(LangKeys.Common_Notice)
                     , MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -2905,7 +2905,7 @@ namespace ReviewMovie
 
             if (dgvMainView.RowCount > 0)
             {
-                var result = MessageBox.Show(
+                var result = MsgBox.Show(
                     LanguageManager.Get(LangKeys.Main_ConfirmReloadAll),
                     LanguageManager.Get(LangKeys.Common_Confirm),
                     MessageBoxButtons.YesNo,
@@ -2964,7 +2964,7 @@ namespace ReviewMovie
                 // Nếu chọn nhiều hơn 1 dòng thì hỏi xác nhận
                 if (listNumber.Count > 1)
                 {
-                    var result = MessageBox.Show(
+                    var result = MsgBox.Show(
                         LanguageManager.Get(LangKeys.Main_ConfirmReloadSelected),
                         LanguageManager.Get(LangKeys.Common_Confirm),
                         MessageBoxButtons.YesNo,
@@ -3010,7 +3010,7 @@ namespace ReviewMovie
             {
                 if (dgvMainView.SelectedRows.Count == 0)
                 {
-                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_SelectRowToDelete));
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_SelectRowToDelete));
                     return;
                 }
 
@@ -3018,13 +3018,13 @@ namespace ReviewMovie
 
                 if (!int.TryParse(selectedRow.Cells["Column_index"].Value?.ToString(), out int noIdToDelete))
                 {
-                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_CannotGetRowId));
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_CannotGetRowId));
                     return;
                 }
 
                 if (noIdToDelete != _indexRowMax - 1)
                 {
-                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_OnlyDeleteLastRow));
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_OnlyDeleteLastRow));
                     return;
                 }
 
@@ -3050,7 +3050,7 @@ namespace ReviewMovie
             }
             catch (Exception ex)
             {
-                MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_DeleteRowError, ex.Message));
+                MsgBox.Show(LanguageManager.GetFormat(LangKeys.Main_DeleteRowError, ex.Message));
             }
         }
 
@@ -3064,7 +3064,7 @@ namespace ReviewMovie
 
             if (_indexRowSelect < 0)
             {
-                MessageBox.Show(ERR_ROW_INDEX);
+                MsgBox.Show(ERR_ROW_INDEX);
                 return;
             }
 
@@ -3085,7 +3085,7 @@ namespace ReviewMovie
                 // Chỉ báo message 1 lần
                 if (wasTrimmed)
                 {
-                    MessageBox.Show(
+                    MsgBox.Show(
                         LanguageManager.GetFormat(LangKeys.Main_TextTooLong, RwConstant.MaxLengthText),
                         LanguageManager.Get(LangKeys.Common_Notice),
                         MessageBoxButtons.OK,
@@ -3118,7 +3118,7 @@ namespace ReviewMovie
             }
             else
             {
-                MessageBox.Show(ERR_ROW_INDEX);
+                MsgBox.Show(ERR_ROW_INDEX);
             }
         }
 
@@ -3154,7 +3154,7 @@ namespace ReviewMovie
                             // Gọi lại UI thread nếu cần show lỗi
                             this.Invoke((Action)(() =>
                             {
-                                MessageBox.Show(LanguageManager.GetFormat(LangKeys.Lib_ErrorFormat, ex.Message), LanguageManager.Get(LangKeys.Main_ImportMediaTitle), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MsgBox.Show(LanguageManager.GetFormat(LangKeys.Lib_ErrorFormat, ex.Message), LanguageManager.Get(LangKeys.Main_ImportMediaTitle), MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }));
                         }
                     });
@@ -3162,7 +3162,7 @@ namespace ReviewMovie
             }
             else
             {
-                MessageBox.Show(ERR_ROW_INDEX);
+                MsgBox.Show(ERR_ROW_INDEX);
             }
         }
 
@@ -3270,7 +3270,7 @@ namespace ReviewMovie
             }
             else
             {
-                //MessageBox.Show("Nhập vào phải là Ảnh hoặc Video. ");
+                //MsgBox.Show("Nhập vào phải là Ảnh hoặc Video. ");
                 SetMediaError(info, index, LanguageManager.Get(LangKeys.Main_MediaMissing));
             }
 
@@ -3323,7 +3323,7 @@ namespace ReviewMovie
                     }
                     else
                     {
-                        MessageBox.Show(LanguageManager.Get(LangKeys.Main_InputMustBeAudio));
+                        MsgBox.Show(LanguageManager.Get(LangKeys.Main_InputMustBeAudio));
                     }
                 }
             }
@@ -3441,7 +3441,7 @@ namespace ReviewMovie
             }
             catch (Exception ex)
             {
-                MessageBox.Show(LanguageManager.GetFormat(LangKeys.Lib_ErrorFormat, ex.Message), LanguageManager.Get(LangKeys.Common_Warning), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MsgBox.Show(LanguageManager.GetFormat(LangKeys.Lib_ErrorFormat, ex.Message), LanguageManager.Get(LangKeys.Common_Warning), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 ResetMergeButton();
             }
         }
@@ -3457,7 +3457,7 @@ namespace ReviewMovie
                 Invoke(new MethodInvoker(delegate ()
                 {
                     lblstatus.Text = LanguageManager.Get(LangKeys.Main_MergeCancelled);
-                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_MergeCancelled)
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_MergeCancelled)
                         , LanguageManager.Get(LangKeys.Common_Notice)
                         , MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }));
@@ -3467,7 +3467,7 @@ namespace ReviewMovie
                 Invoke(new MethodInvoker(delegate ()
                 {
                     lblstatus.Text = LanguageManager.Get(LangKeys.Main_StatusError);
-                    MessageBox.Show(LanguageManager.GetFormat(LangKeys.Lib_ErrorFormat, ex.Message)
+                    MsgBox.Show(LanguageManager.GetFormat(LangKeys.Lib_ErrorFormat, ex.Message)
                         , LanguageManager.Get(LangKeys.Common_Error)
                         , MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }));
@@ -3547,7 +3547,7 @@ namespace ReviewMovie
             {
                 this.Invoke(new Action(() =>
                 {
-                    MessageBox.Show(
+                    MsgBox.Show(
                         this,
                         LanguageManager.Get(LangKeys.Main_MergeNoVideo),
                         LanguageManager.Get(LangKeys.Common_Notice),
@@ -3571,7 +3571,7 @@ namespace ReviewMovie
                 {
                     Invoke(new MethodInvoker(delegate ()
                     {
-                        MessageBox.Show(LanguageManager.Get(LangKeys.Main_CheckFileRenamed));
+                        MsgBox.Show(LanguageManager.Get(LangKeys.Main_CheckFileRenamed));
                     }));
                     return;
                 }
@@ -3631,7 +3631,7 @@ namespace ReviewMovie
                     {
                         errorReport += "...";
                     }
-                    MessageBox.Show(errorReport, LanguageManager.Get(LangKeys.Main_MergeErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox.Show(errorReport, LanguageManager.Get(LangKeys.Main_MergeErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }));
                 return;
             }
@@ -3651,7 +3651,7 @@ namespace ReviewMovie
                     confirmMessage += LanguageManager.GetFormat(LangKeys.Main_ValidVideoCount, validVideos, totalVideos);
                     confirmMessage += LanguageManager.GetFormat(LangKeys.Main_ContinueMergeQuestion, validVideos);
 
-                    DialogResult result = MessageBox.Show(
+                    DialogResult result = MsgBox.Show(
                         confirmMessage,
                         LanguageManager.Get(LangKeys.Main_MergeConfirmTitle),
                         MessageBoxButtons.YesNo,
@@ -3756,7 +3756,7 @@ namespace ReviewMovie
                         }
 
                         MessageBoxIcon icon = corruptedVideos.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information;
-                        MessageBox.Show(report, LanguageManager.Get(LangKeys.Main_MergeResultTitle), MessageBoxButtons.OK, icon);
+                        MsgBox.Show(report, LanguageManager.Get(LangKeys.Main_MergeResultTitle), MessageBoxButtons.OK, icon);
 
                         // Mở subfolder output sau khi thành công
                         Funcion.OpenFolder(outputFolder);
@@ -3776,7 +3776,7 @@ namespace ReviewMovie
                         Invoke(new MethodInvoker(delegate ()
                         {
                             lblstatus.Text = LanguageManager.Get(LangKeys.Main_MergeFailedStatus);
-                            MessageBox.Show(LanguageManager.Get(LangKeys.Main_MergeFfmpegError),
+                            MsgBox.Show(LanguageManager.Get(LangKeys.Main_MergeFfmpegError),
                                           LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }));
                     }
@@ -3787,7 +3787,7 @@ namespace ReviewMovie
                     Invoke(new MethodInvoker(delegate ()
                     {
                         lblstatus.Text = LanguageManager.Get(LangKeys.Main_MergeFailedStatus);
-                        MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_MergeFfmpegExitCode, exitCode),
+                        MsgBox.Show(LanguageManager.GetFormat(LangKeys.Main_MergeFfmpegExitCode, exitCode),
                                       LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }));
                 }
@@ -3804,7 +3804,7 @@ namespace ReviewMovie
                 Invoke(new MethodInvoker(delegate ()
                 {
                     lblstatus.Text = LanguageManager.Get(LangKeys.Main_StatusError);
-                    MessageBox.Show(LanguageManager.GetFormat(LangKeys.Lib_ErrorFormat, exception.Message), LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox.Show(LanguageManager.GetFormat(LangKeys.Lib_ErrorFormat, exception.Message), LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }));
                 Console.WriteLine(exception.Message);
             }
@@ -3888,8 +3888,8 @@ namespace ReviewMovie
 
                 if (tempProject.IsEmpty)
                 {
-                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_ProjectNotFound));
-                    var result = MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_ConfirmDeleteProject, selectPath), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.YesNo);
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_ProjectNotFound));
+                    var result = MsgBox.Show(LanguageManager.GetFormat(LangKeys.Main_ConfirmDeleteProject, selectPath), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes)
                     {
                         _previousText = string.Empty;
@@ -3905,7 +3905,7 @@ namespace ReviewMovie
                 }
 
                 // ==== 5. Mở project nếu người dùng xác nhận ====
-                if (MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_ConfirmOpenProject, selectPath), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MsgBox.Show(LanguageManager.GetFormat(LangKeys.Main_ConfirmOpenProject, selectPath), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     _infoProject = tempProject;
                     DefaultProjectData();
@@ -3968,7 +3968,7 @@ namespace ReviewMovie
                 }
                 else // User không muốn mở → gợi ý xóa
                 {
-                    var result = MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_ConfirmDeleteProject, selectPath), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.YesNo);
+                    var result = MsgBox.Show(LanguageManager.GetFormat(LangKeys.Main_ConfirmDeleteProject, selectPath), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes)
                     {
                         _previousText = string.Empty;
@@ -4099,7 +4099,7 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    MessageBox.Show(ERR_PROJECT_EMPTY);
+                    MsgBox.Show(ERR_PROJECT_EMPTY);
                 }
             }
             finally
@@ -4172,7 +4172,7 @@ namespace ReviewMovie
             string projectPath = cbProjectName.Text.Trim();
             if (string.IsNullOrEmpty(projectPath))
             {
-                MessageBox.Show(LanguageManager.Get(LangKeys.Main_ProjectInputEmpty));
+                MsgBox.Show(LanguageManager.Get(LangKeys.Main_ProjectInputEmpty));
                 return;
             }
 
@@ -4180,7 +4180,7 @@ namespace ReviewMovie
             {
                 if (_loadConfig.IsDuplicate(projectPath))
                 {
-                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_ProjectExists));
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_ProjectExists));
                     return;
                 }
 
@@ -4195,7 +4195,7 @@ namespace ReviewMovie
                 var isSuccess = _loadConfig.AddProjectToConfig(newProject);
                 if(!isSuccess)
                 {
-                    MessageBox.Show(LanguageManager.Get(LangKeys.Main_CriticalDataError), LanguageManager.Get(LangKeys.Main_CriticalErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_CriticalDataError), LanguageManager.Get(LangKeys.Main_CriticalErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Environment.Exit(0);
                 }
                 _loadConfig.SaveToDatabase(newProject);
@@ -4216,11 +4216,11 @@ namespace ReviewMovie
                 DisplayItemDefault();
                 SaveEffectSetting();
                 UIThreadHelper.SetLabelText(lblstatus, RwConstant.STATUS_DEFAULT, Color.Black);
-                MessageBox.Show(LanguageManager.Get(LangKeys.Main_CreateProjectSuccess));
+                MsgBox.Show(LanguageManager.Get(LangKeys.Main_CreateProjectSuccess));
             }
             catch (Exception ex)
             {
-                MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_CreateProjectError, ex.Message));
+                MsgBox.Show(LanguageManager.GetFormat(LangKeys.Main_CreateProjectError, ex.Message));
             }
         }
 
@@ -4307,7 +4307,7 @@ namespace ReviewMovie
             }
             else
             {
-                MessageBox.Show(ERR_PROJECT_EMPTY);
+                MsgBox.Show(ERR_PROJECT_EMPTY);
             }
         }
 
@@ -4391,7 +4391,7 @@ namespace ReviewMovie
 
             if (string.IsNullOrEmpty(_projectName))
             {
-                MessageBox.Show(ERR_PROJECT_EMPTY);
+                MsgBox.Show(ERR_PROJECT_EMPTY);
                 return;
             }
 
@@ -4752,7 +4752,7 @@ namespace ReviewMovie
                     var listVoice = await voiceServices.GetAllVoicesAsync();
                     if(listVoice == null)
                     {
-                        MessageBox.Show(LanguageManager.Get(LangKeys.Main_ElevenlabError));
+                        MsgBox.Show(LanguageManager.Get(LangKeys.Main_ElevenlabError));
 
                         cbLanguageSelect.DataSource = null;
                         cbLanguageSelect.SelectedIndex = -1;
@@ -4795,7 +4795,7 @@ namespace ReviewMovie
 
                         if (filteredLanguages == null || filteredLanguages.Count == 0)
                         {
-                            MessageBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoices), LanguageManager.Get(LangKeys.Main_CannotLoadVoicesTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MsgBox.Show(LanguageManager.Get(LangKeys.Main_CannotLoadVoices), LanguageManager.Get(LangKeys.Main_CannotLoadVoicesTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             cbLanguageSelect.DataSource = null;
                         }
                         else
@@ -4809,7 +4809,7 @@ namespace ReviewMovie
                     }
                     else
                     {
-                        MessageBox.Show(LanguageManager.Get(LangKeys.Main_JsonDataError));
+                        MsgBox.Show(LanguageManager.Get(LangKeys.Main_JsonDataError));
                         cbLanguageSelect.DataSource = null;
                     }
                 }
@@ -4846,13 +4846,13 @@ namespace ReviewMovie
             }
             catch (TaskCanceledException)
             {
-                MessageBox.Show(LanguageManager.Get(LangKeys.Main_ConnectionTimeout)
+                MsgBox.Show(LanguageManager.Get(LangKeys.Main_ConnectionTimeout)
                     , LanguageManager.Get(LangKeys.Main_ConnectionErrorTitle)
                     , MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (System.Net.Http.HttpRequestException)
             {
-                MessageBox.Show(LanguageManager.Get(LangKeys.Main_ConnectionError)
+                MsgBox.Show(LanguageManager.Get(LangKeys.Main_ConnectionError)
                     , LanguageManager.Get(LangKeys.Main_ConnectionErrorTitle)
                     , MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -4917,7 +4917,7 @@ namespace ReviewMovie
                     VbeeToken = vbeeToken,
                     ManualSelected = manualSelected
                 });
-                if (check) MessageBox.Show(LanguageManager.Get(LangKeys.Main_SaveKeySuccess));
+                if (check) MsgBox.Show(LanguageManager.Get(LangKeys.Main_SaveKeySuccess));
             }
         }
 
@@ -5134,7 +5134,7 @@ namespace ReviewMovie
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox.Show(ex.Message, LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -5200,7 +5200,7 @@ namespace ReviewMovie
             //int rowIndex = e.RowIndex;
 
             //// Hiển thị thông báo lỗi cho người dùng
-            //MessageBox.Show($"Lỗi: {errorMessage} trong cột {columnName}, hàng {rowIndex + 1}");
+            //MsgBox.Show($"Lỗi: {errorMessage} trong cột {columnName}, hàng {rowIndex + 1}");
 
             // Đánh dấu lỗi đã được xử lý
             e.ThrowException = false;
@@ -5266,7 +5266,7 @@ namespace ReviewMovie
             var valEffectSettup = _infoProject.EffectSettup;
             if (valEffectSettup != null && valEffectSettup.Active)
             {
-                var dialog = MessageBox.Show(
+                var dialog = MsgBox.Show(
                     LanguageManager.Get(LangKeys.Main_ConfirmChangeConfig),
                     LanguageManager.Get(LangKeys.Common_Confirm),
                     MessageBoxButtons.YesNo,
@@ -5280,13 +5280,13 @@ namespace ReviewMovie
             var check = SaveEffectSetting();
             if (check)
             {
-                MessageBox.Show(LanguageManager.Get(LangKeys.Main_SaveEffectSuccess)
+                MsgBox.Show(LanguageManager.Get(LangKeys.Main_SaveEffectSuccess)
                     , LanguageManager.Get(LangKeys.Common_Success)
                     , MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show(LanguageManager.Get(LangKeys.Main_SaveEffectError)
+                MsgBox.Show(LanguageManager.Get(LangKeys.Main_SaveEffectError)
                     , LanguageManager.Get(LangKeys.Common_Error)
                     , MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

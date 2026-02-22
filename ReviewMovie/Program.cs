@@ -1,3 +1,4 @@
+using EasyClip.View.DialogMessage;
 using LibCommon.Lib;
 using LibCommon.Lib.Localization;
 using ReviewMovie.Localization;
@@ -34,7 +35,7 @@ namespace ReviewMovie
             else
             {
                 // Nếu ứng dụng đã chạy, hiển thị hộp thoại xác nhận
-                DialogResult result = MessageBox.Show(
+                DialogResult result = MsgBox.Show(
                     LanguageManager.Get(LangKeys.Program_AlreadyRunning),
                     LanguageManager.Get(LangKeys.Common_Notice),
                     MessageBoxButtons.YesNo,

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using EasyClip.View.DialogMessage;
 
 namespace ReviewMovie
 {
@@ -140,14 +141,14 @@ namespace ReviewMovie
             if (owner.InvokeRequired)
             {
                 return (DialogResult)owner.Invoke(new Func<DialogResult>(() =>
-                    MessageBox.Show(owner, text, caption, buttons, icon)
+                    MsgBox.Show(owner, text, caption, buttons, icon)
                 ));
             }
             else
             {
                 // Đảm bảo MessageBox hiển thị đúng context UI
                 Application.DoEvents(); // Đảm bảo vẽ lại UI trước khi show MessageBox (tùy chọn)
-                return MessageBox.Show(owner, text, caption, buttons, icon);
+                return MsgBox.Show(owner, text, caption, buttons, icon);
             }
         }
     }
