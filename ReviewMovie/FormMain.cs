@@ -3908,7 +3908,7 @@ namespace ReviewMovie
                 if (tempProject.IsEmpty)
                 {
                     MessageBox.Show(LanguageManager.Get(LangKeys.Main_ProjectNotFound));
-                    var result = MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_ConfirmDeleteProject, selectPath), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    var result = MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_ConfirmDeleteProject, selectPath), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes)
                     {
                         _previousText = string.Empty;
@@ -3987,7 +3987,7 @@ namespace ReviewMovie
                 }
                 else // User không muốn mở → gợi ý xóa
                 {
-                    var result = MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_ConfirmDeleteProject, selectPath), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    var result = MessageBox.Show(LanguageManager.GetFormat(LangKeys.Main_ConfirmDeleteProject, selectPath), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes)
                     {
                         _previousText = string.Empty;
