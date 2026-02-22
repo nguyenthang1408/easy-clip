@@ -58,12 +58,82 @@ namespace ReviewMovie
 
         private void SetupLoginUi()
         {
+            var windowBackColor = Color.FromArgb(17, 20, 27);
+            var cardBackColor = Color.FromArgb(24, 28, 36);
+            var cardRaisedColor = Color.FromArgb(33, 38, 49);
+            var inputBackColor = Color.FromArgb(36, 42, 54);
+            var borderColor = Color.FromArgb(61, 70, 86);
+            var accentColor = Color.FromArgb(0, 196, 255);
+            var accentHoverColor = Color.FromArgb(33, 209, 255);
+            var accentPressedColor = Color.FromArgb(0, 162, 211);
+            var textPrimaryColor = Color.FromArgb(237, 242, 249);
+            var textSecondaryColor = Color.FromArgb(158, 170, 189);
+
+            BackColor = windowBackColor;
+
             // Remove outer frame: let the card occupy full form.
             if (cardPanel != null)
             {
                 cardPanel.Dock = DockStyle.Fill;
                 cardPanel.Location = Point.Empty;
                 cardPanel.Margin = Padding.Empty;
+                cardPanel.BackColor = cardBackColor;
+            }
+
+            if (pnlTopAccent != null)
+            {
+                pnlTopAccent.Visible = true;
+                pnlTopAccent.Height = 3;
+                pnlTopAccent.BackColor = accentColor;
+            }
+
+            if (pnlLogo != null)
+            {
+                pnlLogo.BackColor = cardRaisedColor;
+            }
+
+            if (lblLogoIcon != null)
+            {
+                lblLogoIcon.ForeColor = accentColor;
+            }
+
+            if (lblTitle != null)
+            {
+                lblTitle.ForeColor = textPrimaryColor;
+            }
+
+            if (lblSubtitle != null)
+            {
+                lblSubtitle.ForeColor = textSecondaryColor;
+            }
+
+            if (materialLabel1 != null)
+            {
+                materialLabel1.ForeColor = textSecondaryColor;
+            }
+
+            if (materialLabel2 != null)
+            {
+                materialLabel2.ForeColor = textSecondaryColor;
+            }
+
+            if (lkHelp != null)
+            {
+                lkHelp.LinkColor = textSecondaryColor;
+                lkHelp.ActiveLinkColor = accentColor;
+                lkHelp.VisitedLinkColor = textSecondaryColor;
+            }
+
+            if (linklbRegister != null)
+            {
+                linklbRegister.LinkColor = accentColor;
+                linklbRegister.ActiveLinkColor = accentHoverColor;
+                linklbRegister.VisitedLinkColor = accentColor;
+            }
+
+            if (lbstatus != null)
+            {
+                lbstatus.ForeColor = Color.FromArgb(255, 111, 111);
             }
 
             // Commonized UI setup (easy to maintain)
@@ -71,9 +141,13 @@ namespace ReviewMovie
             {
                 appCode.ReadOnly = true;
                 // Make it visually obvious it's read-only
-                appCode.BackgroundColor = ColorTranslator.FromHtml("#F1F5F9");
-                appCode.BorderColor = ColorTranslator.FromHtml("#E2E8F0");
-                appCode.InnerTextBox.ForeColor = ColorTranslator.FromHtml("#64748B");
+                appCode.BackgroundColor = cardRaisedColor;
+                appCode.BorderColor = borderColor;
+                appCode.BorderFocusColor = accentColor;
+                appCode.HoverColor = Color.FromArgb(40, 46, 58);
+                appCode.TextColor = textSecondaryColor;
+                appCode.InnerTextBox.BackColor = cardRaisedColor;
+                appCode.InnerTextBox.ForeColor = textSecondaryColor;
                 appCode.InnerTextBox.Cursor = Cursors.Default;
 
                 // Prevent focusing/tabbing into AppCode field
@@ -91,31 +165,31 @@ namespace ReviewMovie
 
             if (txInsertApiKey is UiTextBox apiKey)
             {
-                // Keep API key textbox on a white background.
-                apiKey.BackgroundColor = Color.White;
-                apiKey.BorderColor = ColorTranslator.FromHtml("#D6DCEC");
-                apiKey.BorderFocusColor = ColorTranslator.FromHtml("#61B0FF");
-                apiKey.HoverColor = ColorTranslator.FromHtml("#F2F4F8");
-                apiKey.TextColor = ColorTranslator.FromHtml("#212529");
-                apiKey.InnerTextBox.ForeColor = ColorTranslator.FromHtml("#212529");
+                apiKey.BackgroundColor = inputBackColor;
+                apiKey.BorderColor = borderColor;
+                apiKey.BorderFocusColor = accentColor;
+                apiKey.HoverColor = Color.FromArgb(45, 52, 66);
+                apiKey.TextColor = textPrimaryColor;
+                apiKey.InnerTextBox.BackColor = inputBackColor;
+                apiKey.InnerTextBox.ForeColor = textPrimaryColor;
             }
 
             if (btnLoginApiKey is PrimaryButton primary)
             {
-                // Facebook-style primary CTA
-                primary.FillColor = ColorTranslator.FromHtml("#1877F2");
-                primary.HoverFillColor = ColorTranslator.FromHtml("#166FE5");
-                primary.PressedFillColor = ColorTranslator.FromHtml("#145DBF");
+                primary.FillColor = accentColor;
+                primary.HoverFillColor = accentHoverColor;
+                primary.PressedFillColor = accentPressedColor;
                 primary.CornerRadius = UiTheme.ButtonRadius;
-                primary.ForeColor = Color.White;
+                primary.ForeColor = Color.FromArgb(8, 23, 33);
             }
 
             if (btnClose is IconCircleButton close)
             {
                 close.CornerRadius = UiTheme.CloseRadius;
-                close.NormalBackColor = Color.White;
-                close.HoverBackColor = UiTheme.CloseHover;
-                close.PressedBackColor = UiTheme.ClosePressed;
+                close.NormalBackColor = cardRaisedColor;
+                close.HoverBackColor = Color.FromArgb(46, 52, 65);
+                close.PressedBackColor = Color.FromArgb(56, 63, 78);
+                close.ForeColor = textSecondaryColor;
             }
         }
 
@@ -156,8 +230,7 @@ namespace ReviewMovie
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            // Keep a clean white canvas to avoid outer-looking border.
-            e.Graphics.Clear(Color.White);
+            e.Graphics.Clear(Color.FromArgb(17, 20, 27));
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -219,7 +292,7 @@ namespace ReviewMovie
             btnLoginApiKey.Enabled = false;
 
             lbstatus.Text = string.Empty;
-            lbstatus.ForeColor = Color.Black;
+            lbstatus.ForeColor = Color.FromArgb(158, 170, 189);
             // Kiểm tra API Key
             string apiKey = txInsertApiKey.Text.Trim();
             if (string.IsNullOrEmpty(apiKey))
@@ -304,11 +377,21 @@ namespace ReviewMovie
         {
             using (var popup = new Form())
             {
+                var overlayColor = Color.FromArgb(17, 20, 27);
+                var cardColor = Color.FromArgb(24, 28, 36);
+                var raisedColor = Color.FromArgb(33, 38, 49);
+                var borderColor = Color.FromArgb(61, 70, 86);
+                var accentColor = Color.FromArgb(0, 196, 255);
+                var accentHoverColor = Color.FromArgb(33, 209, 255);
+                var accentPressedColor = Color.FromArgb(0, 162, 211);
+                var textPrimaryColor = Color.FromArgb(237, 242, 249);
+                var textSecondaryColor = Color.FromArgb(158, 170, 189);
+
                 popup.FormBorderStyle = FormBorderStyle.None;
                 popup.StartPosition = FormStartPosition.CenterParent;
                 popup.ShowInTaskbar = false;
                 popup.TopMost = true;
-                popup.BackColor = Color.FromArgb(243, 246, 252);
+                popup.BackColor = overlayColor;
                 popup.ClientSize = new Size(360, 190);
                 popup.Padding = new Padding(8);
                 popup.Text = "Thông báo";
@@ -317,7 +400,7 @@ namespace ReviewMovie
                 var panelCard = new Panel
                 {
                     Dock = DockStyle.Fill,
-                    BackColor = Color.White
+                    BackColor = cardColor
                 };
                 popup.Controls.Add(panelCard);
 
@@ -325,14 +408,14 @@ namespace ReviewMovie
                 {
                     Dock = DockStyle.Top,
                     Height = 42,
-                    BackColor = Color.FromArgb(248, 250, 255)
+                    BackColor = raisedColor
                 };
                 var lblTitle = new Label
                 {
                     AutoSize = true,
                     Text = "Thông báo",
                     Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point),
-                    ForeColor = Color.FromArgb(45, 53, 66),
+                    ForeColor = textPrimaryColor,
                     Location = new Point(12, 9)
                 };
                 panelHeader.Controls.Add(lblTitle);
@@ -341,7 +424,7 @@ namespace ReviewMovie
                 {
                     Text = "x",
                     Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point),
-                    ForeColor = Color.FromArgb(118, 126, 140),
+                    ForeColor = textSecondaryColor,
                     FlatStyle = FlatStyle.Flat,
                     Size = new Size(32, 28),
                     Location = new Point(popup.ClientSize.Width - 52, 7),
@@ -350,8 +433,8 @@ namespace ReviewMovie
                     TabStop = false
                 };
                 btnClose.FlatAppearance.BorderSize = 0;
-                btnClose.FlatAppearance.MouseOverBackColor = Color.FromArgb(240, 244, 252);
-                btnClose.FlatAppearance.MouseDownBackColor = Color.FromArgb(229, 235, 246);
+                btnClose.FlatAppearance.MouseOverBackColor = Color.FromArgb(50, 57, 70);
+                btnClose.FlatAppearance.MouseDownBackColor = Color.FromArgb(59, 67, 82);
                 btnClose.Click += (_, __) =>
                 {
                     popup.DialogResult = DialogResult.OK;
@@ -362,7 +445,7 @@ namespace ReviewMovie
                 var panelBody = new Panel
                 {
                     Dock = DockStyle.Fill,
-                    BackColor = Color.White
+                    BackColor = cardColor
                 };
                 panelCard.Controls.Add(panelBody);
                 panelCard.Controls.Add(panelHeader);
@@ -373,7 +456,7 @@ namespace ReviewMovie
                     ColumnCount = 2,
                     RowCount = 3,
                     Padding = new Padding(20, 18, 20, 14),
-                    BackColor = Color.White
+                    BackColor = cardColor
                 };
                 bodyLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 56F));
                 bodyLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
@@ -386,7 +469,7 @@ namespace ReviewMovie
                 {
                     Size = new Size(40, 40),
                     Dock = DockStyle.Fill,
-                    FillColor = Color.FromArgb(43, 123, 234),
+                    FillColor = accentColor,
                     BorderThickness = 0,
                     CornerRadius = 20,
                     Margin = new Padding(0, 12, 12, 6)
@@ -409,7 +492,7 @@ namespace ReviewMovie
                     AutoSize = false,
                     Text = message,
                     Font = new Font("Segoe UI", 10.5F, FontStyle.Bold, GraphicsUnit.Point),
-                    ForeColor = Color.FromArgb(45, 53, 66),
+                    ForeColor = textPrimaryColor,
                     Dock = DockStyle.Fill,
                     Margin = new Padding(0, 12, 0, 6),
                     TextAlign = ContentAlignment.MiddleLeft,
@@ -421,10 +504,10 @@ namespace ReviewMovie
                 {
                     Text = "OK",
                     Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point),
-                    ForeColor = Color.White,
-                    FillColor = Color.FromArgb(43, 123, 234),
-                    HoverFillColor = Color.FromArgb(38, 111, 214),
-                    PressedFillColor = Color.FromArgb(33, 98, 190),
+                    ForeColor = Color.FromArgb(8, 23, 33),
+                    FillColor = accentColor,
+                    HoverFillColor = accentHoverColor,
+                    PressedFillColor = accentPressedColor,
                     CornerRadius = 8,
                     Size = new Size(96, 34),
                     Anchor = AnchorStyles.Right,
@@ -440,7 +523,7 @@ namespace ReviewMovie
                 {
                     e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                     var rect = new Rectangle(0, 0, panelCard.Width - 1, panelCard.Height - 1);
-                    using (var pen = new Pen(Color.FromArgb(216, 223, 236), 1f))
+                    using (var pen = new Pen(borderColor, 1f))
                     using (var path = UiHelpers.CreateRoundedRectPath(rect, 10))
                     {
                         e.Graphics.DrawPath(pen, path);
@@ -448,7 +531,7 @@ namespace ReviewMovie
                 };
                 panelHeader.Paint += (s, e) =>
                 {
-                    using (var pen = new Pen(Color.FromArgb(230, 235, 245), 1f))
+                    using (var pen = new Pen(borderColor, 1f))
                     {
                         e.Graphics.DrawLine(pen, 0, panelHeader.Height - 1, panelHeader.Width, panelHeader.Height - 1);
                     }
