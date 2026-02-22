@@ -270,3 +270,78 @@ Sử dụng `Properties.Settings.Default` (có sẵn trong project) để lưu l
 | Đợt 1 (Services + LibCommon CAO/TB) | 42 | 12 files |
 | Đợt 2 (Voice display names) | 109 | 3 files |
 | **Tổng** | **~331** | **~30 files** |
+
+---
+
+## 8. Bug Fixes
+
+### Fix #1: T2Psoft voice source không lưu đúng khi save/reload project (Hoàn thành)
+
+**Triệu chứng:** Chọn T2Psoft → save project → mở lại → combobox nhảy sang Google/FptAI/Elevenlab.
+
+**Nguyên nhân gốc:**
+
+T2Psoft là proxy, server trả về `VoiceType` cho biết sub-engine thực tế (Google/FPT/Elevenlab). Trong `HandleT2PsoftVoiceSource()` (FormMain.cs ~line 773-799):
+
+```
+User chọn T2Psoft → server trả VoiceType="Google"
+→ _manualSelected = ManualSelect.Google
+→ UpdateVoiceSourceSelect() lưu _infoProject.VoiceSelect = "Google"
+→ Lần sau load project → FindIndex match "Google" → combobox chọn GoogleTTS (sai!)
+```
+
+`ManualSelect` enum trước đó không có giá trị `T2Psoft`, nên không thể lưu đúng nguồn đã chọn.
+
+**Data flow liên quan:**
+
+| Thành phần | File | Vai trò |
+|------------|------|---------|
+| `InfoProject.VoiceSelect` | `ProjectModel.cs` | Field string lưu tên voice source |
+| `ManualSelect` enum | `Enum.cs` | Enum các voice source, trước thiếu T2Psoft |
+| `ListVoiceSite` constants | `AISiteSource.cs` | Hằng số tên site: "T2Psoft", "FptAI", "Google", "Elevenlab", "Vbee" |
+| `ProjectDataService` | `ProjectDataService.cs` | Lưu/đọc project vào LiteDB tại `{ProjectPath}\{ProjectID}.db` |
+| `ConfigDataService` | `ConfigDataService.cs` | Lưu danh sách project vào `%AppData%\EasyClip\config.db` |
+| `HandleT2PsoftVoiceSource()` | `FormMain.cs` ~line 730-805 | Xử lý khi chọn T2Psoft, gọi API server lấy sub-engine |
+| `UpdateVoiceSourceSelect()` | `FormMain.cs` ~line 4910 | Lưu VoiceSelect vào DB khi thay đổi |
+| `GetVoiceSourcesByPackageType()` | `FormMain.cs` ~line 659-699 | Tạo danh sách voice source cho combobox theo package type |
+| `btnOpenProject_Click` | `FormMain.cs` ~line 3930-3976 | Load project và restore combobox voice source |
+
+**Cách fix (3 thay đổi):**
+
+1. **`LibCommon/Lib/Constant/Enum.cs`** — Thêm `T2Psoft` vào `ManualSelect` enum:
+   ```csharp
+   public enum ManualSelect
+   {
+       FptAI = 0,
+       Vbee,
+       Google,
+       Elevenlab,
+       T2Psoft    // ← MỚI
+   }
+   ```
+
+2. **`ReviewMovie/FormMain.cs`** — Thêm helper `GetCurrentVoiceSourceName()`:
+   ```csharp
+   private string GetCurrentVoiceSourceName()
+   {
+       var selectedVoiceSource = (ComboboxModel)cboSiteNguon.SelectedItem;
+       if (selectedVoiceSource?.Value == ListVoiceSite.T2Psoft)
+           return ListVoiceSite.T2Psoft;
+       return _manualSelected.ToString();
+   }
+   ```
+   Helper này kiểm tra combobox `cboSiteNguon`: nếu đang chọn T2Psoft thì trả "T2Psoft", ngược lại trả `_manualSelected.ToString()`.
+
+3. **`ReviewMovie/FormMain.cs`** — Dùng helper thay `_manualSelected.ToString()` tại 2 điểm persistence:
+   - `UpdateVoiceSourceSelect()` (~line 4913): `_infoProject.VoiceSelect = GetCurrentVoiceSourceName();`
+   - `CreateNewProject()` call (~line 4227): `_loadConfig.CreateNewProject(path, GetCurrentVoiceSourceName(), ...)`
+
+**Lý do không đổi `_manualSelected` trong `HandleT2PsoftVoiceSource`:**
+
+`_manualSelected` vẫn giữ sub-engine (Google/FptAI/Elevenlab) vì nó được dùng ở nhiều nơi cho logic TTS engine routing:
+- `cbLanguageSelect_SelectedIndexChanged` (~line 4012-4094): load danh sách voice theo engine
+- `theart_SaveSpeechAsync` (~line 2195-2236): xác định cách download audio
+- `AudioConvertContextModel.ManualSelected` (~line 1804): truyền vào service convert
+- `cbxSpeechType_SelectedIndexChanged` (~line 4102): cài đặt Elevenlab-specific
+
+Nếu set `_manualSelected = T2Psoft` thì tất cả if-else ở trên sẽ không match → TTS engine routing hỏng. Fix chỉ tách phần **persistence** ra helper riêng, giữ nguyên phần **engine routing**.
