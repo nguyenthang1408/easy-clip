@@ -2596,26 +2596,28 @@ namespace ReviewMovie
             }
             catch (OperationCanceledException)
             {
-                return;
+                throw;
             }
             catch
             {
                 UIThreadHelper.SetLabelText(lblstatus, LanguageManager.Get(LangKeys.Main_ErrorCheckMedia), Color.Red);
             }
-
-            // Cập nhật render status chính xác bằng NoID
-            var updatedRow = dgvMainView.Rows
-                .Cast<DataGridViewRow>()
-                .FirstOrDefault(r => Convert.ToInt32(r.Cells["Column_index"].Value) == noId);
-            if (updatedRow != null)
+            finally
             {
-                var status = updatedRow.Cells["Column_renderstatus"].Value?.ToString();
-                if (!string.IsNullOrEmpty(status))
-                    renderInfo.RenderStatus = status;
-            }
+                // Cập nhật render status chính xác bằng NoID
+                var updatedRow = dgvMainView.Rows
+                    .Cast<DataGridViewRow>()
+                    .FirstOrDefault(r => Convert.ToInt32(r.Cells["Column_index"].Value) == noId);
+                if (updatedRow != null)
+                {
+                    var status = updatedRow.Cells["Column_renderstatus"].Value?.ToString();
+                    if (!string.IsNullOrEmpty(status))
+                        renderInfo.RenderStatus = status;
+                }
 
-            // Đồng bộ lại vào project
-            _renderSyncService.UpdateProjectRenderList(_infoProject, _infoProject.InfoRenders, _allInfoRender);
+                // Đồng bộ lại vào project
+                _renderSyncService.UpdateProjectRenderList(_infoProject, _infoProject.InfoRenders, _allInfoRender);
+            }
         }
 
         /// <summary>
@@ -2858,7 +2860,8 @@ namespace ReviewMovie
             }
             catch (OperationCanceledException)
             {
-                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", LanguageManager.Get(LangKeys.Main_Cancelled), Color.OrangeRed);
+                FuncDataGridView.UpdateDataGridViewCell(dgvMainView, input.Index, "Column_renderstatus", LanguageManager.Get(LangKeys.Svc_RenderCancelledCell), Color.OrangeRed);
+                throw;
             }
             catch
             {

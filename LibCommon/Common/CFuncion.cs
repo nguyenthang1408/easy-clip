@@ -289,10 +289,14 @@ namespace LibCommon.Common
                             if (token.IsCancellationRequested)
                             {
                                 // Đã cancel, process đã bị kill
-                                return false;
+                                token.ThrowIfCancellationRequested();
                             }
                         }
+
+                        // Process đã kết thúc - kiểm tra có phải do cancel kill không
+                        token.ThrowIfCancellationRequested();
                     }
+                    catch (OperationCanceledException) { throw; }
                     catch
                     {
                         return false;
