@@ -42,6 +42,9 @@ namespace ReviewMovie.Base.Controls
                 Width = 80,
                 TextAlign = HorizontalAlignment.Center
             };
+            _numeric.HandleCreated += (_, __) => HideInnerButtons();
+            _numeric.Layout += (_, __) => HideInnerButtons();
+            _numeric.ControlAdded += (_, __) => HideInnerButtons();
 
             _buttonPanel = new UpDownButtonPanel();
             _buttonPanel.UpClicked += (_, __) =>
@@ -99,9 +102,20 @@ namespace ReviewMovie.Base.Controls
         private void HideInnerButtons()
         {
             if (_numeric.Controls.Count <= 0) return;
-            var buttons = _numeric.Controls[0];
-            buttons.Visible = false;
-            buttons.Enabled = false;
+            foreach (Control child in _numeric.Controls)
+            {
+                if (child == null || !child.GetType().Name.Contains("UpDownButtons", StringComparison.Ordinal))
+                    continue;
+
+                var buttons = child;
+                buttons.BackColor = NormalizeSurfaceColor(_backgroundColor);
+                buttons.ForeColor = _textColor;
+                buttons.Visible = false;
+                buttons.Enabled = false;
+                buttons.TabStop = false;
+                buttons.Location = new Point(_numeric.Width + 1, 0);
+                buttons.Size = new Size(0, Math.Max(0, _numeric.Height));
+            }
         }
 
         private void UpdateButtonPanelTheme()
@@ -147,6 +161,7 @@ namespace ReviewMovie.Base.Controls
 
             _numeric.Location = new Point(x, textY);
             _numeric.Size = new Size(textWidth, textHeight);
+            HideInnerButtons();
 
             _buttonPanel.Location = new Point(x + textWidth + spacing, y);
             _buttonPanel.Size = new Size(buttonWidth, innerH);
