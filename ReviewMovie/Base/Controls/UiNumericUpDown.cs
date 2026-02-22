@@ -16,9 +16,9 @@ namespace ReviewMovie.Base.Controls
         private bool _layouting;
         private bool _centerContent = true;
 
-        private Color _backgroundColor = ThemeManager.Current.SurfaceColor;
+        private Color _backgroundColor = Color.White;
         private Color _textColor = ThemeManager.Current.TextPrimary;
-        private Color _buttonColor = ThemeManager.Current.SurfaceColor;
+        private Color _buttonColor = Color.White;
         private Color _buttonHoverColor = ThemeManager.Current.Hover;
         private Color _buttonIconColor = ThemeManager.Current.TextSecondary;
 
@@ -89,7 +89,7 @@ namespace ReviewMovie.Base.Controls
 
         private void ApplyThemeToInner()
         {
-            _numeric.BackColor = _backgroundColor;
+            _numeric.BackColor = NormalizeSurfaceColor(_backgroundColor);
             _numeric.ForeColor = _textColor;
             _numeric.Font = Font;
             HideInnerButtons();
@@ -106,7 +106,7 @@ namespace ReviewMovie.Base.Controls
 
         private void UpdateButtonPanelTheme()
         {
-            _buttonPanel.ButtonColor = _buttonColor;
+            _buttonPanel.ButtonColor = NormalizeSurfaceColor(_buttonColor);
             _buttonPanel.HoverColor = _buttonHoverColor;
             _buttonPanel.IconColor = _buttonIconColor;
             _buttonPanel.Enabled = _numeric.Enabled;
@@ -158,13 +158,13 @@ namespace ReviewMovie.Base.Controls
         }
 
         [Category("Colors")]
-        public Color BackgroundColor { get => _backgroundColor; set { _backgroundColor = value; ApplyThemeToInner(); Invalidate(); } }
+        public Color BackgroundColor { get => _backgroundColor; set { _backgroundColor = NormalizeSurfaceColor(value); ApplyThemeToInner(); Invalidate(); } }
 
         [Category("Colors")]
         public Color TextColor { get => _textColor; set { _textColor = value; ApplyThemeToInner(); Invalidate(); } }
 
         [Category("Colors")]
-        public Color ButtonColor { get => _buttonColor; set { _buttonColor = value; ApplyThemeToInner(); UpdateButtonPanelTheme(); Invalidate(); } }
+        public Color ButtonColor { get => _buttonColor; set { _buttonColor = NormalizeSurfaceColor(value); ApplyThemeToInner(); UpdateButtonPanelTheme(); Invalidate(); } }
 
         [Category("Colors")]
         public Color ButtonHoverColor { get => _buttonHoverColor; set { _buttonHoverColor = value; UpdateButtonPanelTheme(); Invalidate(); } }
@@ -420,7 +420,7 @@ namespace ReviewMovie.Base.Controls
                 Math.Max(0f, Width - _borderSize - 1f),
                 Math.Max(0f, Height - _borderSize - 1f));
             using (var path = UiHelpers.CreateRoundedRectPath(fillRect, _borderRadius))
-            using (var fill = new SolidBrush(_backgroundColor))
+            using (var fill = new SolidBrush(NormalizeSurfaceColor(_backgroundColor)))
             {
                 e.Graphics.FillPath(fill, path);
             }
@@ -440,6 +440,15 @@ namespace ReviewMovie.Base.Controls
                     }
                 }
             }
+        }
+
+        private static Color NormalizeSurfaceColor(Color color)
+        {
+            if (color.A == 0) return Color.White;
+
+            // Prevent unreadable dark input surfaces for all UiNumericUpDown instances.
+            int luminance = (int)(0.299 * color.R + 0.587 * color.G + 0.114 * color.B);
+            return luminance < 45 ? Color.White : color;
         }
     }
 }
