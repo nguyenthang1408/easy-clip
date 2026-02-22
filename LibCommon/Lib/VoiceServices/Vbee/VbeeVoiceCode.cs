@@ -1,81 +1,82 @@
 ﻿using System;
+using LibCommon.Lib.Localization;
 
 namespace Lib
 {
     public class VbeeVoiceLanguage
     {
-        public const string VietNam_Des = "Việt Nam";
+        public static string VietNam_Des => LibLocalizer.IsEnglish ? "Vietnam" : "Việt Nam";
         public const string VietNam = "vi-VN";
 
-        public const string German_Des = "Đức - German (Germany)";
+        public static string German_Des => LibLocalizer.IsEnglish ? "German (Germany)" : "Đức - German (Germany)";
         public const string German = "de-DE";
 
-        public const string Korean_Des = "Hàn Quốc - Korean (South Korea)";
+        public static string Korean_Des => LibLocalizer.IsEnglish ? "Korean (South Korea)" : "Hàn Quốc - Korean (South Korea)";
         public const string Korean = "ko-KR";
 
-        public const string ChineseHK_Des = "Hồng Kông - Chinese (Hong Kong)";
+        public static string ChineseHK_Des => LibLocalizer.IsEnglish ? "Chinese (Hong Kong)" : "Hồng Kông - Chinese (Hong Kong)";
         public const string ChineseHK = "yue-HK";
 
-        public const string Russian_Des = "Nga - Russian (Russia)";
+        public static string Russian_Des => LibLocalizer.IsEnglish ? "Russian (Russia)" : "Nga - Russian (Russia)";
         public const string Russian = "ru-RU";
 
-        public const string Japanese_Des = "Nhật bản - Japanese (Japan)";
+        public static string Japanese_Des => LibLocalizer.IsEnglish ? "Japanese (Japan)" : "Nhật bản - Japanese (Japan)";
         public const string Japanese = "ja-JP";
 
-        public const string French_Des = "Pháp - French (France)";
+        public static string French_Des => LibLocalizer.IsEnglish ? "French (France)" : "Pháp - French (France)";
         public const string French = "fr-FR";
 
-        public const string FrenchCA_Des = "Pháp (Canada) - French (Canada)";
+        public static string FrenchCA_Des => LibLocalizer.IsEnglish ? "French (Canada)" : "Pháp (Canada) - French (Canada)";
         public const string FrenchCA = "fr-CA";
 
-        public const string EnglishBritish_Des = "Tiếng Anh (Anh) - English (British)";
+        public static string EnglishBritish_Des => LibLocalizer.IsEnglish ? "English (British)" : "Tiếng Anh (Anh) - English (British)";
         public const string EnglishBritish = "en-GB";
 
-        public const string EnglishUK_Des = "Tiếng Anh (Anh) - English (UK)";
+        public static string EnglishUK_Des => LibLocalizer.IsEnglish ? "English (UK)" : "Tiếng Anh (Anh) - English (UK)";
         public const string EnglishUK = "en-GB";
 
-        public const string EnglishUS_Des = "Tiếng Anh (Mỹ) - English (US)";
+        public static string EnglishUS_Des => LibLocalizer.IsEnglish ? "English (US)" : "Tiếng Anh (Mỹ) - English (US)";
         public const string EnglishUS = "en-US";
 
-        public const string MandarinChinese_Des = "Trung Quốc (Phổn thể) - Mandarin Chinese";
+        public static string MandarinChinese_Des => LibLocalizer.IsEnglish ? "Mandarin Chinese" : "Trung Quốc (Phổn thể) - Mandarin Chinese";
         public const string MandarinChinese = "cmn-CN";
     }
     public class VbeeVoicecode
     {
         #region "Việt Nam"
-        public const string NgocHuyen_Des = "HN - Ngọc Huyền (Nữ - Trẻ)";
+        public static string NgocHuyen_Des => LibLocalizer.IsEnglish ? "HN - Ngoc Huyen (Female - Young)" : "HN - Ngọc Huyền (Nữ - Trẻ)";
         //public const string NgocHuyen = "hn_female_ngochuyen_fast_news_48k-thg";
         public const string NgocHuyen = "hn_female_ngochuyen_full_48k-fhg";
 
-        public const string MaiPhuong_Des = "HN - Mai Phương (Nữ - Già)";
+        public static string MaiPhuong_Des => LibLocalizer.IsEnglish ? "HN - Mai Phuong (Female - Elderly)" : "HN - Mai Phương (Nữ - Già)";
         //public const string MaiPhuong = "hn_female_maiphuong_vdts_48k_cs-thg";
         public const string MaiPhuong = "hn_female_maiphuong_vdts_48k-fhg";
 
-        public const string LanTrinh_Des = "SG - Lan Trinh (Nữ - Già , Đọc Truyện)";
+        public static string LanTrinh_Des => LibLocalizer.IsEnglish ? "SG - Lan Trinh (Female - Elderly, Storytelling)" : "SG - Lan Trinh (Nữ - Già , Đọc Truyện)";
         //public const string LanTrinh = "sg_female_lantrinh_fast_vdts_48k_cs-thg";
         public const string LanTrinh = "sg_female_lantrinh_vdts_48k-fhg";
 
-        public const string HuongGiang_Des = "Huế - Hương Giang (Nữ Trẻ)";
+        public static string HuongGiang_Des => LibLocalizer.IsEnglish ? "Hue - Huong Giang (Female - Young)" : "Huế - Hương Giang (Nữ Trẻ)";
         //public const string HuongGiang = "hue_female_huonggiang_news_48k_cs-thg";
         public const string HuongGiang = "hue_female_huonggiang_full_48k-fhg";
 
-        public const string ThaoTrinh_Des = "SG - Thảo Trinh (Nữ Trẻ , Tin Tức)";
+        public static string ThaoTrinh_Des => LibLocalizer.IsEnglish ? "SG - Thao Trinh (Female - Young, News)" : "SG - Thảo Trinh (Nữ Trẻ , Tin Tức)";
         //public const string ThaoTrinh = "sg_female_thaotrinh_fast_news_48k_cs-thg";
         public const string ThaoTrinh = "sg_female_thaotrinh_full_48k-fhg";
 
-        public const string TrungKien_Des = "SG - Trung Kiên (Nam 35-40 , Tin Tức)";
+        public static string TrungKien_Des => LibLocalizer.IsEnglish ? "SG - Trung Kien (Male 35-40, News)" : "SG - Trung Kiên (Nam 35-40 , Tin Tức)";
         //public const string TrungKien = "sg_male_trungkien_vdts_48k-fhg";
         public const string TrungKien = "sg_male_trungkien_vdts_48k-fhg";
 
-        public const string DuyPhuong_Des = "Huế - Duy Phương (Nam 30-40, Bình Thường)";
+        public static string DuyPhuong_Des => LibLocalizer.IsEnglish ? "Hue - Duy Phuong (Male 30-40, Normal)" : "Huế - Duy Phương (Nam 30-40, Bình Thường)";
         //public const string DuyPhuong = "sg_female_duyphuong_fast_news_48k_cs-thg";
         public const string DuyPhuong = "hue_male_duyphuong_full_48k-fhg";
 
-        public const string MinhHoang_Des = "SG - Minh Hoàng (Nam 25-35 , Bình Thường)";
+        public static string MinhHoang_Des => LibLocalizer.IsEnglish ? "SG - Minh Hoang (Male 25-35, Normal)" : "SG - Minh Hoàng (Nam 25-35 , Bình Thường)";
         //public const string MinhHoang = "sg_male_minhhoang_fast_news_48k_cs-thg";
         public const string MinhHoang = "sg_male_minhhoang_full_48k-fhg";
 
-        public const string ManhDung_Des = "HN - Mạnh Dũng (Nam 30-40 , Mạnh Mẽ)";
+        public static string ManhDung_Des => LibLocalizer.IsEnglish ? "HN - Manh Dung (Male 30-40, Strong)" : "HN - Mạnh Dũng (Nam 30-40 , Mạnh Mẽ)";
         public const string ManhDung = "hn_male_manhdung_news_48k-fhg";
         #endregion
 
@@ -198,51 +199,51 @@ namespace Lib
         #endregion
 
         #region Tiếng Anh (Anh) - English (UK)"
-        public const string Laura_Des = "Laura (Nữ Trẻ - Nhanh)";
+        public static string Laura_Des => LibLocalizer.IsEnglish ? "Laura (Female Young - Fast)" : "Laura (Nữ Trẻ - Nhanh)";
         public const string Laura = "en-GB-Standard-A";
 
-        public const string Brian_Des = "Brian (Nam Trẻ)";
+        public static string Brian_Des => LibLocalizer.IsEnglish ? "Brian (Male Young)" : "Brian (Nam Trẻ)";
         public const string Brian = "en-GB-Standard-B";
 
-        public const string Rebecca_Des = "Rebecca (Nữ 30-40 tuổi, Nhẹ, Lướt)";
+        public static string Rebecca_Des => LibLocalizer.IsEnglish ? "Rebecca (Female 30-40, Light, Smooth)" : "Rebecca (Nữ 30-40 tuổi, Nhẹ, Lướt)";
         public const string Rebecca = "en-GB-Standard-C";
 
-        public const string Christopher_Des = "Christopher (Nam 25-35 tuổi , Rõ , Mạnh)";
+        public static string Christopher_Des => LibLocalizer.IsEnglish ? "Christopher (Male 25-35, Clear, Strong)" : "Christopher (Nam 25-35 tuổi , Rõ , Mạnh)";
         public const string Christopher = "en-GB-Standard-D";
 
-        public const string Sarah_Des = "Sarah (Nữ Trẻ - Rõ , Mạnh)";
+        public static string Sarah_Des => LibLocalizer.IsEnglish ? "Sarah (Female Young - Clear, Strong)" : "Sarah (Nữ Trẻ - Rõ , Mạnh)";
         public const string Sarah = "en-GB-Standard-F";
 
-        public const string Emily_Des = "Emily (Nữ Trẻ - Ngạt , Dễ Nghe)";
+        public static string Emily_Des => LibLocalizer.IsEnglish ? "Emily (Female Young - Soft, Easy Listening)" : "Emily (Nữ Trẻ - Ngạt , Dễ Nghe)";
         public const string Emily = "en-GB-Wavenet-A";
 
-        public const string James_Des = "James (Name Trẻ , Nhanh , Rõ)";
+        public static string James_Des => LibLocalizer.IsEnglish ? "James (Male Young, Fast, Clear)" : "James (Name Trẻ , Nhanh , Rõ)";
         public const string James = "en-GB-Wavenet-B";
 
-        public const string Jennifer_Des = "Jennifer (Nữ 40 , Chậm , Kể Chuyện)";
+        public static string Jennifer_Des => LibLocalizer.IsEnglish ? "Jennifer (Female 40, Slow, Storytelling)" : "Jennifer (Nữ 40 , Chậm , Kể Chuyện)";
         public const string Jennifer = "en-GB-Wavenet-C";
 
-        public const string Robert_Des = "Robert (Nam 40 , Chậm , Diễn Thuyết)";
+        public static string Robert_Des => LibLocalizer.IsEnglish ? "Robert (Male 40, Slow, Speaker)" : "Robert (Nam 40 , Chậm , Diễn Thuyết)";
         public const string Robert = "en-GB-Wavenet-D";
 
-        public const string Mary_Des = "Mary (Nữ Trẻ - Nhấn Cao, Rõ ràng)";
+        public static string Mary_Des => LibLocalizer.IsEnglish ? "Mary (Female Young - High Pitch, Clear)" : "Mary (Nữ Trẻ - Nhấn Cao, Rõ ràng)";
         public const string Mary = "en-GB-Wavenet-F";
         #endregion
 
         #region Tiếng Anh (Mỹ) - English (US)"
-        public const string Maddie_Des = "Maddie - (Trẻ Em)";
+        public static string Maddie_Des => LibLocalizer.IsEnglish ? "Maddie - (Child)" : "Maddie - (Trẻ Em)";
         public const string Maddie = "Ivy";
 
-        public const string LucasStandard_Des = "Lucas - Standard (Nam Trẻ)";
+        public static string LucasStandard_Des => LibLocalizer.IsEnglish ? "Lucas - Standard (Male Young)" : "Lucas - Standard (Nam Trẻ)";
         public const string LucasStandard = "en-US-Standard-D";
 
-        public const string OliviaStandard_Des = "Olivia - Standard (Nữ Trung Niên)";
+        public static string OliviaStandard_Des => LibLocalizer.IsEnglish ? "Olivia - Standard (Female Middle-Aged)" : "Olivia - Standard (Nữ Trung Niên)";
         public const string OliviaStandard = "en-US-Standard-E";
 
-        public const string LucasPremium_Des = "Lucas - Premium (Nam Trẻ)";
+        public static string LucasPremium_Des => LibLocalizer.IsEnglish ? "Lucas - Premium (Male Young)" : "Lucas - Premium (Nam Trẻ)";
         public const string LucasPremium = "en-US-Wavenet-D";
 
-        public const string OliviaPremium_Des = "Olivia - Premium (Nữ Trẻ)";
+        public static string OliviaPremium_Des => LibLocalizer.IsEnglish ? "Olivia - Premium (Female Young)" : "Olivia - Premium (Nữ Trẻ)";
         public const string OliviaPremium = "en-US-Wavenet-F";
         #endregion
 

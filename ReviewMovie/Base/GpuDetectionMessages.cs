@@ -1,31 +1,33 @@
+using ReviewMovie.Localization;
+
 namespace ReviewMovie.Base
 {
     /// <summary>
     /// String constants cho GPU Detection
-    /// Tách riêng để hỗ trợ đa ngôn ngữ trong tương lai
+    /// Hỗ trợ đa ngôn ngữ thông qua LanguageManager
     /// </summary>
     public static class GpuDetectionMessages
     {
-        #region Error Messages - Thông báo lỗi chi tiết
+        #region Error Messages - Thông báo lỗi chi tiết (localized)
 
-        public const string ERROR_FFMPEG_NOT_FOUND = "Không tìm thấy FFmpeg.exe";
-        public const string ERROR_ENCODER_NOT_FOUND = "h264_nvenc không có trong danh sách encoders";
-        public const string ERROR_DRIVER_NOT_SUPPORT = "Driver NVIDIA không hỗ trợ phiên bản NVENC API yêu cầu";
-        public const string ERROR_API_VERSION_MISMATCH = "Phiên bản NVENC API không tương thích";
-        public const string ERROR_DRIVER_TOO_OLD = "Driver NVIDIA quá cũ, cần cập nhật driver";
-        public const string ERROR_ENCODER_INIT_FAILED = "Không thể khởi tạo encoder NVENC";
-        public const string ERROR_ENCODER_OPEN_FAILED = "Không thể mở encoder NVENC";
-        public const string ERROR_ENCODING_FAILED = "GPU encoding thất bại";
-        public const string ERROR_NO_DEVICE_FOUND = "Không tìm thấy GPU hỗ trợ NVENC";
-        public const string ERROR_CANNOT_LOAD_NVCUDA = "Không load được nvcuda.dll";
-        public const string ERROR_CANNOT_LOAD_NVENC_API = "Không load được nvEncodeAPI";
-        public const string ERROR_FUNCTION_NOT_IMPLEMENTED = "Chức năng không được hỗ trợ";
-        public const string ERROR_INVALID_ARGUMENT = "Tham số không hợp lệ";
-        public const string ERROR_OUTPUT_STREAM_INIT = "Lỗi khởi tạo output stream";
+        public static string ERROR_FFMPEG_NOT_FOUND => LanguageManager.Get(LangKeys.Gpu_FfmpegNotFound);
+        public static string ERROR_ENCODER_NOT_FOUND => LanguageManager.Get(LangKeys.Gpu_EncoderNotFound);
+        public static string ERROR_DRIVER_NOT_SUPPORT => LanguageManager.Get(LangKeys.Gpu_DriverNotSupport);
+        public static string ERROR_API_VERSION_MISMATCH => LanguageManager.Get(LangKeys.Gpu_ApiVersionMismatch);
+        public static string ERROR_DRIVER_TOO_OLD => LanguageManager.Get(LangKeys.Gpu_DriverTooOld);
+        public static string ERROR_ENCODER_INIT_FAILED => LanguageManager.Get(LangKeys.Gpu_EncoderInitFailed);
+        public static string ERROR_ENCODER_OPEN_FAILED => LanguageManager.Get(LangKeys.Gpu_EncoderOpenFailed);
+        public static string ERROR_ENCODING_FAILED => LanguageManager.Get(LangKeys.Gpu_EncodingFailed);
+        public static string ERROR_NO_DEVICE_FOUND => LanguageManager.Get(LangKeys.Gpu_NoDeviceFound);
+        public static string ERROR_CANNOT_LOAD_NVCUDA => LanguageManager.Get(LangKeys.Gpu_CannotLoadNvcuda);
+        public static string ERROR_CANNOT_LOAD_NVENC_API => LanguageManager.Get(LangKeys.Gpu_CannotLoadNvencApi);
+        public static string ERROR_FUNCTION_NOT_IMPLEMENTED => LanguageManager.Get(LangKeys.Gpu_FunctionNotImpl);
+        public static string ERROR_INVALID_ARGUMENT => LanguageManager.Get(LangKeys.Gpu_InvalidArgument);
+        public static string ERROR_OUTPUT_STREAM_INIT => LanguageManager.Get(LangKeys.Gpu_OutputStreamInit);
 
         #endregion
 
-        #region FFmpeg Error Patterns - Pattern lỗi FFmpeg
+        #region FFmpeg Error Patterns - Pattern lỗi FFmpeg (không đổi, dùng để detect từ output FFmpeg)
 
         public const string PATTERN_DRIVER_NOT_SUPPORT = "Driver does not support";
         public const string PATTERN_NVENC_API_VERSION = "nvenc API version";
@@ -42,49 +44,33 @@ namespace ReviewMovie.Base
 
         #endregion
 
-        #region User-Friendly Messages - Thông báo cho user
+        #region User-Friendly Messages - Thông báo cho user (localized)
 
-        public const string MSG_GPU_NOT_AVAILABLE = "GPU NVIDIA không khả dụng!";
-        public const string MSG_ERROR_PREFIX = "Lỗi: ";
-        public const string MSG_SWITCH_TO_CPU = "\n\nHệ thống sẽ chuyển về sử dụng CPU.";
+        public static string MSG_GPU_NOT_AVAILABLE => LanguageManager.Get(LangKeys.Gpu_NotAvailable);
+        public static string MSG_ERROR_PREFIX => LanguageManager.Get(LangKeys.Gpu_ErrorPrefix);
+        public static string MSG_SWITCH_TO_CPU => LanguageManager.Get(LangKeys.Gpu_SwitchToCpu);
 
-        // Hướng dẫn theo loại lỗi
-        public const string GUIDE_FFMPEG_NOT_FOUND =
-            "FFmpeg chưa được cài đặt hoặc không tìm thấy.\n" +
-            "Vui lòng tải và cài đặt FFmpeg.";
-
-        public const string GUIDE_DRIVER_TOO_OLD =
-            "Vui lòng cập nhật driver NVIDIA lên phiên bản mới nhất.";
-
-        public const string GUIDE_NO_DEVICE_FOUND =
-            "Không tìm thấy GPU NVIDIA hỗ trợ NVENC.\n" +
-            "Cần card đồ họa NVIDIA GTX 600 series trở lên.";
-
-        public const string GUIDE_GENERAL =
-            "Vui lòng kiểm tra:\n" +
-            "- Card đồ họa NVIDIA có hỗ trợ NVENC (GTX 600 series trở lên)\n" +
-            "- Driver NVIDIA đã được cài đặt và cập nhật\n" +
-            "- FFmpeg được build với hỗ trợ NVENC";
+        public static string GUIDE_FFMPEG_NOT_FOUND => LanguageManager.Get(LangKeys.Gpu_GuideFfmpeg);
+        public static string GUIDE_DRIVER_TOO_OLD => LanguageManager.Get(LangKeys.Gpu_GuideDriverOld);
+        public static string GUIDE_NO_DEVICE_FOUND => LanguageManager.Get(LangKeys.Gpu_GuideNoDevice);
+        public static string GUIDE_GENERAL => LanguageManager.Get(LangKeys.Gpu_GuideGeneral);
 
         #endregion
 
-        #region Auto-Detection Messages - Thông báo auto-detect
+        #region Auto-Detection Messages - Thông báo auto-detect (localized)
 
-        public const string DETECT_GPU_AVAILABLE_TITLE = "Đề xuất sử dụng GPU";
-        public const string DETECT_GPU_AVAILABLE_MESSAGE =
-            "Phát hiện GPU NVIDIA hỗ trợ h264_nvenc!\n\n" +
-            "GPU rendering nhanh hơn CPU khoảng 5-10 lần.\n\n" +
-            "Bạn có muốn sử dụng GPU để render không?";
-
-        public const string VALIDATE_GPU_FAILED_TITLE = "GPU không hoạt động";
+        public static string DETECT_GPU_AVAILABLE_TITLE => LanguageManager.Get(LangKeys.Gpu_DetectTitle);
+        public static string DETECT_GPU_AVAILABLE_MESSAGE => LanguageManager.Get(LangKeys.Gpu_DetectMessage);
+        public static string VALIDATE_GPU_FAILED_TITLE => LanguageManager.Get(LangKeys.Gpu_ValidateFailedTitle);
 
         #endregion
 
-        #region Test Messages - Thông báo test
+        #region Test Messages - Thông báo test (localized)
 
-        public const string TEST_ENCODING_FAILED_PREFIX = "GPU encoding test thất bại (exit code: ";
-        public const string TEST_GPU_ERROR_PREFIX = "Lỗi test GPU: ";
-        public const string UNKNOWN_ERROR_PREFIX = "Lỗi không xác định: ";
+        // Keep prefix pattern for format methods
+        public static string TEST_ENCODING_FAILED_PREFIX => LanguageManager.Get(LangKeys.Gpu_TestEncodingFailed);
+        public static string TEST_GPU_ERROR_PREFIX => LanguageManager.Get(LangKeys.Gpu_TestGpuError);
+        public static string UNKNOWN_ERROR_PREFIX => LanguageManager.Get(LangKeys.Gpu_UnknownError);
 
         #endregion
 
@@ -95,7 +81,7 @@ namespace ReviewMovie.Base
         /// </summary>
         public static string GetEncodingFailedMessage(int exitCode)
         {
-            return $"{TEST_ENCODING_FAILED_PREFIX}{exitCode})";
+            return LanguageManager.GetFormat(LangKeys.Gpu_TestEncodingFailed, exitCode);
         }
 
         /// <summary>
@@ -103,7 +89,7 @@ namespace ReviewMovie.Base
         /// </summary>
         public static string GetTestGpuErrorMessage(string errorDetail)
         {
-            return $"{TEST_GPU_ERROR_PREFIX}{errorDetail}";
+            return LanguageManager.GetFormat(LangKeys.Gpu_TestGpuError, errorDetail);
         }
 
         /// <summary>
@@ -111,7 +97,7 @@ namespace ReviewMovie.Base
         /// </summary>
         public static string GetUnknownErrorMessage(string errorDetail)
         {
-            return $"{UNKNOWN_ERROR_PREFIX}{errorDetail}";
+            return LanguageManager.GetFormat(LangKeys.Gpu_UnknownError, errorDetail);
         }
 
         #endregion

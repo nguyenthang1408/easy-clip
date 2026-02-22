@@ -4,9 +4,11 @@ using Google.Apis.Auth.OAuth2;
 using Google.Cloud.TextToSpeech.V1;
 using Grpc.Auth;
 using Grpc.Core;
+using LibCommon.Lib.Localization;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Lib.VoiceServices.GoogleTTS
@@ -75,15 +77,17 @@ namespace Lib.VoiceServices.GoogleTTS
             }
         }
 
-        public ConversionResult ConvertTextToSpeech(string jsonData, string textInput, string voiceCode, string savePath)
+        public ConversionResult ConvertTextToSpeech(string jsonData, string textInput, string voiceCode, string savePath, CancellationToken cancellationToken = default)
         {
             try
             {
                 // Kiểm tra các tham số đầu vào
-                if (string.IsNullOrEmpty(jsonData)) return new ConversionResult(false, "JSON Data không được để trống.");
-                if (string.IsNullOrEmpty(textInput)) return new ConversionResult(false, "Nội dung chuyển đổi không được để trống.");
-                if (string.IsNullOrEmpty(voiceCode)) return new ConversionResult(false, "Voice code không được để trống.");
-                if (string.IsNullOrEmpty(savePath)) return new ConversionResult(false, "Đường dẫn lưu file không được để trống.");
+                if (string.IsNullOrEmpty(jsonData)) return new ConversionResult(false, LibLocalizer.Get("Lib_JsonDataEmpty"));
+                if (string.IsNullOrEmpty(textInput)) return new ConversionResult(false, LibLocalizer.Get("Lib_TextInputEmpty"));
+                if (string.IsNullOrEmpty(voiceCode)) return new ConversionResult(false, LibLocalizer.Get("Lib_VoiceCodeEmpty"));
+                if (string.IsNullOrEmpty(savePath)) return new ConversionResult(false, LibLocalizer.Get("Lib_SavePathEmpty"));
+
+                cancellationToken.ThrowIfCancellationRequested();
 
                 // Thiết lập Google Text-to-Speech client
                 var client = textToSpeechClient(jsonData);
@@ -105,22 +109,24 @@ namespace Lib.VoiceServices.GoogleTTS
                     AudioEncoding = AudioEncoding.Mp3
                 };
 
-                // Gửi yêu cầu đến API và nhận phản hồi (timeout 7s)
-                var response = client.SynthesizeSpeech(synthesisInput, voiceParams, audioConfig, _callSettings);
+                // Gửi yêu cầu đến API và nhận phản hồi (timeout 7s) - truyền cancellationToken qua CallSettings
+                var callSettingsWithCancel = _callSettings.WithCancellationToken(cancellationToken);
+                var response = client.SynthesizeSpeech(synthesisInput, voiceParams, audioConfig, callSettingsWithCancel);
 
                 // Kiểm tra dữ liệu âm thanh trả về
                 if (response.AudioContent == null || response.AudioContent.Length == 0)
-                    return new ConversionResult(false, "Không nhận được dữ liệu âm thanh từ API.");
+                    return new ConversionResult(false, LibLocalizer.Get("Lib_NoAudioData"));
 
                 // Lưu file MP3
                 File.WriteAllBytes(savePath, response.AudioContent.ToByteArray());
 
-                return new ConversionResult(true, "Tải xuống thành công."); // Trạng thái tải xuống thành công
+                return new ConversionResult(true, LibLocalizer.Get("Lib_ConvertDownloadSuccess"));
             }
+            catch (OperationCanceledException) { throw; }
             catch (Exception ex)
             {
                 // Xử lý lỗi
-                return new ConversionResult(false, $"Lỗi: {ex.Message}"); // Trạng thái tải xuống thất bại cùng với thông báo lỗi
+                return new ConversionResult(false, LibLocalizer.GetFormat("Lib_ErrorFormat", ex.Message));
             }
         }
 

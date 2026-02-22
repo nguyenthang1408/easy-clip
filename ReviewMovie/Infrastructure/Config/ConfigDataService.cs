@@ -17,6 +17,8 @@ namespace EasyClip.Infrastructure.Config
     {
         bool Insert(ConfigModel item);
         bool UpdateConfig(ConfigVoiceDto input);
+        bool UpdateLanguage(string language);
+        string GetLanguage();
         bool UpdateProjectNameDate(Guid projectId);
         bool IsProjectPathUnique(string projectPath);
         bool DeleteProjectName(Guid projectId);
@@ -118,6 +120,61 @@ namespace EasyClip.Infrastructure.Config
                 File.AppendAllText(dblog, $"Error updating configuration: {ex.Message}\n");
             }
             return false;
+        }
+
+        public bool UpdateLanguage(string language)
+        {
+            try
+            {
+                lock (LockDb)
+                {
+                    using (var liteDatabase = new LiteDatabase(dbconnection))
+                    {
+                        var collection = liteDatabase.GetCollection<ConfigModel>(TableName);
+                        var config = collection.FindById(1);
+
+                        if (config != null)
+                        {
+                            config.Language = language;
+                            collection.Update(config);
+                            return true;
+                        }
+                        else
+                        {
+                            var newConfig = new ConfigModel { ID = 1, Language = language };
+                            collection.Insert(newConfig);
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(dblog, $"Error updating language: {ex.Message}\n");
+            }
+            return false;
+        }
+
+        public string GetLanguage()
+        {
+            try
+            {
+                lock (LockDb)
+                {
+                    using (var liteDatabase = new LiteDatabase(dbconnection))
+                    {
+                        var collection = liteDatabase.GetCollection<ConfigModel>(TableName);
+                        var config = collection.FindById(1);
+                        if (config != null && !string.IsNullOrEmpty(config.Language))
+                            return config.Language;
+                    }
+                }
+            }
+            catch
+            {
+                // Default to Vietnamese on error
+            }
+            return "vi";
         }
 
         public bool UpdateProjectNameDate(Guid projectId)

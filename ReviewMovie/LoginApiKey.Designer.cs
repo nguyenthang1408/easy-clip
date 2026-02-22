@@ -1,4 +1,4 @@
-﻿namespace ReviewMovie
+namespace ReviewMovie
 {
     partial class LoginApiKey
     {
@@ -37,11 +37,12 @@
             this.lkHelp = new System.Windows.Forms.LinkLabel();
             this.lbstatus = new System.Windows.Forms.Label();
             this.linklbRegister = new System.Windows.Forms.LinkLabel();
+            this.cbAppLanguage = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btnLoginApiKey
             // 
-            this.btnLoginApiKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnLoginApiKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;	
             this.btnLoginApiKey.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnLoginApiKey.Depth = 0;
             this.btnLoginApiKey.HighEmphasis = true;
@@ -125,7 +126,7 @@
             this.lkHelp.LinkColor = System.Drawing.Color.Blue;
             this.lkHelp.Location = new System.Drawing.Point(350, 288);
             this.lkHelp.Name = "lkHelp";
-            this.lkHelp.Size = new System.Drawing.Size(82, 20);
+            this.lkHelp.Size = new System.Drawing.Size(67, 16);
             this.lkHelp.TabIndex = 7;
             this.lkHelp.TabStop = true;
             this.lkHelp.Text = "Trợ Giúp";
@@ -134,10 +135,11 @@
             // lbstatus
             // 
             this.lbstatus.AutoSize = true;
-            this.lbstatus.MaximumSize = new System.Drawing.Size(312, 0);
             this.lbstatus.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lbstatus.Location = new System.Drawing.Point(67, 208);
+            this.lbstatus.MaximumSize = new System.Drawing.Size(312, 0);
             this.lbstatus.Name = "lbstatus";
+            this.lbstatus.Size = new System.Drawing.Size(13, 13);
             this.lbstatus.TabIndex = 8;
             this.lbstatus.Text = "_";
             // 
@@ -148,17 +150,31 @@
             this.linklbRegister.LinkColor = System.Drawing.Color.Red;
             this.linklbRegister.Location = new System.Drawing.Point(350, 264);
             this.linklbRegister.Name = "linklbRegister";
-            this.linklbRegister.Size = new System.Drawing.Size(79, 20);
+            this.linklbRegister.Size = new System.Drawing.Size(64, 16);
             this.linklbRegister.TabIndex = 9;
             this.linklbRegister.TabStop = true;
             this.linklbRegister.Text = "Đăng Ký";
             this.linklbRegister.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklbRegister_LinkClicked);
+            // 
+            // cbAppLanguage
+            // 
+            this.cbAppLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAppLanguage.FormattingEnabled = true;
+            this.cbAppLanguage.Items.AddRange(new object[] {
+            "Tiếng Việt",
+            "English"});
+            this.cbAppLanguage.Location = new System.Drawing.Point(303, 12);
+            this.cbAppLanguage.Name = "cbAppLanguage";
+            this.cbAppLanguage.Size = new System.Drawing.Size(76, 21);
+            this.cbAppLanguage.TabIndex = 10;
+            this.cbAppLanguage.SelectedIndexChanged += new System.EventHandler(this.cbAppLanguage_SelectedIndexChanged);
             // 
             // LoginApiKey
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(441, 321);
+            this.Controls.Add(this.cbAppLanguage);
             this.Controls.Add(this.lbstatus);
             this.Controls.Add(this.linklbRegister);
             this.Controls.Add(this.lkHelp);
@@ -190,5 +206,6 @@
         private System.Windows.Forms.LinkLabel lkHelp;
         private System.Windows.Forms.Label lbstatus;
         private System.Windows.Forms.LinkLabel linklbRegister;
+        private System.Windows.Forms.ComboBox cbAppLanguage;
     }
 }

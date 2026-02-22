@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Lib.VoiceServices.ElevenLabs.V1.Services
@@ -21,10 +22,10 @@ namespace Lib.VoiceServices.ElevenLabs.V1.Services
             ApiKey = apikey;
             ElevenlabsText2speechAdress = $"{URLInfo.Https}{URLInfo.ElevenLabsDomain}{URLInfo.DefaultApiVersion}{URLInfo.TextToSpeech}";
         }
-        public async Task<TextToSpeechResponse> SendTextToSpeechRequestAsync(string voiceId, TextToSpeechRequest request, OutputFormat outputFormat = OutputFormat.MP3_44100_32, bool enableLogging = true)
+        public async Task<TextToSpeechResponse> SendTextToSpeechRequestAsync(string voiceId, TextToSpeechRequest request, OutputFormat outputFormat = OutputFormat.MP3_44100_32, bool enableLogging = true, CancellationToken cancellationToken = default)
         {
             var urlTextToSpeech = $"{ElevenlabsText2speechAdress}{voiceId}?enable_logging={enableLogging}&output_format={outputFormat.ToString().ToLower()}";
-            var postResponse = await apiClientRequest.PostAsync(urlTextToSpeech, request, ApiKey);
+            var postResponse = await apiClientRequest.PostAsync(urlTextToSpeech, request, ApiKey, cancellationToken);
 
             if (postResponse.IsSuccessStatusCode)
             {

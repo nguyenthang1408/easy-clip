@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibCommon.Lib.Localization;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -15,16 +16,16 @@ namespace Lib
         public const string EffectRandomMove_Des = "Random Move (Left | Right)";
         public const string EffectRandomMove_Val = nameof(EffectTypeSelect.RandomMove);
 
-        public const string EffectZoomIn_Des = "ZoomIn 4 góc";
+        public static string EffectZoomIn_Des => LibLocalizer.Get("Lib_EffectZoomIn");
         public const string EffectZoomIn_Val = nameof(EffectTypeSelect.ZoomIn);
 
-        public const string EffectZoomOut_Des = "ZoomOut 4 góc";
+        public static string EffectZoomOut_Des => LibLocalizer.Get("Lib_EffectZoomOut");
         public const string EffectZoomOut_Val = nameof(EffectTypeSelect.ZoomOut);
 
-        public const string EffectMoveX_Des = "Di chuyển dọc";
+        public static string EffectMoveX_Des => LibLocalizer.Get("Lib_EffectMoveVertical");
         public const string EffectMoveX_Val = nameof(EffectTypeSelect.MoveX);
 
-        public const string EffectMoveY_Des = "Di chuyển ngang";
+        public static string EffectMoveY_Des => LibLocalizer.Get("Lib_EffectMoveHorizontal");
         public const string EffectMoveY_Val = nameof(EffectTypeSelect.MoveY);
 
     }
@@ -85,13 +86,13 @@ namespace Lib
         public const string ZoomRatio10_Des = "10%";
         public const string ZoomRatio10_Val = "1.1";
 
-        public const string ZoomRatio25_Des = "25% - Lách Short";
+        public static string ZoomRatio25_Des => LibLocalizer.Get("Lib_Zoom25Short");
         public const string ZoomRatio25_Val = "1.25";
 
         public const string ZoomRatio50_Des = "50%";
         public const string ZoomRatio50_Val = "1.5";
 
-        public const string ZoomRatio75_Des = "75% - Lách Normal";
+        public static string ZoomRatio75_Des => LibLocalizer.Get("Lib_Zoom75Normal");
         public const string ZoomRatio75_Val = "1.75";
 
         public const string ZoomRatio100_Des = "100%";
@@ -123,16 +124,16 @@ namespace Lib
 
     public static class ZoomQualitytName
     {
-        public const string ZoomQuality_Low_Des = "Low";
+        public static string ZoomQuality_Low_Des => LibLocalizer.IsEnglish ? "Low" : "Thấp";
         public const string ZoomQuality_Low_Val = "3000";
 
-        public const string ZoomQuality_Normal_Des = "Normal";
+        public static string ZoomQuality_Normal_Des => LibLocalizer.IsEnglish ? "Normal" : "Bình thường";
         public const string ZoomQuality_Normal_Val = "4000";
 
-        public const string ZoomQuality_Medium_Des = "Medium";
+        public static string ZoomQuality_Medium_Des => LibLocalizer.IsEnglish ? "Medium" : "Trung bình";
         public const string ZoomQuality_Medium_Val = "6000";
 
-        public const string ZoomQuality_High_Des = "High";
+        public static string ZoomQuality_High_Des => LibLocalizer.IsEnglish ? "High" : "Cao";
         public const string ZoomQuality_High_Val = "8000";
 
     }

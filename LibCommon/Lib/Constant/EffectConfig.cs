@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibCommon.Lib.Localization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace Lib
 {
     public static class EffectConfigName
     {
-        public const string DEFAULT_Des = "Mặc Định Tiêu Chuẩn";
+        public static string DEFAULT_Des => LibLocalizer.Get("Lib_ConfigDefault");
         public const string DEFAULT_Val = "default";
 
-        public const string CUSTOM_Des = "Tùy Chỉnh";
+        public static string CUSTOM_Des => LibLocalizer.Get("Lib_ConfigCustom");
         public const string CUSTOM_Val = "custom";
     }
     public static class EffectConfig

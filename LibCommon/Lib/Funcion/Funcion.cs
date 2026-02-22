@@ -98,19 +98,27 @@ namespace Lib
             }
             return newjob;
         }
-        public static async Task<Iobject> DownloadFileAsync(Iobject rec)
+        public static async Task<Iobject> DownloadFileAsync(Iobject rec, CancellationToken cancellationToken = default)
         {
             Iobject newjob = rec;
             try
             {
                 string localPath = Path.Combine(rec.savepath, rec.filename);
-                using (var cts = new CancellationTokenSource(NetworkConfig.Timeout))
-                using (var webClient = new WebClient())
+                using (var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
                 {
-                    cts.Token.Register(() => webClient.CancelAsync());
-                    await webClient.DownloadFileTaskAsync(new Uri(rec.uri), localPath);
-                    newjob.ResultCode = true;
+                    cts.CancelAfter(NetworkConfig.Timeout);
+                    using (var webClient = new WebClient())
+                    {
+                        cts.Token.Register(() => webClient.CancelAsync());
+                        await webClient.DownloadFileTaskAsync(new Uri(rec.uri), localPath);
+                        newjob.ResultCode = true;
+                    }
                 }
+            }
+            catch (OperationCanceledException) { throw; }
+            catch (WebException ex) when (ex.Status == WebExceptionStatus.RequestCanceled)
+            {
+                throw new OperationCanceledException("Download cancelled", ex, cancellationToken);
             }
             catch
             {

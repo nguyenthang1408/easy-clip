@@ -288,9 +288,17 @@ namespace LibCommon.Common
                         {
                             if (token.IsCancellationRequested)
                             {
-                                // Đã cancel, process đã bị kill
+                                // Đã cancel, process đã bị kill bởi token.Register callback
+                                // Chờ process thoát hẳn trước khi return
+                                try { process.WaitForExit(3000); } catch { }
                                 return false;
                             }
+                        }
+
+                        // Process đã kết thúc - kiểm tra có phải do cancel kill không
+                        if (token.IsCancellationRequested)
+                        {
+                            return false;
                         }
                     }
                     catch

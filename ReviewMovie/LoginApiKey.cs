@@ -1,15 +1,17 @@
-﻿using Common.Constant;
+using Common.Constant;
 using Common.Services;
 using EasyClip.Infrastructure.Config;
+using EasyClip.View.DialogMessage;
 using Lib;
 using LibCommon.Lib;
+using ReviewMovie.Localization;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace ReviewMovie
 {
-    public partial class LoginApiKey : Form
+    public partial class LoginApiKey : Form, ILocalizable
     {
         private string AppVersion { get; } = "1.0.1"; // Định nghĩa phiên bản ứng dụng
         private readonly AppCodeService appCodeService;
@@ -21,11 +23,37 @@ namespace ReviewMovie
             appCodeService = new AppCodeService(); // Khởi tạo service
             _configService = new ConfigDataService();
 
+            // Load saved language and set ComboBox
+            LanguageManager.LoadSavedLanguage();
+            cbAppLanguage.SelectedIndex = LanguageManager.CurrentLanguage == LanguageManager.Language.En ? 1 : 0;
+
+            // Subscribe to language change
+            LanguageManager.LanguageChanged += ApplyLanguage;
+            ApplyLanguage();
+
             DisplayAppCode();
             LoadApiKey();
 
             // Đặt sự kiện cho việc đóng form
             this.FormClosing += LoginApiKey_FormClosing;
+        }
+
+        public void ApplyLanguage()
+        {
+            this.Text = LanguageManager.Get(LangKeys.Login_Title);
+            materialLabel1.Text = LanguageManager.Get(LangKeys.Login_AppCode);
+            materialLabel2.Text = LanguageManager.Get(LangKeys.Login_ApiKey);
+            btnLoginApiKey.Text = LanguageManager.Get(LangKeys.Login_BtnLogin);
+            lkHelp.Text = LanguageManager.Get(LangKeys.Login_Help);
+            linklbRegister.Text = LanguageManager.Get(LangKeys.Login_Register);
+        }
+
+        private void cbAppLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbAppLanguage.SelectedIndex == 1)
+                LanguageManager.SetLanguage(LanguageManager.Language.En);
+            else
+                LanguageManager.SetLanguage(LanguageManager.Language.Vi);
         }
 
         private void DisplayAppCode()
@@ -48,7 +76,7 @@ namespace ReviewMovie
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Không thể lấy được T2PKey: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox.Show(LanguageManager.Get(LangKeys.Login_CannotGetKey) + ex.Message, LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -64,7 +92,7 @@ namespace ReviewMovie
             string apiKey = txInsertApiKey.Text.Trim();
             if (string.IsNullOrEmpty(apiKey))
             {
-                MessageBox.Show("Vui lòng nhập API Key!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MsgBox.Show(LanguageManager.Get(LangKeys.Login_EnterApiKey), LanguageManager.Get(LangKeys.Common_Notice), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 btnLoginApiKey.Enabled = true; // Bật lại nút nếu lỗi
                 return;
             }
@@ -82,7 +110,7 @@ namespace ReviewMovie
                     // Code 2001: Tài khoản hợp lệ nhưng chưa kích hoạt gói hoặc gói đã hết hạn
                     if (response.Code == VersionMessageHelper.CodeSuccessNoSubscription)
                     {
-                        lbstatus.Text = VersionMessageHelper.GetVietnameseMessage(response.Code);
+                        lbstatus.Text = VersionMessageHelper.GetMessage(response.Code);
                         lbstatus.ForeColor = Color.OrangeRed;
                         return;
                     }
@@ -92,9 +120,9 @@ namespace ReviewMovie
                     var checkver = new CheckVersionServices();
                     if (checkver.IsNewerVersion(latestVersion, currentVersion))
                     {
-                        DialogResult result = MessageBox.Show(
-                           $"Bạn đang sử dụng phiên bản {currentVersion}. Phiên bản mới nhất là {latestVersion}. Bạn có muốn cập nhật không?",
-                           "Cập nhật phiên bản",
+                        DialogResult result = MsgBox.Show(
+                           LanguageManager.GetFormat(LangKeys.Login_VersionUpdate, currentVersion, latestVersion),
+                           LanguageManager.Get(LangKeys.Login_VersionUpdateTitle),
                            MessageBoxButtons.YesNo,
                            MessageBoxIcon.Warning,
                            MessageBoxDefaultButton.Button1);
@@ -107,9 +135,6 @@ namespace ReviewMovie
                         }
                         // Nếu người dùng chọn No thì tiếp tục cho phép đăng nhập
                     }
-                    // Đăng nhập thành công
-                    MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                     // Mở form chính và đóng form đăng nhập, truyền response để tránh gọi API lần 2
                     this.Hide();
                     FormMain mainForm = new FormMain(appCode, appSlugID, txInsertApiKey.Text, response);
@@ -120,16 +145,15 @@ namespace ReviewMovie
                 }
                 else
                 {
-                    // Hiển thị thông báo tiếng Việt dựa trên mã code từ server
-                    lbstatus.Text = VersionMessageHelper.GetVietnameseMessage(response.Code);
+                    // Hiển thị thông báo dựa trên mã code từ server
+                    lbstatus.Text = VersionMessageHelper.GetMessage(response.Code);
                     lbstatus.ForeColor = Color.Red;
                 }
             }
             catch
             {
-                lbstatus.Text = "Không Kết nối Được, API cần được Kích Hoạt!";
+                lbstatus.Text = LanguageManager.Get(LangKeys.Login_ConnectionFailed);
                 lbstatus.ForeColor = Color.Red;
-                //MessageBox.Show("Không Kết nối Được, API cần được Kích Hoạt!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -144,6 +168,7 @@ namespace ReviewMovie
 
         private void LoginApiKey_FormClosing(object sender, FormClosingEventArgs e)
         {
+            LanguageManager.LanguageChanged -= ApplyLanguage;
             Application.Exit();
         }
 

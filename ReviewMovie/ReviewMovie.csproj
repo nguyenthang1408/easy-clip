@@ -105,6 +105,11 @@
     <Compile Include="Base\Enum.cs" />
     <Compile Include="Base\GpuDetectionMessages.cs" />
     <Compile Include="Base\GpuDetectionResult.cs" />
+    <Compile Include="Localization\ILocalizable.cs" />
+    <Compile Include="Localization\LanguageManager.cs" />
+    <Compile Include="Localization\LangKeys.cs" />
+    <Compile Include="Localization\Resources\Lang_vi.cs" />
+    <Compile Include="Localization\Resources\Lang_en.cs" />
     <Compile Include="Base\RVFuncion.cs" />
     <Compile Include="Base\TextProcessUtil.cs" />
     <Compile Include="Base\UIThreadHelper.cs" />
@@ -146,12 +151,19 @@
     <Compile Include="Services\RenderDataSyncService.cs" />
     <Compile Include="Services\VideoMergeService.cs" />
     <Compile Include="Services\VideoValidationService.cs" />
+    <Compile Include="View\DialogMessage\DialogMsg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\DialogMessage\DialogMsg.Designer.cs">
+      <DependentUpon>DialogMsg.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\DialogMessage\FormLoadingCancel.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\DialogMessage\FormLoadingCancel.Designer.cs">
       <DependentUpon>FormLoadingCancel.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\DialogMessage\MsgBox.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

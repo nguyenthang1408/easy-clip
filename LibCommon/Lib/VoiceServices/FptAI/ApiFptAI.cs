@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -11,7 +12,7 @@ namespace Lib
     {
         public ApiFptAI() { }
 
-        private async Task<FptAIModelOutput> TextToSpeechRequestAsync(FptAIModelInput input)
+        private async Task<FptAIModelOutput> TextToSpeechRequestAsync(FptAIModelInput input, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -22,7 +23,7 @@ namespace Lib
                     client.DefaultRequestHeaders.Add("speed", input.speedrate);
                     client.DefaultRequestHeaders.Add("voice", input.voidcoce);
 
-                    var response = await client.PostAsync("https://api.fpt.ai/hmi/tts/v5", new StringContent(payload));
+                    var response = await client.PostAsync("https://api.fpt.ai/hmi/tts/v5", new StringContent(payload), cancellationToken);
                     string result = await response.Content.ReadAsStringAsync();
 
                     return new FptAIModelOutput
@@ -32,6 +33,7 @@ namespace Lib
                     };
                 }
             }
+            catch (OperationCanceledException) { throw; }
             catch
             {
                 return new FptAIModelOutput
@@ -43,7 +45,7 @@ namespace Lib
         }
 
 
-        public async Task<string> FptAIConvertText2SpeechAsync(string apiKey, string voiceCode, string speedRate, string inputText)
+        public async Task<string> FptAIConvertText2SpeechAsync(string apiKey, string voiceCode, string speedRate, string inputText, CancellationToken cancellationToken = default)
         {
             var input = new FptAIModelInput
             {
@@ -53,7 +55,7 @@ namespace Lib
                 speedrate = speedRate
             };
 
-            var output = await TextToSpeechRequestAsync(input);
+            var output = await TextToSpeechRequestAsync(input, cancellationToken);
             return output?.result?.async ?? string.Empty;
         }
 
