@@ -35,6 +35,7 @@ namespace ReviewMovie.Base.Controls
 
             AutoSize = true;
             ForeColor = _textColor;
+            UpdateAutoSize();
         }
 
         [Category("Colors")]
@@ -56,7 +57,7 @@ namespace ReviewMovie.Base.Controls
         public int BoxBorderSize { get => _boxBorderSize; set { _boxBorderSize = Math.Max(0, value); Invalidate(); } }
 
         [Category("Box Style")]
-        public int BoxSize { get => _boxSize; set { _boxSize = Math.Max(10, value); Invalidate(); } }
+        public int BoxSize { get => _boxSize; set { _boxSize = Math.Max(10, value); UpdateAutoSize(); Invalidate(); } }
 
         [Category("Box Style")]
         public int BoxRadius { get => _boxRadius; set { _boxRadius = Math.Max(0, value); Invalidate(); } }
@@ -65,7 +66,7 @@ namespace ReviewMovie.Base.Controls
         public UiBoxStyle BoxStyle { get => _boxStyle; set { _boxStyle = value; Invalidate(); } }
 
         [Category("Layout")]
-        public UiTextPosition TextPosition { get => _textPosition; set { _textPosition = value; Invalidate(); } }
+        public UiTextPosition TextPosition { get => _textPosition; set { _textPosition = value; UpdateAutoSize(); Invalidate(); } }
 
         private Color GetEffectiveBorderColor()
         {
@@ -90,6 +91,43 @@ namespace ReviewMovie.Base.Controls
             base.OnMouseLeave(e);
             _hovered = false;
             Invalidate();
+        }
+
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+            UpdateAutoSize();
+        }
+
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+            UpdateAutoSize();
+        }
+
+        protected override void OnAutoSizeChanged(EventArgs e)
+        {
+            base.OnAutoSizeChanged(e);
+            UpdateAutoSize();
+        }
+
+        public override Size GetPreferredSize(Size proposedSize)
+        {
+            Size textSize = TextRenderer.MeasureText((Text ?? string.Empty).Length == 0 ? " " : Text, Font);
+            int width = _boxSize + 8 + textSize.Width;
+            int height = Math.Max(_boxSize, textSize.Height) + 2;
+            return new Size(Math.Max(10, width), Math.Max(10, height));
+        }
+
+        private void UpdateAutoSize()
+        {
+            if (!AutoSize || Dock != DockStyle.None) return;
+
+            Size preferred = GetPreferredSize(Size.Empty);
+            if (Size != preferred)
+            {
+                Size = preferred;
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)

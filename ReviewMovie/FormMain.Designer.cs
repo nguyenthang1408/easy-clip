@@ -413,7 +413,7 @@ namespace ReviewMovie
             this.grbConfigRender.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.grbConfigRender.Location = new System.Drawing.Point(11, 203);
             this.grbConfigRender.Name = "grbConfigRender";
-            this.grbConfigRender.Size = new System.Drawing.Size(325, 416);
+            this.grbConfigRender.Size = new System.Drawing.Size(445, 416);
             this.grbConfigRender.TabIndex = 14;
             this.grbConfigRender.TabStop = false;
             this.grbConfigRender.Text = "Lựa Chọn Hiệu Ứng";
@@ -951,7 +951,7 @@ namespace ReviewMovie
             this.grboxSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.grboxSetting.Location = new System.Drawing.Point(0, 0);
             this.grboxSetting.Name = "grboxSetting";
-            this.grboxSetting.Size = new System.Drawing.Size(347, 734);
+            this.grboxSetting.Size = new System.Drawing.Size(467, 734);
             this.grboxSetting.TabIndex = 1;
             this.grboxSetting.TabStop = false;
             this.grboxSetting.Text = "Cài Đặt ";
@@ -968,7 +968,7 @@ namespace ReviewMovie
             this.grbConfigVoice.Enabled = false;
             this.grbConfigVoice.Location = new System.Drawing.Point(11, 48);
             this.grbConfigVoice.Name = "grbConfigVoice";
-            this.grbConfigVoice.Size = new System.Drawing.Size(325, 155);
+            this.grbConfigVoice.Size = new System.Drawing.Size(445, 155);
             this.grbConfigVoice.TabIndex = 46;
             this.grbConfigVoice.TabStop = false;
             this.grbConfigVoice.Text = "Cài Đặt Voice";
@@ -992,7 +992,7 @@ namespace ReviewMovie
             this.grbActionRender.Controls.Add(this.lblstatus);
             this.grbActionRender.Location = new System.Drawing.Point(11, 625);
             this.grbActionRender.Name = "grbActionRender";
-            this.grbActionRender.Size = new System.Drawing.Size(325, 96);
+            this.grbActionRender.Size = new System.Drawing.Size(445, 96);
             this.grbActionRender.TabIndex = 45;
             this.grbActionRender.TabStop = false;
             this.grbActionRender.Text = "Xuất Bản Video";
@@ -1010,7 +1010,6 @@ namespace ReviewMovie
             this.cbProjectName.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbProjectName_DrawItem);
             this.cbProjectName.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.cbProjectName_MeasureItem);
             this.cbProjectName.SelectedIndexChanged += new System.EventHandler(this.cbProjectName_SelectedIndexChanged);
-            this.cbProjectName.MouseMove += new System.Windows.Forms.MouseEventHandler(this.cbProjectName_MouseMove);
             // 
             // tlpView
             // 
@@ -1537,7 +1536,7 @@ namespace ReviewMovie
             this.pnlHeaderTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeaderTitle.Location = new System.Drawing.Point(0, 0);
             this.pnlHeaderTitle.Name = "pnlHeaderTitle";
-            this.pnlHeaderTitle.Size = new System.Drawing.Size(1294, 46);
+            this.pnlHeaderTitle.Size = new System.Drawing.Size(1414, 46);
             this.pnlHeaderTitle.TabIndex = 44;
             this.pnlHeaderTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HeaderArea_MouseDown);
             // 
@@ -1719,7 +1718,7 @@ namespace ReviewMovie
             // scMain.Panel2
             // 
             this.scMain.Panel2.Controls.Add(this.scSetting);
-            this.scMain.Size = new System.Drawing.Size(1294, 736);
+            this.scMain.Size = new System.Drawing.Size(1414, 736);
             this.scMain.SplitterDistance = 910;
             this.scMain.TabIndex = 43;
             // 
@@ -1773,7 +1772,7 @@ namespace ReviewMovie
             // scSetting.Panel2
             // 
             this.scSetting.Panel2.Controls.Add(this.grboxSetting);
-            this.scSetting.Size = new System.Drawing.Size(380, 736);
+            this.scSetting.Size = new System.Drawing.Size(500, 736);
             this.scSetting.SplitterDistance = 27;
             this.scSetting.TabIndex = 46;
             // 
@@ -1823,7 +1822,7 @@ namespace ReviewMovie
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1294, 782);
+            this.ClientSize = new System.Drawing.Size(1414, 782);
             this.Controls.Add(this.scMain);
             this.Controls.Add(this.pnlHeaderTitle);
             this.DoubleBuffered = true;

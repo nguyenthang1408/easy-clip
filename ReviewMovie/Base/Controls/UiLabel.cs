@@ -32,6 +32,8 @@ namespace ReviewMovie.Base.Controls
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             ForeColor = _textColor;
             BackColor = Color.Transparent;
+            AutoSize = true;
+            UpdateAutoSize();
         }
 
         [Category("Appearance")]
@@ -102,6 +104,46 @@ namespace ReviewMovie.Base.Controls
         {
             base.OnResize(e);
             UiHelpers.ApplyRoundRegion(this, _borderRadius);
+        }
+
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+            UpdateAutoSize();
+        }
+
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+            UpdateAutoSize();
+        }
+
+        protected override void OnAutoSizeChanged(EventArgs e)
+        {
+            base.OnAutoSizeChanged(e);
+            UpdateAutoSize();
+        }
+
+        private void UpdateAutoSize()
+        {
+            if (!AutoSize || Dock != DockStyle.None) return;
+
+            var preferred = GetPreferredSize(Size.Empty);
+            if (preferred.Width <= 0 || preferred.Height <= 0) return;
+
+            if (Size != preferred)
+            {
+                Size = preferred;
+            }
+        }
+
+        public override Size GetPreferredSize(Size proposedSize)
+        {
+            string content = Text ?? string.Empty;
+            Size text = TextRenderer.MeasureText(content.Length == 0 ? " " : content, Font);
+            int width = Math.Max(1, text.Width + _padding.Horizontal + (_borderSize * 2));
+            int height = Math.Max(1, text.Height + _padding.Vertical + (_borderSize * 2));
+            return new Size(width, height);
         }
 
         protected override void OnPaint(PaintEventArgs e)
