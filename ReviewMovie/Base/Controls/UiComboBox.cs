@@ -12,7 +12,7 @@ namespace ReviewMovie.Base.Controls
     {
         private bool _userCustomizedColors;
         private bool _userCustomizedBorderColors;
-        private int _borderRadius = 4;
+        private int _borderRadius = 1;
         private bool _disableHoverEffects = true;
         private bool _centerTextInItems = true;
         private bool _focused;
@@ -42,7 +42,7 @@ namespace ReviewMovie.Base.Controls
         }
 
         [Category("Appearance")]
-        [DefaultValue(4)]
+        [DefaultValue(1)]
         public int BorderRadius
         {
             get => _borderRadius;

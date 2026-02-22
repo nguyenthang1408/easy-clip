@@ -411,7 +411,7 @@ namespace ReviewMovie
             this.grbConfigRender.Controls.Add(this.label6);
             this.grbConfigRender.Controls.Add(this.label5);
             this.grbConfigRender.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.grbConfigRender.Location = new System.Drawing.Point(11, 203);
+            this.grbConfigRender.Location = new System.Drawing.Point(11, 209);
             this.grbConfigRender.Name = "grbConfigRender";
             this.grbConfigRender.Size = new System.Drawing.Size(365, 416);
             this.grbConfigRender.TabIndex = 14;
@@ -1005,7 +1005,7 @@ namespace ReviewMovie
             this.grbActionRender.Controls.Add(this.rbCPUused);
             this.grbActionRender.Controls.Add(this.btnAddAll);
             this.grbActionRender.Controls.Add(this.lblstatus);
-            this.grbActionRender.Location = new System.Drawing.Point(11, 625);
+            this.grbActionRender.Location = new System.Drawing.Point(11, 631);
             this.grbActionRender.Name = "grbActionRender";
             this.grbActionRender.Size = new System.Drawing.Size(365, 96);
             this.grbActionRender.TabIndex = 45;
