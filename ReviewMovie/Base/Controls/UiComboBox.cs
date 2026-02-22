@@ -14,6 +14,7 @@ namespace ReviewMovie.Base.Controls
         private bool _userCustomizedBorderColors;
         private int _borderRadius = 4;
         private bool _disableHoverEffects = true;
+        private bool _centerTextInItems = true;
         private bool _focused;
         private Color _borderColor = ThemeManager.Current.Border;
         private Color _borderFocusColor = ThemeManager.Current.BorderFocus;
@@ -24,6 +25,7 @@ namespace ReviewMovie.Base.Controls
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             FlatStyle = FlatStyle.Flat;
             IntegralHeight = false;
+            DrawMode = DrawMode.OwnerDrawFixed;
 
             ApplyThemeDefaults();
 
@@ -94,6 +96,18 @@ namespace ReviewMovie.Base.Controls
         {
             get => _disableHoverEffects;
             set => _disableHoverEffects = value;
+        }
+
+        [Category("Layout")]
+        [DefaultValue(true)]
+        public bool CenterTextInItems
+        {
+            get => _centerTextInItems;
+            set
+            {
+                _centerTextInItems = value;
+                Invalidate();
+            }
         }
 
         private void ApplyThemeDefaults()
@@ -169,6 +183,44 @@ namespace ReviewMovie.Base.Controls
             {
                 DrawComboBorder();
             }
+        }
+
+        protected override void OnDrawItem(DrawItemEventArgs e)
+        {
+            // Keep existing custom owner-draw behavior for project combobox.
+            if (!_centerTextInItems || string.Equals(Name, "cbProjectName", StringComparison.Ordinal))
+            {
+                base.OnDrawItem(e);
+                return;
+            }
+
+            if (e.Index < 0)
+            {
+                e.DrawBackground();
+                var flagsCurrent = TextFormatFlags.HorizontalCenter |
+                                   TextFormatFlags.VerticalCenter |
+                                   TextFormatFlags.EndEllipsis;
+                var currentFore = Enabled ? ForeColor : SystemColors.GrayText;
+                TextRenderer.DrawText(e.Graphics, Text ?? string.Empty, Font, e.Bounds, currentFore, flagsCurrent);
+                e.DrawFocusRectangle();
+                return;
+            }
+
+            if (e.Index >= Items.Count)
+            {
+                base.OnDrawItem(e);
+                return;
+            }
+
+            e.DrawBackground();
+
+            var fore = Enabled ? ForeColor : SystemColors.GrayText;
+            var flags = TextFormatFlags.HorizontalCenter |
+                        TextFormatFlags.VerticalCenter |
+                        TextFormatFlags.EndEllipsis;
+            string text = GetItemText(Items[e.Index]);
+            TextRenderer.DrawText(e.Graphics, text ?? string.Empty, Font, e.Bounds, fore, flags);
+            e.DrawFocusRectangle();
         }
 
         private void DrawComboBorder()
