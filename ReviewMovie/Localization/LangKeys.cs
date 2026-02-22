@@ -416,5 +416,8 @@ namespace ReviewMovie.Localization
 
         // ========== FormMain - Cancel Tasks Warning ==========
         public const string Main_TasksStillRunning = "Main_TasksStillRunning";
+
+        // ========== Services - Cancel Cell Status ==========
+        public const string Svc_ConvertCancelledCell = "Svc_ConvertCancelledCell";
     }
 }

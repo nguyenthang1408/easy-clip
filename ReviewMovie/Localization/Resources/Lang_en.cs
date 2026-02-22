@@ -420,6 +420,9 @@ namespace ReviewMovie.Localization.Resources
 
             // ========== FormMain - Cancel Tasks Warning ==========
             { LangKeys.Main_TasksStillRunning, "Some processes have not finished (may be stuck). Please check again!" },
+
+            // ========== Services - Cancel Cell Status ==========
+            { LangKeys.Svc_ConvertCancelledCell, "Convert Cancelled" },
         };
     }
 }

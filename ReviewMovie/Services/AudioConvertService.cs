@@ -222,7 +222,7 @@ namespace EasyClip.Services
             }
             catch (OperationCanceledException)
             {
-                audioStatus = LanguageManager.Get(LangKeys.Main_Cancelled);
+                audioStatus = LanguageManager.Get(LangKeys.Svc_ConvertCancelledCell);
                 context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
                 context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
                 context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_CancelConvertRow, index), Color.OrangeRed);

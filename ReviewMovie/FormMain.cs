@@ -1817,6 +1817,7 @@ namespace ReviewMovie
                     FuncDataGridView.UpdateDataGridViewCell(dgvMainView, idx, "Column_audiolink", audiolink, Color.White);
                     Color color = audiostatus == LanguageManager.Get(LangKeys.Svc_Converted) ? Color.GreenYellow
                                 : audiostatus == LanguageManager.Get(LangKeys.Svc_Converting) ? Color.Yellow
+                                : audiostatus == LanguageManager.Get(LangKeys.Svc_ConvertCancelledCell) ? Color.OrangeRed
                                 : audiostatus == LanguageManager.Get(LangKeys.Main_Cancelled) ? Color.Red
                                 : Color.OrangeRed;
                     FuncDataGridView.UpdateDataGridViewCell(dgvMainView, idx, "Column_audiostatus", audiostatus, color);

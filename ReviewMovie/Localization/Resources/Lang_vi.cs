@@ -420,6 +420,9 @@ namespace ReviewMovie.Localization.Resources
 
             // ========== FormMain - Cancel Tasks Warning ==========
             { LangKeys.Main_TasksStillRunning, "Một số tiến trình vẫn chưa kết thúc (có thể bị treo). Vui lòng kiểm tra lại!" },
+
+            // ========== Services - Cancel Cell Status ==========
+            { LangKeys.Svc_ConvertCancelledCell, "Đã huỷ Convert" },
         };
     }
 }
