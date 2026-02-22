@@ -215,13 +215,22 @@ namespace ReviewMovie.Base.Controls
             return base.GetPreferredSize(proposedSize);
         }
 
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            // Avoid default background fill (often white) that causes
+            // visible artifacts around rounded corners.
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             if (e == null) return;
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            UiHelpers.ClearBackground(e.Graphics, this);
+            using (var bg = new SolidBrush(GetParentSurfaceColor()))
+            {
+                e.Graphics.FillRectangle(bg, ClientRectangle);
+            }
 
             var fillRect = new Rectangle(0, 0, Width, Height);
             var borderRect = new Rectangle(0, 0, Width - 1, Height - 1);
@@ -296,6 +305,18 @@ namespace ReviewMovie.Base.Controls
                 textRect,
                 textColor,
                 TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.EndEllipsis);
+        }
+
+        private Color GetParentSurfaceColor()
+        {
+            var current = Parent;
+            while (current != null)
+            {
+                if (current.BackColor.A > 0) return current.BackColor;
+                current = current.Parent;
+            }
+
+            return SystemColors.Control;
         }
     }
 }
