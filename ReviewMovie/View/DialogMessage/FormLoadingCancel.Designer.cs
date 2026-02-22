@@ -104,29 +104,29 @@ namespace EasyClip.View.DialogMessage
             this.pnlBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlBody.Location = new System.Drawing.Point(0, 53);
             this.pnlBody.Name = "pnlBody";
-            this.pnlBody.Size = new System.Drawing.Size(340, 82);
+            this.pnlBody.Size = new System.Drawing.Size(340, 100);
             this.pnlBody.TabIndex = 2;
             //
-            // pictureBox1
+            // pictureBox1  – spinner, centred horizontally, top of body
             //
             this.pictureBox1.Image = global::EasyClip.Properties.Resources.ellipse_dots;
-            this.pictureBox1.Location = new System.Drawing.Point(20, 16);
+            this.pictureBox1.Location = new System.Drawing.Point(142, 10);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox1.Size = new System.Drawing.Size(56, 56);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             //
-            // lblStatus
+            // lblStatus  – below spinner, centred horizontally
             //
             this.lblStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(50, 50, 50);
-            this.lblStatus.Location = new System.Drawing.Point(80, 16);
+            this.lblStatus.Location = new System.Drawing.Point(20, 72);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(245, 50);
+            this.lblStatus.Size = new System.Drawing.Size(300, 22);
             this.lblStatus.TabIndex = 1;
             this.lblStatus.Text = "Đang huỷ... vui lòng chờ";
-            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             //
             // pnlFooter
             //
@@ -160,7 +160,7 @@ namespace EasyClip.View.DialogMessage
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(340, 185);
+            this.ClientSize = new System.Drawing.Size(340, 203);
             this.Controls.Add(this.pnlBody);
             this.Controls.Add(this.pnlFooter);
             this.Controls.Add(this.pnlAccent);
