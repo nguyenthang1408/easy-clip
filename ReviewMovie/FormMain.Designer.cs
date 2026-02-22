@@ -1409,7 +1409,11 @@ namespace ReviewMovie
             // lbHeaderInputMedia
             // 
             this.lbHeaderInputMedia.AutoSize = true;
-            this.lbHeaderInputMedia.BackColor = System.Drawing.Color.SteelBlue;
+            this.lbHeaderInputMedia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(132)))), ((int)(((byte)(214)))));
+            this.lbHeaderInputMedia.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(132)))), ((int)(((byte)(214)))));
+            this.lbHeaderInputMedia.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(98)))), ((int)(((byte)(170)))));
+            this.lbHeaderInputMedia.BorderRadius = 3;
+            this.lbHeaderInputMedia.BorderSize = 1;
             this.lbHeaderInputMedia.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbHeaderInputMedia.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.lbHeaderInputMedia.ForeColor = System.Drawing.Color.White;
@@ -1420,6 +1424,7 @@ namespace ReviewMovie
             this.lbHeaderInputMedia.TabIndex = 1;
             this.lbHeaderInputMedia.Text = "Kéo Thả (Ảnh , Video)";
             this.lbHeaderInputMedia.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbHeaderInputMedia.TextColor = System.Drawing.Color.White;
             // 
             // btnRecord
             // 
@@ -1456,7 +1461,11 @@ namespace ReviewMovie
             // lbHeaderText
             // 
             this.lbHeaderText.AutoSize = true;
-            this.lbHeaderText.BackColor = System.Drawing.Color.SteelBlue;
+            this.lbHeaderText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(132)))), ((int)(((byte)(214)))));
+            this.lbHeaderText.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(132)))), ((int)(((byte)(214)))));
+            this.lbHeaderText.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(98)))), ((int)(((byte)(170)))));
+            this.lbHeaderText.BorderRadius = 3;
+            this.lbHeaderText.BorderSize = 1;
             this.lbHeaderText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbHeaderText.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbHeaderText.ForeColor = System.Drawing.Color.White;
@@ -1467,6 +1476,7 @@ namespace ReviewMovie
             this.lbHeaderText.TabIndex = 0;
             this.lbHeaderText.Text = "Nhập Text | Hoặc Kéo Audio File Vào !";
             this.lbHeaderText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbHeaderText.TextColor = System.Drawing.Color.White;
             // 
             // txtTextInput
             // 
