@@ -4546,6 +4546,10 @@ namespace ReviewMovie
 
         }
 
+        private void btnExportSubtitle_Click(object sender, EventArgs e)
+        {
+            // New code
+        }
         /// <summary>
         /// Xóa tất cả video files trong thư mục được chỉ định
         /// </summary>
