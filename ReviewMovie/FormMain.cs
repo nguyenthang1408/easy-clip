@@ -885,7 +885,6 @@ namespace ReviewMovie
 
                 if (listVoice == null)
                 {
-                    MsgBox.Show(LanguageManager.Get(LangKeys.Main_VoiceKeyError));
                     cbLanguageSelect.SelectedIndexChanged -= cbLanguageSelect_SelectedIndexChanged;
                     cbLanguageSelect.DataSource = null;
                     cbLanguageSelect.SelectedIndex = -1;
@@ -4787,8 +4786,6 @@ namespace ReviewMovie
                     var listVoice = await voiceServices.GetAllVoicesAsync();
                     if(listVoice == null)
                     {
-                        MsgBox.Show(LanguageManager.Get(LangKeys.Main_ElevenlabError));
-
                         cbLanguageSelect.DataSource = null;
                         cbLanguageSelect.SelectedIndex = -1;
                     }
