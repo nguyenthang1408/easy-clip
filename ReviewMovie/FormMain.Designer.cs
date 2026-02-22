@@ -434,6 +434,9 @@ namespace ReviewMovie
             // 
             // nbSpeechRatio
             // 
+            this.nbSpeechRatio.BackgroundColor = System.Drawing.Color.White;
+            this.nbSpeechRatio.ButtonColor = System.Drawing.Color.White;
+            this.nbSpeechRatio.ButtonIconColor = System.Drawing.Color.DimGray;
             this.nbSpeechRatio.DecimalPlaces = 1;
             this.nbSpeechRatio.Increment = new decimal(new int[] {
             1,
@@ -450,6 +453,7 @@ namespace ReviewMovie
             this.nbSpeechRatio.Padding = new System.Windows.Forms.Padding(2);
             this.nbSpeechRatio.Size = new System.Drawing.Size(48, 20);
             this.nbSpeechRatio.TabIndex = 125;
+            this.nbSpeechRatio.TextColor = System.Drawing.Color.Black;
             this.nbSpeechRatio.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nbSpeechRatio.Value = new decimal(new int[] {
             5,
@@ -530,6 +534,9 @@ namespace ReviewMovie
             // 
             // nScaleAudioRangeEnd
             // 
+            this.nScaleAudioRangeEnd.BackgroundColor = System.Drawing.Color.White;
+            this.nScaleAudioRangeEnd.ButtonColor = System.Drawing.Color.White;
+            this.nScaleAudioRangeEnd.ButtonIconColor = System.Drawing.Color.DimGray;
             this.nScaleAudioRangeEnd.DecimalPlaces = 1;
             this.nScaleAudioRangeEnd.Increment = new decimal(new int[] {
             1,
@@ -551,6 +558,7 @@ namespace ReviewMovie
             this.nScaleAudioRangeEnd.Padding = new System.Windows.Forms.Padding(2);
             this.nScaleAudioRangeEnd.Size = new System.Drawing.Size(46, 20);
             this.nScaleAudioRangeEnd.TabIndex = 118;
+            this.nScaleAudioRangeEnd.TextColor = System.Drawing.Color.Black;
             this.nScaleAudioRangeEnd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nScaleAudioRangeEnd.Value = new decimal(new int[] {
             12,
@@ -560,6 +568,9 @@ namespace ReviewMovie
             // 
             // nScaleAudioRangeStart
             // 
+            this.nScaleAudioRangeStart.BackgroundColor = System.Drawing.Color.White;
+            this.nScaleAudioRangeStart.ButtonColor = System.Drawing.Color.White;
+            this.nScaleAudioRangeStart.ButtonIconColor = System.Drawing.Color.DimGray;
             this.nScaleAudioRangeStart.DecimalPlaces = 1;
             this.nScaleAudioRangeStart.Increment = new decimal(new int[] {
             1,
@@ -581,6 +592,7 @@ namespace ReviewMovie
             this.nScaleAudioRangeStart.Padding = new System.Windows.Forms.Padding(2);
             this.nScaleAudioRangeStart.Size = new System.Drawing.Size(46, 20);
             this.nScaleAudioRangeStart.TabIndex = 117;
+            this.nScaleAudioRangeStart.TextColor = System.Drawing.Color.Black;
             this.nScaleAudioRangeStart.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nScaleAudioRangeStart.Value = new decimal(new int[] {
             1,
@@ -612,6 +624,9 @@ namespace ReviewMovie
             // 
             // nbThread
             // 
+            this.nbThread.BackgroundColor = System.Drawing.Color.White;
+            this.nbThread.ButtonColor = System.Drawing.Color.White;
+            this.nbThread.ButtonIconColor = System.Drawing.Color.DimGray;
             this.nbThread.Location = new System.Drawing.Point(246, 46);
             this.nbThread.Maximum = new decimal(new int[] {
             30,
@@ -627,6 +642,7 @@ namespace ReviewMovie
             this.nbThread.Padding = new System.Windows.Forms.Padding(2);
             this.nbThread.Size = new System.Drawing.Size(63, 20);
             this.nbThread.TabIndex = 114;
+            this.nbThread.TextColor = System.Drawing.Color.Black;
             this.nbThread.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nbThread.Value = new decimal(new int[] {
             5,
@@ -645,6 +661,9 @@ namespace ReviewMovie
             // 
             // nbVolumnOrigin
             // 
+            this.nbVolumnOrigin.BackgroundColor = System.Drawing.Color.White;
+            this.nbVolumnOrigin.ButtonColor = System.Drawing.Color.White;
+            this.nbVolumnOrigin.ButtonIconColor = System.Drawing.Color.DimGray;
             this.nbVolumnOrigin.DecimalPlaces = 1;
             this.nbVolumnOrigin.Increment = new decimal(new int[] {
             2,
@@ -661,6 +680,7 @@ namespace ReviewMovie
             this.nbVolumnOrigin.Padding = new System.Windows.Forms.Padding(2);
             this.nbVolumnOrigin.Size = new System.Drawing.Size(48, 20);
             this.nbVolumnOrigin.TabIndex = 112;
+            this.nbVolumnOrigin.TextColor = System.Drawing.Color.Black;
             this.nbVolumnOrigin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nbVolumnOrigin.Value = new decimal(new int[] {
             5,
@@ -742,6 +762,9 @@ namespace ReviewMovie
             // 
             // nFPS
             // 
+            this.nFPS.BackgroundColor = System.Drawing.Color.White;
+            this.nFPS.ButtonColor = System.Drawing.Color.White;
+            this.nFPS.ButtonIconColor = System.Drawing.Color.DimGray;
             this.nFPS.Location = new System.Drawing.Point(246, 21);
             this.nFPS.Minimum = new decimal(new int[] {
             15,
@@ -752,6 +775,7 @@ namespace ReviewMovie
             this.nFPS.Padding = new System.Windows.Forms.Padding(2);
             this.nFPS.Size = new System.Drawing.Size(63, 20);
             this.nFPS.TabIndex = 104;
+            this.nFPS.TextColor = System.Drawing.Color.Black;
             this.nFPS.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nFPS.Value = new decimal(new int[] {
             30,
