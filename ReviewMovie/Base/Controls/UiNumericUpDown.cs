@@ -167,8 +167,11 @@ namespace ReviewMovie.Base.Controls
             _numeric.Size = new Size(textWidth, textHeight);
             HideInnerButtons();
 
-            _buttonPanel.Location = new Point(x + textWidth + spacing, y);
-            _buttonPanel.Size = new Size(buttonWidth, innerH);
+            // Keep a 1px breathing space so the button panel never covers bottom border.
+            int panelY = y + 1;
+            int panelHeight = Math.Max(12, innerH - 2);
+            _buttonPanel.Location = new Point(x + textWidth + spacing, panelY);
+            _buttonPanel.Size = new Size(buttonWidth, panelHeight);
             _buttonPanel.BringToFront();
             }
             finally
@@ -432,13 +435,8 @@ namespace ReviewMovie.Base.Controls
             e.Graphics.CompositingMode = CompositingMode.SourceOver;
             UiHelpers.ClearBackground(e.Graphics, this);
 
-            var fillRect = new RectangleF(0f, 0f, Width, Height);
-            float inset = Math.Max(1f, _borderSize) / 2f;
-            var borderRect = new RectangleF(
-                inset,
-                inset,
-                Math.Max(0f, Width - _borderSize - 1f),
-                Math.Max(0f, Height - _borderSize - 1f));
+            var fillRect = new RectangleF(0.5f, 0.5f, Math.Max(0f, Width - 1f), Math.Max(0f, Height - 1f));
+            var borderRect = new RectangleF(0.5f, 0.5f, Math.Max(0f, Width - 1f), Math.Max(0f, Height - 1f));
             using (var path = UiHelpers.CreateRoundedRectPath(fillRect, _borderRadius))
             using (var fill = new SolidBrush(NormalizeSurfaceColor(_backgroundColor)))
             {
@@ -450,7 +448,7 @@ namespace ReviewMovie.Base.Controls
             {
                 using (var pen = new Pen(border, _borderSize))
                 {
-                    pen.Alignment = PenAlignment.Center;
+                    pen.Alignment = PenAlignment.Inset;
                     pen.LineJoin = LineJoin.Round;
                     pen.StartCap = LineCap.Round;
                     pen.EndCap = LineCap.Round;

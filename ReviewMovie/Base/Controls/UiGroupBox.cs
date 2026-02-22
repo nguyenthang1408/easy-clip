@@ -47,7 +47,7 @@ namespace ReviewMovie.Base.Controls
         public int BorderSizeEx { get => _borderSize; set { _borderSize = Math.Max(0, value); Invalidate(); } }
 
         [Category("Border")]
-        public int BorderRadius { get => _borderRadius; set { _borderRadius = Math.Max(0, value); UiHelpers.ApplyRoundRegion(this, _borderRadius); Invalidate(); } }
+        public int BorderRadius { get => _borderRadius; set { _borderRadius = Math.Max(0, value); Invalidate(); } }
 
         [Category("Border")]
         public UiBorderStyle BorderStyleEx { get => _borderStyle; set { _borderStyle = value; Invalidate(); } }
@@ -58,7 +58,7 @@ namespace ReviewMovie.Base.Controls
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            UiHelpers.ApplyRoundRegion(this, _borderRadius);
+            Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)

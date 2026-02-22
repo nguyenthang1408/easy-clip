@@ -448,7 +448,7 @@ namespace ReviewMovie
             0});
             this.nbSpeechRatio.Name = "nbSpeechRatio";
             this.nbSpeechRatio.Padding = new System.Windows.Forms.Padding(2);
-            this.nbSpeechRatio.Size = new System.Drawing.Size(48, 20);
+            this.nbSpeechRatio.Size = new System.Drawing.Size(48, 22);
             this.nbSpeechRatio.TabIndex = 125;
             this.nbSpeechRatio.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nbSpeechRatio.Value = new decimal(new int[] {
@@ -552,7 +552,7 @@ namespace ReviewMovie
             65536});
             this.nScaleAudioRangeEnd.Name = "nScaleAudioRangeEnd";
             this.nScaleAudioRangeEnd.Padding = new System.Windows.Forms.Padding(2);
-            this.nScaleAudioRangeEnd.Size = new System.Drawing.Size(46, 20);
+            this.nScaleAudioRangeEnd.Size = new System.Drawing.Size(46, 22);
             this.nScaleAudioRangeEnd.TabIndex = 118;
             this.nScaleAudioRangeEnd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nScaleAudioRangeEnd.Value = new decimal(new int[] {
@@ -582,7 +582,7 @@ namespace ReviewMovie
             0});
             this.nScaleAudioRangeStart.Name = "nScaleAudioRangeStart";
             this.nScaleAudioRangeStart.Padding = new System.Windows.Forms.Padding(2);
-            this.nScaleAudioRangeStart.Size = new System.Drawing.Size(46, 20);
+            this.nScaleAudioRangeStart.Size = new System.Drawing.Size(46, 22);
             this.nScaleAudioRangeStart.TabIndex = 117;
             this.nScaleAudioRangeStart.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nScaleAudioRangeStart.Value = new decimal(new int[] {
@@ -629,7 +629,7 @@ namespace ReviewMovie
             0});
             this.nbThread.Name = "nbThread";
             this.nbThread.Padding = new System.Windows.Forms.Padding(2);
-            this.nbThread.Size = new System.Drawing.Size(70, 20);
+            this.nbThread.Size = new System.Drawing.Size(70, 22);
             this.nbThread.TabIndex = 114;
             this.nbThread.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nbThread.Value = new decimal(new int[] {
@@ -664,7 +664,7 @@ namespace ReviewMovie
             0});
             this.nbVolumnOrigin.Name = "nbVolumnOrigin";
             this.nbVolumnOrigin.Padding = new System.Windows.Forms.Padding(2);
-            this.nbVolumnOrigin.Size = new System.Drawing.Size(48, 20);
+            this.nbVolumnOrigin.Size = new System.Drawing.Size(48, 22);
             this.nbVolumnOrigin.TabIndex = 112;
             this.nbVolumnOrigin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nbVolumnOrigin.Value = new decimal(new int[] {
@@ -759,7 +759,7 @@ namespace ReviewMovie
             0});
             this.nFPS.Name = "nFPS";
             this.nFPS.Padding = new System.Windows.Forms.Padding(2);
-            this.nFPS.Size = new System.Drawing.Size(70, 20);
+            this.nFPS.Size = new System.Drawing.Size(70, 22);
             this.nFPS.TabIndex = 104;
             this.nFPS.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nFPS.Value = new decimal(new int[] {
