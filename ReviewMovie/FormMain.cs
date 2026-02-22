@@ -731,7 +731,7 @@ namespace ReviewMovie
                 txtAppID.Visible = true;
                 txtAppID.Text = _apikey;
                 txtAppID.Enabled = false;
-                txtAppID.Size = new Size(247, 90);
+                txtAppID.Size = new Size(239, 90);
                 lblToken.Visible = false;
                 txtToken.Visible = false;
 
@@ -1656,7 +1656,7 @@ namespace ReviewMovie
             txtAppID.Visible = true;
             txtAppID.Text = _apikey;
             txtAppID.Enabled = false;
-            txtAppID.Size = new Size(247, 90);
+            txtAppID.Size = new Size(239, 90);
             lblToken.Visible = false;
             txtToken.Visible = false;
 
@@ -4751,7 +4751,7 @@ namespace ReviewMovie
                     txtToken.Enabled = true;
 
                     lblapi.Text = "ApiKey";
-                    txtAppID.Size = new Size(247, 90);
+                    txtAppID.Size = new Size(239, 90);
                     lblToken.Visible = false;
                     txtToken.Visible = false;
 
@@ -4775,7 +4775,7 @@ namespace ReviewMovie
                     txtToken.Enabled = true;
 
                     lblapi.Text = "Elevenlab";
-                    txtAppID.Size = new Size(247, 90);
+                    txtAppID.Size = new Size(239, 90);
                     lblToken.Visible = false;
                     txtToken.Visible = false;
 
@@ -4815,7 +4815,7 @@ namespace ReviewMovie
                     txtToken.Enabled = true;
 
                     lblapi.Text = "Json Data";
-                    txtAppID.Size = new Size(247, 90);
+                    txtAppID.Size = new Size(239, 90);
                     lblToken.Visible = false;
                     txtToken.Visible = false;
 
@@ -4857,7 +4857,7 @@ namespace ReviewMovie
                     txtToken.Enabled = true;
 
                     lblapi.Text = "AppID";
-                    txtAppID.Size = new Size(247, 40);
+                    txtAppID.Size = new Size(239, 40);
                     lblToken.Visible = true;
                     txtToken.Visible = true;
 
