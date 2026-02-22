@@ -156,7 +156,11 @@ namespace ReviewMovie.Base.Controls
 
             int buttonWidth = Math.Max(22, innerH / 2);
             buttonWidth = Math.Min(buttonWidth, Math.Max(22, innerW / 2));
-            int spacing = 4;
+
+            // Overlay the native spinner gutter so it cannot show black artifacts.
+            int nativeSpinnerWidth = Math.Max(0, SystemInformation.VerticalScrollBarWidth);
+            int overlap = Math.Min(nativeSpinnerWidth, Math.Max(0, buttonWidth - 2));
+            int spacing = -overlap;
             int textWidth = Math.Max(0, innerW - buttonWidth - spacing);
 
             _numeric.Location = new Point(x, textY);
@@ -165,6 +169,7 @@ namespace ReviewMovie.Base.Controls
 
             _buttonPanel.Location = new Point(x + textWidth + spacing, y);
             _buttonPanel.Size = new Size(buttonWidth, innerH);
+            _buttonPanel.BringToFront();
             }
             finally
             {
