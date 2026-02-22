@@ -834,7 +834,7 @@ namespace ReviewMovie
                     ComboBoxFuncion.CbBlinding(cbLanguageSelect,
                         filteredLanguages,
                         !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                            ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                            ? Math.Max(filteredLanguages.FindIndex(x => x.Value.Equals(checkSaveST.SlanguageSelect) || x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                             : 0);
                     cbLanguageSelect.SelectedIndexChanged += cbLanguageSelect_SelectedIndexChanged;
 
@@ -864,7 +864,7 @@ namespace ReviewMovie
             ComboBoxFuncion.CbBlinding(cbLanguageSelect,
                 filteredLanguages,
                 !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                    ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                    ? Math.Max(filteredLanguages.FindIndex(x => x.Value.Equals(checkSaveST.SlanguageSelect) || x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                     : 0);
         }
 
@@ -901,7 +901,7 @@ namespace ReviewMovie
                     ComboBoxFuncion.CbBlinding(cbLanguageSelect,
                         allLanguages,
                         allLanguages != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                            ? Math.Max(allLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                            ? Math.Max(allLanguages.FindIndex(x => x.Value.Equals(checkSaveST.SlanguageSelect) || x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                             : 0);
                 }
             }
@@ -1732,7 +1732,7 @@ namespace ReviewMovie
                 SscaleAudioRangeEnd = nScaleAudioRangeEnd.Value,
                 SspeechRatio = nbSpeechRatio.Value.ToString("0.0"),
                 SckNotUseAudio = _statusMuted,
-                SlanguageSelect = cbLanguageSelect?.Text ?? string.Empty,
+                SlanguageSelect = (cbLanguageSelect?.SelectedItem as ComboboxModel)?.Value ?? string.Empty,
                 SspeechType = cbxSpeechType?.Text ?? string.Empty
             };
 
@@ -4728,7 +4728,7 @@ namespace ReviewMovie
                     ComboBoxFuncion.CbBlinding(cbLanguageSelect
                                                 , filteredLanguages
                                                 , !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                                    ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                                                    ? Math.Max(filteredLanguages.FindIndex(x => x.Value.Equals(checkSaveST.SlanguageSelect) || x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                                                     : 0);
                 }
                 else if (_manualSelected == ManualSelect.Elevenlab)
@@ -4767,7 +4767,7 @@ namespace ReviewMovie
                         ComboBoxFuncion.CbBlinding(cbLanguageSelect
                                     , allLanguages
                                     , allLanguages != null && !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                        ? Math.Max(allLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                                        ? Math.Max(allLanguages.FindIndex(x => x.Value.Equals(checkSaveST.SlanguageSelect) || x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                                         : 0);
                     }
                 }
@@ -4803,7 +4803,7 @@ namespace ReviewMovie
                             ComboBoxFuncion.CbBlinding(cbLanguageSelect
                                                   , filteredLanguages
                                                   , !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                                      ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                                                      ? Math.Max(filteredLanguages.FindIndex(x => x.Value.Equals(checkSaveST.SlanguageSelect) || x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                                                       : 0);
                         }
                     }
@@ -4834,7 +4834,7 @@ namespace ReviewMovie
                     ComboBoxFuncion.CbBlinding(cbLanguageSelect
                                               , filteredLanguages
                                               , !string.IsNullOrEmpty(checkSaveST?.SlanguageSelect)
-                                                  ? Math.Max(filteredLanguages.FindIndex(x => x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
+                                                  ? Math.Max(filteredLanguages.FindIndex(x => x.Value.Equals(checkSaveST.SlanguageSelect) || x.Display.Equals(checkSaveST.SlanguageSelect)), 0)
                                                   : 0);
                 }
 
