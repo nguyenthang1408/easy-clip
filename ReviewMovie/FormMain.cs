@@ -4224,7 +4224,7 @@ namespace ReviewMovie
 
                 _loadConfig.EnsureDirectory(projectPath);
 
-                var newProject = _loadConfig.CreateNewProject(projectPath, _manualSelected.ToString(), nbSpeechRatio.Value.ToString("0.0"), CkZoom.Checked);
+                var newProject = _loadConfig.CreateNewProject(projectPath, GetCurrentVoiceSourceName(), nbSpeechRatio.Value.ToString("0.0"), CkZoom.Checked);
                 _projectName = projectPath;
 
                 var isSuccess = _loadConfig.AddProjectToConfig(newProject);
@@ -4898,11 +4898,23 @@ namespace ReviewMovie
             }
         }
 
+        /// <summary>
+        /// Trả về tên voice source hiện tại dựa trên combobox cboSiteNguon.
+        /// Nếu đang chọn T2Psoft thì trả "T2Psoft", ngược lại trả _manualSelected.ToString().
+        /// </summary>
+        private string GetCurrentVoiceSourceName()
+        {
+            var selectedVoiceSource = (ComboboxModel)cboSiteNguon.SelectedItem;
+            if (selectedVoiceSource?.Value == ListVoiceSite.T2Psoft)
+                return ListVoiceSite.T2Psoft;
+            return _manualSelected.ToString();
+        }
+
         private void UpdateVoiceSourceSelect()
         {
             if (!string.IsNullOrEmpty(_projectName))
             {
-                _infoProject.VoiceSelect = _manualSelected.ToString();
+                _infoProject.VoiceSelect = GetCurrentVoiceSourceName();
 
                 // Đồng bộ lại vào project
                 _renderSyncService.UpdateProjectRenderList(_infoProject, _infoProject.InfoRenders, _allInfoRender);
