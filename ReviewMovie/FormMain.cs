@@ -348,11 +348,19 @@ namespace ReviewMovie
             rbCPUused.Text = LanguageManager.Get(LangKeys.Main_UseCPU);
             rbGPUused.Text = LanguageManager.Get(LangKeys.Main_UseGPU);
 
-            // Action buttons
-            btnRecord.Text = LanguageManager.Get(LangKeys.Main_Record);
-            btnConvertAudio.Text = LanguageManager.Get(LangKeys.Main_ConvertAudio);
-            btnSaveAudio.Text = LanguageManager.Get(LangKeys.Main_SaveAudio);
-            btnRenderVideoPart.Text = LanguageManager.Get(LangKeys.Main_RenderPart);
+            // Action buttons - respect running state
+            btnRecord.Text = _isRecording
+                ? LanguageManager.Get(LangKeys.Main_Stop)
+                : LanguageManager.Get(LangKeys.Main_Record);
+            btnConvertAudio.Text = _isConvertingSingle
+                ? LanguageManager.Get(LangKeys.Main_Stop)
+                : LanguageManager.Get(LangKeys.Main_ConvertAudio);
+            btnSaveAudio.Text = _isDownloadingSingle
+                ? LanguageManager.Get(LangKeys.Main_Stop)
+                : LanguageManager.Get(LangKeys.Main_SaveAudio);
+            btnRenderVideoPart.Text = _renderingRows.Count > 0
+                ? LanguageManager.Get(LangKeys.Main_Stop)
+                : LanguageManager.Get(LangKeys.Main_RenderPart);
 
             // Content header
             grViewHeader.Text = LanguageManager.Get(LangKeys.Main_MicIn);
@@ -374,13 +382,25 @@ namespace ReviewMovie
             MenuItemReloadVideoTime.Text = LanguageManager.Get(LangKeys.Main_ReloadVideoTime);
             tsMenuDeleteRow.Text = LanguageManager.Get(LangKeys.Main_DeleteSelectedRows);
 
-            // Context menu sub-items
-            ConvertTex2SpeechAll.Text = LanguageManager.Get(LangKeys.Common_SelectAll);
-            ConvertTex2SpeechSelect.Text = LanguageManager.Get(LangKeys.Common_SelectGroup);
-            DownAudioAll.Text = LanguageManager.Get(LangKeys.Common_SelectAll);
-            DownAudioAllSelect.Text = LanguageManager.Get(LangKeys.Common_SelectGroup);
-            PartRenderAll.Text = LanguageManager.Get(LangKeys.Common_SelectAll);
-            PartRenderSelect.Text = LanguageManager.Get(LangKeys.Common_SelectGroup);
+            // Context menu sub-items - respect running state
+            ConvertTex2SpeechAll.Text = _isConvertingAll
+                ? LanguageManager.Get(LangKeys.Common_CancelSelectAll)
+                : LanguageManager.Get(LangKeys.Common_SelectAll);
+            ConvertTex2SpeechSelect.Text = _isConvertingSelected
+                ? LanguageManager.Get(LangKeys.Common_CancelSelectGroup)
+                : LanguageManager.Get(LangKeys.Common_SelectGroup);
+            DownAudioAll.Text = _isDownloadingAll
+                ? LanguageManager.Get(LangKeys.Common_CancelSelectAll)
+                : LanguageManager.Get(LangKeys.Common_SelectAll);
+            DownAudioAllSelect.Text = _isDownloadingSelected
+                ? LanguageManager.Get(LangKeys.Common_CancelSelectGroup)
+                : LanguageManager.Get(LangKeys.Common_SelectGroup);
+            PartRenderAll.Text = _isRenderingAll
+                ? LanguageManager.Get(LangKeys.Common_CancelSelectAll)
+                : LanguageManager.Get(LangKeys.Common_SelectAll);
+            PartRenderSelect.Text = _isRenderingSelected
+                ? LanguageManager.Get(LangKeys.Common_CancelSelectGroup)
+                : LanguageManager.Get(LangKeys.Common_SelectGroup);
             tsMAll.Text = LanguageManager.Get(LangKeys.Common_SelectAll);
             tsMSelected.Text = LanguageManager.Get(LangKeys.Common_SelectGroup);
 
