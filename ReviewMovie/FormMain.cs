@@ -109,7 +109,6 @@ namespace ReviewMovie
         public int _indexRowMax = 0;
         public int _indexRowSelect = -1;
         private bool _videoShort = false;
-        private bool _checkrecord = false;
         private bool _isInternalTextChange = false;
 
         private bool _isAddingRow = false;
@@ -123,10 +122,7 @@ namespace ReviewMovie
         private const decimal _speechratioVbee = 1.0m;
         private const decimal _speechratioGoogleTTS = 0.5m;
 
-        private Thread _thread_ConvertSpeech;
         private Thread _theart_videotheostt;
-        private Thread _thread_rendervideo;
-        private Thread _thread_downloadaudio;
 
         private string _projectPath;
         private string _audioPath;
@@ -4462,7 +4458,6 @@ namespace ReviewMovie
             btnAddAll.Enabled = false;
             btnOpenProject.Enabled = false;
             cbProjectName.Enabled = false;
-            bool isLoadDataGridInit = true;
 
             try
             {
