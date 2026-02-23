@@ -4,19 +4,25 @@ using EasyClip.Infrastructure.Config;
 using EasyClip.View.DialogMessage;
 using Lib;
 using LibCommon.Lib;
-using ReviewMovie.Localization;
-using System;
-using System.Drawing;
-using System.Windows.Forms;
 using ReviewMovie.Base;
 using ReviewMovie.Base.Controls;
+using ReviewMovie.Infrastructure.Config;
+using ReviewMovie.Localization;
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
+using System.Net.Http;
+using System.Reflection.Emit;
+using System.Windows.Forms;
 using MessageBox = ReviewMovie.Base.UiMessageBox;
 
 namespace ReviewMovie
 {
-    public partial class LoginApiKey : Form, ILocalizable
+    public partial class LoginApiKey : Form
     {
-        private string AppVersion { get; } = "1.0.1"; // Định nghĩa phiên bản ứng dụng
+        private string AppVersion { get; } = "2.0.0"; // Định nghĩa phiên bản ứng dụng
         private readonly AppCodeService appCodeService;
         private readonly IConfigDataService _configService;
         private bool _readOnlyFocusWired;
@@ -32,12 +38,6 @@ namespace ReviewMovie
             appCodeService = isDesignTime ? null : new AppCodeService(); // Khởi tạo service
             _configService = isDesignTime ? null : new ConfigDataService();
 
-            if (isDesignTime)
-            {
-                SetupLoginUi();
-                return;
-            }
-
             // Load saved language and set ComboBox
             LanguageManager.LoadSavedLanguage();
             cbAppLanguage.SelectedIndex = LanguageManager.CurrentLanguage == LanguageManager.Language.En ? 1 : 0;
@@ -45,6 +45,12 @@ namespace ReviewMovie
             // Subscribe to language change
             LanguageManager.LanguageChanged += ApplyLanguage;
             ApplyLanguage();
+
+            if (isDesignTime)
+            {
+                SetupLoginUi();
+                return;
+            }
 
             DisplayAppCode();
             LoadApiKey();
@@ -60,6 +66,24 @@ namespace ReviewMovie
             this.MouseDown += DragArea_MouseDown;
 
             SetupLoginUi();
+        }
+
+        private void cbAppLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbAppLanguage.SelectedIndex == 1)
+                LanguageManager.SetLanguage(LanguageManager.Language.En);
+            else
+                LanguageManager.SetLanguage(LanguageManager.Language.Vi);
+        }
+
+        public void ApplyLanguage()
+        {
+            this.Text = LanguageManager.Get(LangKeys.Login_Title);
+            materialLabel1.Text = LanguageManager.Get(LangKeys.Login_AppCode);
+            materialLabel2.Text = LanguageManager.Get(LangKeys.Login_ApiKey);
+            btnLoginApiKey.Text = LanguageManager.Get(LangKeys.Login_BtnLogin);
+            lkHelp.Text = LanguageManager.Get(LangKeys.Login_Help);
+            linklbRegister.Text = LanguageManager.Get(LangKeys.Login_Register);
         }
 
         private void SetupLoginUi()
@@ -194,24 +218,6 @@ namespace ReviewMovie
             Close();
         }
 
-        public void ApplyLanguage()
-        {
-            this.Text = LanguageManager.Get(LangKeys.Login_Title);
-            materialLabel1.Text = LanguageManager.Get(LangKeys.Login_AppCode);
-            materialLabel2.Text = LanguageManager.Get(LangKeys.Login_ApiKey);
-            btnLoginApiKey.Text = LanguageManager.Get(LangKeys.Login_BtnLogin);
-            lkHelp.Text = LanguageManager.Get(LangKeys.Login_Help);
-            linklbRegister.Text = LanguageManager.Get(LangKeys.Login_Register);
-        }
-
-        private void cbAppLanguage_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cbAppLanguage.SelectedIndex == 1)
-                LanguageManager.SetLanguage(LanguageManager.Language.En);
-            else
-                LanguageManager.SetLanguage(LanguageManager.Language.Vi);
-        }
-
         private void DisplayAppCode()
         {
             // Sử dụng AppCodeService để lấy appCode
@@ -232,7 +238,7 @@ namespace ReviewMovie
                 }
                 catch (Exception ex)
                 {
-                    MsgBox.Show(LanguageManager.Get(LangKeys.Login_CannotGetKey) + ex.Message, LanguageManager.Get(LangKeys.Common_Error), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Không thể lấy được T2PKey: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -291,10 +297,6 @@ namespace ReviewMovie
                         }
                         // Nếu người dùng chọn No thì tiếp tục cho phép đăng nhập
                     }
-                    // Đăng nhập thành công
-                    ShowLoginSuccessPopup("Đăng nhập thành công!");
-
-                    // Mở form chính và đóng form đăng nhập
                     // Mở form chính và đóng form đăng nhập, truyền response để tránh gọi API lần 2
                     this.Hide();
                     FormMain mainForm = new FormMain(appCode, appSlugID, txInsertApiKey.Text, response);
@@ -328,191 +330,12 @@ namespace ReviewMovie
 
         private void LoginApiKey_FormClosing(object sender, FormClosingEventArgs e)
         {
-            LanguageManager.LanguageChanged -= ApplyLanguage;
             Application.Exit();
         }
 
         private void linklbRegister_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://t2psoft.com/Home/Register");
-        }
-
-        private void ShowLoginSuccessPopup(string message)
-        {
-            using (var popup = new Form())
-            {
-                popup.FormBorderStyle = FormBorderStyle.None;
-                popup.StartPosition = FormStartPosition.CenterParent;
-                popup.ShowInTaskbar = false;
-                popup.TopMost = true;
-                popup.BackColor = Color.FromArgb(243, 246, 252);
-                popup.ClientSize = new Size(360, 190);
-                popup.Padding = new Padding(8);
-                popup.Text = "Thông báo";
-                UiHelpers.EnableSmoothPainting(popup);
-
-                var panelCard = new Panel
-                {
-                    Dock = DockStyle.Fill,
-                    BackColor = Color.White
-                };
-                popup.Controls.Add(panelCard);
-
-                var panelHeader = new Panel
-                {
-                    Dock = DockStyle.Top,
-                    Height = 42,
-                    BackColor = Color.FromArgb(248, 250, 255)
-                };
-                var lblTitle = new Label
-                {
-                    AutoSize = true,
-                    Text = "Thông báo",
-                    Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point),
-                    ForeColor = Color.FromArgb(45, 53, 66),
-                    Location = new Point(12, 9)
-                };
-                panelHeader.Controls.Add(lblTitle);
-
-                var btnClose = new Button
-                {
-                    Text = "x",
-                    Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point),
-                    ForeColor = Color.FromArgb(118, 126, 140),
-                    FlatStyle = FlatStyle.Flat,
-                    Size = new Size(32, 28),
-                    Location = new Point(popup.ClientSize.Width - 52, 7),
-                    Anchor = AnchorStyles.Top | AnchorStyles.Right,
-                    Cursor = Cursors.Hand,
-                    TabStop = false
-                };
-                btnClose.FlatAppearance.BorderSize = 0;
-                btnClose.FlatAppearance.MouseOverBackColor = Color.FromArgb(240, 244, 252);
-                btnClose.FlatAppearance.MouseDownBackColor = Color.FromArgb(229, 235, 246);
-                btnClose.Click += (_, __) =>
-                {
-                    popup.DialogResult = DialogResult.OK;
-                    popup.Close();
-                };
-                panelHeader.Controls.Add(btnClose);
-
-                var panelBody = new Panel
-                {
-                    Dock = DockStyle.Fill,
-                    BackColor = Color.White
-                };
-                panelCard.Controls.Add(panelBody);
-                panelCard.Controls.Add(panelHeader);
-
-                var bodyLayout = new TableLayoutPanel
-                {
-                    Dock = DockStyle.Fill,
-                    ColumnCount = 2,
-                    RowCount = 3,
-                    Padding = new Padding(20, 18, 20, 14),
-                    BackColor = Color.White
-                };
-                bodyLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 56F));
-                bodyLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-                bodyLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 58F));
-                bodyLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-                bodyLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-                panelBody.Controls.Add(bodyLayout);
-
-                var iconCircle = new RoundedPanel
-                {
-                    Size = new Size(40, 40),
-                    Dock = DockStyle.Fill,
-                    FillColor = Color.FromArgb(43, 123, 234),
-                    BorderThickness = 0,
-                    CornerRadius = 20,
-                    Margin = new Padding(0, 12, 12, 6)
-                };
-                bodyLayout.Controls.Add(iconCircle, 0, 0);
-
-                var lblIcon = new Label
-                {
-                    Dock = DockStyle.Fill,
-                    Text = "i",
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point),
-                    ForeColor = Color.White,
-                    BackColor = Color.Transparent
-                };
-                iconCircle.Controls.Add(lblIcon);
-
-                var lblMessage = new Label
-                {
-                    AutoSize = false,
-                    Text = message,
-                    Font = new Font("Segoe UI", 10.5F, FontStyle.Bold, GraphicsUnit.Point),
-                    ForeColor = Color.FromArgb(45, 53, 66),
-                    Dock = DockStyle.Fill,
-                    Margin = new Padding(0, 12, 0, 6),
-                    TextAlign = ContentAlignment.MiddleLeft,
-                    AutoEllipsis = true
-                };
-                bodyLayout.Controls.Add(lblMessage, 1, 0);
-
-                var btnOk = new PrimaryButton
-                {
-                    Text = "OK",
-                    Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point),
-                    ForeColor = Color.White,
-                    FillColor = Color.FromArgb(43, 123, 234),
-                    HoverFillColor = Color.FromArgb(38, 111, 214),
-                    PressedFillColor = Color.FromArgb(33, 98, 190),
-                    CornerRadius = 8,
-                    Size = new Size(96, 34),
-                    Anchor = AnchorStyles.Right,
-                    Margin = new Padding(0, 4, 0, 0),
-                    Cursor = Cursors.Hand,
-                    DialogResult = DialogResult.OK
-                };
-                bodyLayout.Controls.Add(btnOk, 1, 2);
-                popup.AcceptButton = btnOk;
-                popup.CancelButton = btnOk;
-
-                panelCard.Paint += (s, e) =>
-                {
-                    e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                    var rect = new Rectangle(0, 0, panelCard.Width - 1, panelCard.Height - 1);
-                    using (var pen = new Pen(Color.FromArgb(216, 223, 236), 1f))
-                    using (var path = UiHelpers.CreateRoundedRectPath(rect, 10))
-                    {
-                        e.Graphics.DrawPath(pen, path);
-                    }
-                };
-                panelHeader.Paint += (s, e) =>
-                {
-                    using (var pen = new Pen(Color.FromArgb(230, 235, 245), 1f))
-                    {
-                        e.Graphics.DrawLine(pen, 0, panelHeader.Height - 1, panelHeader.Width, panelHeader.Height - 1);
-                    }
-                };
-
-                MouseEventHandler dragHandler = (s, e) =>
-                {
-                    if (e.Button != MouseButtons.Left) return;
-                    Win32.BeginDrag(popup);
-                };
-                panelHeader.MouseDown += dragHandler;
-                lblTitle.MouseDown += dragHandler;
-
-                popup.Shown += (s, e) =>
-                {
-                    UiHelpers.ApplyRoundRegion(panelCard, 10);
-                };
-                popup.Resize += (s, e) =>
-                {
-                    if (panelCard.Width > 0 && panelCard.Height > 0)
-                    {
-                        UiHelpers.ApplyRoundRegion(panelCard, 10);
-                    }
-                };
-
-                popup.ShowDialog(this);
-            }
         }
 
         private void LoginApiKey_Load(object sender, EventArgs e)

@@ -32,28 +32,28 @@ namespace ReviewMovie
             this.cardPanel = new System.Windows.Forms.Panel();
             this.linklbRegister = new System.Windows.Forms.LinkLabel();
             this.lkHelp = new System.Windows.Forms.LinkLabel();
+            this.btnLoginApiKey = new ReviewMovie.Base.Controls.PrimaryButton();
+            this.btnClose = new ReviewMovie.Base.Controls.IconCircleButton();
             this.lbstatus = new System.Windows.Forms.Label();
+            this.txInsertApiKey = new ReviewMovie.Base.Controls.UiTextBox();
             this.materialLabel2 = new System.Windows.Forms.Label();
+            this.txAppCodeShow = new ReviewMovie.Base.Controls.UiTextBox();
             this.materialLabel1 = new System.Windows.Forms.Label();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlLogo = new System.Windows.Forms.Panel();
             this.lblLogoIcon = new System.Windows.Forms.Label();
             this.pnlTopAccent = new System.Windows.Forms.Panel();
-            this.btnLoginApiKey = new ReviewMovie.Base.Controls.PrimaryButton();
-            this.btnClose = new ReviewMovie.Base.Controls.IconCircleButton();
-            this.txInsertApiKey = new ReviewMovie.Base.Controls.UiTextBox();
-            this.txAppCodeShow = new ReviewMovie.Base.Controls.UiTextBox();
+            this.cbAppLanguage = new System.Windows.Forms.ComboBox();
+            this.cbAppLanguage = new System.Windows.Forms.ComboBox();
             this.cardPanel.SuspendLayout();
             this.pnlLogo.SuspendLayout();
-            this.linklbRegister = new System.Windows.Forms.LinkLabel();
-            this.cbAppLanguage = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // cardPanel
             // 
-            this.cardPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cardPanel.BackColor = System.Drawing.Color.White;
+            this.cardPanel.Controls.Add(this.cbAppLanguage);
             this.cardPanel.Controls.Add(this.linklbRegister);
             this.cardPanel.Controls.Add(this.lkHelp);
             this.cardPanel.Controls.Add(this.btnLoginApiKey);
@@ -67,37 +67,21 @@ namespace ReviewMovie
             this.cardPanel.Controls.Add(this.lblTitle);
             this.cardPanel.Controls.Add(this.pnlLogo);
             this.cardPanel.Controls.Add(this.pnlTopAccent);
+            this.cardPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cardPanel.Location = new System.Drawing.Point(0, 0);
             this.cardPanel.Name = "cardPanel";
             this.cardPanel.Size = new System.Drawing.Size(450, 600);
             this.cardPanel.TabIndex = 0;
             this.cardPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
-            this.btnLoginApiKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;	
-            this.btnLoginApiKey.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnLoginApiKey.Depth = 0;
-            this.btnLoginApiKey.HighEmphasis = true;
-            this.btnLoginApiKey.Icon = null;
-            this.btnLoginApiKey.Location = new System.Drawing.Point(168, 264);
-            this.btnLoginApiKey.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnLoginApiKey.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnLoginApiKey.Name = "btnLoginApiKey";
-            this.btnLoginApiKey.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnLoginApiKey.Size = new System.Drawing.Size(105, 36);
-            this.btnLoginApiKey.TabIndex = 1;
-            this.btnLoginApiKey.Text = "ĐĂNG NHẬP";
-            this.btnLoginApiKey.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnLoginApiKey.UseAccentColor = false;
-            this.btnLoginApiKey.UseVisualStyleBackColor = true;
-            this.btnLoginApiKey.Click += new System.EventHandler(this.btnLoginApiKey_Click);
             // 
             // linklbRegister
             // 
             this.linklbRegister.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(112)))), ((int)(((byte)(226)))));
+            this.linklbRegister.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.linklbRegister.AutoSize = true;
             this.linklbRegister.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linklbRegister.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.linklbRegister.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(112)))), ((int)(((byte)(226)))));
-            this.linklbRegister.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.linklbRegister.Location = new System.Drawing.Point(349, 514);
             this.linklbRegister.Name = "linklbRegister";
             this.linklbRegister.Size = new System.Drawing.Size(57, 17);
@@ -110,11 +94,11 @@ namespace ReviewMovie
             // lkHelp
             // 
             this.lkHelp.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(108)))), ((int)(((byte)(136)))));
+            this.lkHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lkHelp.AutoSize = true;
             this.lkHelp.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lkHelp.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lkHelp.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(108)))), ((int)(((byte)(136)))));
-            this.lkHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lkHelp.Location = new System.Drawing.Point(44, 514);
             this.lkHelp.Name = "lkHelp";
             this.lkHelp.Size = new System.Drawing.Size(36, 17);
@@ -124,6 +108,56 @@ namespace ReviewMovie
             this.lkHelp.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(108)))), ((int)(((byte)(136)))));
             this.lkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lkHelp_LinkClicked);
             // 
+            // cbAppLanguage
+            // 
+            this.cbAppLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAppLanguage.FormattingEnabled = true;
+            this.cbAppLanguage.Items.AddRange(new object[] {
+            "Tiếng Việt",
+            "English"});
+            this.cbAppLanguage.Location = new System.Drawing.Point(303, 12);
+            this.cbAppLanguage.Name = "cbAppLanguage";
+            this.cbAppLanguage.Size = new System.Drawing.Size(76, 21);
+            this.cbAppLanguage.TabIndex = 10;
+            this.cbAppLanguage.SelectedIndexChanged += new System.EventHandler(this.cbAppLanguage_SelectedIndexChanged);
+            // 
+            // btnLoginApiKey
+            // 
+            this.btnLoginApiKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(119)))), ((int)(((byte)(242)))));
+            this.btnLoginApiKey.CornerRadius = 12;
+            this.btnLoginApiKey.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(119)))), ((int)(((byte)(242)))));
+            this.btnLoginApiKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLoginApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 11.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLoginApiKey.ForeColor = System.Drawing.Color.White;
+            this.btnLoginApiKey.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(111)))), ((int)(((byte)(229)))));
+            this.btnLoginApiKey.Location = new System.Drawing.Point(44, 448);
+            this.btnLoginApiKey.Name = "btnLoginApiKey";
+            this.btnLoginApiKey.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(93)))), ((int)(((byte)(191)))));
+            this.btnLoginApiKey.Size = new System.Drawing.Size(362, 54);
+            this.btnLoginApiKey.TabIndex = 9;
+            this.btnLoginApiKey.Text = "Login  ➜";
+            this.btnLoginApiKey.UseVisualStyleBackColor = false;
+            this.btnLoginApiKey.Click += new System.EventHandler(this.btnLoginApiKey_Click);
+            // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.BackColor = System.Drawing.Color.White;
+            this.btnClose.CornerRadius = 15;
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(145)))), ((int)(((byte)(165)))));
+            this.btnClose.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.btnClose.Location = new System.Drawing.Point(408, 12);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.NormalBackColor = System.Drawing.Color.White;
+            this.btnClose.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.btnClose.Size = new System.Drawing.Size(30, 30);
+            this.btnClose.TabIndex = 12;
+            this.btnClose.Text = "✕";
+            this.btnClose.UseVisualStyleBackColor = false;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // lbstatus
             // 
             this.lbstatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -132,6 +166,35 @@ namespace ReviewMovie
             this.lbstatus.Name = "lbstatus";
             this.lbstatus.Size = new System.Drawing.Size(362, 30);
             this.lbstatus.TabIndex = 8;
+            // 
+            // txInsertApiKey
+            // 
+            this.txInsertApiKey.BackColor = System.Drawing.Color.Transparent;
+            this.txInsertApiKey.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
+            this.txInsertApiKey.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(236)))), ((int)(((byte)(255)))));
+            this.txInsertApiKey.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.txInsertApiKey.BorderRadius = 4;
+            this.txInsertApiKey.DisableTextBox = false;
+            this.txInsertApiKey.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txInsertApiKey.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.txInsertApiKey.IconLeft = null;
+            this.txInsertApiKey.IconRight = null;
+            this.txInsertApiKey.IconSize = new System.Drawing.Size(18, 18);
+            this.txInsertApiKey.Lines = new string[0];
+            this.txInsertApiKey.Location = new System.Drawing.Point(44, 336);
+            this.txInsertApiKey.MaxLength = 32767;
+            this.txInsertApiKey.Multiline = false;
+            this.txInsertApiKey.Name = "txInsertApiKey";
+            this.txInsertApiKey.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
+            this.txInsertApiKey.ReadOnly = false;
+            this.txInsertApiKey.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txInsertApiKey.SelectionLength = 0;
+            this.txInsertApiKey.SelectionStart = 0;
+            this.txInsertApiKey.Size = new System.Drawing.Size(362, 54);
+            this.txInsertApiKey.TabIndex = 7;
+            this.txInsertApiKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txInsertApiKey.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.txInsertApiKey.UseSystemPasswordChar = false;
             // 
             // materialLabel2
             // 
@@ -143,6 +206,35 @@ namespace ReviewMovie
             this.materialLabel2.Size = new System.Drawing.Size(58, 19);
             this.materialLabel2.TabIndex = 6;
             this.materialLabel2.Text = "API KEY";
+            // 
+            // txAppCodeShow
+            // 
+            this.txAppCodeShow.BackColor = System.Drawing.Color.Transparent;
+            this.txAppCodeShow.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
+            this.txAppCodeShow.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(236)))), ((int)(((byte)(255)))));
+            this.txAppCodeShow.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.txAppCodeShow.BorderRadius = 4;
+            this.txAppCodeShow.DisableTextBox = false;
+            this.txAppCodeShow.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txAppCodeShow.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.txAppCodeShow.IconLeft = null;
+            this.txAppCodeShow.IconRight = null;
+            this.txAppCodeShow.IconSize = new System.Drawing.Size(18, 18);
+            this.txAppCodeShow.Lines = new string[0];
+            this.txAppCodeShow.Location = new System.Drawing.Point(44, 250);
+            this.txAppCodeShow.MaxLength = 32767;
+            this.txAppCodeShow.Multiline = false;
+            this.txAppCodeShow.Name = "txAppCodeShow";
+            this.txAppCodeShow.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
+            this.txAppCodeShow.ReadOnly = true;
+            this.txAppCodeShow.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txAppCodeShow.SelectionLength = 0;
+            this.txAppCodeShow.SelectionStart = 0;
+            this.txAppCodeShow.Size = new System.Drawing.Size(362, 54);
+            this.txAppCodeShow.TabIndex = 1;
+            this.txAppCodeShow.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txAppCodeShow.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.txAppCodeShow.UseSystemPasswordChar = false;
             // 
             // materialLabel1
             // 
@@ -201,16 +293,6 @@ namespace ReviewMovie
             this.lblLogoIcon.Text = "🎬";
             this.lblLogoIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblLogoIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
-            this.lkHelp.AutoSize = true;
-            this.lkHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lkHelp.LinkColor = System.Drawing.Color.Blue;
-            this.lkHelp.Location = new System.Drawing.Point(350, 288);
-            this.lkHelp.Name = "lkHelp";
-            this.lkHelp.Size = new System.Drawing.Size(67, 16);
-            this.lkHelp.TabIndex = 7;
-            this.lkHelp.TabStop = true;
-            this.lkHelp.Text = "Trợ Giúp";
-            this.lkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lkHelp_LinkClicked);
             // 
             // pnlTopAccent
             // 
@@ -223,132 +305,6 @@ namespace ReviewMovie
             this.pnlTopAccent.Visible = false;
             this.pnlTopAccent.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
-            // btnLoginApiKey
-            // 
-            this.btnLoginApiKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(119)))), ((int)(((byte)(242)))));
-            this.btnLoginApiKey.CornerRadius = 12;
-            this.btnLoginApiKey.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(119)))), ((int)(((byte)(242)))));
-            this.btnLoginApiKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoginApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 11.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLoginApiKey.ForeColor = System.Drawing.Color.White;
-            this.btnLoginApiKey.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(111)))), ((int)(((byte)(229)))));
-            this.btnLoginApiKey.Location = new System.Drawing.Point(44, 448);
-            this.btnLoginApiKey.Name = "btnLoginApiKey";
-            this.btnLoginApiKey.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(93)))), ((int)(((byte)(191)))));
-            this.btnLoginApiKey.Size = new System.Drawing.Size(362, 54);
-            this.btnLoginApiKey.TabIndex = 9;
-            this.btnLoginApiKey.Text = "Login  ➜";
-            this.btnLoginApiKey.UseVisualStyleBackColor = false;
-            this.btnLoginApiKey.Click += new System.EventHandler(this.btnLoginApiKey_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.BackColor = System.Drawing.Color.White;
-            this.btnClose.CornerRadius = 15;
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(145)))), ((int)(((byte)(165)))));
-            this.btnClose.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(408, 12);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.NormalBackColor = System.Drawing.Color.White;
-            this.btnClose.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.btnClose.Size = new System.Drawing.Size(30, 30);
-            this.btnClose.TabIndex = 12;
-            this.btnClose.Text = "✕";
-            this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // txInsertApiKey
-            // 
-            this.txInsertApiKey.BackColor = System.Drawing.Color.Transparent;
-            this.txInsertApiKey.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
-            this.txInsertApiKey.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(236)))), ((int)(((byte)(255)))));
-            this.txInsertApiKey.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.txInsertApiKey.BorderRadius = 4;
-            this.txInsertApiKey.DisableTextBox = false;
-            this.txInsertApiKey.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
-            this.txInsertApiKey.IconLeft = null;
-            this.txInsertApiKey.IconRight = null;
-            this.txInsertApiKey.IconSize = new System.Drawing.Size(18, 18);
-            this.txInsertApiKey.Lines = new string[0];
-            this.txInsertApiKey.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txInsertApiKey.Location = new System.Drawing.Point(44, 336);
-            this.txInsertApiKey.MaxLength = 32767;
-            this.txInsertApiKey.Multiline = false;
-            this.txInsertApiKey.Name = "txInsertApiKey";
-            this.txInsertApiKey.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
-            this.txInsertApiKey.ReadOnly = false;
-            this.txInsertApiKey.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txInsertApiKey.SelectionLength = 0;
-            this.txInsertApiKey.SelectionStart = 0;
-            this.txInsertApiKey.Size = new System.Drawing.Size(362, 54);
-            this.txInsertApiKey.TabIndex = 7;
-            this.txInsertApiKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txInsertApiKey.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.txInsertApiKey.UseSystemPasswordChar = false;
-            this.lbstatus.AutoSize = true;
-            this.lbstatus.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lbstatus.Location = new System.Drawing.Point(67, 208);
-            this.lbstatus.MaximumSize = new System.Drawing.Size(312, 0);
-            this.lbstatus.Name = "lbstatus";
-            this.lbstatus.Size = new System.Drawing.Size(13, 13);
-            this.lbstatus.TabIndex = 8;
-            this.lbstatus.Text = "_";
-            // 
-            // txAppCodeShow
-            // 
-            this.txAppCodeShow.BackColor = System.Drawing.Color.Transparent;
-            this.txAppCodeShow.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
-            this.txAppCodeShow.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(236)))), ((int)(((byte)(255)))));
-            this.txAppCodeShow.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.txAppCodeShow.BorderRadius = 4;
-            this.txAppCodeShow.DisableTextBox = false;
-            this.txAppCodeShow.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
-            this.txAppCodeShow.IconLeft = null;
-            this.txAppCodeShow.IconRight = null;
-            this.txAppCodeShow.IconSize = new System.Drawing.Size(18, 18);
-            this.txAppCodeShow.Lines = new string[0];
-            this.txAppCodeShow.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txAppCodeShow.Location = new System.Drawing.Point(44, 250);
-            this.txAppCodeShow.MaxLength = 32767;
-            this.txAppCodeShow.Multiline = false;
-            this.txAppCodeShow.Name = "txAppCodeShow";
-            this.txAppCodeShow.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
-            this.txAppCodeShow.ReadOnly = true;
-            this.txAppCodeShow.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txAppCodeShow.SelectionLength = 0;
-            this.txAppCodeShow.SelectionStart = 0;
-            this.txAppCodeShow.Size = new System.Drawing.Size(362, 54);
-            this.txAppCodeShow.TabIndex = 1;
-            this.txAppCodeShow.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txAppCodeShow.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.txAppCodeShow.UseSystemPasswordChar = false;
-            this.linklbRegister.AutoSize = true;
-            this.linklbRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linklbRegister.LinkColor = System.Drawing.Color.Red;
-            this.linklbRegister.Location = new System.Drawing.Point(350, 264);
-            this.linklbRegister.Name = "linklbRegister";
-            this.linklbRegister.Size = new System.Drawing.Size(64, 16);
-            this.linklbRegister.TabIndex = 9;
-            this.linklbRegister.TabStop = true;
-            this.linklbRegister.Text = "Đăng Ký";
-            this.linklbRegister.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklbRegister_LinkClicked);
-            // 
-            // cbAppLanguage
-            // 
-            this.cbAppLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbAppLanguage.FormattingEnabled = true;
-            this.cbAppLanguage.Items.AddRange(new object[] {
-            "Tiếng Việt",
-            "English"});
-            this.cbAppLanguage.Location = new System.Drawing.Point(303, 12);
-            this.cbAppLanguage.Name = "cbAppLanguage";
-            this.cbAppLanguage.Size = new System.Drawing.Size(76, 21);
-            this.cbAppLanguage.TabIndex = 10;
-            this.cbAppLanguage.SelectedIndexChanged += new System.EventHandler(this.cbAppLanguage_SelectedIndexChanged);
-            // 
             // LoginApiKey
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -356,19 +312,6 @@ namespace ReviewMovie
             this.ClientSize = new System.Drawing.Size(450, 600);
             this.Controls.Add(this.cardPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(441, 321);
-            this.Controls.Add(this.cbAppLanguage);
-            this.Controls.Add(this.lbstatus);
-            this.Controls.Add(this.linklbRegister);
-            this.Controls.Add(this.lkHelp);
-            this.Controls.Add(this.materialLabel2);
-            this.Controls.Add(this.txInsertApiKey);
-            this.Controls.Add(this.materialLabel1);
-            this.Controls.Add(this.txAppCodeShow);
-            this.Controls.Add(this.btnLoginApiKey);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "LoginApiKey";

@@ -68,8 +68,7 @@ namespace ReviewMovie
         }
 
 
-        public static void SetLabelText(Label label, string message, Color color, ToolTip toolTip = null, string tooltipText = null)
-        public static void SetLabelText(Control label, string message, Color color)
+        public static void SetLabelText(Control label, string message, Color color, ToolTip toolTip = null, string tooltipText = null)
         {
             if (label == null || label.IsDisposed) return;
 
