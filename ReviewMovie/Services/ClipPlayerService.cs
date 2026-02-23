@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReviewMovie.Localization;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
@@ -34,7 +35,7 @@ namespace EasyClip.Services
                 string clipPlayerPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ClipPlayer", "ClipPlayer.exe");
                 if (!File.Exists(clipPlayerPath))
                 {
-                    throw new FileNotFoundException("Không tìm thấy ClipPlayer.exe");
+                    throw new FileNotFoundException(LanguageManager.Get(LangKeys.Svc_ClipPlayerNotFound));
                 }
 
                 _clipPlayerProcess = Process.GetProcessesByName("ClipPlayer").FirstOrDefault();

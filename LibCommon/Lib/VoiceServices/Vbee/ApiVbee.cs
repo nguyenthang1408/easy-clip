@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http;
@@ -82,6 +83,8 @@ namespace Lib
             try
             {
                 var request = (HttpWebRequest)WebRequest.Create(input.linksite);
+                request.Timeout = NetworkConfig.TimeoutMs;
+                request.ReadWriteTimeout = NetworkConfig.TimeoutMs;
                 var postData = @"{" + "\n" +
                                 @"    ""app_id"": """ + input.appId + @"""," + "\n" +
                                 @"    ""response_type"": ""indirect""," + "\n" +
@@ -132,7 +135,7 @@ namespace Lib
         }
         // End check
 
-        public async Task<TextToSpeechModelOutput> PostTextToSpeechAsync(TextToSpeechModelInput input)
+        public async Task<TextToSpeechModelOutput> PostTextToSpeechAsync(TextToSpeechModelInput input, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -147,26 +150,27 @@ namespace Lib
                                 @"    ""speed_rate"": """ + input.speedrate + @"""" + "\n" +
                                 @"}";
 
-                using (var client = new HttpClient())
+                using (var client = new HttpClient { Timeout = NetworkConfig.Timeout })
                 {
                     client.DefaultRequestHeaders.Authorization =
                         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", input.token);
 
                     var content = new StringContent(postData, Encoding.UTF8, "application/json");
-                    var response = await client.PostAsync(input.linksite, content);
+                    var response = await client.PostAsync(input.linksite, content, cancellationToken);
                     var responseString = await response.Content.ReadAsStringAsync();
 
                     var output = JsonConvert.DeserializeObject<TextToSpeechModelOutput>(responseString);
                     return output;
                 }
             }
+            catch (OperationCanceledException) { throw; }
             catch
             {
                 return null;
             }
         }
 
-        public async Task<string> ConvertText2SpeechAsync(string iAppID, string iToken, string ivoidcode, string iSpeedrate, string inputtext)
+        public async Task<string> ConvertText2SpeechAsync(string iAppID, string iToken, string ivoidcode, string iSpeedrate, string inputtext, CancellationToken cancellationToken = default)
         {
             var input = new TextToSpeechModelInput
             {
@@ -178,27 +182,27 @@ namespace Lib
                 inputText = inputtext
             };
 
-            var output = await PostTextToSpeechAsync(input);
+            var output = await PostTextToSpeechAsync(input, cancellationToken);
             return output?.result?.request_id ?? string.Empty;
         }
 
-        public async Task<GetaudioModelOutput> GetLinkaudioAsync(GetaudioModelInput input)
+        public async Task<GetaudioModelOutput> GetLinkaudioAsync(GetaudioModelInput input, CancellationToken cancellationToken = default)
         {
-            if (input == null 
-                || string.IsNullOrWhiteSpace(input.linksite) 
-                || string.IsNullOrWhiteSpace(input.token) 
+            if (input == null
+                || string.IsNullOrWhiteSpace(input.linksite)
+                || string.IsNullOrWhiteSpace(input.token)
                 || string.IsNullOrWhiteSpace(input.requestID))
                 return null;
 
             try
             {
-                using (var client = new HttpClient())
+                using (var client = new HttpClient { Timeout = NetworkConfig.Timeout })
                 {
                     client.DefaultRequestHeaders.Authorization =
                         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", input.token);
 
                     string requestUrl = $"{input.linksite}/{input.requestID}";
-                    var response = await client.GetAsync(requestUrl);
+                    var response = await client.GetAsync(requestUrl, cancellationToken);
 
                     if (!response.IsSuccessStatusCode)
                         return null;
@@ -209,6 +213,7 @@ namespace Lib
                     return output;
                 }
             }
+            catch (OperationCanceledException) { throw; }
             catch
             {
                 return null;
@@ -222,6 +227,8 @@ namespace Lib
             try
             {
                 var request = (HttpWebRequest)WebRequest.Create(input.linksite + "/" + input.requestID);
+                request.Timeout = NetworkConfig.TimeoutMs;
+                request.ReadWriteTimeout = NetworkConfig.TimeoutMs;
                 request.Headers.Add("Authorization", $"Bearer {input.token}");
                 request.Method = "GET";
 

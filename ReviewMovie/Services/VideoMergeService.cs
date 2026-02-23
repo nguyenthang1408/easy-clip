@@ -1,4 +1,5 @@
 using Lib;
+using ReviewMovie.Localization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -60,7 +61,7 @@ namespace EasyClip.Services
 
                             try
                             {
-                                progressCallback?.Invoke($"Đang ghép {validVideoCount} video - Time: {timeStr}{speedStr}");
+                                progressCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_MergingProgress, validVideoCount, timeStr, speedStr));
                             }
                             catch { }
                         }

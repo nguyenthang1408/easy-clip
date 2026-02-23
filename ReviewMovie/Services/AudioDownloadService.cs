@@ -1,5 +1,6 @@
 ﻿using Lib;
 using Lib.VoiceServices.ElevenLabs.V1.Services;
+using ReviewMovie.Localization;
 using ReviewMovie.Model;
 using System;
 using System.Collections.Generic;
@@ -33,88 +34,94 @@ namespace EasyClip.Services
 
             if (!string.IsNullOrEmpty(ctx.AddressLink))
             {
-                if (recordStatus)
+                try
                 {
-                    await Task.Run(() => RecordAudio.RemoveNoise(ctx.AddressLink, saveapath));
-                    //RecordAudio.RemoveNoise(ctx.AddressLink, saveapath);
-                }
-                else
-                {
-                    if (ctx.ManualSelected == ManualSelect.Elevenlab)
+                    if (recordStatus)
                     {
-                        GetAudioInHistory getAudio = new GetAudioInHistory(ctx.AppId);
-                        fdone = await getAudio.DownloadAudioAsync(ctx.AddressLink, saveapath);
+                        await Task.Run(() => RecordAudio.RemoveNoise(ctx.AddressLink, saveapath));
                     }
                     else
                     {
-                        var jobResult = await Funcion.DownloadFileAsync(new Iobject
+                        if (ctx.ManualSelected == ManualSelect.Elevenlab)
                         {
-                            uri = ctx.AddressLink,
-                            savepath = ctx.AudioPath,
-                            filename = $"{ctx.RowIndex}.mp3"
-                        });
-                        fdone = jobResult.ResultCode;
+                            GetAudioInHistory getAudio = new GetAudioInHistory(ctx.AppId);
+                            fdone = await getAudio.DownloadAudioAsync(ctx.AddressLink, saveapath, token);
+                        }
+                        else
+                        {
+                            var jobResult = await Funcion.DownloadFileAsync(new Iobject
+                            {
+                                uri = ctx.AddressLink,
+                                savepath = ctx.AudioPath,
+                                filename = $"{ctx.RowIndex}.mp3"
+                            }, token);
+                            fdone = jobResult.ResultCode;
+                        }
                     }
-                }
 
-                token.ThrowIfCancellationRequested();
+                    token.ThrowIfCancellationRequested();
 
-                if ((fdone && File.Exists(saveapath)) || (recordStatus && File.Exists(saveapath)))
-                {
-                    //string valuetime = Funcion.GetMediaTime(saveapath);
-                    string valuetime = await Task.Run(() => Funcion.GetMediaTime(saveapath));
-
-                    decimal timeaudio = (decimal)(Convert.ToDouble(valuetime) / 1000);
-                    string timestatus = $"{timeaudio:0.000}s";
-
-                    string downloadstatus = timeaudio > 0
-                        ? recordStatus
-                            ? $"Thu Âm Thành công ! [AudioTime:{timeaudio:0.000}s ]"
-                            : $"Download Thành công ! [AudioTime:{timeaudio:0.000}s ]"
-                        : recordStatus ? "Thu Âm Thất Bại !" : "Download Thất Bại !";
-
-                    if (timeaudio > 0)
+                    if ((fdone && File.Exists(saveapath)) || (recordStatus && File.Exists(saveapath)))
                     {
-                        var mediaType = CheckMedia.GetMediaType(dataGridRowSelect.Cells["Column_filemediapath"].Value?.ToString());
+                        string valuetime = await Task.Run(() => Funcion.GetMediaTime(saveapath));
 
-                        if (mediaType is MediaType.Picture)
+                        decimal timeaudio = (decimal)(Convert.ToDouble(valuetime) / 1000);
+                        string timestatus = $"{timeaudio:0.000}s";
+
+                        string downloadstatus = timeaudio > 0
+                            ? recordStatus
+                                ? LanguageManager.GetFormat(LangKeys.Svc_RecordSuccess, $"{timeaudio:0.000}")
+                                : LanguageManager.GetFormat(LangKeys.Svc_DownloadSuccess, $"{timeaudio:0.000}")
+                            : recordStatus ? LanguageManager.Get(LangKeys.Svc_RecordFailed) : LanguageManager.Get(LangKeys.Svc_DownloadFailed);
+
+                        if (timeaudio > 0)
                         {
-                            if (timeaudio > 0)
+                            var mediaType = CheckMedia.GetMediaType(dataGridRowSelect.Cells["Column_filemediapath"].Value?.ToString());
+
+                            if (mediaType is MediaType.Picture)
                             {
-                                decimal audioTimeScale = timeaudio * (decimal)scaledValue;
-                                string audioTimeScalestatus = $"{audioTimeScale:0.000}s";
-                                timevd.TimeOfMediaPart = audioTimeScale;
-                                ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_timevideo", audioTimeScalestatus, Color.White);
+                                if (timeaudio > 0)
+                                {
+                                    decimal audioTimeScale = timeaudio * (decimal)scaledValue;
+                                    string audioTimeScalestatus = $"{audioTimeScale:0.000}s";
+                                    timevd.TimeOfMediaPart = audioTimeScale;
+                                    ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_timevideo", audioTimeScalestatus, Color.White);
+                                }
                             }
+                            else if (mediaType is MediaType.Video)
+                            {
+                                if (timeaudio > timevd.TimeOfMediaPart)
+                                {
+                                    timevd.TimeOfMediaPart = timeaudio;
+                                    ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_timevideo", timestatus, Color.White);
+                                }
+                            }
+
+                            ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audioTime", timestatus, Color.White);
+                            ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audiostatus", downloadstatus, Color.GreenYellow);
                         }
-                        else if (mediaType is MediaType.Video)
+                        else
                         {
-                            if (timeaudio > timevd.TimeOfMediaPart)
-                            {
-                                timevd.TimeOfMediaPart = timeaudio;
-                                ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_timevideo", timestatus, Color.White);
-                            }
+                            ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audiostatus", downloadstatus, Color.OrangeRed);
                         }
 
-                        ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audioTime", timestatus, Color.White);
-                        ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audiostatus", downloadstatus, Color.GreenYellow);
+                        if (timevd != null) timevd.Audiotime = timeaudio;
+                        ctx.UpdateAudioTimeCallback?.Invoke(ctx.RowIndex, timeaudio);
                     }
                     else
                     {
-                        ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audiostatus", downloadstatus, Color.OrangeRed);
+                        ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audiostatus", LanguageManager.Get(LangKeys.Svc_DownloadFailed), Color.OrangeRed);
                     }
-
-                    if (timevd != null) timevd.Audiotime = timeaudio;
-                    ctx.UpdateAudioTimeCallback?.Invoke(ctx.RowIndex, timeaudio);
                 }
-                else
+                catch (OperationCanceledException)
                 {
-                    ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audiostatus", "Download thất bại !", Color.OrangeRed);
+                    ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audiostatus", LanguageManager.Get(LangKeys.Svc_DownloadCancelledCell), Color.OrangeRed);
+                    throw;
                 }
             }
             else
             {
-                ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audiostatus", "Chưa chuyển âm xong , Thử lại sau !", Color.Orange);
+                ctx.UpdateCellCallback?.Invoke(ctx.RowIndex, "Column_audiostatus", LanguageManager.Get(LangKeys.Svc_ConversionNotReady), Color.Orange);
             }
         }
     }

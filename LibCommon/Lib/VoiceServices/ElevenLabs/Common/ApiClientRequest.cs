@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Lib.VoiceServices.ElevenLabs
@@ -14,32 +15,37 @@ namespace Lib.VoiceServices.ElevenLabs
 
         public ApiClientRequest()
         {
-            _httpClient = new HttpClient();
+            _httpClient = new HttpClient
+            {
+                Timeout = NetworkConfig.Timeout
+            };
         }
 
-        public async Task<HttpResponseMessage> GetAsync(string url, string apiKey)
+        public async Task<HttpResponseMessage> GetAsync(string url, string apiKey, CancellationToken cancellationToken = default)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Add("xi-api-key", apiKey);
-                HttpResponseMessage response = await _httpClient.GetAsync(url);
+                HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
                 return response;
             }
+            catch (OperationCanceledException) { throw; }
             catch
             {
                 return null;
             }
         }
-        public async Task<HttpResponseMessage> PostAsync(string url, object jsonData, string apiKey)
+        public async Task<HttpResponseMessage> PostAsync(string url, object jsonData, string apiKey, CancellationToken cancellationToken = default)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Add("xi-api-key", apiKey);
 
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(jsonData), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync(url, content);
+                HttpResponseMessage response = await _httpClient.PostAsync(url, content, cancellationToken);
                 return response;
             }
+            catch (OperationCanceledException) { throw; }
             catch
             {
                 return null;

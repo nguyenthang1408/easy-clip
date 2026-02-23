@@ -5,6 +5,9 @@ namespace Lib
 {
     public class ListVoiceSite
     {
+        public const string T2Psoft_Des = "https://t2psoft.com/";
+        public const string T2Psoft = "T2Psoft";
+
         public const string FptAI_Des = "https://fpt.ai/";
         public const string FptAI = "FptAI";
 

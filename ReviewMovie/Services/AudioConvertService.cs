@@ -1,9 +1,12 @@
-﻿using Lib;
+﻿using Common.Constant;
+using Lib;
 using Lib.VoiceServices.ElevenLabs;
 using Lib.VoiceServices.ElevenLabs.V1.Model;
 using Lib.VoiceServices.ElevenLabs.V1.Services;
 using Lib.VoiceServices.GoogleTTS;
+using LibCommon.Lib.Model.Package;
 using ReviewMovie.Infrastructure.Project;
+using ReviewMovie.Localization;
 using ReviewMovie.Model;
 using System;
 using System.Collections.Generic;
@@ -43,7 +46,7 @@ namespace EasyClip.Services
                 if (isOtherRunning())
                 {
                     context.ShowAlertCallback?.Invoke(
-                        "Đang có tiến trình Convert Text2Speech khác đang chạy.");
+                        LanguageManager.Get(LangKeys.Svc_ConvertAlreadyRunning));
                     return;
                 }
 
@@ -71,17 +74,17 @@ namespace EasyClip.Services
                         {
                             // Lỗi bất ngờ ngoài try/catch của ConvertText2SpeechAsync (hiếm)
                             string inputText = context.GetInputTextByIndex?.Invoke(index) ?? string.Empty;
-                            context.UpdateRowCallback?.Invoke(index, "", "Lỗi Converted !", inputText);
-                            context.OnAfterRowConverted?.Invoke(index, "", "Lỗi Converted !", inputText);
+                            context.UpdateRowCallback?.Invoke(index, "", LanguageManager.Get(LangKeys.Svc_ConvertError), inputText);
+                            context.OnAfterRowConverted?.Invoke(index, "", LanguageManager.Get(LangKeys.Svc_ConvertError), inputText);
                             // Có thể log thêm lỗi ex nếu muốn
                         }
                         await Task.Delay(300, cts.Token);
                     }
-                    context.SetStatusCallback?.Invoke($"Hoàn thành convert ({modeLabel})", Color.Green);
+                    context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_ConvertComplete, modeLabel), Color.Green);
                 }
                 catch (OperationCanceledException)
                 {
-                    context.SetStatusCallback?.Invoke($"Đã huỷ Convert2Speech ({modeLabel})", Color.OrangeRed);
+                    context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_ConvertCancelled, modeLabel), Color.OrangeRed);
                 }
                 finally
                 {
@@ -107,24 +110,70 @@ namespace EasyClip.Services
 
             if (string.IsNullOrWhiteSpace(inputText))
             {
-                audioStatus = "Không có nội dung";
+                audioStatus = LanguageManager.Get(LangKeys.Svc_NoContent);
                 context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
                 context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
                 return;
             }
 
-            audioStatus = "Converting...";
+            audioStatus = LanguageManager.Get(LangKeys.Svc_Converting);
             context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
-            // Có thể không cần update DB ở trạng thái "Converting..."
-            context.SetStatusCallback?.Invoke($"Đang convert dòng {index}", Color.Green);
+            context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_ConvertingRow, index), Color.Green);
 
             try
             {
+                token.ThrowIfCancellationRequested();
+
+                // Gọi usage API trước khi convert (chỉ khi dùng T2Psoft)
+                if (context.IsT2Psoft && context.ApiRequest != null)
+                {
+                    ApiResponse<TtsUsageResponse> apiResponse;
+                    try
+                    {
+                        apiResponse = await context.ApiRequest.LogTtsUsageAsync(
+                            context.AppCode,
+                            context.ProductSlug,
+                            inputText,
+                            LibConst.TtsSourceApp,
+                            token);
+                    }
+                    catch (OperationCanceledException) { throw; }
+                    catch (Exception ex)
+                    {
+                        audioStatus = LanguageManager.Get(LangKeys.Svc_ServerConnectionError);
+                        context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
+                        context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
+                        context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_UsageApiError, ex.Message), Color.OrangeRed);
+                        return;
+                    }
+
+                    // Server trả error (VD: daily limit exceeded, code 4005)
+                    if (apiResponse == null || apiResponse.Error || apiResponse.Data == null || !apiResponse.Data.Success)
+                    {
+                        string serverMsg = apiResponse?.Message ?? LanguageManager.Get(LangKeys.Svc_UnknownServerError);
+                        audioStatus = LanguageManager.Get(LangKeys.Svc_QuotaExceeded);
+                        context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
+                        context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
+
+                        // Hiển thị trên lblstatus kèm tooltip chi tiết
+                        if (context.SetStatusWithTooltipCallback != null)
+                            context.SetStatusWithTooltipCallback.Invoke(serverMsg, Color.OrangeRed, serverMsg);
+                        else
+                            context.SetStatusCallback?.Invoke(serverMsg, Color.OrangeRed);
+                        return;
+                    }
+
+                    // Callback cập nhật characterUsed/characterLimit + rotate key in-memory
+                    context.OnTtsUsageUpdated?.Invoke(apiResponse.Data);
+                }
+
+                token.ThrowIfCancellationRequested();
+
                 switch (context.ManualSelected)
                 {
                     case ManualSelect.FptAI:
                         requestID = await new ApiFptAI().FptAIConvertText2SpeechAsync(
-                            context.AppID, context.VoiceCode, context.SpeechRatio.ToString("0.0"), inputText.Replace("\"", " "));
+                            context.AppID, context.VoiceCode, context.SpeechRatio.ToString("0.0"), inputText.Replace("\"", " "), token);
                         break;
 
                     case ManualSelect.Elevenlab:
@@ -136,14 +185,14 @@ namespace EasyClip.Services
                             VoiceSettings = context.VoiceSetting // class đúng ElevenLabs
                         };
                         var convertResponse = await elevenLabRequest.SendTextToSpeechRequestAsync(
-                            context.VoiceCode, text2speechRequest, OutputFormat.MP3_44100_32);
+                            context.VoiceCode, text2speechRequest, OutputFormat.MP3_44100_32, true, token);
                         requestID = convertResponse?.HistoryItemId ?? string.Empty;
                         break;
 
                     case ManualSelect.Vbee:
                         requestID = await new ApiVbee().ConvertText2SpeechAsync(
                             context.AppID, context.Token, context.VoiceCode,
-                            context.SpeechRatio.ToString("0.0"), inputText.Replace("\"", " "));
+                            context.SpeechRatio.ToString("0.0"), inputText.Replace("\"", " "), token);
                         break;
 
                     case ManualSelect.Google:
@@ -151,7 +200,7 @@ namespace EasyClip.Services
                         var client = new APIGoogleTTS();
                         var result = client.ConvertTextToSpeech(
                             context.AppID, inputText.Replace("\"", " "),
-                            context.VoiceCode, fullpath);
+                            context.VoiceCode, fullpath, token);
                         if (result.IsSuccess)
                             requestID = fullpath;
                         break;
@@ -160,31 +209,33 @@ namespace EasyClip.Services
                         throw new NotSupportedException("Provider TTS chưa được hỗ trợ.");
                 }
 
+                token.ThrowIfCancellationRequested();
+
                 if (!string.IsNullOrEmpty(requestID))
                 {
-                    audioStatus = "Converted";
+                    audioStatus = LanguageManager.Get(LangKeys.Svc_Converted);
                 }
                 else
                 {
-                    audioStatus = "Lỗi Converted !";
+                    audioStatus = LanguageManager.Get(LangKeys.Svc_ConvertError);
                 }
                 context.UpdateRowCallback?.Invoke(index, requestID, audioStatus, inputText);
                 context.OnAfterRowConverted?.Invoke(index, requestID, audioStatus, inputText);
             }
             catch (OperationCanceledException)
             {
-                audioStatus = "Đã huỷ";
+                audioStatus = LanguageManager.Get(LangKeys.Svc_ConvertCancelledCell);
                 context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
                 context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
-                context.SetStatusCallback?.Invoke($"Huỷ convert dòng {index}", Color.OrangeRed);
+                context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_CancelConvertRow, index), Color.OrangeRed);
                 throw;
             }
             catch (Exception ex)
             {
-                audioStatus = "Lỗi Converted !";
+                audioStatus = LanguageManager.Get(LangKeys.Svc_ConvertError);
                 context.UpdateRowCallback?.Invoke(index, "", audioStatus, inputText);
                 context.OnAfterRowConverted?.Invoke(index, "", audioStatus, inputText);
-                context.SetStatusCallback?.Invoke($"Lỗi convert dòng {index}: {ex.Message}", Color.Red);
+                context.SetStatusCallback?.Invoke(LanguageManager.GetFormat(LangKeys.Svc_ConvertRowError, index, ex.Message), Color.Red);
             }
         }
 

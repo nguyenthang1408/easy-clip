@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using EasyClip.View.DialogMessage;
 using MessageBox = ReviewMovie.Base.UiMessageBox;
 
 namespace ReviewMovie
@@ -67,6 +68,7 @@ namespace ReviewMovie
         }
 
 
+        public static void SetLabelText(Label label, string message, Color color, ToolTip toolTip = null, string tooltipText = null)
         public static void SetLabelText(Control label, string message, Color color)
         {
             if (label == null || label.IsDisposed) return;
@@ -81,6 +83,8 @@ namespace ReviewMovie
                         {
                             label.ForeColor = color;
                             label.Text = message;
+                            if (toolTip != null)
+                                toolTip.SetToolTip(label, tooltipText ?? string.Empty);
                         }
                     }));
                 }
@@ -88,6 +92,8 @@ namespace ReviewMovie
                 {
                     label.ForeColor = color;
                     label.Text = message;
+                    if (toolTip != null)
+                        toolTip.SetToolTip(label, tooltipText ?? string.Empty);
                 }
             }
             catch (ObjectDisposedException)
@@ -137,14 +143,14 @@ namespace ReviewMovie
             if (owner.InvokeRequired)
             {
                 return (DialogResult)owner.Invoke(new Func<DialogResult>(() =>
-                    MessageBox.Show(owner, text, caption, buttons, icon)
+                    MsgBox.Show(owner, text, caption, buttons, icon)
                 ));
             }
             else
             {
                 // Đảm bảo MessageBox hiển thị đúng context UI
                 Application.DoEvents(); // Đảm bảo vẽ lại UI trước khi show MessageBox (tùy chọn)
-                return MessageBox.Show(owner, text, caption, buttons, icon);
+                return MsgBox.Show(owner, text, caption, buttons, icon);
             }
         }
     }

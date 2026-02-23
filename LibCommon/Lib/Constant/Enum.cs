@@ -14,7 +14,8 @@ namespace Lib
         FptAI = 0,
         Vbee,
         Google,
-        Elevenlab
+        Elevenlab,
+        T2Psoft
     }
     public enum MediaType
     {

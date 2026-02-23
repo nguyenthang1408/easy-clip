@@ -46,6 +46,8 @@ namespace ReviewMovie
             this.txAppCodeShow = new ReviewMovie.Base.Controls.UiTextBox();
             this.cardPanel.SuspendLayout();
             this.pnlLogo.SuspendLayout();
+            this.linklbRegister = new System.Windows.Forms.LinkLabel();
+            this.cbAppLanguage = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // cardPanel
@@ -70,6 +72,23 @@ namespace ReviewMovie
             this.cardPanel.Size = new System.Drawing.Size(450, 600);
             this.cardPanel.TabIndex = 0;
             this.cardPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
+            this.btnLoginApiKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;	
+            this.btnLoginApiKey.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnLoginApiKey.Depth = 0;
+            this.btnLoginApiKey.HighEmphasis = true;
+            this.btnLoginApiKey.Icon = null;
+            this.btnLoginApiKey.Location = new System.Drawing.Point(168, 264);
+            this.btnLoginApiKey.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnLoginApiKey.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnLoginApiKey.Name = "btnLoginApiKey";
+            this.btnLoginApiKey.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnLoginApiKey.Size = new System.Drawing.Size(105, 36);
+            this.btnLoginApiKey.TabIndex = 1;
+            this.btnLoginApiKey.Text = "ĐĂNG NHẬP";
+            this.btnLoginApiKey.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnLoginApiKey.UseAccentColor = false;
+            this.btnLoginApiKey.UseVisualStyleBackColor = true;
+            this.btnLoginApiKey.Click += new System.EventHandler(this.btnLoginApiKey_Click);
             // 
             // linklbRegister
             // 
@@ -182,6 +201,16 @@ namespace ReviewMovie
             this.lblLogoIcon.Text = "🎬";
             this.lblLogoIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblLogoIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
+            this.lkHelp.AutoSize = true;
+            this.lkHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lkHelp.LinkColor = System.Drawing.Color.Blue;
+            this.lkHelp.Location = new System.Drawing.Point(350, 288);
+            this.lkHelp.Name = "lkHelp";
+            this.lkHelp.Size = new System.Drawing.Size(67, 16);
+            this.lkHelp.TabIndex = 7;
+            this.lkHelp.TabStop = true;
+            this.lkHelp.Text = "Trợ Giúp";
+            this.lkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lkHelp_LinkClicked);
             // 
             // pnlTopAccent
             // 
@@ -259,6 +288,14 @@ namespace ReviewMovie
             this.txInsertApiKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txInsertApiKey.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.txInsertApiKey.UseSystemPasswordChar = false;
+            this.lbstatus.AutoSize = true;
+            this.lbstatus.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lbstatus.Location = new System.Drawing.Point(67, 208);
+            this.lbstatus.MaximumSize = new System.Drawing.Size(312, 0);
+            this.lbstatus.Name = "lbstatus";
+            this.lbstatus.Size = new System.Drawing.Size(13, 13);
+            this.lbstatus.TabIndex = 8;
+            this.lbstatus.Text = "_";
             // 
             // txAppCodeShow
             // 
@@ -288,6 +325,29 @@ namespace ReviewMovie
             this.txAppCodeShow.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txAppCodeShow.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.txAppCodeShow.UseSystemPasswordChar = false;
+            this.linklbRegister.AutoSize = true;
+            this.linklbRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linklbRegister.LinkColor = System.Drawing.Color.Red;
+            this.linklbRegister.Location = new System.Drawing.Point(350, 264);
+            this.linklbRegister.Name = "linklbRegister";
+            this.linklbRegister.Size = new System.Drawing.Size(64, 16);
+            this.linklbRegister.TabIndex = 9;
+            this.linklbRegister.TabStop = true;
+            this.linklbRegister.Text = "Đăng Ký";
+            this.linklbRegister.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklbRegister_LinkClicked);
+            // 
+            // cbAppLanguage
+            // 
+            this.cbAppLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAppLanguage.FormattingEnabled = true;
+            this.cbAppLanguage.Items.AddRange(new object[] {
+            "Tiếng Việt",
+            "English"});
+            this.cbAppLanguage.Location = new System.Drawing.Point(303, 12);
+            this.cbAppLanguage.Name = "cbAppLanguage";
+            this.cbAppLanguage.Size = new System.Drawing.Size(76, 21);
+            this.cbAppLanguage.TabIndex = 10;
+            this.cbAppLanguage.SelectedIndexChanged += new System.EventHandler(this.cbAppLanguage_SelectedIndexChanged);
             // 
             // LoginApiKey
             // 
@@ -296,6 +356,19 @@ namespace ReviewMovie
             this.ClientSize = new System.Drawing.Size(450, 600);
             this.Controls.Add(this.cardPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(441, 321);
+            this.Controls.Add(this.cbAppLanguage);
+            this.Controls.Add(this.lbstatus);
+            this.Controls.Add(this.linklbRegister);
+            this.Controls.Add(this.lkHelp);
+            this.Controls.Add(this.materialLabel2);
+            this.Controls.Add(this.txInsertApiKey);
+            this.Controls.Add(this.materialLabel1);
+            this.Controls.Add(this.txAppCodeShow);
+            this.Controls.Add(this.btnLoginApiKey);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "LoginApiKey";
@@ -327,5 +400,6 @@ namespace ReviewMovie
         private System.Windows.Forms.LinkLabel lkHelp;
         private System.Windows.Forms.Label lbstatus;
         private System.Windows.Forms.LinkLabel linklbRegister;
+        private System.Windows.Forms.ComboBox cbAppLanguage;
     }
 }

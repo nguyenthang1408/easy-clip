@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Lib.VoiceServices.ElevenLabs.V1.Services
@@ -20,11 +21,11 @@ namespace Lib.VoiceServices.ElevenLabs.V1.Services
             ApiKey = apikey;
             ElevenlabsDownloadAudioAdress = $"{URLInfo.Https}{URLInfo.ElevenLabsDomain}{URLInfo.DefaultApiVersion}{URLInfo.History}";
         }
-        public async Task<bool> DownloadAudioAsync(string historyItemId, string saveFilePath)
+        public async Task<bool> DownloadAudioAsync(string historyItemId, string saveFilePath, CancellationToken cancellationToken = default)
         {
             var urlGetAudio = $"{ElevenlabsDownloadAudioAdress}{historyItemId}{URLInfo.HistoryAudio}";
 
-            HttpResponseMessage response = await apiClientRequest.GetAsync(urlGetAudio, ApiKey);
+            HttpResponseMessage response = await apiClientRequest.GetAsync(urlGetAudio, ApiKey, cancellationToken);
 
             if (response.IsSuccessStatusCode)
             {

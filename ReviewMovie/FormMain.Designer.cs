@@ -103,6 +103,62 @@ namespace ReviewMovie
             this.cbProjectName = new ReviewMovie.Base.Controls.UiComboBox();
             this.tlpView = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
             this.dgvMainView = new ReviewMovie.Base.Controls.UiDataGridView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblapi = new System.Windows.Forms.Label();
+            this.txtAppID = new System.Windows.Forms.TextBox();
+            this.btnOpenProject = new System.Windows.Forms.Button();
+            this.lblToken = new System.Windows.Forms.Label();
+            this.txtToken = new System.Windows.Forms.TextBox();
+            this.grbConfigRender = new System.Windows.Forms.GroupBox();
+            this.ckOpenPlayer = new System.Windows.Forms.CheckBox();
+            this.nbSpeechRatio = new System.Windows.Forms.NumericUpDown();
+            this.cbSettingTemplate = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.btnSaveEffectSetting = new System.Windows.Forms.Button();
+            this.ckRandomMoveLeftRight = new System.Windows.Forms.CheckBox();
+            this.cbLanguageSelect = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.nScaleAudioRangeEnd = new System.Windows.Forms.NumericUpDown();
+            this.nScaleAudioRangeStart = new System.Windows.Forms.NumericUpDown();
+            this.label14 = new System.Windows.Forms.Label();
+            this.ckHflipRandom = new System.Windows.Forms.CheckBox();
+            this.nbThread = new System.Windows.Forms.NumericUpDown();
+            this.label13 = new System.Windows.Forms.Label();
+            this.nbVolumnOrigin = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ckNotUseAudio = new System.Windows.Forms.CheckBox();
+            this.cbMode = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cbZoomQuality = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.nFPS = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cbZoomRatio = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cbEffectType = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.ckHflip = new System.Windows.Forms.CheckBox();
+            this.ckRotate = new System.Windows.Forms.CheckBox();
+            this.CkZoom = new System.Windows.Forms.CheckBox();
+            this.cbxVideoQuality = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbxSpeechType = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btnAddAll = new System.Windows.Forms.Button();
+            this.lblstatus = new System.Windows.Forms.Label();
+            this.cboSiteNguon = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.grboxSetting = new System.Windows.Forms.GroupBox();
+            this.grbConfigVoice = new System.Windows.Forms.GroupBox();
+            this.btnSaveVoiceSource = new System.Windows.Forms.Button();
+            this.grbActionRender = new System.Windows.Forms.GroupBox();
+            this.rbGPUused = new System.Windows.Forms.RadioButton();
+            this.rbCPUused = new System.Windows.Forms.RadioButton();
+            this.cbProjectName = new System.Windows.Forms.ComboBox();
+            this.tlpView = new System.Windows.Forms.TableLayoutPanel();
+            this.dgvMainView = new System.Windows.Forms.DataGridView();
             this.Column_check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_index = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -161,6 +217,22 @@ namespace ReviewMovie
             this.btnHeaderSetting = new System.Windows.Forms.Button();
             this.lblHeaderAvatar = new System.Windows.Forms.Label();
             this.btnHeaderClose = new System.Windows.Forms.Button();
+            this.lbHeaderInputMedia = new System.Windows.Forms.Label();
+            this.btnRecord = new System.Windows.Forms.Button();
+            this.tlpText = new System.Windows.Forms.TableLayoutPanel();
+            this.lbHeaderText = new System.Windows.Forms.Label();
+            this.txtTextInput = new System.Windows.Forms.TextBox();
+            this.tlpHeaderButton = new System.Windows.Forms.TableLayoutPanel();
+            this.btnRenderVideoPart = new System.Windows.Forms.Button();
+            this.btnConvertAudio = new System.Windows.Forms.Button();
+            this.btnSaveAudio = new System.Windows.Forms.Button();
+            this.scMain = new System.Windows.Forms.SplitContainer();
+            this.scView = new System.Windows.Forms.SplitContainer();
+            this.btnExpand = new System.Windows.Forms.Button();
+            this.scSetting = new System.Windows.Forms.SplitContainer();
+            this.btnCollapse = new System.Windows.Forms.Button();
+            this.btnExportSubtitle = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ctMenu.SuspendLayout();
             this.grbConfigRender.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nbSpeechRatio)).BeginInit();
@@ -391,7 +463,6 @@ namespace ReviewMovie
             this.grbConfigRender.Controls.Add(this.nbVolumnOrigin);
             this.grbConfigRender.Controls.Add(this.label4);
             this.grbConfigRender.Controls.Add(this.ckNotUseAudio);
-            this.grbConfigRender.Controls.Add(this.label3);
             this.grbConfigRender.Controls.Add(this.cbMode);
             this.grbConfigRender.Controls.Add(this.label12);
             this.grbConfigRender.Controls.Add(this.cbZoomQuality);
@@ -525,6 +596,8 @@ namespace ReviewMovie
             // 
             this.label15.AutoSize = false;
             this.label15.Location = new System.Drawing.Point(251, 240);
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(248, 244);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(14, 20);
             this.label15.TabIndex = 119;
@@ -570,6 +643,7 @@ namespace ReviewMovie
             0,
             65536});
             this.nScaleAudioRangeStart.Location = new System.Drawing.Point(202, 240);
+            this.nScaleAudioRangeStart.Location = new System.Drawing.Point(201, 240);
             this.nScaleAudioRangeStart.Maximum = new decimal(new int[] {
             18,
             0,
@@ -596,11 +670,14 @@ namespace ReviewMovie
             this.label14.AutoSize = false;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.Location = new System.Drawing.Point(134, 240);
+            this.label14.Location = new System.Drawing.Point(130, 244);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(64, 20);
+            this.label14.Size = new System.Drawing.Size(69, 13);
             this.label14.TabIndex = 116;
             this.label14.Text = "Audio Scale";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label14.Text = "Hệ số tốc độ";
             // 
             // ckHflipRandom
             // 
@@ -687,21 +764,13 @@ namespace ReviewMovie
             // 
             this.ckNotUseAudio.AutoSize = true;
             this.ckNotUseAudio.Location = new System.Drawing.Point(296, 272);
+            this.ckNotUseAudio.Location = new System.Drawing.Point(199, 271);
             this.ckNotUseAudio.Name = "ckNotUseAudio";
-            this.ckNotUseAudio.Size = new System.Drawing.Size(15, 14);
+            this.ckNotUseAudio.Size = new System.Drawing.Size(96, 17);
             this.ckNotUseAudio.TabIndex = 110;
+            this.ckNotUseAudio.Text = "Ko dùng Audio";
             this.ckNotUseAudio.UseVisualStyleBackColor = true;
             this.ckNotUseAudio.CheckedChanged += new System.EventHandler(this.ckMuted_CheckedChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = false;
-            this.label3.Location = new System.Drawing.Point(198, 269);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(92, 20);
-            this.label3.TabIndex = 109;
-            this.label3.Text = "Ko dùng Audio :";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbMode
             // 
@@ -896,6 +965,8 @@ namespace ReviewMovie
             // 
             this.label6.AutoSize = false;
             this.label6.Location = new System.Drawing.Point(8, 342);
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 347);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(72, 22);
             this.label6.TabIndex = 17;
@@ -906,6 +977,8 @@ namespace ReviewMovie
             // 
             this.label5.AutoSize = false;
             this.label5.Location = new System.Drawing.Point(8, 269);
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 272);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(72, 22);
             this.label5.TabIndex = 15;
@@ -1011,6 +1084,32 @@ namespace ReviewMovie
             this.grbActionRender.TabIndex = 45;
             this.grbActionRender.TabStop = false;
             this.grbActionRender.Text = "Xuất Bản Video";
+            // 
+            // rbGPUused
+            // 
+            this.rbGPUused.AutoSize = true;
+            this.rbGPUused.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbGPUused.ForeColor = System.Drawing.Color.ForestGreen;
+            this.rbGPUused.Location = new System.Drawing.Point(18, 49);
+            this.rbGPUused.Name = "rbGPUused";
+            this.rbGPUused.Size = new System.Drawing.Size(77, 17);
+            this.rbGPUused.TabIndex = 18;
+            this.rbGPUused.TabStop = true;
+            this.rbGPUused.Text = "Use GPU";
+            this.rbGPUused.UseVisualStyleBackColor = true;
+            // 
+            // rbCPUused
+            // 
+            this.rbCPUused.AutoSize = true;
+            this.rbCPUused.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbCPUused.ForeColor = System.Drawing.Color.Red;
+            this.rbCPUused.Location = new System.Drawing.Point(18, 26);
+            this.rbCPUused.Name = "rbCPUused";
+            this.rbCPUused.Size = new System.Drawing.Size(76, 17);
+            this.rbCPUused.TabIndex = 17;
+            this.rbCPUused.TabStop = true;
+            this.rbCPUused.Text = "Use CPU";
+            this.rbCPUused.UseVisualStyleBackColor = true;
             // 
             // cbProjectName
             // 
@@ -1243,6 +1342,8 @@ namespace ReviewMovie
             this.btnAddRow,
             this.toolStripSeparator2,
             this.btnImportSubtitle,
+            this.toolStripSeparator5,
+            this.btnExportSubtitle,
             this.toolStripSeparator3,
             this.btnDestroyAction});
             this.tsMenuView.Location = new System.Drawing.Point(0, 178);
@@ -1378,7 +1479,7 @@ namespace ReviewMovie
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.76289F));
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 81.23711F));
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
-            this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 174F));
+            this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177F));
             this.tlpViewHeader.Controls.Add(this.tlpImportMedia, 2, 0);
             this.tlpViewHeader.Controls.Add(this.btnRecord, 0, 0);
             this.tlpViewHeader.Controls.Add(this.tlpText, 1, 0);
@@ -1399,7 +1500,7 @@ namespace ReviewMovie
             this.tlpImportMedia.Controls.Add(this.txtImPortMedia, 0, 1);
             this.tlpImportMedia.Controls.Add(this.lbHeaderInputMedia, 0, 0);
             this.tlpImportMedia.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpImportMedia.Location = new System.Drawing.Point(537, 3);
+            this.tlpImportMedia.Location = new System.Drawing.Point(534, 3);
             this.tlpImportMedia.Name = "tlpImportMedia";
             this.tlpImportMedia.RowCount = 2;
             this.tlpImportMedia.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
@@ -1452,7 +1553,7 @@ namespace ReviewMovie
             this.btnRecord.Image = global::EasyClip.Properties.Resources.ivoice;
             this.btnRecord.Location = new System.Drawing.Point(3, 3);
             this.btnRecord.Name = "btnRecord";
-            this.btnRecord.Size = new System.Drawing.Size(94, 147);
+            this.btnRecord.Size = new System.Drawing.Size(93, 147);
             this.btnRecord.TabIndex = 0;
             this.btnRecord.Text = "Record";
             this.btnRecord.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -1466,12 +1567,12 @@ namespace ReviewMovie
             this.tlpText.Controls.Add(this.lbHeaderText, 0, 0);
             this.tlpText.Controls.Add(this.txtTextInput, 0, 1);
             this.tlpText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpText.Location = new System.Drawing.Point(103, 3);
+            this.tlpText.Location = new System.Drawing.Point(102, 3);
             this.tlpText.Name = "tlpText";
             this.tlpText.RowCount = 2;
             this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
-            this.tlpText.Size = new System.Drawing.Size(428, 147);
+            this.tlpText.Size = new System.Drawing.Size(426, 147);
             this.tlpText.TabIndex = 1;
             // 
             // lbHeaderText
@@ -1488,7 +1589,7 @@ namespace ReviewMovie
             this.lbHeaderText.Location = new System.Drawing.Point(1, 1);
             this.lbHeaderText.Margin = new System.Windows.Forms.Padding(1);
             this.lbHeaderText.Name = "lbHeaderText";
-            this.lbHeaderText.Size = new System.Drawing.Size(426, 20);
+            this.lbHeaderText.Size = new System.Drawing.Size(424, 20);
             this.lbHeaderText.TabIndex = 0;
             this.lbHeaderText.Text = "Nhập Text | Hoặc Kéo Audio File Vào !";
             this.lbHeaderText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1501,7 +1602,7 @@ namespace ReviewMovie
             this.txtTextInput.Location = new System.Drawing.Point(3, 25);
             this.txtTextInput.Multiline = true;
             this.txtTextInput.Name = "txtTextInput";
-            this.txtTextInput.Size = new System.Drawing.Size(422, 119);
+            this.txtTextInput.Size = new System.Drawing.Size(420, 119);
             this.txtTextInput.TabIndex = 1;
             this.txtTextInput.TextChanged += new System.EventHandler(this.txtTextInput_TextChanged);
             this.txtTextInput.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtTextInput_DragDrop);
@@ -1516,14 +1617,14 @@ namespace ReviewMovie
             this.tlpHeaderButton.Controls.Add(this.btnConvertAudio, 0, 0);
             this.tlpHeaderButton.Controls.Add(this.btnSaveAudio, 0, 1);
             this.tlpHeaderButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpHeaderButton.Location = new System.Drawing.Point(693, 3);
+            this.tlpHeaderButton.Location = new System.Drawing.Point(690, 3);
             this.tlpHeaderButton.Name = "tlpHeaderButton";
             this.tlpHeaderButton.RowCount = 3;
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpHeaderButton.Size = new System.Drawing.Size(169, 147);
+            this.tlpHeaderButton.Size = new System.Drawing.Size(172, 147);
             this.tlpHeaderButton.TabIndex = 3;
             // 
             // btnRenderVideoPart
@@ -1534,7 +1635,7 @@ namespace ReviewMovie
             this.btnRenderVideoPart.Location = new System.Drawing.Point(4, 104);
             this.btnRenderVideoPart.Margin = new System.Windows.Forms.Padding(4);
             this.btnRenderVideoPart.Name = "btnRenderVideoPart";
-            this.btnRenderVideoPart.Size = new System.Drawing.Size(161, 39);
+            this.btnRenderVideoPart.Size = new System.Drawing.Size(164, 39);
             this.btnRenderVideoPart.TabIndex = 3;
             this.btnRenderVideoPart.Text = "Render Part";
             this.btnRenderVideoPart.UseVisualStyleBackColor = false;
@@ -1548,7 +1649,7 @@ namespace ReviewMovie
             this.btnConvertAudio.Location = new System.Drawing.Point(4, 4);
             this.btnConvertAudio.Margin = new System.Windows.Forms.Padding(4);
             this.btnConvertAudio.Name = "btnConvertAudio";
-            this.btnConvertAudio.Size = new System.Drawing.Size(161, 42);
+            this.btnConvertAudio.Size = new System.Drawing.Size(164, 42);
             this.btnConvertAudio.TabIndex = 1;
             this.btnConvertAudio.Text = "Convert Audio";
             this.btnConvertAudio.UseVisualStyleBackColor = false;
@@ -1562,7 +1663,7 @@ namespace ReviewMovie
             this.btnSaveAudio.Location = new System.Drawing.Point(4, 54);
             this.btnSaveAudio.Margin = new System.Windows.Forms.Padding(4);
             this.btnSaveAudio.Name = "btnSaveAudio";
-            this.btnSaveAudio.Size = new System.Drawing.Size(161, 42);
+            this.btnSaveAudio.Size = new System.Drawing.Size(164, 42);
             this.btnSaveAudio.TabIndex = 2;
             this.btnSaveAudio.Text = "Save Audio";
             this.btnSaveAudio.UseVisualStyleBackColor = false;
@@ -1830,31 +1931,20 @@ namespace ReviewMovie
             this.btnCollapse.UseVisualStyleBackColor = false;
             this.btnCollapse.Click += new System.EventHandler(this.btnCollapse_Click);
             // 
-            // rbCPUused
+            // btnExportSubtitle
             // 
-            this.rbCPUused.AutoSize = true;
-            this.rbCPUused.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbCPUused.ForeColor = System.Drawing.Color.Red;
-            this.rbCPUused.Location = new System.Drawing.Point(18, 26);
-            this.rbCPUused.Name = "rbCPUused";
-            this.rbCPUused.Size = new System.Drawing.Size(76, 17);
-            this.rbCPUused.TabIndex = 17;
-            this.rbCPUused.TabStop = true;
-            this.rbCPUused.Text = "Use CPU";
-            this.rbCPUused.UseVisualStyleBackColor = true;
+            this.btnExportSubtitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnExportSubtitle.Image = global::EasyClip.Properties.Resources.copy;
+            this.btnExportSubtitle.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExportSubtitle.Name = "btnExportSubtitle";
+            this.btnExportSubtitle.Size = new System.Drawing.Size(115, 22);
+            this.btnExportSubtitle.Text = "Xuất Subtitle File";
+            this.btnExportSubtitle.Click += new System.EventHandler(this.btnExportSubtitle_Click);
             // 
-            // rbGPUused
+            // toolStripSeparator5
             // 
-            this.rbGPUused.AutoSize = true;
-            this.rbGPUused.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbGPUused.ForeColor = System.Drawing.Color.ForestGreen;
-            this.rbGPUused.Location = new System.Drawing.Point(18, 49);
-            this.rbGPUused.Name = "rbGPUused";
-            this.rbGPUused.Size = new System.Drawing.Size(77, 17);
-            this.rbGPUused.TabIndex = 18;
-            this.rbGPUused.TabStop = true;
-            this.rbGPUused.Text = "Use GPU";
-            this.rbGPUused.UseVisualStyleBackColor = true;
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // FormMain
             // 
@@ -1956,6 +2046,37 @@ namespace ReviewMovie
         private ReviewMovie.Base.Controls.UiGroupBox grboxSetting;
         private ReviewMovie.Base.Controls.UiCheckBox ckNotUseAudio;
         private ReviewMovie.Base.Controls.UiLabel label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblapi;
+        private System.Windows.Forms.TextBox txtAppID;
+        private System.Windows.Forms.Button btnOpenProject;
+        private System.Windows.Forms.Label lblToken;
+        private System.Windows.Forms.TextBox txtToken;
+        private System.Windows.Forms.GroupBox grbConfigRender;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbxSpeechType;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnAddAll;
+        private System.Windows.Forms.Label lblstatus;
+        private System.Windows.Forms.ComboBox cboSiteNguon;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbMode;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ComboBox cbZoomQuality;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.NumericUpDown nFPS;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox cbZoomRatio;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cbEffectType;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox ckHflip;
+        private System.Windows.Forms.CheckBox ckRotate;
+        private System.Windows.Forms.CheckBox CkZoom;
+        private System.Windows.Forms.ComboBox cbxVideoQuality;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox grboxSetting;
+        private System.Windows.Forms.CheckBox ckNotUseAudio;
         private System.Windows.Forms.ContextMenuStrip ctMenu;
         private System.Windows.Forms.ToolStripMenuItem MenuItemConvertTex2Speech;
         private System.Windows.Forms.ToolStripMenuItem MenuItemDownAudio;
@@ -2051,6 +2172,11 @@ namespace ReviewMovie
         private System.Windows.Forms.Button btnHeaderSetting;
         private System.Windows.Forms.Label lblHeaderAvatar;
         private System.Windows.Forms.Button btnHeaderClose;
+        private System.Windows.Forms.CheckBox ckOpenPlayer;
+        private System.Windows.Forms.RadioButton rbCPUused;
+        private System.Windows.Forms.RadioButton rbGPUused;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripButton btnExportSubtitle;
     }
 }
 
