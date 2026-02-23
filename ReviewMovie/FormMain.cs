@@ -4667,7 +4667,7 @@ namespace ReviewMovie
                     }
 
                     SubtitleReaderV2.WriteToSubtitleFile(exportList, saveFileDialog.FileName);
-                    ShowMessage(LanguageManager.Get(LangKeys.Main_ExportSubtitleSuccess), LanguageManager.Get(LangKeys.Common_Success));
+                    MsgBox.Success(LanguageManager.Get(LangKeys.Main_ExportSubtitleSuccess), LanguageManager.Get(LangKeys.Common_Success));
                 }
                 catch (Exception ex)
                 {
