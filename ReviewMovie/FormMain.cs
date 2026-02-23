@@ -79,6 +79,8 @@ namespace ReviewMovie
         public static List<InfoRenderVd> _allInfoRender = new List<InfoRenderVd>();
         public static BindingList<InfoMainView> _listdata = new BindingList<InfoMainView>();
         public static List<InfoMainView> _listSubtitleData;
+        private List<SubtitlesParser.ParsersV2.SubtitleBlock> _subtitleBlocks = null;
+        private bool _hasVideoZero = false;
         public static List<Voice> _listVoice = new List<Voice>();
         public static VoiceSettings _voiceSetting = new VoiceSettings();
 
@@ -107,7 +109,6 @@ namespace ReviewMovie
         public int _indexRowMax = 0;
         public int _indexRowSelect = -1;
         private bool _videoShort = false;
-        private bool _checkrecord = false;
         private bool _isInternalTextChange = false;
 
         private bool _isAddingRow = false;
@@ -121,10 +122,7 @@ namespace ReviewMovie
         private const decimal _speechratioVbee = 1.0m;
         private const decimal _speechratioGoogleTTS = 0.5m;
 
-        private Thread _thread_ConvertSpeech;
         private Thread _theart_videotheostt;
-        private Thread _thread_rendervideo;
-        private Thread _thread_downloadaudio;
 
         private string _projectPath;
         private string _audioPath;
@@ -1084,6 +1082,9 @@ namespace ReviewMovie
                     return;
                 }    
 
+                // Lưu subtitle blocks gốc để dùng khi export (cần timing)
+                _subtitleBlocks = subtitleValue;
+
                 bool hasVideoZero = false;
                 string checkZeroFile = CFuncion.FindFullNameMediaPath(_infoProject.InforSubtitleFile.FolderSubtileMediaFile, "0");
 
@@ -1092,6 +1093,7 @@ namespace ReviewMovie
                     _indexRowMax += 1;
                     hasVideoZero = true;
                 }
+                _hasVideoZero = hasVideoZero;
 
                 //for (int i = 0; i < subtitleValue.Count; i++)
                 //{
@@ -4456,7 +4458,6 @@ namespace ReviewMovie
             btnAddAll.Enabled = false;
             btnOpenProject.Enabled = false;
             cbProjectName.Enabled = false;
-            bool isLoadDataGridInit = true;
 
             try
             {
@@ -4546,6 +4547,129 @@ namespace ReviewMovie
 
         }
 
+        private void btnExportSubtitle_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(_projectName))
+            {
+                MsgBox.Show(ERR_PROJECT_EMPTY);
+                return;
+            }
+
+            if (_listdata == null || _listdata.Count == 0)
+            {
+                ShowMessage(LanguageManager.Get(LangKeys.Main_ExportSubtitleNoData), LanguageManager.Get(LangKeys.Common_Notice));
+                return;
+            }
+
+            // Commit bất kỳ chỉnh sửa đang chờ trong ô hiện tại của grid
+            dgvMainView.EndEdit();
+            if (dgvMainView.CurrentRow != null)
+                SaveCurrentRowData(dgvMainView.CurrentRow.Index);
+
+            // Chọn chế độ xuất
+            var exportMode = FormExportMode.Show(this);
+            if (exportMode == FormExportMode.ExportMode.Cancel)
+                return;
+
+            // Validate theo chế độ đã chọn trước khi mở SaveFileDialog
+            if (exportMode == FormExportMode.ExportMode.OriginalTime)
+            {
+                if (_subtitleBlocks == null || _subtitleBlocks.Count == 0)
+                {
+                    ShowMessage(LanguageManager.Get(LangKeys.Main_ExportSubtitleNoOriginal), LanguageManager.Get(LangKeys.Common_Notice));
+                    return;
+                }
+            }
+            else // VideoTime
+            {
+                int startIdx = _hasVideoZero ? 1 : 0;
+                var missingIds = new System.Collections.Generic.List<int>();
+                for (int i = startIdx; i < _listdata.Count; i++)
+                {
+                    var render = _allInfoRender.FirstOrDefault(c => c.NoID == _listdata[i].id);
+                    if (render == null || !render.TimeOfMediaPart.HasValue || render.TimeOfMediaPart.Value <= 0)
+                        missingIds.Add(_listdata[i].id);
+                }
+                if (missingIds.Count > 0)
+                {
+                    ShowMessage(
+                        string.Format(LanguageManager.Get(LangKeys.Main_ExportSubtitleMissingTime), string.Join(", ", missingIds)),
+                        LanguageManager.Get(LangKeys.Common_Error));
+                    return;
+                }
+            }
+
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Title = LanguageManager.Get(LangKeys.Main_ExportSubtitleTitle);
+                saveFileDialog.Filter = "Subtitle (*.srt)|*.srt";
+                saveFileDialog.DefaultExt = "srt";
+                saveFileDialog.FileName = Path.GetFileNameWithoutExtension(_infoProject?.InforSubtitleFile?.SubtitleFile ?? "exported_subtitle");
+
+                if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                    return;
+
+                try
+                {
+                    var exportList = new List<SubtitlesParser.ParsersV2.SubtitleBlock>();
+
+                    if (exportMode == FormExportMode.ExportMode.OriginalTime)
+                    {
+                        // Xuất theo timing gốc từ file subtitle đã import
+                        // Nếu có video intro (index 0 trong grid), các subtitle block lệch đi 1 so với grid
+                        for (int k = 0; k < _subtitleBlocks.Count; k++)
+                        {
+                            int gridIndex = _hasVideoZero ? k + 1 : k;
+                            string editedText = string.Empty;
+                            if (gridIndex < _listdata.Count)
+                                editedText = _listdata[gridIndex].inputtext ?? string.Empty;
+
+                            exportList.Add(new SubtitlesParser.ParsersV2.SubtitleBlock
+                            {
+                                OrderNumber = k + 1,
+                                StartTime = _subtitleBlocks[k].StartTime,
+                                EndTime = _subtitleBlocks[k].EndTime,
+                                InlineTextList = new List<string> { editedText }
+                            });
+                        }
+                    }
+                    else // VideoTime
+                    {
+                        // Xuất theo thời lượng video của từng row, tính thời gian tích lũy
+                        // StartTime[i] = cursor, EndTime[i] = cursor + TimeOfMediaPart[i]
+                        // StartTime[i+1] = EndTime[i] + 1ms (gap 1ms giữa các block)
+                        int startIdx = _hasVideoZero ? 1 : 0;
+                        TimeSpan cursor = TimeSpan.Zero;
+                        int orderNum = 1;
+
+                        for (int i = startIdx; i < _listdata.Count; i++)
+                        {
+                            var render = _allInfoRender.FirstOrDefault(c => c.NoID == _listdata[i].id);
+                            var duration = TimeSpan.FromSeconds((double)render.TimeOfMediaPart.Value);
+                            var startTime = cursor;
+                            var endTime = cursor + duration;
+
+                            exportList.Add(new SubtitlesParser.ParsersV2.SubtitleBlock
+                            {
+                                OrderNumber = orderNum++,
+                                StartTime = startTime,
+                                EndTime = endTime,
+                                InlineTextList = new List<string> { _listdata[i].inputtext ?? string.Empty }
+                            });
+
+                            cursor = endTime + TimeSpan.FromMilliseconds(1);
+                        }
+                    }
+
+                    SubtitleReaderV2.WriteToSubtitleFile(exportList, saveFileDialog.FileName);
+                    MsgBox.Success(LanguageManager.Get(LangKeys.Main_ExportSubtitleSuccess), LanguageManager.Get(LangKeys.Common_Success));
+                }
+                catch (Exception ex)
+                {
+                    ShowMessage(LanguageManager.Get(LangKeys.Main_ExportSubtitleError) + "\n" + ex.Message, LanguageManager.Get(LangKeys.Common_Error));
+                }
+            }
+        }
         /// <summary>
         /// Xóa tất cả video files trong thư mục được chỉ định
         /// </summary>

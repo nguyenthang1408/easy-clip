@@ -157,6 +157,12 @@
     <Compile Include="View\DialogMessage\DialogMsg.Designer.cs">
       <DependentUpon>DialogMsg.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\DialogMessage\FormExportMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\DialogMessage\FormExportMode.Designer.cs">
+      <DependentUpon>FormExportMode.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\DialogMessage\FormLoadingCancel.cs">
       <SubType>Form</SubType>
     </Compile>
