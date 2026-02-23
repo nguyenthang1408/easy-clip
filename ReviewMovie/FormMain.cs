@@ -4566,16 +4566,43 @@ namespace ReviewMovie
                 return;
             }
 
-            if (_subtitleBlocks == null || _subtitleBlocks.Count == 0)
-            {
-                ShowMessage(LanguageManager.Get(LangKeys.Main_ExportSubtitleNoOriginal), LanguageManager.Get(LangKeys.Common_Notice));
-                return;
-            }
-
             // Commit bất kỳ chỉnh sửa đang chờ trong ô hiện tại của grid
             dgvMainView.EndEdit();
             if (dgvMainView.CurrentRow != null)
                 SaveCurrentRowData(dgvMainView.CurrentRow.Index);
+
+            // Chọn chế độ xuất
+            var exportMode = FormExportMode.Show(this);
+            if (exportMode == FormExportMode.ExportMode.Cancel)
+                return;
+
+            // Validate theo chế độ đã chọn trước khi mở SaveFileDialog
+            if (exportMode == FormExportMode.ExportMode.OriginalTime)
+            {
+                if (_subtitleBlocks == null || _subtitleBlocks.Count == 0)
+                {
+                    ShowMessage(LanguageManager.Get(LangKeys.Main_ExportSubtitleNoOriginal), LanguageManager.Get(LangKeys.Common_Notice));
+                    return;
+                }
+            }
+            else // VideoTime
+            {
+                int startIdx = _hasVideoZero ? 1 : 0;
+                var missingIds = new System.Collections.Generic.List<int>();
+                for (int i = startIdx; i < _listdata.Count; i++)
+                {
+                    var render = _allInfoRender.FirstOrDefault(c => c.NoID == _listdata[i].id);
+                    if (render == null || !render.TimeOfMediaPart.HasValue || render.TimeOfMediaPart.Value <= 0)
+                        missingIds.Add(_listdata[i].id);
+                }
+                if (missingIds.Count > 0)
+                {
+                    ShowMessage(
+                        string.Format(LanguageManager.Get(LangKeys.Main_ExportSubtitleMissingTime), string.Join(", ", missingIds)),
+                        LanguageManager.Get(LangKeys.Common_Error));
+                    return;
+                }
+            }
 
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
@@ -4589,27 +4616,54 @@ namespace ReviewMovie
 
                 try
                 {
-                    // Xây dựng danh sách subtitle với text đã chỉnh sửa từ dgvMainView
-                    // Nếu có video intro (index 0 trong grid), các subtitle block lệch đi 1 so với grid
                     var exportList = new List<SubtitlesParser.ParsersV2.SubtitleBlock>();
 
-                    for (int k = 0; k < _subtitleBlocks.Count; k++)
+                    if (exportMode == FormExportMode.ExportMode.OriginalTime)
                     {
-                        int gridIndex = _hasVideoZero ? k + 1 : k;
-
-                        string editedText = string.Empty;
-                        if (gridIndex < _listdata.Count)
+                        // Xuất theo timing gốc từ file subtitle đã import
+                        // Nếu có video intro (index 0 trong grid), các subtitle block lệch đi 1 so với grid
+                        for (int k = 0; k < _subtitleBlocks.Count; k++)
                         {
-                            editedText = _listdata[gridIndex].inputtext ?? string.Empty;
+                            int gridIndex = _hasVideoZero ? k + 1 : k;
+                            string editedText = string.Empty;
+                            if (gridIndex < _listdata.Count)
+                                editedText = _listdata[gridIndex].inputtext ?? string.Empty;
+
+                            exportList.Add(new SubtitlesParser.ParsersV2.SubtitleBlock
+                            {
+                                OrderNumber = k + 1,
+                                StartTime = _subtitleBlocks[k].StartTime,
+                                EndTime = _subtitleBlocks[k].EndTime,
+                                InlineTextList = new List<string> { editedText }
+                            });
                         }
+                    }
+                    else // VideoTime
+                    {
+                        // Xuất theo thời lượng video của từng row, tính thời gian tích lũy
+                        // StartTime[i] = cursor, EndTime[i] = cursor + TimeOfMediaPart[i]
+                        // StartTime[i+1] = EndTime[i] + 1ms (gap 1ms giữa các block)
+                        int startIdx = _hasVideoZero ? 1 : 0;
+                        TimeSpan cursor = TimeSpan.Zero;
+                        int orderNum = 1;
 
-                        exportList.Add(new SubtitlesParser.ParsersV2.SubtitleBlock
+                        for (int i = startIdx; i < _listdata.Count; i++)
                         {
-                            OrderNumber = k + 1,
-                            StartTime = _subtitleBlocks[k].StartTime,
-                            EndTime = _subtitleBlocks[k].EndTime,
-                            InlineTextList = new List<string> { editedText }
-                        });
+                            var render = _allInfoRender.FirstOrDefault(c => c.NoID == _listdata[i].id);
+                            var duration = TimeSpan.FromSeconds((double)render.TimeOfMediaPart.Value);
+                            var startTime = cursor;
+                            var endTime = cursor + duration;
+
+                            exportList.Add(new SubtitlesParser.ParsersV2.SubtitleBlock
+                            {
+                                OrderNumber = orderNum++,
+                                StartTime = startTime,
+                                EndTime = endTime,
+                                InlineTextList = new List<string> { _listdata[i].inputtext ?? string.Empty }
+                            });
+
+                            cursor = endTime + TimeSpan.FromMilliseconds(1);
+                        }
                     }
 
                     SubtitleReaderV2.WriteToSubtitleFile(exportList, saveFileDialog.FileName);

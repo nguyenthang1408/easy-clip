@@ -362,6 +362,11 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_ExportSubtitleNoOriginal, "Chưa import subtitle. Vui lòng import subtitle trước khi xuất!" },
             { LangKeys.Main_ExportSubtitleSuccess, "Xuất subtitle thành công!" },
             { LangKeys.Main_ExportSubtitleError, "Lỗi khi xuất subtitle!" },
+            { LangKeys.Main_ExportSubtitleModeTitle, "Xuất Subtitle" },
+            { LangKeys.Main_ExportSubtitleModeMsg, "Chọn chế độ xuất subtitle:" },
+            { LangKeys.Main_ExportSubtitleBtnOriginal, "Time gốc" },
+            { LangKeys.Main_ExportSubtitleBtnVideoTime, "Time video" },
+            { LangKeys.Main_ExportSubtitleMissingTime, "Các row sau thiếu thời lượng video (cột Time Video):\nRow ID: {0}\nVui lòng cập nhật thời lượng trước khi xuất!" },
 
             // ========== FormMain - API Errors ==========
             { LangKeys.Main_ElevenlabError, "ApiKey Elevenlab Lỗi !" },
