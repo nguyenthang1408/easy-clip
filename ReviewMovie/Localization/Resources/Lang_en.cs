@@ -357,6 +357,16 @@ namespace ReviewMovie.Localization.Resources
             { LangKeys.Main_SubtitleCancelled, "Subtitle loading cancelled." },
             { LangKeys.Main_ThreadError, "Thread operation error." },
             { LangKeys.Main_SelectMediaFolderTitle, "Select media folder" },
+            { LangKeys.Main_ExportSubtitleTitle, "Save Subtitle File" },
+            { LangKeys.Main_ExportSubtitleNoData, "No subtitle data to export!" },
+            { LangKeys.Main_ExportSubtitleNoOriginal, "No subtitle imported. Please import a subtitle before exporting!" },
+            { LangKeys.Main_ExportSubtitleSuccess, "Subtitle exported successfully!" },
+            { LangKeys.Main_ExportSubtitleError, "Error exporting subtitle!" },
+            { LangKeys.Main_ExportSubtitleModeTitle, "Export Subtitle" },
+            { LangKeys.Main_ExportSubtitleModeMsg, "Select export mode:" },
+            { LangKeys.Main_ExportSubtitleBtnOriginal, "Original Time" },
+            { LangKeys.Main_ExportSubtitleBtnVideoTime, "Video Time" },
+            { LangKeys.Main_ExportSubtitleMissingTime, "The following rows are missing video duration (Time Video column):\nRow ID: {0}\nPlease update the duration before exporting!" },
 
             // ========== FormMain - API Errors ==========
             { LangKeys.Main_ElevenlabError, "ApiKey Elevenlab Error!" },
