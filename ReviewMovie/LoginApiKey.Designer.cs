@@ -30,6 +30,7 @@ namespace ReviewMovie
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginApiKey));
             this.cardPanel = new System.Windows.Forms.Panel();
+            this.cbAppLanguage = new ReviewMovie.Base.Controls.UiComboBox();
             this.linklbRegister = new System.Windows.Forms.LinkLabel();
             this.lkHelp = new System.Windows.Forms.LinkLabel();
             this.btnLoginApiKey = new ReviewMovie.Base.Controls.PrimaryButton();
@@ -44,8 +45,6 @@ namespace ReviewMovie
             this.pnlLogo = new System.Windows.Forms.Panel();
             this.lblLogoIcon = new System.Windows.Forms.Label();
             this.pnlTopAccent = new System.Windows.Forms.Panel();
-            this.cbAppLanguage = new System.Windows.Forms.ComboBox();
-            this.cbAppLanguage = new System.Windows.Forms.ComboBox();
             this.cardPanel.SuspendLayout();
             this.pnlLogo.SuspendLayout();
             this.SuspendLayout();
@@ -73,6 +72,19 @@ namespace ReviewMovie
             this.cardPanel.Size = new System.Drawing.Size(450, 600);
             this.cardPanel.TabIndex = 0;
             this.cardPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
+            // 
+            // cbAppLanguage
+            // 
+            this.cbAppLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAppLanguage.FormattingEnabled = true;
+            this.cbAppLanguage.Items.AddRange(new object[] {
+            "Tiếng Việt",
+            "English"});
+            this.cbAppLanguage.Location = new System.Drawing.Point(34, 20);
+            this.cbAppLanguage.Name = "cbAppLanguage";
+            this.cbAppLanguage.Size = new System.Drawing.Size(121, 24);
+            this.cbAppLanguage.TabIndex = 10;
+            this.cbAppLanguage.SelectedIndexChanged += new System.EventHandler(this.cbAppLanguage_SelectedIndexChanged);
             // 
             // linklbRegister
             // 
@@ -107,19 +119,6 @@ namespace ReviewMovie
             this.lkHelp.Text = "Help";
             this.lkHelp.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(108)))), ((int)(((byte)(136)))));
             this.lkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lkHelp_LinkClicked);
-            // 
-            // cbAppLanguage
-            // 
-            this.cbAppLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbAppLanguage.FormattingEnabled = true;
-            this.cbAppLanguage.Items.AddRange(new object[] {
-            "Tiếng Việt",
-            "English"});
-            this.cbAppLanguage.Location = new System.Drawing.Point(303, 12);
-            this.cbAppLanguage.Name = "cbAppLanguage";
-            this.cbAppLanguage.Size = new System.Drawing.Size(76, 21);
-            this.cbAppLanguage.TabIndex = 10;
-            this.cbAppLanguage.SelectedIndexChanged += new System.EventHandler(this.cbAppLanguage_SelectedIndexChanged);
             // 
             // btnLoginApiKey
             // 
@@ -343,6 +342,6 @@ namespace ReviewMovie
         private System.Windows.Forms.LinkLabel lkHelp;
         private System.Windows.Forms.Label lbstatus;
         private System.Windows.Forms.LinkLabel linklbRegister;
-        private System.Windows.Forms.ComboBox cbAppLanguage;
+        private ReviewMovie.Base.Controls.UiComboBox cbAppLanguage;
     }
 }

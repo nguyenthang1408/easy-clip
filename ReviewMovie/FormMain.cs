@@ -625,7 +625,7 @@ namespace ReviewMovie
                     title += $" | " + LanguageManager.GetFormat(LangKeys.Main_Today, _voiceSourceInfo.DailyCharacterUsed.ToString("N0"), _voiceSourceInfo.DailyCharacterLimit.Value.ToString("N0"));
                 }
 
-                this.Text = title;
+                lblHeaderMainTitle.Text = title;
             }
         }
 
