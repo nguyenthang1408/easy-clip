@@ -1620,7 +1620,7 @@ namespace ReviewMovie
             this.pnlHeaderBrand.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlHeaderBrand.Location = new System.Drawing.Point(0, 0);
             this.pnlHeaderBrand.Name = "pnlHeaderBrand";
-            this.pnlHeaderBrand.Size = new System.Drawing.Size(320, 44);
+            this.pnlHeaderBrand.Size = new System.Drawing.Size(420, 44);
             this.pnlHeaderBrand.TabIndex = 0;
             this.pnlHeaderBrand.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HeaderArea_MouseDown);
             // 
