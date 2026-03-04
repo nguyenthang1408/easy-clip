@@ -30,9 +30,10 @@ namespace ReviewMovie
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.ctMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MenuItemConvertTex2Speech = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,7 +74,6 @@ namespace ReviewMovie
             this.nbVolumnOrigin = new ReviewMovie.Base.Controls.UiNumericUpDown();
             this.label4 = new ReviewMovie.Base.Controls.UiLabel();
             this.ckNotUseAudio = new ReviewMovie.Base.Controls.UiCheckBox();
-            this.label3 = new ReviewMovie.Base.Controls.UiLabel();
             this.cbMode = new ReviewMovie.Base.Controls.UiComboBox();
             this.label12 = new ReviewMovie.Base.Controls.UiLabel();
             this.cbZoomQuality = new ReviewMovie.Base.Controls.UiComboBox();
@@ -92,6 +92,7 @@ namespace ReviewMovie
             this.cbxSpeechType = new ReviewMovie.Base.Controls.UiComboBox();
             this.label6 = new ReviewMovie.Base.Controls.UiLabel();
             this.label5 = new ReviewMovie.Base.Controls.UiLabel();
+            this.label3 = new ReviewMovie.Base.Controls.UiLabel();
             this.btnAddAll = new ReviewMovie.Base.Controls.UiButton();
             this.lblstatus = new ReviewMovie.Base.Controls.UiLabel();
             this.cboSiteNguon = new ReviewMovie.Base.Controls.UiComboBox();
@@ -100,6 +101,8 @@ namespace ReviewMovie
             this.grbConfigVoice = new ReviewMovie.Base.Controls.UiGroupBox();
             this.btnSaveVoiceSource = new ReviewMovie.Base.Controls.UiButton();
             this.grbActionRender = new ReviewMovie.Base.Controls.UiGroupBox();
+            this.rbGPUused = new ReviewMovie.Base.Controls.UiRadioButton();
+            this.rbCPUused = new ReviewMovie.Base.Controls.UiRadioButton();
             this.cbProjectName = new ReviewMovie.Base.Controls.UiComboBox();
             this.tlpView = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
             this.dgvMainView = new ReviewMovie.Base.Controls.UiDataGridView();
@@ -127,6 +130,8 @@ namespace ReviewMovie
             this.btnAddRow = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnImportSubtitle = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnExportSubtitle = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnDestroyAction = new System.Windows.Forms.ToolStripButton();
             this.grViewHeader = new ReviewMovie.Base.Controls.UiGroupBox();
@@ -147,22 +152,13 @@ namespace ReviewMovie
             this.btnExpand = new ReviewMovie.Base.Controls.UiButton();
             this.scSetting = new ReviewMovie.Base.Controls.UiSplitContainer();
             this.btnCollapse = new ReviewMovie.Base.Controls.UiButton();
-            this.rbCPUused = new ReviewMovie.Base.Controls.UiRadioButton();
-            this.rbGPUused = new ReviewMovie.Base.Controls.UiRadioButton();
             this.pnlHeaderTitle = new System.Windows.Forms.Panel();
             this.pnlHeaderBrand = new System.Windows.Forms.Panel();
             this.lblHeaderSubtitle = new System.Windows.Forms.Label();
             this.lblHeaderMainTitle = new System.Windows.Forms.Label();
             this.lblHeaderLogo = new System.Windows.Forms.Label();
             this.tlpHeaderRight = new System.Windows.Forms.TableLayoutPanel();
-            this.lblHeaderActive = new System.Windows.Forms.Label();
-            this.lblHeaderRemaining = new System.Windows.Forms.Label();
-            this.btnHeaderHelp = new System.Windows.Forms.Button();
-            this.btnHeaderSetting = new System.Windows.Forms.Button();
-            this.lblHeaderAvatar = new System.Windows.Forms.Label();
             this.btnHeaderClose = new System.Windows.Forms.Button();
-            this.btnExportSubtitle = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ctMenu.SuspendLayout();
             this.grbConfigRender.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nbSpeechRatio)).BeginInit();
@@ -202,7 +198,6 @@ namespace ReviewMovie
             // ctMenu
             // 
             this.ctMenu.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ctMenu.Renderer = new ReviewMovie.Base.Controls.UiToolStripRenderer(new ReviewMovie.Base.Controls.UiToolStripColors());
             this.ctMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItemConvertTex2Speech,
             this.MenuItemDownAudio,
@@ -210,7 +205,7 @@ namespace ReviewMovie
             this.MenuItemReloadVideoTime,
             this.tsMenuDeleteRow});
             this.ctMenu.Name = "contextMenuStrip1";
-            this.ctMenu.Size = new System.Drawing.Size(248, 114);
+            this.ctMenu.Size = new System.Drawing.Size(250, 114);
             // 
             // MenuItemConvertTex2Speech
             // 
@@ -218,7 +213,7 @@ namespace ReviewMovie
             this.ConvertTex2SpeechAll,
             this.ConvertTex2SpeechSelect});
             this.MenuItemConvertTex2Speech.Name = "MenuItemConvertTex2Speech";
-            this.MenuItemConvertTex2Speech.Size = new System.Drawing.Size(247, 22);
+            this.MenuItemConvertTex2Speech.Size = new System.Drawing.Size(249, 22);
             this.MenuItemConvertTex2Speech.Text = "Chuyển Đổi Text -> Voice";
             // 
             // ConvertTex2SpeechAll
@@ -241,7 +236,7 @@ namespace ReviewMovie
             this.DownAudioAll,
             this.DownAudioAllSelect});
             this.MenuItemDownAudio.Name = "MenuItemDownAudio";
-            this.MenuItemDownAudio.Size = new System.Drawing.Size(247, 22);
+            this.MenuItemDownAudio.Size = new System.Drawing.Size(249, 22);
             this.MenuItemDownAudio.Text = "Lấy Audio Chuyển Đổi";
             // 
             // DownAudioAll
@@ -264,7 +259,7 @@ namespace ReviewMovie
             this.PartRenderAll,
             this.PartRenderSelect});
             this.MenuItemPartRender.Name = "MenuItemPartRender";
-            this.MenuItemPartRender.Size = new System.Drawing.Size(247, 22);
+            this.MenuItemPartRender.Size = new System.Drawing.Size(249, 22);
             this.MenuItemPartRender.Text = "Tạo Đoạn Video Từ Media, Audio";
             // 
             // PartRenderAll
@@ -287,7 +282,7 @@ namespace ReviewMovie
             this.tsMAll,
             this.tsMSelected});
             this.MenuItemReloadVideoTime.Name = "MenuItemReloadVideoTime";
-            this.MenuItemReloadVideoTime.Size = new System.Drawing.Size(247, 22);
+            this.MenuItemReloadVideoTime.Size = new System.Drawing.Size(249, 22);
             this.MenuItemReloadVideoTime.Text = "Reload Time Video Nhập";
             // 
             // tsMAll
@@ -307,74 +302,145 @@ namespace ReviewMovie
             // tsMenuDeleteRow
             // 
             this.tsMenuDeleteRow.Name = "tsMenuDeleteRow";
-            this.tsMenuDeleteRow.Size = new System.Drawing.Size(247, 22);
+            this.tsMenuDeleteRow.Size = new System.Drawing.Size(249, 22);
             this.tsMenuDeleteRow.Text = "Xóa Dòng Chọn";
             this.tsMenuDeleteRow.Click += new System.EventHandler(this.tsMenuDeleteRow_Click);
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label2.BorderColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label2.Location = new System.Drawing.Point(15, 24);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 17);
             this.label2.TabIndex = 6;
             this.label2.Text = "Dự Án";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label2.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // lblapi
             // 
-            this.lblapi.AutoSize = true;
+            this.lblapi.BackColor = System.Drawing.Color.Transparent;
+            this.lblapi.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblapi.BorderColor = System.Drawing.Color.Transparent;
             this.lblapi.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblapi.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.lblapi.Location = new System.Drawing.Point(6, 45);
             this.lblapi.Name = "lblapi";
             this.lblapi.Size = new System.Drawing.Size(40, 15);
             this.lblapi.TabIndex = 8;
             this.lblapi.Text = "AppID";
+            this.lblapi.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblapi.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // txtAppID
             // 
+            this.txtAppID.BackColor = System.Drawing.Color.Transparent;
+            this.txtAppID.BackgroundColor = System.Drawing.Color.White;
+            this.txtAppID.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.txtAppID.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.txtAppID.BorderRadius = 4;
+            this.txtAppID.DisableTextBox = false;
+            this.txtAppID.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.txtAppID.IconLeft = null;
+            this.txtAppID.IconRight = null;
+            this.txtAppID.IconSize = new System.Drawing.Size(18, 18);
+            this.txtAppID.Lines = new string[] {
+        "???"};
             this.txtAppID.Location = new System.Drawing.Point(75, 46);
+            this.txtAppID.MaxLength = 32767;
             this.txtAppID.Multiline = true;
             this.txtAppID.Name = "txtAppID";
+            this.txtAppID.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
+            this.txtAppID.ReadOnly = false;
             this.txtAppID.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtAppID.SelectionLength = 0;
+            this.txtAppID.SelectionStart = 0;
             this.txtAppID.Size = new System.Drawing.Size(239, 40);
             this.txtAppID.TabIndex = 9;
-            this.txtAppID.Text = "???";
+            this.txtAppID.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtAppID.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.txtAppID.UseSystemPasswordChar = false;
             this.txtAppID.TextChanged += new System.EventHandler(this.txtAppID_TextChanged);
             // 
             // btnOpenProject
             // 
             this.btnOpenProject.BackColor = System.Drawing.SystemColors.Control;
+            this.btnOpenProject.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnOpenProject.BorderColor = System.Drawing.Color.Transparent;
+            this.btnOpenProject.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnOpenProject.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
+            this.btnOpenProject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenProject.ForeColor = System.Drawing.Color.White;
+            this.btnOpenProject.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnOpenProject.IconImage = null;
+            this.btnOpenProject.IconSize = new System.Drawing.Size(18, 18);
+            this.btnOpenProject.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnOpenProject.Location = new System.Drawing.Point(310, 19);
             this.btnOpenProject.Name = "btnOpenProject";
+            this.btnOpenProject.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnOpenProject.Size = new System.Drawing.Size(67, 25);
             this.btnOpenProject.TabIndex = 10;
             this.btnOpenProject.Text = "Create";
+            this.btnOpenProject.TextColor = System.Drawing.Color.White;
+            this.btnOpenProject.TextHoverColor = System.Drawing.Color.White;
             this.btnOpenProject.UseVisualStyleBackColor = false;
             this.btnOpenProject.Click += new System.EventHandler(this.btnOpenProject_Click);
             // 
             // lblToken
             // 
-            this.lblToken.AutoSize = true;
+            this.lblToken.BackColor = System.Drawing.Color.Transparent;
+            this.lblToken.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblToken.BorderColor = System.Drawing.Color.Transparent;
             this.lblToken.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblToken.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.lblToken.Location = new System.Drawing.Point(6, 96);
             this.lblToken.Name = "lblToken";
-            this.lblToken.Size = new System.Drawing.Size(38, 15);
+            this.lblToken.Size = new System.Drawing.Size(39, 15);
             this.lblToken.TabIndex = 11;
             this.lblToken.Text = "Token";
+            this.lblToken.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblToken.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // txtToken
             // 
+            this.txtToken.BackColor = System.Drawing.Color.Transparent;
+            this.txtToken.BackgroundColor = System.Drawing.Color.White;
+            this.txtToken.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.txtToken.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.txtToken.BorderRadius = 4;
+            this.txtToken.DisableTextBox = false;
+            this.txtToken.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.txtToken.IconLeft = null;
+            this.txtToken.IconRight = null;
+            this.txtToken.IconSize = new System.Drawing.Size(18, 18);
+            this.txtToken.Lines = new string[] {
+        "???"};
             this.txtToken.Location = new System.Drawing.Point(75, 96);
+            this.txtToken.MaxLength = 32767;
             this.txtToken.Multiline = true;
             this.txtToken.Name = "txtToken";
+            this.txtToken.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
+            this.txtToken.ReadOnly = false;
             this.txtToken.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtToken.SelectionLength = 0;
+            this.txtToken.SelectionStart = 0;
             this.txtToken.Size = new System.Drawing.Size(239, 49);
             this.txtToken.TabIndex = 12;
-            this.txtToken.Text = "???";
+            this.txtToken.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtToken.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.txtToken.UseSystemPasswordChar = false;
             // 
             // grbConfigRender
             // 
+            this.grbConfigRender.BackgroundColor = System.Drawing.Color.Transparent;
+            this.grbConfigRender.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.grbConfigRender.BorderRadius = 10;
+            this.grbConfigRender.BorderSizeEx = 1;
+            this.grbConfigRender.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.grbConfigRender.Controls.Add(this.ckOpenPlayer);
             this.grbConfigRender.Controls.Add(this.nbSpeechRatio);
             this.grbConfigRender.Controls.Add(this.cbSettingTemplate);
@@ -418,23 +484,46 @@ namespace ReviewMovie
             this.grbConfigRender.TabIndex = 14;
             this.grbConfigRender.TabStop = false;
             this.grbConfigRender.Text = "Lựa Chọn Hiệu Ứng";
+            this.grbConfigRender.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grbConfigRender.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.grbConfigRender.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // ckOpenPlayer
             // 
             this.ckOpenPlayer.AutoSize = true;
+            this.ckOpenPlayer.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.ckOpenPlayer.BoxBorderSize = 1;
+            this.ckOpenPlayer.BoxRadius = 4;
+            this.ckOpenPlayer.BoxSize = 16;
+            this.ckOpenPlayer.BoxStyle = ReviewMovie.Base.Controls.Common.UiBoxStyle.Rounded;
             this.ckOpenPlayer.Checked = true;
+            this.ckOpenPlayer.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.ckOpenPlayer.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckOpenPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ckOpenPlayer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.ckOpenPlayer.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.ckOpenPlayer.Location = new System.Drawing.Point(84, 207);
             this.ckOpenPlayer.Name = "ckOpenPlayer";
-            this.ckOpenPlayer.Size = new System.Drawing.Size(157, 20);
+            this.ckOpenPlayer.Size = new System.Drawing.Size(162, 18);
             this.ckOpenPlayer.TabIndex = 126;
             this.ckOpenPlayer.Text = "Tự động Mở Player";
+            this.ckOpenPlayer.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.ckOpenPlayer.TextPosition = ReviewMovie.Base.Controls.Common.UiTextPosition.Right;
+            this.ckOpenPlayer.UncheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.ckOpenPlayer.UseVisualStyleBackColor = true;
             this.ckOpenPlayer.CheckedChanged += new System.EventHandler(this.ckOpenPlayer_CheckedChanged);
             // 
             // nbSpeechRatio
             // 
+            this.nbSpeechRatio.BackColor = System.Drawing.Color.Transparent;
+            this.nbSpeechRatio.BackgroundColor = System.Drawing.Color.White;
+            this.nbSpeechRatio.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.nbSpeechRatio.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.nbSpeechRatio.BorderRadius = 4;
+            this.nbSpeechRatio.BorderSize = 1;
+            this.nbSpeechRatio.ButtonColor = System.Drawing.Color.White;
+            this.nbSpeechRatio.ButtonHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.nbSpeechRatio.ButtonIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
             this.nbSpeechRatio.DecimalPlaces = 1;
             this.nbSpeechRatio.Increment = new decimal(new int[] {
             1,
@@ -447,11 +536,17 @@ namespace ReviewMovie
             0,
             0,
             0});
+            this.nbSpeechRatio.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.nbSpeechRatio.Name = "nbSpeechRatio";
             this.nbSpeechRatio.Padding = new System.Windows.Forms.Padding(2);
             this.nbSpeechRatio.Size = new System.Drawing.Size(48, 22);
             this.nbSpeechRatio.TabIndex = 125;
             this.nbSpeechRatio.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nbSpeechRatio.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.nbSpeechRatio.Value = new decimal(new int[] {
             5,
             0,
@@ -460,82 +555,143 @@ namespace ReviewMovie
             // 
             // cbSettingTemplate
             // 
+            this.cbSettingTemplate.BackColor = System.Drawing.Color.White;
+            this.cbSettingTemplate.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.cbSettingTemplate.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbSettingTemplate.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbSettingTemplate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSettingTemplate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbSettingTemplate.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cbSettingTemplate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbSettingTemplate.FormattingEnabled = true;
+            this.cbSettingTemplate.IntegralHeight = false;
             this.cbSettingTemplate.Location = new System.Drawing.Point(84, 379);
             this.cbSettingTemplate.Name = "cbSettingTemplate";
-            this.cbSettingTemplate.Size = new System.Drawing.Size(176, 21);
+            this.cbSettingTemplate.Size = new System.Drawing.Size(176, 24);
             this.cbSettingTemplate.TabIndex = 124;
             this.cbSettingTemplate.SelectedIndexChanged += new System.EventHandler(this.cbSettingTemplate_SelectedIndexChanged);
             // 
             // label17
             // 
-            this.label17.AutoSize = false;
+            this.label17.BackColor = System.Drawing.Color.Transparent;
+            this.label17.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label17.BorderColor = System.Drawing.Color.Transparent;
+            this.label17.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label17.Location = new System.Drawing.Point(8, 378);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(72, 22);
+            this.label17.Size = new System.Drawing.Size(63, 15);
             this.label17.TabIndex = 123;
             this.label17.Text = "Cấu Hình :";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label17.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // btnSaveEffectSetting
             // 
             this.btnSaveEffectSetting.BackColor = System.Drawing.SystemColors.Control;
+            this.btnSaveEffectSetting.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnSaveEffectSetting.BorderColor = System.Drawing.Color.Transparent;
+            this.btnSaveEffectSetting.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnSaveEffectSetting.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
+            this.btnSaveEffectSetting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveEffectSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.btnSaveEffectSetting.ForeColor = System.Drawing.Color.Red;
+            this.btnSaveEffectSetting.ForeColor = System.Drawing.Color.White;
+            this.btnSaveEffectSetting.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnSaveEffectSetting.IconImage = null;
+            this.btnSaveEffectSetting.IconSize = new System.Drawing.Size(18, 18);
+            this.btnSaveEffectSetting.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnSaveEffectSetting.Location = new System.Drawing.Point(268, 377);
             this.btnSaveEffectSetting.Name = "btnSaveEffectSetting";
+            this.btnSaveEffectSetting.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnSaveEffectSetting.Size = new System.Drawing.Size(70, 24);
             this.btnSaveEffectSetting.TabIndex = 45;
             this.btnSaveEffectSetting.Text = "Save";
+            this.btnSaveEffectSetting.TextColor = System.Drawing.Color.White;
+            this.btnSaveEffectSetting.TextHoverColor = System.Drawing.Color.White;
             this.btnSaveEffectSetting.UseVisualStyleBackColor = false;
             this.btnSaveEffectSetting.Click += new System.EventHandler(this.btnSaveEffectSetting_Click);
             // 
             // ckRandomMoveLeftRight
             // 
             this.ckRandomMoveLeftRight.AutoSize = true;
+            this.ckRandomMoveLeftRight.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.ckRandomMoveLeftRight.BoxBorderSize = 1;
+            this.ckRandomMoveLeftRight.BoxRadius = 4;
+            this.ckRandomMoveLeftRight.BoxSize = 16;
+            this.ckRandomMoveLeftRight.BoxStyle = ReviewMovie.Base.Controls.Common.UiBoxStyle.Rounded;
+            this.ckRandomMoveLeftRight.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.ckRandomMoveLeftRight.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.ckRandomMoveLeftRight.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.ckRandomMoveLeftRight.Location = new System.Drawing.Point(84, 184);
             this.ckRandomMoveLeftRight.Name = "ckRandomMoveLeftRight";
-            this.ckRandomMoveLeftRight.Size = new System.Drawing.Size(212, 17);
+            this.ckRandomMoveLeftRight.Size = new System.Drawing.Size(217, 18);
             this.ckRandomMoveLeftRight.TabIndex = 122;
             this.ckRandomMoveLeftRight.Text = "Layer Tự Động Di Chuyển Trái <-> Phải";
+            this.ckRandomMoveLeftRight.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.ckRandomMoveLeftRight.TextPosition = ReviewMovie.Base.Controls.Common.UiTextPosition.Right;
+            this.ckRandomMoveLeftRight.UncheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.ckRandomMoveLeftRight.UseVisualStyleBackColor = true;
             this.ckRandomMoveLeftRight.CheckedChanged += new System.EventHandler(this.ckRandomMoveLeftRight_CheckedChanged);
             // 
             // cbLanguageSelect
             // 
+            this.cbLanguageSelect.BackColor = System.Drawing.Color.White;
+            this.cbLanguageSelect.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.cbLanguageSelect.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbLanguageSelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbLanguageSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLanguageSelect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbLanguageSelect.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cbLanguageSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbLanguageSelect.FormattingEnabled = true;
+            this.cbLanguageSelect.IntegralHeight = false;
             this.cbLanguageSelect.Location = new System.Drawing.Point(84, 313);
             this.cbLanguageSelect.Name = "cbLanguageSelect";
-            this.cbLanguageSelect.Size = new System.Drawing.Size(270, 21);
+            this.cbLanguageSelect.Size = new System.Drawing.Size(270, 24);
             this.cbLanguageSelect.TabIndex = 121;
             this.cbLanguageSelect.SelectedIndexChanged += new System.EventHandler(this.cbLanguageSelect_SelectedIndexChanged);
             // 
             // label16
             // 
-            this.label16.AutoSize = false;
+            this.label16.BackColor = System.Drawing.Color.Transparent;
+            this.label16.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label16.BorderColor = System.Drawing.Color.Transparent;
+            this.label16.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label16.Location = new System.Drawing.Point(8, 313);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(72, 22);
+            this.label16.Size = new System.Drawing.Size(69, 15);
             this.label16.TabIndex = 120;
             this.label16.Text = "Ngôn Ngữ :";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label16.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // label15
             // 
-            this.label15.AutoSize = false;
-            this.label15.Location = new System.Drawing.Point(251, 240);
-            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.Transparent;
+            this.label15.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label15.BorderColor = System.Drawing.Color.Transparent;
+            this.label15.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label15.Location = new System.Drawing.Point(248, 244);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(14, 20);
+            this.label15.Size = new System.Drawing.Size(20, 15);
             this.label15.TabIndex = 119;
             this.label15.Text = "->";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label15.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // nScaleAudioRangeEnd
             // 
+            this.nScaleAudioRangeEnd.BackColor = System.Drawing.Color.Transparent;
+            this.nScaleAudioRangeEnd.BackgroundColor = System.Drawing.Color.White;
+            this.nScaleAudioRangeEnd.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.nScaleAudioRangeEnd.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.nScaleAudioRangeEnd.BorderRadius = 4;
+            this.nScaleAudioRangeEnd.BorderSize = 1;
+            this.nScaleAudioRangeEnd.ButtonColor = System.Drawing.Color.White;
+            this.nScaleAudioRangeEnd.ButtonHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.nScaleAudioRangeEnd.ButtonIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
             this.nScaleAudioRangeEnd.DecimalPlaces = 1;
             this.nScaleAudioRangeEnd.Increment = new decimal(new int[] {
             1,
@@ -558,6 +714,7 @@ namespace ReviewMovie
             this.nScaleAudioRangeEnd.Size = new System.Drawing.Size(46, 22);
             this.nScaleAudioRangeEnd.TabIndex = 118;
             this.nScaleAudioRangeEnd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nScaleAudioRangeEnd.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.nScaleAudioRangeEnd.Value = new decimal(new int[] {
             12,
             0,
@@ -566,13 +723,21 @@ namespace ReviewMovie
             // 
             // nScaleAudioRangeStart
             // 
+            this.nScaleAudioRangeStart.BackColor = System.Drawing.Color.Transparent;
+            this.nScaleAudioRangeStart.BackgroundColor = System.Drawing.Color.White;
+            this.nScaleAudioRangeStart.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.nScaleAudioRangeStart.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.nScaleAudioRangeStart.BorderRadius = 4;
+            this.nScaleAudioRangeStart.BorderSize = 1;
+            this.nScaleAudioRangeStart.ButtonColor = System.Drawing.Color.White;
+            this.nScaleAudioRangeStart.ButtonHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.nScaleAudioRangeStart.ButtonIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
             this.nScaleAudioRangeStart.DecimalPlaces = 1;
             this.nScaleAudioRangeStart.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            this.nScaleAudioRangeStart.Location = new System.Drawing.Point(202, 240);
             this.nScaleAudioRangeStart.Location = new System.Drawing.Point(201, 240);
             this.nScaleAudioRangeStart.Maximum = new decimal(new int[] {
             18,
@@ -589,6 +754,7 @@ namespace ReviewMovie
             this.nScaleAudioRangeStart.Size = new System.Drawing.Size(46, 22);
             this.nScaleAudioRangeStart.TabIndex = 117;
             this.nScaleAudioRangeStart.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nScaleAudioRangeStart.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.nScaleAudioRangeStart.Value = new decimal(new int[] {
             1,
             0,
@@ -597,32 +763,58 @@ namespace ReviewMovie
             // 
             // label14
             // 
-            this.label14.AutoSize = false;
+            this.label14.BackColor = System.Drawing.Color.Transparent;
+            this.label14.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label14.BorderColor = System.Drawing.Color.Transparent;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(134, 240);
+            this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label14.Location = new System.Drawing.Point(130, 244);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(64, 20);
             this.label14.Size = new System.Drawing.Size(69, 13);
             this.label14.TabIndex = 116;
-            this.label14.Text = "Audio Scale";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label14.Text = "Hệ số tốc độ";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label14.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // ckHflipRandom
             // 
             this.ckHflipRandom.AutoSize = true;
-            this.ckHflipRandom.ForeColor = System.Drawing.Color.Red;
+            this.ckHflipRandom.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.ckHflipRandom.BoxBorderSize = 1;
+            this.ckHflipRandom.BoxRadius = 4;
+            this.ckHflipRandom.BoxSize = 16;
+            this.ckHflipRandom.BoxStyle = ReviewMovie.Base.Controls.Common.UiBoxStyle.Rounded;
+            this.ckHflipRandom.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.ckHflipRandom.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.ckHflipRandom.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.ckHflipRandom.Location = new System.Drawing.Point(246, 157);
             this.ckHflipRandom.Name = "ckHflipRandom";
-            this.ckHflipRandom.Size = new System.Drawing.Size(84, 17);
+            this.ckHflipRandom.Size = new System.Drawing.Size(89, 18);
             this.ckHflipRandom.TabIndex = 115;
             this.ckHflipRandom.Text = "Lật Random";
+            this.ckHflipRandom.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.ckHflipRandom.TextPosition = ReviewMovie.Base.Controls.Common.UiTextPosition.Right;
+            this.ckHflipRandom.UncheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.ckHflipRandom.UseVisualStyleBackColor = true;
             this.ckHflipRandom.CheckedChanged += new System.EventHandler(this.ckHflipRandom_CheckedChanged);
             // 
             // nbThread
             // 
+            this.nbThread.BackColor = System.Drawing.Color.Transparent;
+            this.nbThread.BackgroundColor = System.Drawing.Color.White;
+            this.nbThread.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.nbThread.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.nbThread.BorderRadius = 4;
+            this.nbThread.BorderSize = 1;
+            this.nbThread.ButtonColor = System.Drawing.Color.White;
+            this.nbThread.ButtonHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.nbThread.ButtonIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
+            this.nbThread.DecimalPlaces = 0;
+            this.nbThread.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.nbThread.Location = new System.Drawing.Point(246, 47);
             this.nbThread.Maximum = new decimal(new int[] {
             30,
@@ -639,6 +831,7 @@ namespace ReviewMovie
             this.nbThread.Size = new System.Drawing.Size(70, 22);
             this.nbThread.TabIndex = 114;
             this.nbThread.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nbThread.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.nbThread.Value = new decimal(new int[] {
             5,
             0,
@@ -647,16 +840,30 @@ namespace ReviewMovie
             // 
             // label13
             // 
-            this.label13.AutoSize = false;
+            this.label13.BackColor = System.Drawing.Color.Transparent;
+            this.label13.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label13.BorderColor = System.Drawing.Color.Transparent;
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label13.Location = new System.Drawing.Point(173, 45);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(68, 22);
+            this.label13.Size = new System.Drawing.Size(50, 15);
             this.label13.TabIndex = 113;
             this.label13.Text = "Thread :";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label13.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // nbVolumnOrigin
             // 
+            this.nbVolumnOrigin.BackColor = System.Drawing.Color.Transparent;
+            this.nbVolumnOrigin.BackgroundColor = System.Drawing.Color.White;
+            this.nbVolumnOrigin.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.nbVolumnOrigin.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.nbVolumnOrigin.BorderRadius = 4;
+            this.nbVolumnOrigin.BorderSize = 1;
+            this.nbVolumnOrigin.ButtonColor = System.Drawing.Color.White;
+            this.nbVolumnOrigin.ButtonHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.nbVolumnOrigin.ButtonIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
             this.nbVolumnOrigin.DecimalPlaces = 1;
             this.nbVolumnOrigin.Increment = new decimal(new int[] {
             2,
@@ -669,11 +876,17 @@ namespace ReviewMovie
             0,
             0,
             0});
+            this.nbVolumnOrigin.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.nbVolumnOrigin.Name = "nbVolumnOrigin";
             this.nbVolumnOrigin.Padding = new System.Windows.Forms.Padding(2);
             this.nbVolumnOrigin.Size = new System.Drawing.Size(48, 22);
             this.nbVolumnOrigin.TabIndex = 112;
             this.nbVolumnOrigin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nbVolumnOrigin.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.nbVolumnOrigin.Value = new decimal(new int[] {
             5,
             0,
@@ -682,32 +895,53 @@ namespace ReviewMovie
             // 
             // label4
             // 
-            this.label4.AutoSize = false;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label4.BorderColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label4.Location = new System.Drawing.Point(8, 240);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(72, 22);
+            this.label4.Size = new System.Drawing.Size(77, 15);
             this.label4.TabIndex = 111;
             this.label4.Text = "Volumn gốc :";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label4.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // ckNotUseAudio
             // 
             this.ckNotUseAudio.AutoSize = true;
-            this.ckNotUseAudio.Location = new System.Drawing.Point(296, 272);
+            this.ckNotUseAudio.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.ckNotUseAudio.BoxBorderSize = 1;
+            this.ckNotUseAudio.BoxRadius = 4;
+            this.ckNotUseAudio.BoxSize = 16;
+            this.ckNotUseAudio.BoxStyle = ReviewMovie.Base.Controls.Common.UiBoxStyle.Rounded;
+            this.ckNotUseAudio.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.ckNotUseAudio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.ckNotUseAudio.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.ckNotUseAudio.Location = new System.Drawing.Point(199, 271);
             this.ckNotUseAudio.Name = "ckNotUseAudio";
-            this.ckNotUseAudio.Size = new System.Drawing.Size(96, 17);
+            this.ckNotUseAudio.Size = new System.Drawing.Size(101, 18);
             this.ckNotUseAudio.TabIndex = 110;
             this.ckNotUseAudio.Text = "Ko dùng Audio";
+            this.ckNotUseAudio.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.ckNotUseAudio.TextPosition = ReviewMovie.Base.Controls.Common.UiTextPosition.Right;
+            this.ckNotUseAudio.UncheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.ckNotUseAudio.UseVisualStyleBackColor = true;
             this.ckNotUseAudio.CheckedChanged += new System.EventHandler(this.ckMuted_CheckedChanged);
             // 
             // cbMode
             // 
             this.cbMode.BackColor = System.Drawing.SystemColors.Info;
+            this.cbMode.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.cbMode.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbMode.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbMode.FormattingEnabled = true;
+            this.cbMode.IntegralHeight = false;
             this.cbMode.Location = new System.Drawing.Point(84, 120);
             this.cbMode.Name = "cbMode";
             this.cbMode.Size = new System.Drawing.Size(150, 21);
@@ -716,41 +950,75 @@ namespace ReviewMovie
             // 
             // label12
             // 
-            this.label12.AutoSize = false;
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label12.BorderColor = System.Drawing.Color.Transparent;
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label12.Location = new System.Drawing.Point(8, 120);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(72, 22);
+            this.label12.Size = new System.Drawing.Size(64, 15);
             this.label12.TabIndex = 107;
             this.label12.Text = "Lựa Chọn :";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label12.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // cbZoomQuality
             // 
             this.cbZoomQuality.BackColor = System.Drawing.SystemColors.Info;
+            this.cbZoomQuality.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.cbZoomQuality.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbZoomQuality.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbZoomQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoomQuality.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbZoomQuality.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbZoomQuality.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbZoomQuality.FormattingEnabled = true;
+            this.cbZoomQuality.IntegralHeight = false;
             this.cbZoomQuality.Location = new System.Drawing.Point(84, 47);
             this.cbZoomQuality.Name = "cbZoomQuality";
-            this.cbZoomQuality.Size = new System.Drawing.Size(90, 20);
+            this.cbZoomQuality.Size = new System.Drawing.Size(90, 19);
             this.cbZoomQuality.TabIndex = 106;
             this.cbZoomQuality.SelectedIndexChanged += new System.EventHandler(this.cbZoomQuality_SelectedIndexChanged);
             // 
             // label11
             // 
-            this.label11.AutoSize = false;
+            this.label11.BackColor = System.Drawing.Color.Transparent;
+            this.label11.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label11.BorderColor = System.Drawing.Color.Transparent;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Bold);
-            this.label11.ForeColor = System.Drawing.Color.Red;
+            this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label11.Location = new System.Drawing.Point(8, 45);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(72, 22);
+            this.label11.Size = new System.Drawing.Size(63, 12);
             this.label11.TabIndex = 105;
             this.label11.Text = "% ZQuality :";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label11.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // nFPS
             // 
+            this.nFPS.BackColor = System.Drawing.Color.Transparent;
+            this.nFPS.BackgroundColor = System.Drawing.Color.White;
+            this.nFPS.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.nFPS.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.nFPS.BorderRadius = 4;
+            this.nFPS.BorderSize = 1;
+            this.nFPS.ButtonColor = System.Drawing.Color.White;
+            this.nFPS.ButtonHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.nFPS.ButtonIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(125)))), ((int)(((byte)(132)))));
+            this.nFPS.DecimalPlaces = 0;
+            this.nFPS.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.nFPS.Location = new System.Drawing.Point(246, 21);
+            this.nFPS.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             this.nFPS.Minimum = new decimal(new int[] {
             15,
             0,
@@ -761,6 +1029,7 @@ namespace ReviewMovie
             this.nFPS.Size = new System.Drawing.Size(70, 22);
             this.nFPS.TabIndex = 104;
             this.nFPS.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nFPS.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.nFPS.Value = new decimal(new int[] {
             30,
             0,
@@ -769,102 +1038,165 @@ namespace ReviewMovie
             // 
             // label10
             // 
-            this.label10.AutoSize = false;
+            this.label10.BackColor = System.Drawing.Color.Transparent;
+            this.label10.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label10.BorderColor = System.Drawing.Color.Transparent;
+            this.label10.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label10.Location = new System.Drawing.Point(173, 21);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(68, 20);
+            this.label10.Size = new System.Drawing.Size(71, 15);
             this.label10.TabIndex = 103;
             this.label10.Text = "FPS (InPut) :";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label10.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // cbZoomRatio
             // 
             this.cbZoomRatio.BackColor = System.Drawing.SystemColors.Info;
+            this.cbZoomRatio.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.cbZoomRatio.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbZoomRatio.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbZoomRatio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoomRatio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbZoomRatio.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbZoomRatio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbZoomRatio.FormattingEnabled = true;
+            this.cbZoomRatio.IntegralHeight = false;
             this.cbZoomRatio.Location = new System.Drawing.Point(84, 21);
             this.cbZoomRatio.Name = "cbZoomRatio";
-            this.cbZoomRatio.Size = new System.Drawing.Size(90, 20);
+            this.cbZoomRatio.Size = new System.Drawing.Size(90, 19);
             this.cbZoomRatio.TabIndex = 102;
             this.cbZoomRatio.SelectedIndexChanged += new System.EventHandler(this.cbZoomRatio_SelectedIndexChanged);
             // 
             // label9
             // 
-            this.label9.AutoSize = false;
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label9.BorderColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Bold);
-            this.label9.ForeColor = System.Drawing.Color.Red;
+            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label9.Location = new System.Drawing.Point(8, 21);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(72, 20);
+            this.label9.Size = new System.Drawing.Size(63, 12);
             this.label9.TabIndex = 100;
             this.label9.Text = "% ZoomUp :";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label9.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // cbEffectType
             // 
             this.cbEffectType.BackColor = System.Drawing.SystemColors.Info;
+            this.cbEffectType.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.cbEffectType.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbEffectType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbEffectType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEffectType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbEffectType.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbEffectType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbEffectType.FormattingEnabled = true;
+            this.cbEffectType.IntegralHeight = false;
             this.cbEffectType.Location = new System.Drawing.Point(84, 151);
             this.cbEffectType.Name = "cbEffectType";
-            this.cbEffectType.Size = new System.Drawing.Size(150, 20);
+            this.cbEffectType.Size = new System.Drawing.Size(150, 19);
             this.cbEffectType.TabIndex = 99;
             this.cbEffectType.SelectedIndexChanged += new System.EventHandler(this.cbEffectType_SelectedIndexChanged);
             // 
             // label8
             // 
-            this.label8.AutoSize = false;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label8.BorderColor = System.Drawing.Color.Transparent;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label8.Location = new System.Drawing.Point(8, 149);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(72, 22);
+            this.label8.Size = new System.Drawing.Size(62, 15);
             this.label8.TabIndex = 98;
             this.label8.Text = "Hiệu ứng :";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label8.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // ckHflip
             // 
             this.ckHflip.AutoSize = true;
-            this.ckHflip.ForeColor = System.Drawing.Color.Red;
+            this.ckHflip.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.ckHflip.BoxBorderSize = 1;
+            this.ckHflip.BoxRadius = 4;
+            this.ckHflip.BoxSize = 16;
+            this.ckHflip.BoxStyle = ReviewMovie.Base.Controls.Common.UiBoxStyle.Rounded;
+            this.ckHflip.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.ckHflip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.ckHflip.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.ckHflip.Location = new System.Drawing.Point(246, 136);
             this.ckHflip.Name = "ckHflip";
-            this.ckHflip.Size = new System.Drawing.Size(71, 17);
+            this.ckHflip.Size = new System.Drawing.Size(76, 18);
             this.ckHflip.TabIndex = 97;
             this.ckHflip.Text = "Lật Video";
+            this.ckHflip.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.ckHflip.TextPosition = ReviewMovie.Base.Controls.Common.UiTextPosition.Right;
+            this.ckHflip.UncheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.ckHflip.UseVisualStyleBackColor = true;
             this.ckHflip.CheckedChanged += new System.EventHandler(this.ckHflip_CheckedChanged);
             // 
             // ckRotate
             // 
             this.ckRotate.AutoSize = true;
+            this.ckRotate.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.ckRotate.BoxBorderSize = 1;
+            this.ckRotate.BoxRadius = 4;
+            this.ckRotate.BoxSize = 16;
+            this.ckRotate.BoxStyle = ReviewMovie.Base.Controls.Common.UiBoxStyle.Rounded;
+            this.ckRotate.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.ckRotate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.ckRotate.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.ckRotate.Location = new System.Drawing.Point(246, 113);
             this.ckRotate.Name = "ckRotate";
-            this.ckRotate.Size = new System.Drawing.Size(79, 17);
+            this.ckRotate.Size = new System.Drawing.Size(84, 18);
             this.ckRotate.TabIndex = 96;
             this.ckRotate.Text = "Xoay video";
+            this.ckRotate.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.ckRotate.TextPosition = ReviewMovie.Base.Controls.Common.UiTextPosition.Right;
+            this.ckRotate.UncheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.ckRotate.UseVisualStyleBackColor = true;
             this.ckRotate.CheckedChanged += new System.EventHandler(this.ckRotate_CheckedChanged);
             // 
             // CkZoom
             // 
             this.CkZoom.AutoSize = true;
+            this.CkZoom.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.CkZoom.BoxBorderSize = 1;
+            this.CkZoom.BoxRadius = 4;
+            this.CkZoom.BoxSize = 16;
+            this.CkZoom.BoxStyle = ReviewMovie.Base.Controls.Common.UiBoxStyle.Rounded;
             this.CkZoom.Checked = true;
+            this.CkZoom.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.CkZoom.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CkZoom.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.CkZoom.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.CkZoom.Location = new System.Drawing.Point(246, 89);
             this.CkZoom.Name = "CkZoom";
-            this.CkZoom.Size = new System.Drawing.Size(82, 17);
+            this.CkZoom.Size = new System.Drawing.Size(87, 18);
             this.CkZoom.TabIndex = 95;
             this.CkZoom.Text = "Zoom video";
+            this.CkZoom.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.CkZoom.TextPosition = ReviewMovie.Base.Controls.Common.UiTextPosition.Right;
+            this.CkZoom.UncheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.CkZoom.UseVisualStyleBackColor = true;
             this.CkZoom.CheckedChanged += new System.EventHandler(this.CkZoom_CheckedChanged);
             // 
             // cbxVideoQuality
             // 
             this.cbxVideoQuality.BackColor = System.Drawing.SystemColors.Info;
+            this.cbxVideoQuality.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.cbxVideoQuality.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbxVideoQuality.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbxVideoQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxVideoQuality.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbxVideoQuality.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbxVideoQuality.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbxVideoQuality.FormattingEnabled = true;
+            this.cbxVideoQuality.IntegralHeight = false;
             this.cbxVideoQuality.Location = new System.Drawing.Point(84, 87);
             this.cbxVideoQuality.Name = "cbxVideoQuality";
             this.cbxVideoQuality.Size = new System.Drawing.Size(150, 21);
@@ -873,92 +1205,162 @@ namespace ReviewMovie
             // 
             // label7
             // 
-            this.label7.AutoSize = false;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label7.BorderColor = System.Drawing.Color.Transparent;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label7.Location = new System.Drawing.Point(8, 86);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(72, 22);
+            this.label7.Size = new System.Drawing.Size(72, 15);
             this.label7.TabIndex = 92;
             this.label7.Text = "Chất lượng :";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label7.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // cbxSpeechType
             // 
+            this.cbxSpeechType.BackColor = System.Drawing.Color.White;
+            this.cbxSpeechType.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.cbxSpeechType.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbxSpeechType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbxSpeechType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxSpeechType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbxSpeechType.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cbxSpeechType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbxSpeechType.FormattingEnabled = true;
+            this.cbxSpeechType.IntegralHeight = false;
             this.cbxSpeechType.Location = new System.Drawing.Point(84, 343);
             this.cbxSpeechType.Name = "cbxSpeechType";
-            this.cbxSpeechType.Size = new System.Drawing.Size(270, 21);
+            this.cbxSpeechType.Size = new System.Drawing.Size(270, 24);
             this.cbxSpeechType.TabIndex = 18;
             this.cbxSpeechType.SelectedIndexChanged += new System.EventHandler(this.cbxSpeechType_SelectedIndexChanged);
             // 
             // label6
             // 
-            this.label6.AutoSize = false;
-            this.label6.Location = new System.Drawing.Point(8, 342);
-            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label6.BorderColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label6.Location = new System.Drawing.Point(6, 347);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(72, 22);
+            this.label6.Size = new System.Drawing.Size(69, 15);
             this.label6.TabIndex = 17;
             this.label6.Text = "Giọng Đọc :";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label6.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // label5
             // 
-            this.label5.AutoSize = false;
-            this.label5.Location = new System.Drawing.Point(8, 269);
-            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label5.BorderColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label5.Location = new System.Drawing.Point(6, 272);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(72, 22);
+            this.label5.Size = new System.Drawing.Size(75, 15);
             this.label5.TabIndex = 15;
             this.label5.Text = "Tốc Độ Đọc :";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label5.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            // 
+            // label3
+            // 
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label3.BorderColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(10, 15);
+            this.label3.TabIndex = 0;
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label3.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // btnAddAll
             // 
             this.btnAddAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnAddAll.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnAddAll.BorderColor = System.Drawing.Color.Transparent;
+            this.btnAddAll.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnAddAll.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
+            this.btnAddAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddAll.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddAll.ForeColor = System.Drawing.Color.White;
+            this.btnAddAll.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnAddAll.IconImage = null;
+            this.btnAddAll.IconSize = new System.Drawing.Size(18, 18);
+            this.btnAddAll.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnAddAll.Location = new System.Drawing.Point(136, 26);
             this.btnAddAll.Name = "btnAddAll";
+            this.btnAddAll.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnAddAll.Size = new System.Drawing.Size(176, 41);
             this.btnAddAll.TabIndex = 15;
             this.btnAddAll.Text = "GHÉP CÁC ĐOẠN";
+            this.btnAddAll.TextColor = System.Drawing.Color.White;
+            this.btnAddAll.TextHoverColor = System.Drawing.Color.White;
             this.btnAddAll.UseVisualStyleBackColor = false;
             this.btnAddAll.Click += new System.EventHandler(this.btnAddAll_Click);
             // 
             // lblstatus
             // 
-            this.lblstatus.AutoSize = true;
+            this.lblstatus.BackColor = System.Drawing.Color.Transparent;
+            this.lblstatus.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblstatus.BorderColor = System.Drawing.Color.Transparent;
+            this.lblstatus.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblstatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.lblstatus.Location = new System.Drawing.Point(15, 76);
             this.lblstatus.Name = "lblstatus";
-            this.lblstatus.Size = new System.Drawing.Size(16, 13);
+            this.lblstatus.Size = new System.Drawing.Size(16, 15);
             this.lblstatus.TabIndex = 16;
             this.lblstatus.Text = "...";
+            this.lblstatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblstatus.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // cboSiteNguon
             // 
+            this.cboSiteNguon.BackColor = System.Drawing.Color.White;
+            this.cboSiteNguon.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.cboSiteNguon.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cboSiteNguon.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cboSiteNguon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSiteNguon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboSiteNguon.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cboSiteNguon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cboSiteNguon.FormattingEnabled = true;
+            this.cboSiteNguon.IntegralHeight = false;
             this.cboSiteNguon.Location = new System.Drawing.Point(75, 17);
             this.cboSiteNguon.Name = "cboSiteNguon";
-            this.cboSiteNguon.Size = new System.Drawing.Size(220, 21);
+            this.cboSiteNguon.Size = new System.Drawing.Size(220, 24);
             this.cboSiteNguon.TabIndex = 40;
             this.cboSiteNguon.SelectedIndexChanged += new System.EventHandler(this.cboSiteNguon_SelectedIndexChanged);
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label1.BorderColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label1.Location = new System.Drawing.Point(6, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 13);
             this.label1.TabIndex = 41;
             this.label1.Text = "Nguồn Voice";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // grboxSetting
             // 
             this.grboxSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
+            this.grboxSetting.BackgroundColor = System.Drawing.Color.Transparent;
+            this.grboxSetting.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.grboxSetting.BorderRadius = 10;
+            this.grboxSetting.BorderSizeEx = 1;
+            this.grboxSetting.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.grboxSetting.Controls.Add(this.grbConfigVoice);
             this.grboxSetting.Controls.Add(this.grbActionRender);
             this.grboxSetting.Controls.Add(this.cbProjectName);
@@ -973,9 +1375,17 @@ namespace ReviewMovie
             this.grboxSetting.TabIndex = 1;
             this.grboxSetting.TabStop = false;
             this.grboxSetting.Text = "Cài Đặt ";
+            this.grboxSetting.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grboxSetting.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.grboxSetting.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // grbConfigVoice
             // 
+            this.grbConfigVoice.BackgroundColor = System.Drawing.Color.Transparent;
+            this.grbConfigVoice.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.grbConfigVoice.BorderRadius = 10;
+            this.grbConfigVoice.BorderSizeEx = 1;
+            this.grbConfigVoice.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.grbConfigVoice.Controls.Add(this.label1);
             this.grbConfigVoice.Controls.Add(this.txtToken);
             this.grbConfigVoice.Controls.Add(this.btnSaveVoiceSource);
@@ -990,20 +1400,41 @@ namespace ReviewMovie
             this.grbConfigVoice.TabIndex = 46;
             this.grbConfigVoice.TabStop = false;
             this.grbConfigVoice.Text = "Cài Đặt Voice";
+            this.grbConfigVoice.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grbConfigVoice.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.grbConfigVoice.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // btnSaveVoiceSource
             // 
             this.btnSaveVoiceSource.BackColor = System.Drawing.SystemColors.Control;
+            this.btnSaveVoiceSource.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnSaveVoiceSource.BorderColor = System.Drawing.Color.Transparent;
+            this.btnSaveVoiceSource.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnSaveVoiceSource.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
+            this.btnSaveVoiceSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveVoiceSource.ForeColor = System.Drawing.Color.White;
+            this.btnSaveVoiceSource.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnSaveVoiceSource.IconImage = null;
+            this.btnSaveVoiceSource.IconSize = new System.Drawing.Size(18, 18);
+            this.btnSaveVoiceSource.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnSaveVoiceSource.Location = new System.Drawing.Point(302, 16);
             this.btnSaveVoiceSource.Name = "btnSaveVoiceSource";
+            this.btnSaveVoiceSource.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnSaveVoiceSource.Size = new System.Drawing.Size(56, 22);
             this.btnSaveVoiceSource.TabIndex = 44;
             this.btnSaveVoiceSource.Text = "Save";
+            this.btnSaveVoiceSource.TextColor = System.Drawing.Color.White;
+            this.btnSaveVoiceSource.TextHoverColor = System.Drawing.Color.White;
             this.btnSaveVoiceSource.UseVisualStyleBackColor = false;
             this.btnSaveVoiceSource.Click += new System.EventHandler(this.btnSaveVoiceSource_Click);
             // 
             // grbActionRender
             // 
+            this.grbActionRender.BackgroundColor = System.Drawing.Color.Transparent;
+            this.grbActionRender.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.grbActionRender.BorderRadius = 10;
+            this.grbActionRender.BorderSizeEx = 1;
+            this.grbActionRender.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.grbActionRender.Controls.Add(this.rbGPUused);
             this.grbActionRender.Controls.Add(this.rbCPUused);
             this.grbActionRender.Controls.Add(this.btnAddAll);
@@ -1014,42 +1445,71 @@ namespace ReviewMovie
             this.grbActionRender.TabIndex = 45;
             this.grbActionRender.TabStop = false;
             this.grbActionRender.Text = "Xuất Bản Video";
+            this.grbActionRender.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grbActionRender.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.grbActionRender.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // rbGPUused
             // 
             this.rbGPUused.AutoSize = true;
+            this.rbGPUused.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.rbGPUused.BoxBorderSize = 1;
+            this.rbGPUused.BoxRadius = 4;
+            this.rbGPUused.BoxSize = 16;
+            this.rbGPUused.BoxStyle = ReviewMovie.Base.Controls.Common.UiBoxStyle.Circle;
+            this.rbGPUused.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.rbGPUused.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbGPUused.ForeColor = System.Drawing.Color.ForestGreen;
+            this.rbGPUused.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.rbGPUused.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.rbGPUused.Location = new System.Drawing.Point(18, 49);
             this.rbGPUused.Name = "rbGPUused";
-            this.rbGPUused.Size = new System.Drawing.Size(77, 17);
+            this.rbGPUused.Size = new System.Drawing.Size(83, 18);
             this.rbGPUused.TabIndex = 18;
             this.rbGPUused.TabStop = true;
             this.rbGPUused.Text = "Use GPU";
+            this.rbGPUused.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.rbGPUused.TextPosition = ReviewMovie.Base.Controls.Common.UiTextPosition.Right;
+            this.rbGPUused.UncheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.rbGPUused.UseVisualStyleBackColor = true;
             // 
             // rbCPUused
             // 
             this.rbCPUused.AutoSize = true;
+            this.rbCPUused.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.rbCPUused.BoxBorderSize = 1;
+            this.rbCPUused.BoxRadius = 4;
+            this.rbCPUused.BoxSize = 16;
+            this.rbCPUused.BoxStyle = ReviewMovie.Base.Controls.Common.UiBoxStyle.Circle;
+            this.rbCPUused.CheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.rbCPUused.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbCPUused.ForeColor = System.Drawing.Color.Red;
+            this.rbCPUused.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.rbCPUused.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.rbCPUused.Location = new System.Drawing.Point(18, 26);
             this.rbCPUused.Name = "rbCPUused";
-            this.rbCPUused.Size = new System.Drawing.Size(76, 17);
+            this.rbCPUused.Size = new System.Drawing.Size(82, 18);
             this.rbCPUused.TabIndex = 17;
             this.rbCPUused.TabStop = true;
             this.rbCPUused.Text = "Use CPU";
+            this.rbCPUused.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.rbCPUused.TextPosition = ReviewMovie.Base.Controls.Common.UiTextPosition.Right;
+            this.rbCPUused.UncheckedColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.rbCPUused.UseVisualStyleBackColor = true;
             // 
             // cbProjectName
             // 
+            this.cbProjectName.BackColor = System.Drawing.Color.White;
+            this.cbProjectName.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.cbProjectName.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
             this.cbProjectName.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbProjectName.DropDownHeight = 200;
+            this.cbProjectName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbProjectName.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cbProjectName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbProjectName.FormattingEnabled = true;
             this.cbProjectName.IntegralHeight = false;
             this.cbProjectName.Location = new System.Drawing.Point(86, 21);
             this.cbProjectName.Name = "cbProjectName";
-            this.cbProjectName.Size = new System.Drawing.Size(220, 21);
+            this.cbProjectName.Size = new System.Drawing.Size(220, 24);
             this.cbProjectName.TabIndex = 43;
             this.cbProjectName.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbProjectName_DrawItem);
             this.cbProjectName.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.cbProjectName_MeasureItem);
@@ -1057,6 +1517,11 @@ namespace ReviewMovie
             // 
             // tlpView
             // 
+            this.tlpView.BackgroundColor = System.Drawing.Color.Transparent;
+            this.tlpView.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.tlpView.BorderRadius = 0;
+            this.tlpView.BorderSizeEx = 0;
+            this.tlpView.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
             this.tlpView.ColumnCount = 1;
             this.tlpView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -1079,11 +1544,11 @@ namespace ReviewMovie
             this.dgvMainView.AllowDrop = true;
             this.dgvMainView.AllowUserToAddRows = false;
             this.dgvMainView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(247)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(44)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
-            this.dgvMainView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(247)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(44)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+            this.dgvMainView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvMainView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvMainView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dgvMainView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(245)))), ((int)(((byte)(255)))));
@@ -1093,17 +1558,20 @@ namespace ReviewMovie
             this.dgvMainView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvMainView.CellBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(254)))), ((int)(((byte)(255)))));
             this.dgvMainView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(102)))), ((int)(((byte)(160)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 8.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(102)))), ((int)(((byte)(160)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvMainView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvMainView.CellFont = new System.Drawing.Font("Segoe UI", 9F);
+            this.dgvMainView.CellForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.dgvMainView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(102)))), ((int)(((byte)(160)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(4, 0, 6, 0);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(102)))), ((int)(((byte)(160)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMainView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvMainView.ColumnHeadersHeight = 32;
             this.dgvMainView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvMainView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dgvMainView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column_check,
             this.Column_id,
@@ -1117,14 +1585,14 @@ namespace ReviewMovie
             this.Column_renderstatus,
             this.Column_inputtext});
             this.dgvMainView.ContextMenuStrip = this.ctMenu;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(254)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(44)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvMainView.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(254)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMainView.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvMainView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMainView.EnableHeadersVisualStyles = false;
             this.dgvMainView.GridBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(245)))), ((int)(((byte)(255)))));
@@ -1132,6 +1600,7 @@ namespace ReviewMovie
             this.dgvMainView.GridForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(44)))), ((int)(((byte)(64)))));
             this.dgvMainView.GridLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(210)))), ((int)(((byte)(230)))));
             this.dgvMainView.HeaderBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(102)))), ((int)(((byte)(160)))));
+            this.dgvMainView.HeaderFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.dgvMainView.HeaderForeColor = System.Drawing.Color.White;
             this.dgvMainView.HeaderHeight = 32;
             this.dgvMainView.Location = new System.Drawing.Point(3, 207);
@@ -1139,6 +1608,12 @@ namespace ReviewMovie
             this.dgvMainView.RowHeadersVisible = false;
             this.dgvMainView.RowHeadersWidth = 20;
             this.dgvMainView.RowHeight = 30;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            this.dgvMainView.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvMainView.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.dgvMainView.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.dgvMainView.RowTemplate.Height = 30;
             this.dgvMainView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvMainView.Size = new System.Drawing.Size(871, 524);
             this.dgvMainView.StandardTab = true;
@@ -1258,7 +1733,6 @@ namespace ReviewMovie
             // tsMenuView
             // 
             this.tsMenuView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
-            this.tsMenuView.Renderer = new ReviewMovie.Base.Controls.UiToolStripRenderer(new ReviewMovie.Base.Controls.UiToolStripColors());
             this.tsMenuView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator6,
             this.btnSearch,
@@ -1355,7 +1829,7 @@ namespace ReviewMovie
             this.btnAddRow.Image = global::EasyClip.Properties.Resources.add_1;
             this.btnAddRow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnAddRow.Name = "btnAddRow";
-            this.btnAddRow.Size = new System.Drawing.Size(113, 22);
+            this.btnAddRow.Size = new System.Drawing.Size(114, 22);
             this.btnAddRow.Text = "Thêm Dòng Mới";
             this.btnAddRow.Click += new System.EventHandler(this.btnAddRow_Click);
             // 
@@ -1373,6 +1847,21 @@ namespace ReviewMovie
             this.btnImportSubtitle.Size = new System.Drawing.Size(136, 22);
             this.btnImportSubtitle.Text = "Nhập Subtitle (Auto)";
             this.btnImportSubtitle.Click += new System.EventHandler(this.btnImportSubtitle_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnExportSubtitle
+            // 
+            this.btnExportSubtitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnExportSubtitle.Image = global::EasyClip.Properties.Resources.copy;
+            this.btnExportSubtitle.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExportSubtitle.Name = "btnExportSubtitle";
+            this.btnExportSubtitle.Size = new System.Drawing.Size(115, 22);
+            this.btnExportSubtitle.Text = "Xuất Subtitle File";
+            this.btnExportSubtitle.Click += new System.EventHandler(this.btnExportSubtitle_Click);
             // 
             // toolStripSeparator3
             // 
@@ -1393,6 +1882,11 @@ namespace ReviewMovie
             // grViewHeader
             // 
             this.grViewHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
+            this.grViewHeader.BackgroundColor = System.Drawing.Color.Transparent;
+            this.grViewHeader.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.grViewHeader.BorderRadius = 10;
+            this.grViewHeader.BorderSizeEx = 1;
+            this.grViewHeader.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.grViewHeader.Controls.Add(this.tlpViewHeader);
             this.grViewHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grViewHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -1402,14 +1896,22 @@ namespace ReviewMovie
             this.grViewHeader.TabIndex = 0;
             this.grViewHeader.TabStop = false;
             this.grViewHeader.Text = "Mic In";
+            this.grViewHeader.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grViewHeader.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.grViewHeader.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
             // tlpViewHeader
             // 
+            this.tlpViewHeader.BackgroundColor = System.Drawing.Color.Transparent;
+            this.tlpViewHeader.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.tlpViewHeader.BorderRadius = 0;
+            this.tlpViewHeader.BorderSizeEx = 0;
+            this.tlpViewHeader.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
             this.tlpViewHeader.ColumnCount = 4;
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.76289F));
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 81.23711F));
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
-            this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177F));
+            this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 179F));
             this.tlpViewHeader.Controls.Add(this.tlpImportMedia, 2, 0);
             this.tlpViewHeader.Controls.Add(this.btnRecord, 0, 0);
             this.tlpViewHeader.Controls.Add(this.tlpText, 1, 0);
@@ -1425,12 +1927,17 @@ namespace ReviewMovie
             // 
             // tlpImportMedia
             // 
+            this.tlpImportMedia.BackgroundColor = System.Drawing.Color.Transparent;
+            this.tlpImportMedia.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.tlpImportMedia.BorderRadius = 0;
+            this.tlpImportMedia.BorderSizeEx = 0;
+            this.tlpImportMedia.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
             this.tlpImportMedia.ColumnCount = 1;
             this.tlpImportMedia.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpImportMedia.Controls.Add(this.txtImPortMedia, 0, 1);
             this.tlpImportMedia.Controls.Add(this.lbHeaderInputMedia, 0, 0);
             this.tlpImportMedia.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpImportMedia.Location = new System.Drawing.Point(534, 3);
+            this.tlpImportMedia.Location = new System.Drawing.Point(532, 3);
             this.tlpImportMedia.Name = "tlpImportMedia";
             this.tlpImportMedia.RowCount = 2;
             this.tlpImportMedia.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
@@ -1455,11 +1962,9 @@ namespace ReviewMovie
             // 
             // lbHeaderInputMedia
             // 
-            this.lbHeaderInputMedia.AutoSize = true;
             this.lbHeaderInputMedia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(132)))), ((int)(((byte)(214)))));
             this.lbHeaderInputMedia.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(132)))), ((int)(((byte)(214)))));
             this.lbHeaderInputMedia.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(98)))), ((int)(((byte)(170)))));
-            this.lbHeaderInputMedia.BorderRadius = 0;
             this.lbHeaderInputMedia.BorderSize = 1;
             this.lbHeaderInputMedia.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbHeaderInputMedia.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
@@ -1476,22 +1981,39 @@ namespace ReviewMovie
             // btnRecord
             // 
             this.btnRecord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnRecord.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnRecord.BorderColor = System.Drawing.Color.Transparent;
+            this.btnRecord.BorderHoverColor = System.Drawing.Color.Transparent;
             this.btnRecord.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRecord.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
             this.btnRecord.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnRecord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRecord.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRecord.ForeColor = System.Drawing.Color.White;
+            this.btnRecord.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnRecord.IconImage = null;
+            this.btnRecord.IconSize = new System.Drawing.Size(18, 18);
             this.btnRecord.Image = global::EasyClip.Properties.Resources.ivoice;
+            this.btnRecord.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnRecord.Location = new System.Drawing.Point(3, 3);
             this.btnRecord.Name = "btnRecord";
+            this.btnRecord.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnRecord.Size = new System.Drawing.Size(93, 147);
             this.btnRecord.TabIndex = 0;
             this.btnRecord.Text = "Record";
             this.btnRecord.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnRecord.TextColor = System.Drawing.Color.White;
+            this.btnRecord.TextHoverColor = System.Drawing.Color.White;
             this.btnRecord.UseVisualStyleBackColor = true;
             this.btnRecord.Click += new System.EventHandler(this.btnRecord_Click);
             // 
             // tlpText
             // 
+            this.tlpText.BackgroundColor = System.Drawing.Color.Transparent;
+            this.tlpText.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.tlpText.BorderRadius = 0;
+            this.tlpText.BorderSizeEx = 0;
+            this.tlpText.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
             this.tlpText.ColumnCount = 1;
             this.tlpText.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpText.Controls.Add(this.lbHeaderText, 0, 0);
@@ -1502,16 +2024,14 @@ namespace ReviewMovie
             this.tlpText.RowCount = 2;
             this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tlpText.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
-            this.tlpText.Size = new System.Drawing.Size(426, 147);
+            this.tlpText.Size = new System.Drawing.Size(424, 147);
             this.tlpText.TabIndex = 1;
             // 
             // lbHeaderText
             // 
-            this.lbHeaderText.AutoSize = true;
             this.lbHeaderText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(132)))), ((int)(((byte)(214)))));
             this.lbHeaderText.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(132)))), ((int)(((byte)(214)))));
             this.lbHeaderText.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(98)))), ((int)(((byte)(170)))));
-            this.lbHeaderText.BorderRadius = 0;
             this.lbHeaderText.BorderSize = 1;
             this.lbHeaderText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbHeaderText.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1519,7 +2039,7 @@ namespace ReviewMovie
             this.lbHeaderText.Location = new System.Drawing.Point(1, 1);
             this.lbHeaderText.Margin = new System.Windows.Forms.Padding(1);
             this.lbHeaderText.Name = "lbHeaderText";
-            this.lbHeaderText.Size = new System.Drawing.Size(424, 20);
+            this.lbHeaderText.Size = new System.Drawing.Size(422, 20);
             this.lbHeaderText.TabIndex = 0;
             this.lbHeaderText.Text = "Nhập Text | Hoặc Kéo Audio File Vào !";
             this.lbHeaderText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1528,18 +2048,43 @@ namespace ReviewMovie
             // txtTextInput
             // 
             this.txtTextInput.AllowDrop = true;
+            this.txtTextInput.BackColor = System.Drawing.Color.Transparent;
+            this.txtTextInput.BackgroundColor = System.Drawing.Color.White;
+            this.txtTextInput.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.txtTextInput.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.txtTextInput.BorderRadius = 4;
+            this.txtTextInput.DisableTextBox = false;
             this.txtTextInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtTextInput.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
+            this.txtTextInput.IconLeft = null;
+            this.txtTextInput.IconRight = null;
+            this.txtTextInput.IconSize = new System.Drawing.Size(18, 18);
+            this.txtTextInput.Lines = new string[0];
             this.txtTextInput.Location = new System.Drawing.Point(3, 25);
+            this.txtTextInput.MaxLength = 32767;
             this.txtTextInput.Multiline = true;
             this.txtTextInput.Name = "txtTextInput";
-            this.txtTextInput.Size = new System.Drawing.Size(420, 119);
+            this.txtTextInput.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
+            this.txtTextInput.ReadOnly = false;
+            this.txtTextInput.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtTextInput.SelectionLength = 0;
+            this.txtTextInput.SelectionStart = 0;
+            this.txtTextInput.Size = new System.Drawing.Size(418, 119);
             this.txtTextInput.TabIndex = 1;
+            this.txtTextInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtTextInput.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
+            this.txtTextInput.UseSystemPasswordChar = false;
             this.txtTextInput.TextChanged += new System.EventHandler(this.txtTextInput_TextChanged);
             this.txtTextInput.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtTextInput_DragDrop);
             this.txtTextInput.DragEnter += new System.Windows.Forms.DragEventHandler(this.txtTextInput_DragEnter);
             // 
             // tlpHeaderButton
             // 
+            this.tlpHeaderButton.BackgroundColor = System.Drawing.Color.Transparent;
+            this.tlpHeaderButton.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.tlpHeaderButton.BorderRadius = 0;
+            this.tlpHeaderButton.BorderSizeEx = 0;
+            this.tlpHeaderButton.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
             this.tlpHeaderButton.ColumnCount = 1;
             this.tlpHeaderButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpHeaderButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -1547,57 +2092,221 @@ namespace ReviewMovie
             this.tlpHeaderButton.Controls.Add(this.btnConvertAudio, 0, 0);
             this.tlpHeaderButton.Controls.Add(this.btnSaveAudio, 0, 1);
             this.tlpHeaderButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpHeaderButton.Location = new System.Drawing.Point(690, 3);
+            this.tlpHeaderButton.Location = new System.Drawing.Point(688, 3);
             this.tlpHeaderButton.Name = "tlpHeaderButton";
             this.tlpHeaderButton.RowCount = 3;
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpHeaderButton.Size = new System.Drawing.Size(172, 147);
+            this.tlpHeaderButton.Size = new System.Drawing.Size(174, 147);
             this.tlpHeaderButton.TabIndex = 3;
             // 
             // btnRenderVideoPart
             // 
             this.btnRenderVideoPart.BackColor = System.Drawing.SystemColors.Control;
+            this.btnRenderVideoPart.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnRenderVideoPart.BorderColor = System.Drawing.Color.Transparent;
+            this.btnRenderVideoPart.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnRenderVideoPart.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
             this.btnRenderVideoPart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnRenderVideoPart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRenderVideoPart.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRenderVideoPart.ForeColor = System.Drawing.Color.White;
+            this.btnRenderVideoPart.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnRenderVideoPart.IconImage = null;
+            this.btnRenderVideoPart.IconSize = new System.Drawing.Size(18, 18);
+            this.btnRenderVideoPart.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnRenderVideoPart.Location = new System.Drawing.Point(4, 104);
             this.btnRenderVideoPart.Margin = new System.Windows.Forms.Padding(4);
             this.btnRenderVideoPart.Name = "btnRenderVideoPart";
-            this.btnRenderVideoPart.Size = new System.Drawing.Size(164, 39);
+            this.btnRenderVideoPart.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
+            this.btnRenderVideoPart.Size = new System.Drawing.Size(166, 39);
             this.btnRenderVideoPart.TabIndex = 3;
             this.btnRenderVideoPart.Text = "Render Part";
+            this.btnRenderVideoPart.TextColor = System.Drawing.Color.White;
+            this.btnRenderVideoPart.TextHoverColor = System.Drawing.Color.White;
             this.btnRenderVideoPart.UseVisualStyleBackColor = false;
             this.btnRenderVideoPart.Click += new System.EventHandler(this.btnRenderVideoPart_Click);
             // 
             // btnConvertAudio
             // 
             this.btnConvertAudio.BackColor = System.Drawing.SystemColors.Control;
+            this.btnConvertAudio.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnConvertAudio.BorderColor = System.Drawing.Color.Transparent;
+            this.btnConvertAudio.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnConvertAudio.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
             this.btnConvertAudio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnConvertAudio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnConvertAudio.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConvertAudio.ForeColor = System.Drawing.Color.White;
+            this.btnConvertAudio.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnConvertAudio.IconImage = null;
+            this.btnConvertAudio.IconSize = new System.Drawing.Size(18, 18);
+            this.btnConvertAudio.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnConvertAudio.Location = new System.Drawing.Point(4, 4);
             this.btnConvertAudio.Margin = new System.Windows.Forms.Padding(4);
             this.btnConvertAudio.Name = "btnConvertAudio";
-            this.btnConvertAudio.Size = new System.Drawing.Size(164, 42);
+            this.btnConvertAudio.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
+            this.btnConvertAudio.Size = new System.Drawing.Size(166, 42);
             this.btnConvertAudio.TabIndex = 1;
             this.btnConvertAudio.Text = "Convert Audio";
+            this.btnConvertAudio.TextColor = System.Drawing.Color.White;
+            this.btnConvertAudio.TextHoverColor = System.Drawing.Color.White;
             this.btnConvertAudio.UseVisualStyleBackColor = false;
             this.btnConvertAudio.Click += new System.EventHandler(this.btnConvertAudio_Click);
             // 
             // btnSaveAudio
             // 
             this.btnSaveAudio.BackColor = System.Drawing.SystemColors.Control;
+            this.btnSaveAudio.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnSaveAudio.BorderColor = System.Drawing.Color.Transparent;
+            this.btnSaveAudio.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnSaveAudio.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
             this.btnSaveAudio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSaveAudio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveAudio.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSaveAudio.ForeColor = System.Drawing.Color.White;
+            this.btnSaveAudio.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnSaveAudio.IconImage = null;
+            this.btnSaveAudio.IconSize = new System.Drawing.Size(18, 18);
+            this.btnSaveAudio.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnSaveAudio.Location = new System.Drawing.Point(4, 54);
             this.btnSaveAudio.Margin = new System.Windows.Forms.Padding(4);
             this.btnSaveAudio.Name = "btnSaveAudio";
-            this.btnSaveAudio.Size = new System.Drawing.Size(164, 42);
+            this.btnSaveAudio.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
+            this.btnSaveAudio.Size = new System.Drawing.Size(166, 42);
             this.btnSaveAudio.TabIndex = 2;
             this.btnSaveAudio.Text = "Save Audio";
+            this.btnSaveAudio.TextColor = System.Drawing.Color.White;
+            this.btnSaveAudio.TextHoverColor = System.Drawing.Color.White;
             this.btnSaveAudio.UseVisualStyleBackColor = false;
             this.btnSaveAudio.Click += new System.EventHandler(this.btnSaveAudio_Click);
+            // 
+            // scMain
+            // 
+            this.scMain.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.scMain.BorderRadius = 0;
+            this.scMain.BorderSizeEx = 0;
+            this.scMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.scMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.scMain.IsSplitterFixed = true;
+            this.scMain.Location = new System.Drawing.Point(0, 46);
+            this.scMain.Name = "scMain";
+            // 
+            // scMain.Panel1
+            // 
+            this.scMain.Panel1.Controls.Add(this.scView);
+            // 
+            // scMain.Panel2
+            // 
+            this.scMain.Panel2.Controls.Add(this.scSetting);
+            this.scMain.Size = new System.Drawing.Size(1334, 736);
+            this.scMain.SplitterColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.scMain.SplitterDistance = 910;
+            this.scMain.TabIndex = 43;
+            // 
+            // scView
+            // 
+            this.scView.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.scView.BorderRadius = 0;
+            this.scView.BorderSizeEx = 0;
+            this.scView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.scView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scView.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.scView.IsSplitterFixed = true;
+            this.scView.Location = new System.Drawing.Point(0, 0);
+            this.scView.Name = "scView";
+            // 
+            // scView.Panel1
+            // 
+            this.scView.Panel1.Controls.Add(this.tlpView);
+            // 
+            // scView.Panel2
+            // 
+            this.scView.Panel2.Controls.Add(this.btnExpand);
+            this.scView.Size = new System.Drawing.Size(910, 736);
+            this.scView.SplitterColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.scView.SplitterDistance = 879;
+            this.scView.TabIndex = 47;
+            // 
+            // btnExpand
+            // 
+            this.btnExpand.BackColor = System.Drawing.SystemColors.Info;
+            this.btnExpand.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnExpand.BorderColor = System.Drawing.Color.Transparent;
+            this.btnExpand.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnExpand.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
+            this.btnExpand.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnExpand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExpand.ForeColor = System.Drawing.Color.White;
+            this.btnExpand.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnExpand.IconImage = null;
+            this.btnExpand.IconSize = new System.Drawing.Size(18, 18);
+            this.btnExpand.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnExpand.Location = new System.Drawing.Point(0, 0);
+            this.btnExpand.Margin = new System.Windows.Forms.Padding(0);
+            this.btnExpand.Name = "btnExpand";
+            this.btnExpand.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
+            this.btnExpand.Size = new System.Drawing.Size(25, 734);
+            this.btnExpand.TabIndex = 46;
+            this.btnExpand.Text = ">";
+            this.btnExpand.TextColor = System.Drawing.Color.White;
+            this.btnExpand.TextHoverColor = System.Drawing.Color.White;
+            this.btnExpand.UseVisualStyleBackColor = false;
+            this.btnExpand.Visible = false;
+            this.btnExpand.Click += new System.EventHandler(this.btnExpand_Click);
+            // 
+            // scSetting
+            // 
+            this.scSetting.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.scSetting.BorderRadius = 0;
+            this.scSetting.BorderSizeEx = 0;
+            this.scSetting.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.scSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scSetting.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.scSetting.IsSplitterFixed = true;
+            this.scSetting.Location = new System.Drawing.Point(0, 0);
+            this.scSetting.Name = "scSetting";
+            // 
+            // scSetting.Panel1
+            // 
+            this.scSetting.Panel1.Controls.Add(this.btnCollapse);
+            // 
+            // scSetting.Panel2
+            // 
+            this.scSetting.Panel2.Controls.Add(this.grboxSetting);
+            this.scSetting.Size = new System.Drawing.Size(420, 736);
+            this.scSetting.SplitterColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.scSetting.SplitterDistance = 27;
+            this.scSetting.TabIndex = 46;
+            // 
+            // btnCollapse
+            // 
+            this.btnCollapse.BackColor = System.Drawing.SystemColors.Info;
+            this.btnCollapse.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnCollapse.BorderColor = System.Drawing.Color.Transparent;
+            this.btnCollapse.BorderHoverColor = System.Drawing.Color.Transparent;
+            this.btnCollapse.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
+            this.btnCollapse.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCollapse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCollapse.ForeColor = System.Drawing.Color.White;
+            this.btnCollapse.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnCollapse.IconImage = null;
+            this.btnCollapse.IconSize = new System.Drawing.Size(18, 18);
+            this.btnCollapse.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnCollapse.Location = new System.Drawing.Point(0, 0);
+            this.btnCollapse.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCollapse.Name = "btnCollapse";
+            this.btnCollapse.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
+            this.btnCollapse.Size = new System.Drawing.Size(25, 734);
+            this.btnCollapse.TabIndex = 45;
+            this.btnCollapse.Text = "<";
+            this.btnCollapse.TextColor = System.Drawing.Color.White;
+            this.btnCollapse.TextHoverColor = System.Drawing.Color.White;
+            this.btnCollapse.UseVisualStyleBackColor = false;
+            this.btnCollapse.Click += new System.EventHandler(this.btnCollapse_Click);
             // 
             // pnlHeaderTitle
             // 
@@ -1620,7 +2329,7 @@ namespace ReviewMovie
             this.pnlHeaderBrand.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlHeaderBrand.Location = new System.Drawing.Point(0, 0);
             this.pnlHeaderBrand.Name = "pnlHeaderBrand";
-            this.pnlHeaderBrand.Size = new System.Drawing.Size(700, 44);
+            this.pnlHeaderBrand.Size = new System.Drawing.Size(1300, 44);
             this.pnlHeaderBrand.TabIndex = 0;
             this.pnlHeaderBrand.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HeaderArea_MouseDown);
             // 
@@ -1631,7 +2340,7 @@ namespace ReviewMovie
             this.lblHeaderSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(136)))), ((int)(((byte)(149)))));
             this.lblHeaderSubtitle.Location = new System.Drawing.Point(48, 23);
             this.lblHeaderSubtitle.Name = "lblHeaderSubtitle";
-            this.lblHeaderSubtitle.Size = new System.Drawing.Size(99, 12);
+            this.lblHeaderSubtitle.Size = new System.Drawing.Size(93, 12);
             this.lblHeaderSubtitle.TabIndex = 2;
             this.lblHeaderSubtitle.Text = "TPMEDIA PREMIUM";
             this.lblHeaderSubtitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HeaderArea_MouseDown);
@@ -1643,7 +2352,7 @@ namespace ReviewMovie
             this.lblHeaderMainTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(53)))), ((int)(((byte)(66)))));
             this.lblHeaderMainTitle.Location = new System.Drawing.Point(48, 6);
             this.lblHeaderMainTitle.Name = "lblHeaderMainTitle";
-            this.lblHeaderMainTitle.Size = new System.Drawing.Size(95, 19);
+            this.lblHeaderMainTitle.Size = new System.Drawing.Size(106, 19);
             this.lblHeaderMainTitle.TabIndex = 1;
             this.lblHeaderMainTitle.Text = "EasyClip Studio";
             this.lblHeaderMainTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HeaderArea_MouseDown);
@@ -1663,99 +2372,15 @@ namespace ReviewMovie
             // 
             // tlpHeaderRight
             // 
-            this.tlpHeaderRight.ColumnCount = 6;
-            this.tlpHeaderRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 62F));
-            this.tlpHeaderRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
-            this.tlpHeaderRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tlpHeaderRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tlpHeaderRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tlpHeaderRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tlpHeaderRight.Controls.Add(this.lblHeaderActive, 0, 0);
-            this.tlpHeaderRight.Controls.Add(this.lblHeaderRemaining, 1, 0);
-            this.tlpHeaderRight.Controls.Add(this.btnHeaderHelp, 2, 0);
-            this.tlpHeaderRight.Controls.Add(this.btnHeaderSetting, 3, 0);
-            this.tlpHeaderRight.Controls.Add(this.lblHeaderAvatar, 4, 0);
+            this.tlpHeaderRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpHeaderRight.Controls.Add(this.btnHeaderClose, 5, 0);
             this.tlpHeaderRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tlpHeaderRight.Location = new System.Drawing.Point(972, 0);
+            this.tlpHeaderRight.Location = new System.Drawing.Point(1292, 0);
             this.tlpHeaderRight.Name = "tlpHeaderRight";
             this.tlpHeaderRight.RowCount = 1;
             this.tlpHeaderRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpHeaderRight.Size = new System.Drawing.Size(320, 44);
+            this.tlpHeaderRight.Size = new System.Drawing.Size(60, 44);
             this.tlpHeaderRight.TabIndex = 1;
-            // 
-            // lblHeaderActive
-            // 
-            this.lblHeaderActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(248)))), ((int)(((byte)(238)))));
-            this.lblHeaderActive.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblHeaderActive.Font = new System.Drawing.Font("Segoe UI", 7.5F, System.Drawing.FontStyle.Bold);
-            this.lblHeaderActive.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(138)))), ((int)(((byte)(86)))));
-            this.lblHeaderActive.Location = new System.Drawing.Point(4, 10);
-            this.lblHeaderActive.Margin = new System.Windows.Forms.Padding(4, 10, 4, 10);
-            this.lblHeaderActive.Name = "lblHeaderActive";
-            this.lblHeaderActive.Size = new System.Drawing.Size(54, 24);
-            this.lblHeaderActive.TabIndex = 0;
-            this.lblHeaderActive.Text = "Active";
-            this.lblHeaderActive.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblHeaderRemaining
-            // 
-            this.lblHeaderRemaining.AutoSize = true;
-            this.lblHeaderRemaining.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblHeaderRemaining.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeaderRemaining.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(100)))), ((int)(((byte)(112)))));
-            this.lblHeaderRemaining.Location = new System.Drawing.Point(66, 0);
-            this.lblHeaderRemaining.Name = "lblHeaderRemaining";
-            this.lblHeaderRemaining.Size = new System.Drawing.Size(110, 44);
-            this.lblHeaderRemaining.TabIndex = 1;
-            this.lblHeaderRemaining.Text = "1 Day Remaining";
-            this.lblHeaderRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // btnHeaderHelp
-            // 
-            this.btnHeaderHelp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnHeaderHelp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnHeaderHelp.FlatAppearance.BorderSize = 0;
-            this.btnHeaderHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHeaderHelp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnHeaderHelp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(89)))), ((int)(((byte)(99)))), ((int)(((byte)(114)))));
-            this.btnHeaderHelp.Location = new System.Drawing.Point(182, 6);
-            this.btnHeaderHelp.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-            this.btnHeaderHelp.Name = "btnHeaderHelp";
-            this.btnHeaderHelp.Size = new System.Drawing.Size(28, 32);
-            this.btnHeaderHelp.TabIndex = 2;
-            this.btnHeaderHelp.Text = "?";
-            this.btnHeaderHelp.UseVisualStyleBackColor = true;
-            // 
-            // btnHeaderSetting
-            // 
-            this.btnHeaderSetting.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnHeaderSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnHeaderSetting.FlatAppearance.BorderSize = 0;
-            this.btnHeaderSetting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHeaderSetting.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHeaderSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(89)))), ((int)(((byte)(99)))), ((int)(((byte)(114)))));
-            this.btnHeaderSetting.Location = new System.Drawing.Point(216, 6);
-            this.btnHeaderSetting.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-            this.btnHeaderSetting.Name = "btnHeaderSetting";
-            this.btnHeaderSetting.Size = new System.Drawing.Size(28, 32);
-            this.btnHeaderSetting.TabIndex = 3;
-            this.btnHeaderSetting.Text = "⚙";
-            this.btnHeaderSetting.UseVisualStyleBackColor = true;
-            // 
-            // lblHeaderAvatar
-            // 
-            this.lblHeaderAvatar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(136)))), ((int)(((byte)(57)))));
-            this.lblHeaderAvatar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblHeaderAvatar.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lblHeaderAvatar.ForeColor = System.Drawing.Color.White;
-            this.lblHeaderAvatar.Location = new System.Drawing.Point(252, 6);
-            this.lblHeaderAvatar.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.lblHeaderAvatar.Name = "lblHeaderAvatar";
-            this.lblHeaderAvatar.Size = new System.Drawing.Size(30, 32);
-            this.lblHeaderAvatar.TabIndex = 4;
-            this.lblHeaderAvatar.Text = "TN";
-            this.lblHeaderAvatar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnHeaderClose
             // 
@@ -1765,116 +2390,14 @@ namespace ReviewMovie
             this.btnHeaderClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHeaderClose.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnHeaderClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.btnHeaderClose.Location = new System.Drawing.Point(289, 6);
+            this.btnHeaderClose.Location = new System.Drawing.Point(116, 6);
             this.btnHeaderClose.Margin = new System.Windows.Forms.Padding(2, 6, 2, 6);
             this.btnHeaderClose.Name = "btnHeaderClose";
-            this.btnHeaderClose.Size = new System.Drawing.Size(32, 32);
+            this.btnHeaderClose.Size = new System.Drawing.Size(16, 32);
             this.btnHeaderClose.TabIndex = 5;
             this.btnHeaderClose.Text = "X";
             this.btnHeaderClose.UseVisualStyleBackColor = true;
             this.btnHeaderClose.Click += new System.EventHandler(this.btnHeaderClose_Click);
-            // 
-            // scMain
-            // 
-            this.scMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.scMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.scMain.IsSplitterFixed = true;
-            this.scMain.Location = new System.Drawing.Point(0, 0);
-            this.scMain.Name = "scMain";
-            // 
-            // scMain.Panel1
-            // 
-            this.scMain.Panel1.Controls.Add(this.scView);
-            // 
-            // scMain.Panel2
-            // 
-            this.scMain.Panel2.Controls.Add(this.scSetting);
-            this.scMain.Size = new System.Drawing.Size(1334, 736);
-            this.scMain.SplitterDistance = 910;
-            this.scMain.TabIndex = 43;
-            // 
-            // scView
-            // 
-            this.scView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.scView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scView.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.scView.IsSplitterFixed = true;
-            this.scView.Location = new System.Drawing.Point(0, 0);
-            this.scView.Name = "scView";
-            // 
-            // scView.Panel1
-            // 
-            this.scView.Panel1.Controls.Add(this.tlpView);
-            // 
-            // scView.Panel2
-            // 
-            this.scView.Panel2.Controls.Add(this.btnExpand);
-            this.scView.Size = new System.Drawing.Size(910, 736);
-            this.scView.SplitterDistance = 879;
-            this.scView.TabIndex = 47;
-            // 
-            // btnExpand
-            // 
-            this.btnExpand.BackColor = System.Drawing.SystemColors.Info;
-            this.btnExpand.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnExpand.Location = new System.Drawing.Point(0, 0);
-            this.btnExpand.Margin = new System.Windows.Forms.Padding(0);
-            this.btnExpand.Name = "btnExpand";
-            this.btnExpand.Size = new System.Drawing.Size(25, 734);
-            this.btnExpand.TabIndex = 46;
-            this.btnExpand.Text = ">";
-            this.btnExpand.UseVisualStyleBackColor = false;
-            this.btnExpand.Visible = false;
-            this.btnExpand.Click += new System.EventHandler(this.btnExpand_Click);
-            // 
-            // scSetting
-            // 
-            this.scSetting.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.scSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scSetting.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.scSetting.IsSplitterFixed = true;
-            this.scSetting.Location = new System.Drawing.Point(0, 0);
-            this.scSetting.Name = "scSetting";
-            // 
-            // scSetting.Panel1
-            // 
-            this.scSetting.Panel1.Controls.Add(this.btnCollapse);
-            // 
-            // scSetting.Panel2
-            // 
-            this.scSetting.Panel2.Controls.Add(this.grboxSetting);
-            this.scSetting.Size = new System.Drawing.Size(420, 736);
-            this.scSetting.SplitterDistance = 27;
-            this.scSetting.TabIndex = 46;
-            // 
-            // btnCollapse
-            // 
-            this.btnCollapse.BackColor = System.Drawing.SystemColors.Info;
-            this.btnCollapse.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCollapse.Location = new System.Drawing.Point(0, 0);
-            this.btnCollapse.Margin = new System.Windows.Forms.Padding(0);
-            this.btnCollapse.Name = "btnCollapse";
-            this.btnCollapse.Size = new System.Drawing.Size(25, 734);
-            this.btnCollapse.TabIndex = 45;
-            this.btnCollapse.Text = "<";
-            this.btnCollapse.UseVisualStyleBackColor = false;
-            this.btnCollapse.Click += new System.EventHandler(this.btnCollapse_Click);
-            // 
-            // btnExportSubtitle
-            // 
-            this.btnExportSubtitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnExportSubtitle.Image = global::EasyClip.Properties.Resources.copy;
-            this.btnExportSubtitle.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExportSubtitle.Name = "btnExportSubtitle";
-            this.btnExportSubtitle.Size = new System.Drawing.Size(115, 22);
-            this.btnExportSubtitle.Text = "Xuất Subtitle File";
-            this.btnExportSubtitle.Click += new System.EventHandler(this.btnExportSubtitle_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // FormMain
             // 
@@ -1938,7 +2461,6 @@ namespace ReviewMovie
             this.pnlHeaderBrand.ResumeLayout(false);
             this.pnlHeaderBrand.PerformLayout();
             this.tlpHeaderRight.ResumeLayout(false);
-            this.tlpHeaderRight.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2065,11 +2587,6 @@ namespace ReviewMovie
         private System.Windows.Forms.Label lblHeaderMainTitle;
         private System.Windows.Forms.Label lblHeaderLogo;
         private System.Windows.Forms.TableLayoutPanel tlpHeaderRight;
-        private System.Windows.Forms.Label lblHeaderActive;
-        private System.Windows.Forms.Label lblHeaderRemaining;
-        private System.Windows.Forms.Button btnHeaderHelp;
-        private System.Windows.Forms.Button btnHeaderSetting;
-        private System.Windows.Forms.Label lblHeaderAvatar;
         private System.Windows.Forms.Button btnHeaderClose;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton btnExportSubtitle;
