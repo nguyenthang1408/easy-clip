@@ -221,7 +221,9 @@ namespace ReviewMovie.Base.Controls
             if (e.Index < 0)
             {
                 bool isCurrentSelected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
-                if (isCurrentSelected && !_selectionBackColor.IsEmpty)
+                bool isCurrentHot = (e.State & DrawItemState.HotLight) == DrawItemState.HotLight;
+                bool shouldHighlightCurrent = (isCurrentSelected || isCurrentHot) && !_selectionBackColor.IsEmpty;
+                if (shouldHighlightCurrent)
                 {
                     using (var bgBrush = new SolidBrush(_selectionBackColor))
                     {
@@ -236,7 +238,7 @@ namespace ReviewMovie.Base.Controls
                 var flagsCurrent = GetItemTextFlags();
                 var bounds = GetItemTextBounds(e.Bounds);
                 var currentFore = Enabled ? ForeColor : SystemColors.GrayText;
-                if (isCurrentSelected && !_selectionForeColor.IsEmpty)
+                if (shouldHighlightCurrent && !_selectionForeColor.IsEmpty)
                 {
                     currentFore = _selectionForeColor;
                 }
@@ -253,7 +255,9 @@ namespace ReviewMovie.Base.Controls
             }
 
             bool isSelected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
-            if (isSelected && !_selectionBackColor.IsEmpty)
+            bool isHot = (e.State & DrawItemState.HotLight) == DrawItemState.HotLight;
+            bool shouldHighlight = (isSelected || isHot) && !_selectionBackColor.IsEmpty;
+            if (shouldHighlight)
             {
                 using (var bgBrush = new SolidBrush(_selectionBackColor))
                 {
@@ -266,7 +270,7 @@ namespace ReviewMovie.Base.Controls
             }
 
             var fore = Enabled ? ForeColor : SystemColors.GrayText;
-            if (isSelected && !_selectionForeColor.IsEmpty)
+            if (shouldHighlight && !_selectionForeColor.IsEmpty)
             {
                 fore = _selectionForeColor;
             }

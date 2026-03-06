@@ -95,7 +95,7 @@ namespace ReviewMovie
             "English"});
             this.cbAppLanguage.Location = new System.Drawing.Point(34, 20);
             this.cbAppLanguage.Name = "cbAppLanguage";
-            this.cbAppLanguage.SelectionBackColor = System.Drawing.Color.White;
+            this.cbAppLanguage.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cbAppLanguage.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbAppLanguage.Size = new System.Drawing.Size(121, 24);
             this.cbAppLanguage.TabIndex = 10;
