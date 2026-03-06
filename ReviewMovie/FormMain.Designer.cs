@@ -308,8 +308,8 @@ namespace ReviewMovie
             // 
             // label2
             // 
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.BackgroundColor = System.Drawing.Color.White;
             this.label2.BorderColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -323,8 +323,8 @@ namespace ReviewMovie
             // 
             // lblapi
             // 
-            this.lblapi.BackColor = System.Drawing.Color.Transparent;
-            this.lblapi.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblapi.BackColor = System.Drawing.Color.White;
+            this.lblapi.BackgroundColor = System.Drawing.Color.White;
             this.lblapi.BorderColor = System.Drawing.Color.Transparent;
             this.lblapi.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblapi.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -392,8 +392,8 @@ namespace ReviewMovie
             // 
             // lblToken
             // 
-            this.lblToken.BackColor = System.Drawing.Color.Transparent;
-            this.lblToken.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblToken.BackColor = System.Drawing.Color.White;
+            this.lblToken.BackgroundColor = System.Drawing.Color.White;
             this.lblToken.BorderColor = System.Drawing.Color.Transparent;
             this.lblToken.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblToken.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -493,6 +493,7 @@ namespace ReviewMovie
             // 
             // ckOpenPlayer
             // 
+            this.ckOpenPlayer.BackColor = System.Drawing.Color.White;
             this.ckOpenPlayer.AutoSize = true;
             this.ckOpenPlayer.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.ckOpenPlayer.BoxBorderSize = 1;
@@ -578,8 +579,8 @@ namespace ReviewMovie
             // 
             // label17
             // 
-            this.label17.BackColor = System.Drawing.Color.Transparent;
-            this.label17.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label17.BackColor = System.Drawing.Color.White;
+            this.label17.BackgroundColor = System.Drawing.Color.White;
             this.label17.BorderColor = System.Drawing.Color.Transparent;
             this.label17.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -618,6 +619,7 @@ namespace ReviewMovie
             // 
             // ckRandomMoveLeftRight
             // 
+            this.ckRandomMoveLeftRight.BackColor = System.Drawing.Color.White;
             this.ckRandomMoveLeftRight.AutoSize = true;
             this.ckRandomMoveLeftRight.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.ckRandomMoveLeftRight.BoxBorderSize = 1;
@@ -660,8 +662,8 @@ namespace ReviewMovie
             // 
             // label16
             // 
-            this.label16.BackColor = System.Drawing.Color.Transparent;
-            this.label16.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label16.BackColor = System.Drawing.Color.White;
+            this.label16.BackgroundColor = System.Drawing.Color.White;
             this.label16.BorderColor = System.Drawing.Color.Transparent;
             this.label16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -675,8 +677,8 @@ namespace ReviewMovie
             // 
             // label15
             // 
-            this.label15.BackColor = System.Drawing.Color.Transparent;
-            this.label15.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label15.BackColor = System.Drawing.Color.White;
+            this.label15.BackgroundColor = System.Drawing.Color.White;
             this.label15.BorderColor = System.Drawing.Color.Transparent;
             this.label15.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -770,8 +772,8 @@ namespace ReviewMovie
             // 
             // label14
             // 
-            this.label14.BackColor = System.Drawing.Color.Transparent;
-            this.label14.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label14.BackColor = System.Drawing.Color.White;
+            this.label14.BackgroundColor = System.Drawing.Color.White;
             this.label14.BorderColor = System.Drawing.Color.Transparent;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -785,6 +787,7 @@ namespace ReviewMovie
             // 
             // ckHflipRandom
             // 
+            this.ckHflipRandom.BackColor = System.Drawing.Color.White;
             this.ckHflipRandom.AutoSize = true;
             this.ckHflipRandom.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.ckHflipRandom.BoxBorderSize = 1;
@@ -847,8 +850,8 @@ namespace ReviewMovie
             // 
             // label13
             // 
-            this.label13.BackColor = System.Drawing.Color.Transparent;
-            this.label13.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label13.BackColor = System.Drawing.Color.White;
+            this.label13.BackgroundColor = System.Drawing.Color.White;
             this.label13.BorderColor = System.Drawing.Color.Transparent;
             this.label13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -902,8 +905,8 @@ namespace ReviewMovie
             // 
             // label4
             // 
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label4.BackColor = System.Drawing.Color.White;
+            this.label4.BackgroundColor = System.Drawing.Color.White;
             this.label4.BorderColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -917,6 +920,7 @@ namespace ReviewMovie
             // 
             // ckNotUseAudio
             // 
+            this.ckNotUseAudio.BackColor = System.Drawing.Color.White;
             this.ckNotUseAudio.AutoSize = true;
             this.ckNotUseAudio.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.ckNotUseAudio.BoxBorderSize = 1;
@@ -959,8 +963,8 @@ namespace ReviewMovie
             // 
             // label12
             // 
-            this.label12.BackColor = System.Drawing.Color.Transparent;
-            this.label12.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label12.BackColor = System.Drawing.Color.White;
+            this.label12.BackgroundColor = System.Drawing.Color.White;
             this.label12.BorderColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -994,8 +998,8 @@ namespace ReviewMovie
             // 
             // label11
             // 
-            this.label11.BackColor = System.Drawing.Color.Transparent;
-            this.label11.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label11.BackColor = System.Drawing.Color.White;
+            this.label11.BackgroundColor = System.Drawing.Color.White;
             this.label11.BorderColor = System.Drawing.Color.Transparent;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Bold);
             this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1049,8 +1053,8 @@ namespace ReviewMovie
             // 
             // label10
             // 
-            this.label10.BackColor = System.Drawing.Color.Transparent;
-            this.label10.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label10.BackColor = System.Drawing.Color.White;
+            this.label10.BackgroundColor = System.Drawing.Color.White;
             this.label10.BorderColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1084,8 +1088,8 @@ namespace ReviewMovie
             // 
             // label9
             // 
-            this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label9.BackColor = System.Drawing.Color.White;
+            this.label9.BackgroundColor = System.Drawing.Color.White;
             this.label9.BorderColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Bold);
             this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1119,8 +1123,8 @@ namespace ReviewMovie
             // 
             // label8
             // 
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label8.BackColor = System.Drawing.Color.White;
+            this.label8.BackgroundColor = System.Drawing.Color.White;
             this.label8.BorderColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1134,6 +1138,7 @@ namespace ReviewMovie
             // 
             // ckHflip
             // 
+            this.ckHflip.BackColor = System.Drawing.Color.White;
             this.ckHflip.AutoSize = true;
             this.ckHflip.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.ckHflip.BoxBorderSize = 1;
@@ -1156,6 +1161,7 @@ namespace ReviewMovie
             // 
             // ckRotate
             // 
+            this.ckRotate.BackColor = System.Drawing.Color.White;
             this.ckRotate.AutoSize = true;
             this.ckRotate.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.ckRotate.BoxBorderSize = 1;
@@ -1178,6 +1184,7 @@ namespace ReviewMovie
             // 
             // CkZoom
             // 
+            this.CkZoom.BackColor = System.Drawing.Color.White;
             this.CkZoom.AutoSize = true;
             this.CkZoom.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.CkZoom.BoxBorderSize = 1;
@@ -1222,8 +1229,8 @@ namespace ReviewMovie
             // 
             // label7
             // 
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label7.BackColor = System.Drawing.Color.White;
+            this.label7.BackgroundColor = System.Drawing.Color.White;
             this.label7.BorderColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1257,8 +1264,8 @@ namespace ReviewMovie
             // 
             // label6
             // 
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label6.BackColor = System.Drawing.Color.White;
+            this.label6.BackgroundColor = System.Drawing.Color.White;
             this.label6.BorderColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1272,8 +1279,8 @@ namespace ReviewMovie
             // 
             // label5
             // 
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label5.BackColor = System.Drawing.Color.White;
+            this.label5.BackgroundColor = System.Drawing.Color.White;
             this.label5.BorderColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1287,8 +1294,8 @@ namespace ReviewMovie
             // 
             // label3
             // 
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label3.BackColor = System.Drawing.Color.White;
+            this.label3.BackgroundColor = System.Drawing.Color.White;
             this.label3.BorderColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1361,8 +1368,8 @@ namespace ReviewMovie
             // 
             // label1
             // 
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.BackgroundColor = System.Drawing.Color.Transparent;
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.BackgroundColor = System.Drawing.Color.White;
             this.label1.BorderColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1478,6 +1485,7 @@ namespace ReviewMovie
             // 
             // rbGPUused
             // 
+            this.rbGPUused.BackColor = System.Drawing.Color.White;
             this.rbGPUused.AutoSize = true;
             this.rbGPUused.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.rbGPUused.BoxBorderSize = 1;
@@ -1501,6 +1509,7 @@ namespace ReviewMovie
             // 
             // rbCPUused
             // 
+            this.rbCPUused.BackColor = System.Drawing.Color.White;
             this.rbCPUused.AutoSize = true;
             this.rbCPUused.BoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.rbCPUused.BoxBorderSize = 1;
