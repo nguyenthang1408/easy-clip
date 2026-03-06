@@ -436,10 +436,10 @@ namespace ReviewMovie
             // 
             // grbConfigRender
             // 
-            this.grbConfigRender.BackgroundColor = System.Drawing.Color.Transparent;
-            this.grbConfigRender.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.grbConfigRender.BackgroundColor = System.Drawing.Color.White;
+            this.grbConfigRender.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(169)))), ((int)(((byte)(238)))));
             this.grbConfigRender.BorderRadius = 10;
-            this.grbConfigRender.BorderSizeEx = 1;
+            this.grbConfigRender.BorderSizeEx = 2;
             this.grbConfigRender.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.grbConfigRender.Controls.Add(this.ckOpenPlayer);
             this.grbConfigRender.Controls.Add(this.nbSpeechRatio);
@@ -481,6 +481,9 @@ namespace ReviewMovie
             this.grbConfigRender.Location = new System.Drawing.Point(11, 209);
             this.grbConfigRender.Name = "grbConfigRender";
             this.grbConfigRender.Size = new System.Drawing.Size(365, 416);
+            this.grbConfigRender.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(44)))), ((int)(((byte)(28)))), ((int)(((byte)(99)))));
+            this.grbConfigRender.ShadowDepth = 4;
+            this.grbConfigRender.ShadowEnabled = true;
             this.grbConfigRender.TabIndex = 14;
             this.grbConfigRender.TabStop = false;
             this.grbConfigRender.Text = "Lựa Chọn Hiệu Ứng";
@@ -1375,9 +1378,9 @@ namespace ReviewMovie
             // 
             this.grboxSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(231)))), ((int)(((byte)(250)))));
             this.grboxSetting.BackgroundColor = System.Drawing.Color.Transparent;
-            this.grboxSetting.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.grboxSetting.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(186)))), ((int)(((byte)(245)))));
             this.grboxSetting.BorderRadius = 10;
-            this.grboxSetting.BorderSizeEx = 1;
+            this.grboxSetting.BorderSizeEx = 2;
             this.grboxSetting.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.grboxSetting.Controls.Add(this.grbConfigVoice);
             this.grboxSetting.Controls.Add(this.grbActionRender);
@@ -1399,10 +1402,10 @@ namespace ReviewMovie
             // 
             // grbConfigVoice
             // 
-            this.grbConfigVoice.BackgroundColor = System.Drawing.Color.Transparent;
-            this.grbConfigVoice.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.grbConfigVoice.BackgroundColor = System.Drawing.Color.White;
+            this.grbConfigVoice.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(169)))), ((int)(((byte)(238)))));
             this.grbConfigVoice.BorderRadius = 10;
-            this.grbConfigVoice.BorderSizeEx = 1;
+            this.grbConfigVoice.BorderSizeEx = 2;
             this.grbConfigVoice.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.grbConfigVoice.Controls.Add(this.label1);
             this.grbConfigVoice.Controls.Add(this.txtToken);
@@ -1415,6 +1418,9 @@ namespace ReviewMovie
             this.grbConfigVoice.Location = new System.Drawing.Point(11, 48);
             this.grbConfigVoice.Name = "grbConfigVoice";
             this.grbConfigVoice.Size = new System.Drawing.Size(365, 155);
+            this.grbConfigVoice.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(44)))), ((int)(((byte)(28)))), ((int)(((byte)(99)))));
+            this.grbConfigVoice.ShadowDepth = 4;
+            this.grbConfigVoice.ShadowEnabled = true;
             this.grbConfigVoice.TabIndex = 46;
             this.grbConfigVoice.TabStop = false;
             this.grbConfigVoice.Text = "Cài Đặt Voice";
@@ -1448,10 +1454,10 @@ namespace ReviewMovie
             // 
             // grbActionRender
             // 
-            this.grbActionRender.BackgroundColor = System.Drawing.Color.Transparent;
-            this.grbActionRender.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.grbActionRender.BackgroundColor = System.Drawing.Color.White;
+            this.grbActionRender.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(169)))), ((int)(((byte)(238)))));
             this.grbActionRender.BorderRadius = 10;
-            this.grbActionRender.BorderSizeEx = 1;
+            this.grbActionRender.BorderSizeEx = 2;
             this.grbActionRender.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.Solid;
             this.grbActionRender.Controls.Add(this.rbGPUused);
             this.grbActionRender.Controls.Add(this.rbCPUused);
@@ -1460,6 +1466,9 @@ namespace ReviewMovie
             this.grbActionRender.Location = new System.Drawing.Point(11, 631);
             this.grbActionRender.Name = "grbActionRender";
             this.grbActionRender.Size = new System.Drawing.Size(365, 96);
+            this.grbActionRender.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(44)))), ((int)(((byte)(28)))), ((int)(((byte)(99)))));
+            this.grbActionRender.ShadowDepth = 4;
+            this.grbActionRender.ShadowEnabled = true;
             this.grbActionRender.TabIndex = 45;
             this.grbActionRender.TabStop = false;
             this.grbActionRender.Text = "Xuất Bản Video";
@@ -2245,6 +2254,7 @@ namespace ReviewMovie
             // 
             // scView.Panel2
             // 
+            this.scView.Panel2.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.scView.Panel2.Controls.Add(this.btnExpand);
             this.scView.Size = new System.Drawing.Size(910, 736);
             this.scView.SplitterColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
@@ -2292,6 +2302,7 @@ namespace ReviewMovie
             // 
             // scSetting.Panel1
             // 
+            this.scSetting.Panel1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.scSetting.Panel1.Controls.Add(this.btnCollapse);
             // 
             // scSetting.Panel2

@@ -16,6 +16,9 @@ namespace ReviewMovie.Base.Controls
         private int _borderSize = 1;
         private int _borderRadius = 10;
         private UiBorderStyle _borderStyle = UiBorderStyle.Solid;
+        private bool _shadowEnabled;
+        private Color _shadowColor = Color.FromArgb(55, 38, 27, 92);
+        private int _shadowDepth = 4;
 
         private Font _titleFont;
 
@@ -55,6 +58,15 @@ namespace ReviewMovie.Base.Controls
         [Category("Title Style")]
         public Font TitleFont { get => _titleFont; set { _titleFont = value ?? _titleFont; Invalidate(); } }
 
+        [Category("Shadow")]
+        public bool ShadowEnabled { get => _shadowEnabled; set { _shadowEnabled = value; Invalidate(); } }
+
+        [Category("Shadow")]
+        public Color ShadowColor { get => _shadowColor; set { _shadowColor = value; Invalidate(); } }
+
+        [Category("Shadow")]
+        public int ShadowDepth { get => _shadowDepth; set { _shadowDepth = Math.Max(0, value); Invalidate(); } }
+
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
@@ -67,9 +79,28 @@ namespace ReviewMovie.Base.Controls
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             UiHelpers.ClearBackground(e.Graphics, this);
 
-            var rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            int depth = _shadowEnabled ? _shadowDepth : 0;
+            var rect = new Rectangle(
+                0,
+                0,
+                Math.Max(0, Width - 1 - depth),
+                Math.Max(0, Height - 1 - depth));
             int textHeight = TextRenderer.MeasureText(Text ?? string.Empty, _titleFont).Height;
             int titlePad = 6;
+
+            if (_shadowEnabled && _shadowDepth > 0 && _shadowColor.A > 0)
+            {
+                for (int i = 1; i <= _shadowDepth; i++)
+                {
+                    int alpha = Math.Max(6, _shadowColor.A / (i + 1));
+                    var layerRect = new Rectangle(rect.X + i, rect.Y + i, rect.Width, rect.Height);
+                    using (var shadowPath = UiHelpers.CreateRoundedRectPath(layerRect, _borderRadius))
+                    using (var shadowBrush = new SolidBrush(Color.FromArgb(alpha, _shadowColor)))
+                    {
+                        e.Graphics.FillPath(shadowBrush, shadowPath);
+                    }
+                }
+            }
 
             using (var path = UiHelpers.CreateRoundedRectPath(rect, _borderRadius))
             {
@@ -92,7 +123,7 @@ namespace ReviewMovie.Base.Controls
             }
 
             // Title region
-            var titleRect = new Rectangle(titlePad, 0, Width - titlePad * 2, textHeight + titlePad);
+            var titleRect = new Rectangle(titlePad, 0, Math.Max(0, rect.Width - titlePad * 2), textHeight + titlePad);
             if (_titleBackColor.A > 0)
             {
                 using (var b = new SolidBrush(_titleBackColor))
