@@ -3898,7 +3898,7 @@ namespace ReviewMovie
                 popup.StartPosition = FormStartPosition.CenterParent;
                 popup.ShowInTaskbar = false;
                 popup.TopMost = true;
-                popup.BackColor = Color.FromArgb(238, 243, 251);
+                popup.BackColor = Color.White;
                 popup.ClientSize = new Size(390, 176);
                 popup.Padding = new Padding(8);
                 UiHelpers.EnableSmoothPainting(popup);
@@ -3914,7 +3914,7 @@ namespace ReviewMovie
                 {
                     Dock = DockStyle.Top,
                     Height = 40,
-                    BackColor = Color.FromArgb(246, 249, 255)
+                    BackColor = Color.FromArgb(33, 150, 243)
                 };
 
                 var lblTitle = new Label
@@ -3922,7 +3922,7 @@ namespace ReviewMovie
                     AutoSize = true,
                     Text = "Thông Báo !",
                     Font = new Font("Segoe UI", 10.5F, FontStyle.Bold, GraphicsUnit.Point),
-                    ForeColor = Color.FromArgb(38, 48, 63),
+                    ForeColor = Color.White,
                     Location = new Point(12, 9)
                 };
                 panelHeader.Controls.Add(lblTitle);
@@ -3931,7 +3931,7 @@ namespace ReviewMovie
                 {
                     Text = "x",
                     Font = new Font("Segoe UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point),
-                    ForeColor = Color.FromArgb(120, 128, 142),
+                    ForeColor = Color.White,
                     FlatStyle = FlatStyle.Flat,
                     Size = new Size(32, 26),
                     Location = new Point(popup.ClientSize.Width - 50, 7),
@@ -3940,8 +3940,8 @@ namespace ReviewMovie
                     TabStop = false
                 };
                 btnClose.FlatAppearance.BorderSize = 0;
-                btnClose.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 241, 251);
-                btnClose.FlatAppearance.MouseDownBackColor = Color.FromArgb(224, 233, 246);
+                btnClose.FlatAppearance.MouseOverBackColor = Color.FromArgb(28, 135, 224);
+                btnClose.FlatAppearance.MouseDownBackColor = Color.FromArgb(24, 118, 200);
                 btnClose.Click += (_, __) =>
                 {
                     popup.DialogResult = DialogResult.No;
@@ -3989,7 +3989,7 @@ namespace ReviewMovie
                     DialogResult = DialogResult.Yes,
                     Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point),
                     ForeColor = Color.White,
-                    BackColor = Color.FromArgb(44, 124, 235),
+                    BackColor = Color.FromArgb(40, 167, 69),
                     FlatStyle = FlatStyle.Flat,
                     Size = new Size(98, 30),
                     Anchor = AnchorStyles.Right,
@@ -3997,25 +3997,25 @@ namespace ReviewMovie
                     Cursor = Cursors.Hand
                 };
                 btnYes.FlatAppearance.BorderSize = 0;
-                btnYes.FlatAppearance.MouseOverBackColor = Color.FromArgb(37, 111, 216);
-                btnYes.FlatAppearance.MouseDownBackColor = Color.FromArgb(32, 99, 197);
+                btnYes.FlatAppearance.MouseOverBackColor = Color.FromArgb(34, 145, 60);
+                btnYes.FlatAppearance.MouseDownBackColor = Color.FromArgb(30, 128, 53);
 
                 var btnNo = new Button
                 {
                     Text = "No",
                     DialogResult = DialogResult.No,
                     Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point),
-                    ForeColor = Color.FromArgb(46, 58, 74),
-                    BackColor = Color.FromArgb(241, 244, 249),
+                    ForeColor = Color.White,
+                    BackColor = Color.FromArgb(108, 117, 125),
                     FlatStyle = FlatStyle.Flat,
                     Size = new Size(98, 30),
                     Anchor = AnchorStyles.Left,
                     Margin = new Padding(6, 4, 0, 0),
                     Cursor = Cursors.Hand
                 };
-                btnNo.FlatAppearance.BorderColor = Color.FromArgb(214, 221, 232);
-                btnNo.FlatAppearance.MouseOverBackColor = Color.FromArgb(231, 237, 246);
-                btnNo.FlatAppearance.MouseDownBackColor = Color.FromArgb(220, 229, 242);
+                btnNo.FlatAppearance.BorderSize = 0;
+                btnNo.FlatAppearance.MouseOverBackColor = Color.FromArgb(92, 101, 109);
+                btnNo.FlatAppearance.MouseDownBackColor = Color.FromArgb(80, 89, 97);
 
                 buttonLayout.Controls.Add(btnYes, 0, 0);
                 buttonLayout.Controls.Add(btnNo, 1, 0);
