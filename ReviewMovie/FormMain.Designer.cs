@@ -556,8 +556,8 @@ namespace ReviewMovie
             // cbSettingTemplate
             // 
             this.cbSettingTemplate.BackColor = System.Drawing.Color.White;
-            this.cbSettingTemplate.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.cbSettingTemplate.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbSettingTemplate.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(226)))), ((int)(((byte)(245)))));
+            this.cbSettingTemplate.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(186)))), ((int)(((byte)(255)))));
             this.cbSettingTemplate.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbSettingTemplate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSettingTemplate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -567,6 +567,8 @@ namespace ReviewMovie
             this.cbSettingTemplate.IntegralHeight = false;
             this.cbSettingTemplate.Location = new System.Drawing.Point(84, 379);
             this.cbSettingTemplate.Name = "cbSettingTemplate";
+            this.cbSettingTemplate.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
+            this.cbSettingTemplate.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbSettingTemplate.Size = new System.Drawing.Size(176, 24);
             this.cbSettingTemplate.TabIndex = 124;
             this.cbSettingTemplate.SelectedIndexChanged += new System.EventHandler(this.cbSettingTemplate_SelectedIndexChanged);
@@ -636,8 +638,8 @@ namespace ReviewMovie
             // cbLanguageSelect
             // 
             this.cbLanguageSelect.BackColor = System.Drawing.Color.White;
-            this.cbLanguageSelect.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.cbLanguageSelect.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbLanguageSelect.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(226)))), ((int)(((byte)(245)))));
+            this.cbLanguageSelect.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(186)))), ((int)(((byte)(255)))));
             this.cbLanguageSelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbLanguageSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLanguageSelect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -647,6 +649,8 @@ namespace ReviewMovie
             this.cbLanguageSelect.IntegralHeight = false;
             this.cbLanguageSelect.Location = new System.Drawing.Point(84, 313);
             this.cbLanguageSelect.Name = "cbLanguageSelect";
+            this.cbLanguageSelect.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
+            this.cbLanguageSelect.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbLanguageSelect.Size = new System.Drawing.Size(270, 24);
             this.cbLanguageSelect.TabIndex = 121;
             this.cbLanguageSelect.SelectedIndexChanged += new System.EventHandler(this.cbLanguageSelect_SelectedIndexChanged);
@@ -932,9 +936,9 @@ namespace ReviewMovie
             // 
             // cbMode
             // 
-            this.cbMode.BackColor = System.Drawing.SystemColors.Info;
-            this.cbMode.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.cbMode.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbMode.BackColor = System.Drawing.Color.White;
+            this.cbMode.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(226)))), ((int)(((byte)(245)))));
+            this.cbMode.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(186)))), ((int)(((byte)(255)))));
             this.cbMode.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -944,6 +948,8 @@ namespace ReviewMovie
             this.cbMode.IntegralHeight = false;
             this.cbMode.Location = new System.Drawing.Point(84, 120);
             this.cbMode.Name = "cbMode";
+            this.cbMode.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
+            this.cbMode.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbMode.Size = new System.Drawing.Size(150, 21);
             this.cbMode.TabIndex = 108;
             this.cbMode.SelectedIndexChanged += new System.EventHandler(this.cbMode_SelectedIndexChanged);
@@ -965,9 +971,9 @@ namespace ReviewMovie
             // 
             // cbZoomQuality
             // 
-            this.cbZoomQuality.BackColor = System.Drawing.SystemColors.Info;
-            this.cbZoomQuality.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.cbZoomQuality.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbZoomQuality.BackColor = System.Drawing.Color.White;
+            this.cbZoomQuality.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(226)))), ((int)(((byte)(245)))));
+            this.cbZoomQuality.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(186)))), ((int)(((byte)(255)))));
             this.cbZoomQuality.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbZoomQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbZoomQuality.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -977,6 +983,8 @@ namespace ReviewMovie
             this.cbZoomQuality.IntegralHeight = false;
             this.cbZoomQuality.Location = new System.Drawing.Point(84, 47);
             this.cbZoomQuality.Name = "cbZoomQuality";
+            this.cbZoomQuality.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
+            this.cbZoomQuality.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbZoomQuality.Size = new System.Drawing.Size(90, 19);
             this.cbZoomQuality.TabIndex = 106;
             this.cbZoomQuality.SelectedIndexChanged += new System.EventHandler(this.cbZoomQuality_SelectedIndexChanged);
@@ -1053,9 +1061,9 @@ namespace ReviewMovie
             // 
             // cbZoomRatio
             // 
-            this.cbZoomRatio.BackColor = System.Drawing.SystemColors.Info;
-            this.cbZoomRatio.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.cbZoomRatio.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbZoomRatio.BackColor = System.Drawing.Color.White;
+            this.cbZoomRatio.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(226)))), ((int)(((byte)(245)))));
+            this.cbZoomRatio.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(186)))), ((int)(((byte)(255)))));
             this.cbZoomRatio.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbZoomRatio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbZoomRatio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1065,6 +1073,8 @@ namespace ReviewMovie
             this.cbZoomRatio.IntegralHeight = false;
             this.cbZoomRatio.Location = new System.Drawing.Point(84, 21);
             this.cbZoomRatio.Name = "cbZoomRatio";
+            this.cbZoomRatio.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
+            this.cbZoomRatio.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbZoomRatio.Size = new System.Drawing.Size(90, 19);
             this.cbZoomRatio.TabIndex = 102;
             this.cbZoomRatio.SelectedIndexChanged += new System.EventHandler(this.cbZoomRatio_SelectedIndexChanged);
@@ -1086,9 +1096,9 @@ namespace ReviewMovie
             // 
             // cbEffectType
             // 
-            this.cbEffectType.BackColor = System.Drawing.SystemColors.Info;
-            this.cbEffectType.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.cbEffectType.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbEffectType.BackColor = System.Drawing.Color.White;
+            this.cbEffectType.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(226)))), ((int)(((byte)(245)))));
+            this.cbEffectType.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(186)))), ((int)(((byte)(255)))));
             this.cbEffectType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbEffectType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbEffectType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1098,6 +1108,8 @@ namespace ReviewMovie
             this.cbEffectType.IntegralHeight = false;
             this.cbEffectType.Location = new System.Drawing.Point(84, 151);
             this.cbEffectType.Name = "cbEffectType";
+            this.cbEffectType.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
+            this.cbEffectType.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbEffectType.Size = new System.Drawing.Size(150, 19);
             this.cbEffectType.TabIndex = 99;
             this.cbEffectType.SelectedIndexChanged += new System.EventHandler(this.cbEffectType_SelectedIndexChanged);
@@ -1187,9 +1199,9 @@ namespace ReviewMovie
             // 
             // cbxVideoQuality
             // 
-            this.cbxVideoQuality.BackColor = System.Drawing.SystemColors.Info;
-            this.cbxVideoQuality.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.cbxVideoQuality.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbxVideoQuality.BackColor = System.Drawing.Color.White;
+            this.cbxVideoQuality.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(226)))), ((int)(((byte)(245)))));
+            this.cbxVideoQuality.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(186)))), ((int)(((byte)(255)))));
             this.cbxVideoQuality.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbxVideoQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxVideoQuality.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1199,6 +1211,8 @@ namespace ReviewMovie
             this.cbxVideoQuality.IntegralHeight = false;
             this.cbxVideoQuality.Location = new System.Drawing.Point(84, 87);
             this.cbxVideoQuality.Name = "cbxVideoQuality";
+            this.cbxVideoQuality.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
+            this.cbxVideoQuality.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbxVideoQuality.Size = new System.Drawing.Size(150, 21);
             this.cbxVideoQuality.TabIndex = 93;
             this.cbxVideoQuality.SelectedIndexChanged += new System.EventHandler(this.cbxVideoQuality_SelectedIndexChanged);
@@ -1221,8 +1235,8 @@ namespace ReviewMovie
             // cbxSpeechType
             // 
             this.cbxSpeechType.BackColor = System.Drawing.Color.White;
-            this.cbxSpeechType.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.cbxSpeechType.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbxSpeechType.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(226)))), ((int)(((byte)(245)))));
+            this.cbxSpeechType.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(186)))), ((int)(((byte)(255)))));
             this.cbxSpeechType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbxSpeechType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxSpeechType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1232,6 +1246,8 @@ namespace ReviewMovie
             this.cbxSpeechType.IntegralHeight = false;
             this.cbxSpeechType.Location = new System.Drawing.Point(84, 343);
             this.cbxSpeechType.Name = "cbxSpeechType";
+            this.cbxSpeechType.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
+            this.cbxSpeechType.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbxSpeechType.Size = new System.Drawing.Size(270, 24);
             this.cbxSpeechType.TabIndex = 18;
             this.cbxSpeechType.SelectedIndexChanged += new System.EventHandler(this.cbxSpeechType_SelectedIndexChanged);
@@ -1323,8 +1339,8 @@ namespace ReviewMovie
             // cboSiteNguon
             // 
             this.cboSiteNguon.BackColor = System.Drawing.Color.White;
-            this.cboSiteNguon.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.cboSiteNguon.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cboSiteNguon.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(226)))), ((int)(((byte)(245)))));
+            this.cboSiteNguon.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(186)))), ((int)(((byte)(255)))));
             this.cboSiteNguon.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cboSiteNguon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSiteNguon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1334,6 +1350,8 @@ namespace ReviewMovie
             this.cboSiteNguon.IntegralHeight = false;
             this.cboSiteNguon.Location = new System.Drawing.Point(75, 17);
             this.cboSiteNguon.Name = "cboSiteNguon";
+            this.cboSiteNguon.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
+            this.cboSiteNguon.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cboSiteNguon.Size = new System.Drawing.Size(220, 24);
             this.cboSiteNguon.TabIndex = 40;
             this.cboSiteNguon.SelectedIndexChanged += new System.EventHandler(this.cboSiteNguon_SelectedIndexChanged);
@@ -1355,7 +1373,7 @@ namespace ReviewMovie
             // 
             // grboxSetting
             // 
-            this.grboxSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
+            this.grboxSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(231)))), ((int)(((byte)(250)))));
             this.grboxSetting.BackgroundColor = System.Drawing.Color.Transparent;
             this.grboxSetting.BorderColorEx = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
             this.grboxSetting.BorderRadius = 10;
@@ -1498,8 +1516,8 @@ namespace ReviewMovie
             // cbProjectName
             // 
             this.cbProjectName.BackColor = System.Drawing.Color.White;
-            this.cbProjectName.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
-            this.cbProjectName.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.cbProjectName.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(226)))), ((int)(((byte)(245)))));
+            this.cbProjectName.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(186)))), ((int)(((byte)(255)))));
             this.cbProjectName.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbProjectName.DropDownHeight = 200;
             this.cbProjectName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1509,6 +1527,8 @@ namespace ReviewMovie
             this.cbProjectName.IntegralHeight = false;
             this.cbProjectName.Location = new System.Drawing.Point(86, 21);
             this.cbProjectName.Name = "cbProjectName";
+            this.cbProjectName.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
+            this.cbProjectName.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbProjectName.Size = new System.Drawing.Size(220, 24);
             this.cbProjectName.TabIndex = 43;
             this.cbProjectName.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbProjectName_DrawItem);
@@ -2310,8 +2330,8 @@ namespace ReviewMovie
             // 
             // pnlHeaderTitle
             // 
-            this.pnlHeaderTitle.BackColor = System.Drawing.Color.White;
-            this.pnlHeaderTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlHeaderTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(45)))), ((int)(((byte)(204)))));
+            this.pnlHeaderTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.pnlHeaderTitle.Controls.Add(this.pnlHeaderBrand);
             this.pnlHeaderTitle.Controls.Add(this.tlpHeaderRight);
             this.pnlHeaderTitle.Dock = System.Windows.Forms.DockStyle.Top;
@@ -2326,6 +2346,7 @@ namespace ReviewMovie
             this.pnlHeaderBrand.Controls.Add(this.lblHeaderSubtitle);
             this.pnlHeaderBrand.Controls.Add(this.lblHeaderMainTitle);
             this.pnlHeaderBrand.Controls.Add(this.lblHeaderLogo);
+            this.pnlHeaderBrand.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(45)))), ((int)(((byte)(204)))));
             this.pnlHeaderBrand.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlHeaderBrand.Location = new System.Drawing.Point(0, 0);
             this.pnlHeaderBrand.Name = "pnlHeaderBrand";
@@ -2337,7 +2358,7 @@ namespace ReviewMovie
             // 
             this.lblHeaderSubtitle.AutoSize = true;
             this.lblHeaderSubtitle.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeaderSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(136)))), ((int)(((byte)(149)))));
+            this.lblHeaderSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.lblHeaderSubtitle.Location = new System.Drawing.Point(48, 23);
             this.lblHeaderSubtitle.Name = "lblHeaderSubtitle";
             this.lblHeaderSubtitle.Size = new System.Drawing.Size(93, 12);
@@ -2349,7 +2370,7 @@ namespace ReviewMovie
             // 
             this.lblHeaderMainTitle.AutoSize = true;
             this.lblHeaderMainTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeaderMainTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(53)))), ((int)(((byte)(66)))));
+            this.lblHeaderMainTitle.ForeColor = System.Drawing.Color.White;
             this.lblHeaderMainTitle.Location = new System.Drawing.Point(48, 6);
             this.lblHeaderMainTitle.Name = "lblHeaderMainTitle";
             this.lblHeaderMainTitle.Size = new System.Drawing.Size(106, 19);
@@ -2359,9 +2380,9 @@ namespace ReviewMovie
             // 
             // lblHeaderLogo
             // 
-            this.lblHeaderLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(243)))), ((int)(((byte)(227)))));
+            this.lblHeaderLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(202)))), ((int)(((byte)(40)))));
             this.lblHeaderLogo.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblHeaderLogo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(120)))), ((int)(((byte)(48)))));
+            this.lblHeaderLogo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(45)))), ((int)(((byte)(204)))));
             this.lblHeaderLogo.Location = new System.Drawing.Point(12, 8);
             this.lblHeaderLogo.Name = "lblHeaderLogo";
             this.lblHeaderLogo.Size = new System.Drawing.Size(28, 28);
@@ -2372,31 +2393,37 @@ namespace ReviewMovie
             // 
             // tlpHeaderRight
             // 
-            this.tlpHeaderRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpHeaderRight.Controls.Add(this.btnHeaderClose, 5, 0);
+            this.tlpHeaderRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(45)))), ((int)(((byte)(204)))));
+            this.tlpHeaderRight.ColumnCount = 1;
+            this.tlpHeaderRight.ColumnStyles.Clear();
+            this.tlpHeaderRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpHeaderRight.Controls.Add(this.btnHeaderClose, 0, 0);
             this.tlpHeaderRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tlpHeaderRight.Location = new System.Drawing.Point(1292, 0);
+            this.tlpHeaderRight.Location = new System.Drawing.Point(1280, 0);
             this.tlpHeaderRight.Name = "tlpHeaderRight";
             this.tlpHeaderRight.RowCount = 1;
             this.tlpHeaderRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpHeaderRight.Size = new System.Drawing.Size(60, 44);
+            this.tlpHeaderRight.Size = new System.Drawing.Size(54, 44);
             this.tlpHeaderRight.TabIndex = 1;
             // 
             // btnHeaderClose
             // 
+            this.btnHeaderClose.BackColor = System.Drawing.Color.White;
             this.btnHeaderClose.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHeaderClose.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnHeaderClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(239)))));
+            this.btnHeaderClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.btnHeaderClose.FlatAppearance.BorderSize = 0;
             this.btnHeaderClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHeaderClose.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnHeaderClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.btnHeaderClose.Location = new System.Drawing.Point(116, 6);
-            this.btnHeaderClose.Margin = new System.Windows.Forms.Padding(2, 6, 2, 6);
+            this.btnHeaderClose.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHeaderClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(32)))), ((int)(((byte)(41)))));
+            this.btnHeaderClose.Location = new System.Drawing.Point(10, 7);
+            this.btnHeaderClose.Margin = new System.Windows.Forms.Padding(10, 7, 10, 7);
             this.btnHeaderClose.Name = "btnHeaderClose";
-            this.btnHeaderClose.Size = new System.Drawing.Size(16, 32);
+            this.btnHeaderClose.Size = new System.Drawing.Size(34, 30);
             this.btnHeaderClose.TabIndex = 5;
-            this.btnHeaderClose.Text = "X";
-            this.btnHeaderClose.UseVisualStyleBackColor = true;
+            this.btnHeaderClose.Text = "✕";
+            this.btnHeaderClose.UseVisualStyleBackColor = false;
             this.btnHeaderClose.Click += new System.EventHandler(this.btnHeaderClose_Click);
             // 
             // FormMain
@@ -2404,7 +2431,7 @@ namespace ReviewMovie
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(216)))), ((int)(((byte)(233)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(231)))), ((int)(((byte)(250)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1334, 782);
             this.Controls.Add(this.scMain);

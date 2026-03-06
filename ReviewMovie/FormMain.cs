@@ -5704,8 +5704,19 @@ namespace ReviewMovie
                 }
             }
 
-            e.DrawBackground();
-            e.Graphics.DrawString(displayText, e.Font, Brushes.Black, e.Bounds, StringFormat.GenericDefault);
+            bool isSelected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
+            Color backColor = isSelected
+                ? Color.FromArgb(236, 239, 244)
+                : Color.White;
+            Color textColor = Color.FromArgb(33, 37, 41);
+
+            using (var backgroundBrush = new SolidBrush(backColor))
+            using (var textBrush = new SolidBrush(textColor))
+            {
+                e.Graphics.FillRectangle(backgroundBrush, e.Bounds);
+                e.Graphics.DrawString(displayText, e.Font, textBrush, e.Bounds, StringFormat.GenericDefault);
+            }
+
             e.DrawFocusRectangle();
         }
 
