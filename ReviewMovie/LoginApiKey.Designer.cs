@@ -41,7 +41,6 @@ namespace ReviewMovie
             this.txInsertApiKey = new ReviewMovie.Base.Controls.UiTextBox();
             this.materialLabel2 = new System.Windows.Forms.Label();
             this.txAppCodeShow = new ReviewMovie.Base.Controls.UiTextBox();
-            this.btnCopyAppCode = new ReviewMovie.Base.Controls.IconCircleButton();
             this.materialLabel1 = new System.Windows.Forms.Label();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
@@ -64,7 +63,6 @@ namespace ReviewMovie
             this.cardPanel.Controls.Add(this.txInsertApiKey);
             this.cardPanel.Controls.Add(this.materialLabel2);
             this.cardPanel.Controls.Add(this.txAppCodeShow);
-            this.cardPanel.Controls.Add(this.btnCopyAppCode);
             this.cardPanel.Controls.Add(this.materialLabel1);
             this.cardPanel.Controls.Add(this.lblSubtitle);
             this.cardPanel.Controls.Add(this.lblTitle);
@@ -242,7 +240,7 @@ namespace ReviewMovie
             this.txAppCodeShow.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txAppCodeShow.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(243)))), ((int)(((byte)(246)))));
             this.txAppCodeShow.IconLeft = null;
-            this.txAppCodeShow.IconRight = null;
+            this.txAppCodeShow.IconRight = global::EasyClip.Properties.Resources.copy;
             this.txAppCodeShow.IconSize = new System.Drawing.Size(18, 18);
             this.txAppCodeShow.Lines = new string[0];
             this.txAppCodeShow.Location = new System.Drawing.Point(44, 250);
@@ -254,29 +252,11 @@ namespace ReviewMovie
             this.txAppCodeShow.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txAppCodeShow.SelectionLength = 0;
             this.txAppCodeShow.SelectionStart = 0;
-            this.txAppCodeShow.Size = new System.Drawing.Size(300, 54);
+            this.txAppCodeShow.Size = new System.Drawing.Size(362, 54);
             this.txAppCodeShow.TabIndex = 1;
             this.txAppCodeShow.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txAppCodeShow.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.txAppCodeShow.UseSystemPasswordChar = false;
-            // 
-            // btnCopyAppCode
-            // 
-            this.btnCopyAppCode.BackColor = System.Drawing.Color.White;
-            this.btnCopyAppCode.CornerRadius = 10;
-            this.btnCopyAppCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCopyAppCode.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCopyAppCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(45)))), ((int)(((byte)(204)))));
-            this.btnCopyAppCode.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(244)))), ((int)(((byte)(255)))));
-            this.btnCopyAppCode.Location = new System.Drawing.Point(352, 250);
-            this.btnCopyAppCode.Name = "btnCopyAppCode";
-            this.btnCopyAppCode.NormalBackColor = System.Drawing.Color.White;
-            this.btnCopyAppCode.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(232)))), ((int)(((byte)(255)))));
-            this.btnCopyAppCode.Size = new System.Drawing.Size(54, 54);
-            this.btnCopyAppCode.TabIndex = 2;
-            this.btnCopyAppCode.Text = "Copy";
-            this.btnCopyAppCode.UseVisualStyleBackColor = false;
-            this.btnCopyAppCode.Click += new System.EventHandler(this.btnCopyAppCode_Click);
             // 
             // materialLabel1
             // 
@@ -385,6 +365,5 @@ namespace ReviewMovie
         private System.Windows.Forms.Label lbstatus;
         private System.Windows.Forms.LinkLabel linklbRegister;
         private ReviewMovie.Base.Controls.UiComboBox cbAppLanguage;
-        private ReviewMovie.Base.Controls.IconCircleButton btnCopyAppCode;
     }
 }

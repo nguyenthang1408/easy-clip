@@ -25,7 +25,7 @@ namespace ReviewMovie
         private string AppVersion { get; } = "2.0.0"; // Định nghĩa phiên bản ứng dụng
         private readonly AppCodeService appCodeService;
         private readonly IConfigDataService _configService;
-        private bool _readOnlyFocusWired;
+        private bool _appCodeActionsWired;
 
         public LoginApiKey()
         {
@@ -104,18 +104,14 @@ namespace ReviewMovie
                 appCode.BackgroundColor = ColorTranslator.FromHtml("#F1F5F9");
                 appCode.BorderColor = ColorTranslator.FromHtml("#E2E8F0");
                 appCode.InnerTextBox.ForeColor = ColorTranslator.FromHtml("#64748B");
-                appCode.InnerTextBox.Cursor = Cursors.Default;
+                appCode.Cursor = Cursors.Hand;
+                appCode.InnerTextBox.Cursor = Cursors.Hand;
 
-                // Prevent focusing/tabbing into AppCode field
-                appCode.TabStop = false;
-                appCode.InnerTextBox.TabStop = false;
-                if (!_readOnlyFocusWired)
+                if (!_appCodeActionsWired)
                 {
-                    _readOnlyFocusWired = true;
-                    appCode.InnerTextBox.GotFocus += (_, __) =>
-                    {
-                        try { txInsertApiKey?.Focus(); } catch { }
-                    };
+                    _appCodeActionsWired = true;
+                    appCode.RightIconClick += (_, __) => CopyAppCodeToClipboard();
+                    appCode.InnerTextBox.MouseClick += (_, __) => appCode.InnerTextBox.SelectAll();
                 }
             }
 
@@ -324,7 +320,7 @@ namespace ReviewMovie
             }
         }
 
-        private void btnCopyAppCode_Click(object sender, EventArgs e)
+        private void CopyAppCodeToClipboard()
         {
             string appCode = txAppCodeShow.Text?.Trim();
             if (string.IsNullOrWhiteSpace(appCode))

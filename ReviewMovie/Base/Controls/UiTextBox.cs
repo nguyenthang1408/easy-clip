@@ -33,6 +33,8 @@ namespace ReviewMovie.Base.Controls
         private UiBorderStyle _borderStyle = UiBorderStyle.Solid;
         private Size _iconSize = new Size(18, 18);
 
+        public event EventHandler RightIconClick;
+
         public UiTextBox()
         {
             BackColor = Color.Transparent;
@@ -119,6 +121,14 @@ namespace ReviewMovie.Base.Controls
             _textBox.DragDrop += (s, e) => OnDragDrop(e);
             _textBox.DragOver += (s, e) => OnDragOver(e);
             _textBox.DragLeave += (s, e) => OnDragLeave(e);
+
+            _iconRight.Cursor = Cursors.Hand;
+            _iconRight.Click += (s, e) => OnRightIconClick(e);
+        }
+
+        protected virtual void OnRightIconClick(EventArgs e)
+        {
+            RightIconClick?.Invoke(this, e);
         }
 
         private void ApplyThemeToInner()
