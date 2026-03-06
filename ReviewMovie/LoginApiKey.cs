@@ -78,7 +78,7 @@ namespace ReviewMovie
 
         public void ApplyLanguage()
         {
-            this.Text = LanguageManager.Get(LangKeys.Login_Title);
+            this.Text = "EASY CLIP LOGIN";
             materialLabel1.Text = LanguageManager.Get(LangKeys.Login_AppCode);
             materialLabel2.Text = LanguageManager.Get(LangKeys.Login_ApiKey);
             btnLoginApiKey.Text = LanguageManager.Get(LangKeys.Login_BtnLogin);
@@ -249,7 +249,7 @@ namespace ReviewMovie
             btnLoginApiKey.Enabled = false;
 
             lbstatus.Text = string.Empty;
-            lbstatus.ForeColor = Color.Black;
+            lbstatus.ForeColor = Color.White;
             // Kiểm tra API Key
             string apiKey = txInsertApiKey.Text.Trim();
             if (string.IsNullOrEmpty(apiKey))
@@ -273,7 +273,7 @@ namespace ReviewMovie
                     if (response.Code == VersionMessageHelper.CodeSuccessNoSubscription)
                     {
                         lbstatus.Text = VersionMessageHelper.GetMessage(response.Code);
-                        lbstatus.ForeColor = Color.OrangeRed;
+                        lbstatus.ForeColor = Color.FromArgb(255, 241, 118);
                         return;
                     }
 
@@ -309,13 +309,13 @@ namespace ReviewMovie
                 {
                     // Hiển thị thông báo dựa trên mã code từ server
                     lbstatus.Text = VersionMessageHelper.GetMessage(response.Code);
-                    lbstatus.ForeColor = Color.Red;
+                    lbstatus.ForeColor = Color.FromArgb(255, 241, 118);
                 }
             }
             catch
             {
                 lbstatus.Text = LanguageManager.Get(LangKeys.Login_ConnectionFailed);
-                lbstatus.ForeColor = Color.Red;
+                lbstatus.ForeColor = Color.FromArgb(255, 241, 118);
             }
             finally
             {
@@ -323,6 +323,28 @@ namespace ReviewMovie
                 btnLoginApiKey.Enabled = true;
             }
         }
+
+        private void btnCopyAppCode_Click(object sender, EventArgs e)
+        {
+            string appCode = txAppCodeShow.Text?.Trim();
+            if (string.IsNullOrWhiteSpace(appCode))
+            {
+                return;
+            }
+
+            try
+            {
+                Clipboard.SetText(appCode);
+                lbstatus.Text = cbAppLanguage.SelectedIndex == 1 ? "App code copied." : "Đã sao chép App Code.";
+                lbstatus.ForeColor = Color.FromArgb(185, 246, 202);
+            }
+            catch
+            {
+                lbstatus.Text = cbAppLanguage.SelectedIndex == 1 ? "Cannot copy app code." : "Không thể sao chép App Code.";
+                lbstatus.ForeColor = Color.FromArgb(255, 241, 118);
+            }
+        }
+
         private void lkHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://www.facebook.com/La.studio.top");

@@ -18,6 +18,8 @@ namespace ReviewMovie.Base.Controls
         private bool _focused;
         private Color _borderColor = ThemeManager.Current.Border;
         private Color _borderFocusColor = ThemeManager.Current.BorderFocus;
+        private Color _selectionBackColor = Color.Empty;
+        private Color _selectionForeColor = Color.Empty;
         private int _borderSize = 1;
 
         public UiComboBox()
@@ -86,6 +88,28 @@ namespace ReviewMovie.Base.Controls
             set
             {
                 _borderSize = Math.Max(1, value);
+                Invalidate();
+            }
+        }
+
+        [Category("Appearance")]
+        public Color SelectionBackColor
+        {
+            get => _selectionBackColor;
+            set
+            {
+                _selectionBackColor = value;
+                Invalidate();
+            }
+        }
+
+        [Category("Appearance")]
+        public Color SelectionForeColor
+        {
+            get => _selectionForeColor;
+            set
+            {
+                _selectionForeColor = value;
                 Invalidate();
             }
         }
@@ -196,10 +220,27 @@ namespace ReviewMovie.Base.Controls
 
             if (e.Index < 0)
             {
-                e.DrawBackground();
+                bool isCurrentSelected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
+                if (isCurrentSelected && !_selectionBackColor.IsEmpty)
+                {
+                    using (var bgBrush = new SolidBrush(_selectionBackColor))
+                    {
+                        e.Graphics.FillRectangle(bgBrush, e.Bounds);
+                    }
+                }
+                else
+                {
+                    e.DrawBackground();
+                }
+
                 var flagsCurrent = GetItemTextFlags();
                 var bounds = GetItemTextBounds(e.Bounds);
                 var currentFore = Enabled ? ForeColor : SystemColors.GrayText;
+                if (isCurrentSelected && !_selectionForeColor.IsEmpty)
+                {
+                    currentFore = _selectionForeColor;
+                }
+
                 TextRenderer.DrawText(e.Graphics, Text ?? string.Empty, Font, bounds, currentFore, flagsCurrent);
                 e.DrawFocusRectangle();
                 return;
@@ -211,9 +252,24 @@ namespace ReviewMovie.Base.Controls
                 return;
             }
 
-            e.DrawBackground();
+            bool isSelected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
+            if (isSelected && !_selectionBackColor.IsEmpty)
+            {
+                using (var bgBrush = new SolidBrush(_selectionBackColor))
+                {
+                    e.Graphics.FillRectangle(bgBrush, e.Bounds);
+                }
+            }
+            else
+            {
+                e.DrawBackground();
+            }
 
             var fore = Enabled ? ForeColor : SystemColors.GrayText;
+            if (isSelected && !_selectionForeColor.IsEmpty)
+            {
+                fore = _selectionForeColor;
+            }
             var flags = GetItemTextFlags();
             var boundsItem = GetItemTextBounds(e.Bounds);
             string text = GetItemText(Items[e.Index]);

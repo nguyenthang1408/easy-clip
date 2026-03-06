@@ -41,6 +41,7 @@ namespace ReviewMovie
             this.txInsertApiKey = new ReviewMovie.Base.Controls.UiTextBox();
             this.materialLabel2 = new System.Windows.Forms.Label();
             this.txAppCodeShow = new ReviewMovie.Base.Controls.UiTextBox();
+            this.btnCopyAppCode = new ReviewMovie.Base.Controls.IconCircleButton();
             this.materialLabel1 = new System.Windows.Forms.Label();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
@@ -53,7 +54,7 @@ namespace ReviewMovie
             // 
             // cardPanel
             // 
-            this.cardPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(102)))), ((int)(((byte)(0)))));
+            this.cardPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(45)))), ((int)(((byte)(204)))));
             this.cardPanel.Controls.Add(this.cbAppLanguage);
             this.cardPanel.Controls.Add(this.linklbRegister);
             this.cardPanel.Controls.Add(this.lkHelp);
@@ -63,6 +64,7 @@ namespace ReviewMovie
             this.cardPanel.Controls.Add(this.txInsertApiKey);
             this.cardPanel.Controls.Add(this.materialLabel2);
             this.cardPanel.Controls.Add(this.txAppCodeShow);
+            this.cardPanel.Controls.Add(this.btnCopyAppCode);
             this.cardPanel.Controls.Add(this.materialLabel1);
             this.cardPanel.Controls.Add(this.lblSubtitle);
             this.cardPanel.Controls.Add(this.lblTitle);
@@ -77,15 +79,15 @@ namespace ReviewMovie
             // 
             // cbAppLanguage
             // 
-            this.cbAppLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(140)))), ((int)(((byte)(60)))));
-            this.cbAppLanguage.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(180)))), ((int)(((byte)(140)))));
-            this.cbAppLanguage.BorderFocusColor = System.Drawing.Color.White;
+            this.cbAppLanguage.BackColor = System.Drawing.Color.White;
+            this.cbAppLanguage.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(226)))), ((int)(((byte)(245)))));
+            this.cbAppLanguage.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(186)))), ((int)(((byte)(255)))));
             this.cbAppLanguage.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbAppLanguage.DropDownHeight = 200;
             this.cbAppLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAppLanguage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbAppLanguage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cbAppLanguage.ForeColor = System.Drawing.Color.White;
+            this.cbAppLanguage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbAppLanguage.FormattingEnabled = true;
             this.cbAppLanguage.IntegralHeight = false;
             this.cbAppLanguage.Items.AddRange(new object[] {
@@ -93,6 +95,8 @@ namespace ReviewMovie
             "English"});
             this.cbAppLanguage.Location = new System.Drawing.Point(34, 20);
             this.cbAppLanguage.Name = "cbAppLanguage";
+            this.cbAppLanguage.SelectionBackColor = System.Drawing.Color.White;
+            this.cbAppLanguage.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbAppLanguage.Size = new System.Drawing.Size(121, 24);
             this.cbAppLanguage.TabIndex = 10;
             this.cbAppLanguage.SelectedIndexChanged += new System.EventHandler(this.cbAppLanguage_SelectedIndexChanged);
@@ -144,16 +148,16 @@ namespace ReviewMovie
             // 
             // btnLoginApiKey
             // 
-            this.btnLoginApiKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(136)))), ((int)(((byte)(229)))));
+            this.btnLoginApiKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(163)))), ((int)(((byte)(255)))));
             this.btnLoginApiKey.CornerRadius = 28;
-            this.btnLoginApiKey.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(136)))), ((int)(((byte)(229)))));
+            this.btnLoginApiKey.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(163)))), ((int)(((byte)(255)))));
             this.btnLoginApiKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoginApiKey.Font = new System.Drawing.Font("Segoe UI Semibold", 11.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoginApiKey.ForeColor = System.Drawing.Color.White;
-            this.btnLoginApiKey.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(118)))), ((int)(((byte)(210)))));
+            this.btnLoginApiKey.HoverFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(145)))), ((int)(((byte)(230)))));
             this.btnLoginApiKey.Location = new System.Drawing.Point(44, 448);
             this.btnLoginApiKey.Name = "btnLoginApiKey";
-            this.btnLoginApiKey.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(101)))), ((int)(((byte)(192)))));
+            this.btnLoginApiKey.PressedFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(204)))));
             this.btnLoginApiKey.Size = new System.Drawing.Size(362, 54);
             this.btnLoginApiKey.TabIndex = 9;
             this.btnLoginApiKey.Text = "Login  ➜";
@@ -180,8 +184,8 @@ namespace ReviewMovie
             // 
             // lbstatus
             // 
-            this.lbstatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbstatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.lbstatus.Font = new System.Drawing.Font("Segoe UI", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbstatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(241)))), ((int)(((byte)(118)))));
             this.lbstatus.Location = new System.Drawing.Point(44, 398);
             this.lbstatus.Name = "lbstatus";
             this.lbstatus.Size = new System.Drawing.Size(362, 30);
@@ -192,7 +196,7 @@ namespace ReviewMovie
             this.txInsertApiKey.BackColor = System.Drawing.Color.Transparent;
             this.txInsertApiKey.BackgroundColor = System.Drawing.Color.White;
             this.txInsertApiKey.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.txInsertApiKey.BorderFocusColor = System.Drawing.Color.White;
+            this.txInsertApiKey.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(182)))), ((int)(((byte)(255)))));
             this.txInsertApiKey.BorderRadius = 4;
             this.txInsertApiKey.DisableTextBox = false;
             this.txInsertApiKey.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -232,7 +236,7 @@ namespace ReviewMovie
             this.txAppCodeShow.BackColor = System.Drawing.Color.Transparent;
             this.txAppCodeShow.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(253)))));
             this.txAppCodeShow.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(236)))), ((int)(((byte)(255)))));
-            this.txAppCodeShow.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.txAppCodeShow.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(182)))), ((int)(((byte)(255)))));
             this.txAppCodeShow.BorderRadius = 4;
             this.txAppCodeShow.DisableTextBox = false;
             this.txAppCodeShow.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -250,11 +254,29 @@ namespace ReviewMovie
             this.txAppCodeShow.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txAppCodeShow.SelectionLength = 0;
             this.txAppCodeShow.SelectionStart = 0;
-            this.txAppCodeShow.Size = new System.Drawing.Size(362, 54);
+            this.txAppCodeShow.Size = new System.Drawing.Size(300, 54);
             this.txAppCodeShow.TabIndex = 1;
             this.txAppCodeShow.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txAppCodeShow.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.txAppCodeShow.UseSystemPasswordChar = false;
+            // 
+            // btnCopyAppCode
+            // 
+            this.btnCopyAppCode.BackColor = System.Drawing.Color.White;
+            this.btnCopyAppCode.CornerRadius = 10;
+            this.btnCopyAppCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCopyAppCode.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCopyAppCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(45)))), ((int)(((byte)(204)))));
+            this.btnCopyAppCode.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(244)))), ((int)(((byte)(255)))));
+            this.btnCopyAppCode.Location = new System.Drawing.Point(352, 250);
+            this.btnCopyAppCode.Name = "btnCopyAppCode";
+            this.btnCopyAppCode.NormalBackColor = System.Drawing.Color.White;
+            this.btnCopyAppCode.PressedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(232)))), ((int)(((byte)(255)))));
+            this.btnCopyAppCode.Size = new System.Drawing.Size(54, 54);
+            this.btnCopyAppCode.TabIndex = 2;
+            this.btnCopyAppCode.Text = "Copy";
+            this.btnCopyAppCode.UseVisualStyleBackColor = false;
+            this.btnCopyAppCode.Click += new System.EventHandler(this.btnCopyAppCode_Click);
             // 
             // materialLabel1
             // 
@@ -285,7 +307,7 @@ namespace ReviewMovie
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(362, 38);
             this.lblTitle.TabIndex = 2;
-            this.lblTitle.Text = "Review Movie";
+            this.lblTitle.Text = "Easy Clip";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
@@ -304,7 +326,7 @@ namespace ReviewMovie
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLogoIcon.Font = new System.Drawing.Font("Segoe UI Emoji", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLogoIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(94)))), ((int)(((byte)(255)))));
+            this.lblLogoIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(202)))), ((int)(((byte)(40)))));
             this.lblLogoIcon.Location = new System.Drawing.Point(0, 0);
             this.lblLogoIcon.Name = "lblLogoIcon";
             this.lblLogoIcon.Size = new System.Drawing.Size(96, 96);
@@ -363,5 +385,6 @@ namespace ReviewMovie
         private System.Windows.Forms.Label lbstatus;
         private System.Windows.Forms.LinkLabel linklbRegister;
         private ReviewMovie.Base.Controls.UiComboBox cbAppLanguage;
+        private ReviewMovie.Base.Controls.IconCircleButton btnCopyAppCode;
     }
 }
