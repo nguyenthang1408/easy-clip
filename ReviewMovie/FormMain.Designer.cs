@@ -308,8 +308,8 @@ namespace ReviewMovie
             // 
             // label2
             // 
-            this.label2.BackColor = System.Drawing.Color.White;
-            this.label2.BackgroundColor = System.Drawing.Color.White;
+            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(231)))), ((int)(((byte)(250)))));
+            this.label2.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(231)))), ((int)(((byte)(250)))));
             this.label2.BorderColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -379,7 +379,7 @@ namespace ReviewMovie
             this.btnOpenProject.IconImage = null;
             this.btnOpenProject.IconSize = new System.Drawing.Size(18, 18);
             this.btnOpenProject.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnOpenProject.Location = new System.Drawing.Point(302, 22);
+            this.btnOpenProject.Location = new System.Drawing.Point(314, 22);
             this.btnOpenProject.Name = "btnOpenProject";
             this.btnOpenProject.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnOpenProject.Size = new System.Drawing.Size(67, 25);
@@ -478,7 +478,7 @@ namespace ReviewMovie
             this.grbConfigRender.Controls.Add(this.label6);
             this.grbConfigRender.Controls.Add(this.label5);
             this.grbConfigRender.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.grbConfigRender.Location = new System.Drawing.Point(11, 209);
+            this.grbConfigRender.Location = new System.Drawing.Point(11, 217);
             this.grbConfigRender.Name = "grbConfigRender";
             this.grbConfigRender.Size = new System.Drawing.Size(365, 416);
             this.grbConfigRender.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(44)))), ((int)(((byte)(28)))), ((int)(((byte)(99)))));
@@ -487,7 +487,7 @@ namespace ReviewMovie
             this.grbConfigRender.TabIndex = 14;
             this.grbConfigRender.TabStop = false;
             this.grbConfigRender.Text = "Lựa Chọn Hiệu Ứng";
-            this.grbConfigRender.TitleBackColor = System.Drawing.Color.White;
+            this.grbConfigRender.TitleBackColor = System.Drawing.Color.Transparent;
             this.grbConfigRender.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.grbConfigRender.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
@@ -573,7 +573,7 @@ namespace ReviewMovie
             this.cbSettingTemplate.Name = "cbSettingTemplate";
             this.cbSettingTemplate.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cbSettingTemplate.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.cbSettingTemplate.Size = new System.Drawing.Size(176, 24);
+            this.cbSettingTemplate.Size = new System.Drawing.Size(190, 24);
             this.cbSettingTemplate.TabIndex = 124;
             this.cbSettingTemplate.SelectedIndexChanged += new System.EventHandler(this.cbSettingTemplate_SelectedIndexChanged);
             // 
@@ -606,7 +606,7 @@ namespace ReviewMovie
             this.btnSaveEffectSetting.IconImage = null;
             this.btnSaveEffectSetting.IconSize = new System.Drawing.Size(18, 18);
             this.btnSaveEffectSetting.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnSaveEffectSetting.Location = new System.Drawing.Point(268, 372);
+            this.btnSaveEffectSetting.Location = new System.Drawing.Point(280, 372);
             this.btnSaveEffectSetting.Name = "btnSaveEffectSetting";
             this.btnSaveEffectSetting.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnSaveEffectSetting.Size = new System.Drawing.Size(70, 24);
@@ -825,7 +825,7 @@ namespace ReviewMovie
             0,
             0,
             0});
-            this.nbThread.Location = new System.Drawing.Point(246, 52);
+            this.nbThread.Location = new System.Drawing.Point(246, 54);
             this.nbThread.Maximum = new decimal(new int[] {
             30,
             0,
@@ -855,7 +855,7 @@ namespace ReviewMovie
             this.label13.BorderColor = System.Drawing.Color.Transparent;
             this.label13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label13.Location = new System.Drawing.Point(173, 50);
+            this.label13.Location = new System.Drawing.Point(173, 54);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(50, 15);
             this.label13.TabIndex = 113;
@@ -988,7 +988,7 @@ namespace ReviewMovie
             this.cbZoomQuality.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbZoomQuality.FormattingEnabled = true;
             this.cbZoomQuality.IntegralHeight = false;
-            this.cbZoomQuality.Location = new System.Drawing.Point(84, 52);
+            this.cbZoomQuality.Location = new System.Drawing.Point(84, 54);
             this.cbZoomQuality.Name = "cbZoomQuality";
             this.cbZoomQuality.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cbZoomQuality.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1003,7 +1003,7 @@ namespace ReviewMovie
             this.label11.BorderColor = System.Drawing.Color.Transparent;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Bold);
             this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label11.Location = new System.Drawing.Point(8, 50);
+            this.label11.Location = new System.Drawing.Point(8, 54);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(63, 12);
             this.label11.TabIndex = 105;
@@ -1028,7 +1028,7 @@ namespace ReviewMovie
             0,
             0,
             0});
-            this.nFPS.Location = new System.Drawing.Point(246, 26);
+            this.nFPS.Location = new System.Drawing.Point(246, 30);
             this.nFPS.Maximum = new decimal(new int[] {
             100,
             0,
@@ -1058,7 +1058,7 @@ namespace ReviewMovie
             this.label10.BorderColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label10.Location = new System.Drawing.Point(173, 26);
+            this.label10.Location = new System.Drawing.Point(173, 30);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(71, 15);
             this.label10.TabIndex = 103;
@@ -1078,7 +1078,7 @@ namespace ReviewMovie
             this.cbZoomRatio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbZoomRatio.FormattingEnabled = true;
             this.cbZoomRatio.IntegralHeight = false;
-            this.cbZoomRatio.Location = new System.Drawing.Point(84, 26);
+            this.cbZoomRatio.Location = new System.Drawing.Point(84, 30);
             this.cbZoomRatio.Name = "cbZoomRatio";
             this.cbZoomRatio.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cbZoomRatio.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1093,7 +1093,7 @@ namespace ReviewMovie
             this.label9.BorderColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Bold);
             this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label9.Location = new System.Drawing.Point(8, 26);
+            this.label9.Location = new System.Drawing.Point(8, 30);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(63, 12);
             this.label9.TabIndex = 100;
@@ -1422,7 +1422,7 @@ namespace ReviewMovie
             this.grbConfigVoice.Controls.Add(this.cboSiteNguon);
             this.grbConfigVoice.Controls.Add(this.lblapi);
             this.grbConfigVoice.Enabled = false;
-            this.grbConfigVoice.Location = new System.Drawing.Point(11, 48);
+            this.grbConfigVoice.Location = new System.Drawing.Point(11, 56);
             this.grbConfigVoice.Name = "grbConfigVoice";
             this.grbConfigVoice.Size = new System.Drawing.Size(365, 155);
             this.grbConfigVoice.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(44)))), ((int)(((byte)(28)))), ((int)(((byte)(99)))));
@@ -1431,7 +1431,7 @@ namespace ReviewMovie
             this.grbConfigVoice.TabIndex = 46;
             this.grbConfigVoice.TabStop = false;
             this.grbConfigVoice.Text = "Cài Đặt Voice";
-            this.grbConfigVoice.TitleBackColor = System.Drawing.Color.White;
+            this.grbConfigVoice.TitleBackColor = System.Drawing.Color.Transparent;
             this.grbConfigVoice.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.grbConfigVoice.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
@@ -1448,7 +1448,7 @@ namespace ReviewMovie
             this.btnSaveVoiceSource.IconImage = null;
             this.btnSaveVoiceSource.IconSize = new System.Drawing.Size(18, 18);
             this.btnSaveVoiceSource.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnSaveVoiceSource.Location = new System.Drawing.Point(294, 21);
+            this.btnSaveVoiceSource.Location = new System.Drawing.Point(301, 21);
             this.btnSaveVoiceSource.Name = "btnSaveVoiceSource";
             this.btnSaveVoiceSource.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnSaveVoiceSource.Size = new System.Drawing.Size(56, 22);
@@ -1470,7 +1470,7 @@ namespace ReviewMovie
             this.grbActionRender.Controls.Add(this.rbCPUused);
             this.grbActionRender.Controls.Add(this.btnAddAll);
             this.grbActionRender.Controls.Add(this.lblstatus);
-            this.grbActionRender.Location = new System.Drawing.Point(11, 631);
+            this.grbActionRender.Location = new System.Drawing.Point(11, 637);
             this.grbActionRender.Name = "grbActionRender";
             this.grbActionRender.Size = new System.Drawing.Size(365, 96);
             this.grbActionRender.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(44)))), ((int)(((byte)(28)))), ((int)(((byte)(99)))));
@@ -1479,7 +1479,7 @@ namespace ReviewMovie
             this.grbActionRender.TabIndex = 45;
             this.grbActionRender.TabStop = false;
             this.grbActionRender.Text = "Xuất Bản Video";
-            this.grbActionRender.TitleBackColor = System.Drawing.Color.White;
+            this.grbActionRender.TitleBackColor = System.Drawing.Color.Transparent;
             this.grbActionRender.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.grbActionRender.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
@@ -1543,7 +1543,7 @@ namespace ReviewMovie
             this.cbProjectName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbProjectName.FormattingEnabled = true;
             this.cbProjectName.IntegralHeight = false;
-            this.cbProjectName.Location = new System.Drawing.Point(86, 24);
+            this.cbProjectName.Location = new System.Drawing.Point(86, 27);
             this.cbProjectName.Name = "cbProjectName";
             this.cbProjectName.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cbProjectName.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -2273,21 +2273,21 @@ namespace ReviewMovie
             // btnExpand
             // 
             this.btnExpand.BackColor = System.Drawing.SystemColors.Info;
-            this.btnExpand.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnExpand.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(45)))), ((int)(((byte)(204)))));
             this.btnExpand.BorderColor = System.Drawing.Color.Transparent;
             this.btnExpand.BorderHoverColor = System.Drawing.Color.Transparent;
             this.btnExpand.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
             this.btnExpand.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnExpand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExpand.ForeColor = System.Drawing.Color.White;
-            this.btnExpand.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnExpand.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(57)))), ((int)(((byte)(230)))));
             this.btnExpand.IconImage = null;
             this.btnExpand.IconSize = new System.Drawing.Size(18, 18);
             this.btnExpand.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnExpand.Location = new System.Drawing.Point(0, 0);
             this.btnExpand.Margin = new System.Windows.Forms.Padding(0);
             this.btnExpand.Name = "btnExpand";
-            this.btnExpand.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
+            this.btnExpand.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(37)))), ((int)(((byte)(170)))));
             this.btnExpand.Size = new System.Drawing.Size(25, 734);
             this.btnExpand.TabIndex = 46;
             this.btnExpand.Text = ">";
@@ -2325,21 +2325,21 @@ namespace ReviewMovie
             // btnCollapse
             // 
             this.btnCollapse.BackColor = System.Drawing.SystemColors.Info;
-            this.btnCollapse.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.btnCollapse.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(45)))), ((int)(((byte)(204)))));
             this.btnCollapse.BorderColor = System.Drawing.Color.Transparent;
             this.btnCollapse.BorderHoverColor = System.Drawing.Color.Transparent;
             this.btnCollapse.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(230)))), ((int)(((byte)(235)))));
             this.btnCollapse.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnCollapse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCollapse.ForeColor = System.Drawing.Color.White;
-            this.btnCollapse.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(138)))), ((int)(((byte)(26)))));
+            this.btnCollapse.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(57)))), ((int)(((byte)(230)))));
             this.btnCollapse.IconImage = null;
             this.btnCollapse.IconSize = new System.Drawing.Size(18, 18);
             this.btnCollapse.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnCollapse.Location = new System.Drawing.Point(0, 0);
             this.btnCollapse.Margin = new System.Windows.Forms.Padding(0);
             this.btnCollapse.Name = "btnCollapse";
-            this.btnCollapse.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
+            this.btnCollapse.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(37)))), ((int)(((byte)(170)))));
             this.btnCollapse.Size = new System.Drawing.Size(25, 734);
             this.btnCollapse.TabIndex = 45;
             this.btnCollapse.Text = "<";
