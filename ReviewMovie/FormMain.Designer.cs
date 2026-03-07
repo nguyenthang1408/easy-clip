@@ -1974,7 +1974,7 @@ namespace ReviewMovie
             this.tlpViewHeader.Controls.Add(this.tlpText, 1, 0);
             this.tlpViewHeader.Controls.Add(this.tlpHeaderButton, 3, 0);
             this.tlpViewHeader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpViewHeader.Location = new System.Drawing.Point(3, 16);
+            this.tlpViewHeader.Location = new System.Drawing.Point(3, 14);
             this.tlpViewHeader.Name = "tlpViewHeader";
             this.tlpViewHeader.RowCount = 1;
             this.tlpViewHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -2189,9 +2189,9 @@ namespace ReviewMovie
             this.tlpHeaderButton.Location = new System.Drawing.Point(688, 3);
             this.tlpHeaderButton.Name = "tlpHeaderButton";
             this.tlpHeaderButton.RowCount = 3;
-            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
+            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
+            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tlpHeaderButton.Size = new System.Drawing.Size(174, 147);
             this.tlpHeaderButton.TabIndex = 3;
             // 
@@ -2210,11 +2210,11 @@ namespace ReviewMovie
             this.btnRenderVideoPart.IconImage = null;
             this.btnRenderVideoPart.IconSize = new System.Drawing.Size(18, 18);
             this.btnRenderVideoPart.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnRenderVideoPart.Location = new System.Drawing.Point(4, 104);
+            this.btnRenderVideoPart.Location = new System.Drawing.Point(4, 102);
             this.btnRenderVideoPart.Margin = new System.Windows.Forms.Padding(4);
             this.btnRenderVideoPart.Name = "btnRenderVideoPart";
             this.btnRenderVideoPart.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
-            this.btnRenderVideoPart.Size = new System.Drawing.Size(166, 39);
+            this.btnRenderVideoPart.Size = new System.Drawing.Size(166, 41);
             this.btnRenderVideoPart.TabIndex = 3;
             this.btnRenderVideoPart.Text = "Render Part";
             this.btnRenderVideoPart.TextColor = System.Drawing.Color.White;
@@ -2241,7 +2241,7 @@ namespace ReviewMovie
             this.btnConvertAudio.Margin = new System.Windows.Forms.Padding(4);
             this.btnConvertAudio.Name = "btnConvertAudio";
             this.btnConvertAudio.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
-            this.btnConvertAudio.Size = new System.Drawing.Size(166, 42);
+            this.btnConvertAudio.Size = new System.Drawing.Size(166, 41);
             this.btnConvertAudio.TabIndex = 1;
             this.btnConvertAudio.Text = "Convert Audio";
             this.btnConvertAudio.TextColor = System.Drawing.Color.White;
@@ -2264,11 +2264,11 @@ namespace ReviewMovie
             this.btnSaveAudio.IconImage = null;
             this.btnSaveAudio.IconSize = new System.Drawing.Size(18, 18);
             this.btnSaveAudio.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnSaveAudio.Location = new System.Drawing.Point(4, 54);
+            this.btnSaveAudio.Location = new System.Drawing.Point(4, 53);
             this.btnSaveAudio.Margin = new System.Windows.Forms.Padding(4);
             this.btnSaveAudio.Name = "btnSaveAudio";
             this.btnSaveAudio.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
-            this.btnSaveAudio.Size = new System.Drawing.Size(166, 42);
+            this.btnSaveAudio.Size = new System.Drawing.Size(166, 41);
             this.btnSaveAudio.TabIndex = 2;
             this.btnSaveAudio.Text = "Save Audio";
             this.btnSaveAudio.TextColor = System.Drawing.Color.White;

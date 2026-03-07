@@ -254,8 +254,9 @@ namespace ReviewMovie
                 }
 
                 using (var icon = new Icon(iconPath))
+                using (var hiDpiIcon = new Icon(icon, new Size(128, 128)))
                 {
-                    return icon.ToBitmap();
+                    return hiDpiIcon.ToBitmap();
                 }
             }
             catch

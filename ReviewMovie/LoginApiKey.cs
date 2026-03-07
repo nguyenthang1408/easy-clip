@@ -200,8 +200,8 @@ namespace ReviewMovie
             lblLogoIcon.BackColor = Color.Transparent;
             lblLogoIcon.ImageAlign = ContentAlignment.MiddleCenter;
 
-            // Keep login logo smaller to avoid blur/pixelation.
-            const int maxDisplaySize = 56;
+            // Slightly larger badge logo for clearer branding.
+            const int maxDisplaySize = 74;
             float scale = Math.Min((float)maxDisplaySize / logoBitmap.Width, (float)maxDisplaySize / logoBitmap.Height);
             scale = Math.Min(1f, scale); // never upscale
             int targetW = Math.Max(1, (int)Math.Round(logoBitmap.Width * scale));
@@ -220,8 +220,9 @@ namespace ReviewMovie
                 }
 
                 using (var icon = new Icon(iconPath))
+                using (var hiDpiIcon = new Icon(icon, new Size(128, 128)))
                 {
-                    return icon.ToBitmap();
+                    return hiDpiIcon.ToBitmap();
                 }
             }
             catch
