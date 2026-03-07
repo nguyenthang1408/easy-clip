@@ -1983,8 +1983,8 @@ namespace ReviewMovie
             this.tlpMicIn.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.tlpMicIn.Name = "tlpMicIn";
             this.tlpMicIn.RowCount = 2;
-            this.tlpMicIn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tlpMicIn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
+            this.tlpMicIn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tlpMicIn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpMicIn.Size = new System.Drawing.Size(99, 147);
             this.tlpMicIn.TabIndex = 4;
             // 
@@ -2047,12 +2047,13 @@ namespace ReviewMovie
             this.lbMicInTitle.BackgroundColor = System.Drawing.Color.Transparent;
             this.lbMicInTitle.BorderColor = System.Drawing.Color.Transparent;
             this.lbMicInTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbMicInTitle.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lbMicInTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lbMicInTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.lbMicInTitle.Location = new System.Drawing.Point(1, 1);
             this.lbMicInTitle.Margin = new System.Windows.Forms.Padding(1);
             this.lbMicInTitle.Name = "lbMicInTitle";
-            this.lbMicInTitle.Size = new System.Drawing.Size(97, 20);
+            this.lbMicInTitle.Padding = new System.Windows.Forms.Padding(0, 1, 0, 0);
+            this.lbMicInTitle.Size = new System.Drawing.Size(97, 24);
             this.lbMicInTitle.TabIndex = 1;
             this.lbMicInTitle.Text = "Mic In";
             this.lbMicInTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2075,10 +2076,10 @@ namespace ReviewMovie
             this.btnRecord.IconSize = new System.Drawing.Size(18, 18);
             this.btnRecord.Image = global::EasyClip.Properties.Resources.ivoice;
             this.btnRecord.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnRecord.Location = new System.Drawing.Point(3, 25);
+            this.btnRecord.Location = new System.Drawing.Point(3, 29);
             this.btnRecord.Name = "btnRecord";
             this.btnRecord.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
-            this.btnRecord.Size = new System.Drawing.Size(93, 119);
+            this.btnRecord.Size = new System.Drawing.Size(93, 115);
             this.btnRecord.TabIndex = 0;
             this.btnRecord.Text = "Record";
             this.btnRecord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
