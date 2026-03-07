@@ -313,7 +313,7 @@ namespace ReviewMovie
             this.label2.BorderColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label2.Location = new System.Drawing.Point(15, 24);
+            this.label2.Location = new System.Drawing.Point(15, 27);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 17);
             this.label2.TabIndex = 6;
@@ -328,7 +328,7 @@ namespace ReviewMovie
             this.lblapi.BorderColor = System.Drawing.Color.Transparent;
             this.lblapi.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblapi.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.lblapi.Location = new System.Drawing.Point(6, 45);
+            this.lblapi.Location = new System.Drawing.Point(6, 50);
             this.lblapi.Name = "lblapi";
             this.lblapi.Size = new System.Drawing.Size(40, 15);
             this.lblapi.TabIndex = 8;
@@ -350,7 +350,7 @@ namespace ReviewMovie
             this.txtAppID.IconSize = new System.Drawing.Size(18, 18);
             this.txtAppID.Lines = new string[] {
         "???"};
-            this.txtAppID.Location = new System.Drawing.Point(75, 46);
+            this.txtAppID.Location = new System.Drawing.Point(75, 51);
             this.txtAppID.MaxLength = 32767;
             this.txtAppID.Multiline = true;
             this.txtAppID.Name = "txtAppID";
@@ -379,7 +379,7 @@ namespace ReviewMovie
             this.btnOpenProject.IconImage = null;
             this.btnOpenProject.IconSize = new System.Drawing.Size(18, 18);
             this.btnOpenProject.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnOpenProject.Location = new System.Drawing.Point(310, 19);
+            this.btnOpenProject.Location = new System.Drawing.Point(302, 22);
             this.btnOpenProject.Name = "btnOpenProject";
             this.btnOpenProject.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnOpenProject.Size = new System.Drawing.Size(67, 25);
@@ -397,7 +397,7 @@ namespace ReviewMovie
             this.lblToken.BorderColor = System.Drawing.Color.Transparent;
             this.lblToken.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblToken.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.lblToken.Location = new System.Drawing.Point(6, 96);
+            this.lblToken.Location = new System.Drawing.Point(6, 101);
             this.lblToken.Name = "lblToken";
             this.lblToken.Size = new System.Drawing.Size(39, 15);
             this.lblToken.TabIndex = 11;
@@ -419,7 +419,7 @@ namespace ReviewMovie
             this.txtToken.IconSize = new System.Drawing.Size(18, 18);
             this.txtToken.Lines = new string[] {
         "???"};
-            this.txtToken.Location = new System.Drawing.Point(75, 96);
+            this.txtToken.Location = new System.Drawing.Point(75, 101);
             this.txtToken.MaxLength = 32767;
             this.txtToken.Multiline = true;
             this.txtToken.Name = "txtToken";
@@ -487,7 +487,7 @@ namespace ReviewMovie
             this.grbConfigRender.TabIndex = 14;
             this.grbConfigRender.TabStop = false;
             this.grbConfigRender.Text = "Lựa Chọn Hiệu Ứng";
-            this.grbConfigRender.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grbConfigRender.TitleBackColor = System.Drawing.Color.White;
             this.grbConfigRender.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.grbConfigRender.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
@@ -569,7 +569,7 @@ namespace ReviewMovie
             this.cbSettingTemplate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbSettingTemplate.FormattingEnabled = true;
             this.cbSettingTemplate.IntegralHeight = false;
-            this.cbSettingTemplate.Location = new System.Drawing.Point(84, 379);
+            this.cbSettingTemplate.Location = new System.Drawing.Point(84, 374);
             this.cbSettingTemplate.Name = "cbSettingTemplate";
             this.cbSettingTemplate.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cbSettingTemplate.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -584,9 +584,9 @@ namespace ReviewMovie
             this.label17.BorderColor = System.Drawing.Color.Transparent;
             this.label17.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label17.Location = new System.Drawing.Point(8, 378);
+            this.label17.Location = new System.Drawing.Point(8, 373);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(63, 15);
+            this.label17.Size = new System.Drawing.Size(69, 15);
             this.label17.TabIndex = 123;
             this.label17.Text = "Cấu Hình :";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -606,7 +606,7 @@ namespace ReviewMovie
             this.btnSaveEffectSetting.IconImage = null;
             this.btnSaveEffectSetting.IconSize = new System.Drawing.Size(18, 18);
             this.btnSaveEffectSetting.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnSaveEffectSetting.Location = new System.Drawing.Point(268, 377);
+            this.btnSaveEffectSetting.Location = new System.Drawing.Point(268, 372);
             this.btnSaveEffectSetting.Name = "btnSaveEffectSetting";
             this.btnSaveEffectSetting.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnSaveEffectSetting.Size = new System.Drawing.Size(70, 24);
@@ -825,7 +825,7 @@ namespace ReviewMovie
             0,
             0,
             0});
-            this.nbThread.Location = new System.Drawing.Point(246, 47);
+            this.nbThread.Location = new System.Drawing.Point(246, 52);
             this.nbThread.Maximum = new decimal(new int[] {
             30,
             0,
@@ -855,7 +855,7 @@ namespace ReviewMovie
             this.label13.BorderColor = System.Drawing.Color.Transparent;
             this.label13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label13.Location = new System.Drawing.Point(173, 45);
+            this.label13.Location = new System.Drawing.Point(173, 50);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(50, 15);
             this.label13.TabIndex = 113;
@@ -988,7 +988,7 @@ namespace ReviewMovie
             this.cbZoomQuality.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbZoomQuality.FormattingEnabled = true;
             this.cbZoomQuality.IntegralHeight = false;
-            this.cbZoomQuality.Location = new System.Drawing.Point(84, 47);
+            this.cbZoomQuality.Location = new System.Drawing.Point(84, 52);
             this.cbZoomQuality.Name = "cbZoomQuality";
             this.cbZoomQuality.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cbZoomQuality.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1003,7 +1003,7 @@ namespace ReviewMovie
             this.label11.BorderColor = System.Drawing.Color.Transparent;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Bold);
             this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label11.Location = new System.Drawing.Point(8, 45);
+            this.label11.Location = new System.Drawing.Point(8, 50);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(63, 12);
             this.label11.TabIndex = 105;
@@ -1028,7 +1028,7 @@ namespace ReviewMovie
             0,
             0,
             0});
-            this.nFPS.Location = new System.Drawing.Point(246, 21);
+            this.nFPS.Location = new System.Drawing.Point(246, 26);
             this.nFPS.Maximum = new decimal(new int[] {
             100,
             0,
@@ -1058,7 +1058,7 @@ namespace ReviewMovie
             this.label10.BorderColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label10.Location = new System.Drawing.Point(173, 21);
+            this.label10.Location = new System.Drawing.Point(173, 26);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(71, 15);
             this.label10.TabIndex = 103;
@@ -1078,7 +1078,7 @@ namespace ReviewMovie
             this.cbZoomRatio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbZoomRatio.FormattingEnabled = true;
             this.cbZoomRatio.IntegralHeight = false;
-            this.cbZoomRatio.Location = new System.Drawing.Point(84, 21);
+            this.cbZoomRatio.Location = new System.Drawing.Point(84, 26);
             this.cbZoomRatio.Name = "cbZoomRatio";
             this.cbZoomRatio.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cbZoomRatio.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1093,7 +1093,7 @@ namespace ReviewMovie
             this.label9.BorderColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Bold);
             this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label9.Location = new System.Drawing.Point(8, 21);
+            this.label9.Location = new System.Drawing.Point(8, 26);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(63, 12);
             this.label9.TabIndex = 100;
@@ -1333,12 +1333,12 @@ namespace ReviewMovie
             // 
             // lblstatus
             // 
-            this.lblstatus.BackColor = System.Drawing.Color.Transparent;
-            this.lblstatus.BackgroundColor = System.Drawing.Color.Transparent;
+            this.lblstatus.BackColor = System.Drawing.Color.White;
+            this.lblstatus.BackgroundColor = System.Drawing.Color.White;
             this.lblstatus.BorderColor = System.Drawing.Color.Transparent;
             this.lblstatus.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblstatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.lblstatus.Location = new System.Drawing.Point(15, 76);
+            this.lblstatus.Location = new System.Drawing.Point(15, 71);
             this.lblstatus.Name = "lblstatus";
             this.lblstatus.Size = new System.Drawing.Size(16, 15);
             this.lblstatus.TabIndex = 16;
@@ -1358,7 +1358,7 @@ namespace ReviewMovie
             this.cboSiteNguon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cboSiteNguon.FormattingEnabled = true;
             this.cboSiteNguon.IntegralHeight = false;
-            this.cboSiteNguon.Location = new System.Drawing.Point(75, 17);
+            this.cboSiteNguon.Location = new System.Drawing.Point(75, 22);
             this.cboSiteNguon.Name = "cboSiteNguon";
             this.cboSiteNguon.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cboSiteNguon.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -1373,7 +1373,7 @@ namespace ReviewMovie
             this.label1.BorderColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label1.Location = new System.Drawing.Point(6, 19);
+            this.label1.Location = new System.Drawing.Point(6, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 13);
             this.label1.TabIndex = 41;
@@ -1403,7 +1403,7 @@ namespace ReviewMovie
             this.grboxSetting.TabIndex = 1;
             this.grboxSetting.TabStop = false;
             this.grboxSetting.Text = "Cài Đặt ";
-            this.grboxSetting.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grboxSetting.TitleBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(231)))), ((int)(((byte)(250)))));
             this.grboxSetting.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.grboxSetting.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
@@ -1431,7 +1431,7 @@ namespace ReviewMovie
             this.grbConfigVoice.TabIndex = 46;
             this.grbConfigVoice.TabStop = false;
             this.grbConfigVoice.Text = "Cài Đặt Voice";
-            this.grbConfigVoice.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grbConfigVoice.TitleBackColor = System.Drawing.Color.White;
             this.grbConfigVoice.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.grbConfigVoice.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
@@ -1448,7 +1448,7 @@ namespace ReviewMovie
             this.btnSaveVoiceSource.IconImage = null;
             this.btnSaveVoiceSource.IconSize = new System.Drawing.Size(18, 18);
             this.btnSaveVoiceSource.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnSaveVoiceSource.Location = new System.Drawing.Point(302, 16);
+            this.btnSaveVoiceSource.Location = new System.Drawing.Point(294, 21);
             this.btnSaveVoiceSource.Name = "btnSaveVoiceSource";
             this.btnSaveVoiceSource.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnSaveVoiceSource.Size = new System.Drawing.Size(56, 22);
@@ -1479,7 +1479,7 @@ namespace ReviewMovie
             this.grbActionRender.TabIndex = 45;
             this.grbActionRender.TabStop = false;
             this.grbActionRender.Text = "Xuất Bản Video";
-            this.grbActionRender.TitleBackColor = System.Drawing.Color.Transparent;
+            this.grbActionRender.TitleBackColor = System.Drawing.Color.White;
             this.grbActionRender.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.grbActionRender.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             // 
@@ -1543,7 +1543,7 @@ namespace ReviewMovie
             this.cbProjectName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbProjectName.FormattingEnabled = true;
             this.cbProjectName.IntegralHeight = false;
-            this.cbProjectName.Location = new System.Drawing.Point(86, 21);
+            this.cbProjectName.Location = new System.Drawing.Point(86, 24);
             this.cbProjectName.Name = "cbProjectName";
             this.cbProjectName.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cbProjectName.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));

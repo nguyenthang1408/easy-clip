@@ -269,7 +269,7 @@ namespace ReviewMovie
                     if (response.Code == VersionMessageHelper.CodeSuccessNoSubscription)
                     {
                         lbstatus.Text = VersionMessageHelper.GetMessage(response.Code);
-                        lbstatus.ForeColor = Color.FromArgb(255, 241, 118);
+                        lbstatus.ForeColor = Color.FromArgb(255, 77, 79);
                         return;
                     }
 
@@ -305,13 +305,13 @@ namespace ReviewMovie
                 {
                     // Hiển thị thông báo dựa trên mã code từ server
                     lbstatus.Text = VersionMessageHelper.GetMessage(response.Code);
-                    lbstatus.ForeColor = Color.FromArgb(255, 241, 118);
+                    lbstatus.ForeColor = Color.FromArgb(255, 77, 79);
                 }
             }
             catch
             {
                 lbstatus.Text = LanguageManager.Get(LangKeys.Login_ConnectionFailed);
-                lbstatus.ForeColor = Color.FromArgb(255, 241, 118);
+                lbstatus.ForeColor = Color.FromArgb(255, 77, 79);
             }
             finally
             {
@@ -337,7 +337,7 @@ namespace ReviewMovie
             catch
             {
                 lbstatus.Text = cbAppLanguage.SelectedIndex == 1 ? "Cannot copy app code." : "Không thể sao chép App Code.";
-                lbstatus.ForeColor = Color.FromArgb(255, 241, 118);
+                lbstatus.ForeColor = Color.FromArgb(255, 77, 79);
             }
         }
 

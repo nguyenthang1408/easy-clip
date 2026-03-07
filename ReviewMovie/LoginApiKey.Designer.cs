@@ -114,11 +114,11 @@ namespace ReviewMovie
             this.linklbRegister.TabStop = true;
             this.linklbRegister.Text = "Register";
             this.linklbRegister.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(112)))), ((int)(((byte)(226)))));
-            this.linklbRegister.LinkColor = Color.White;
-            this.linklbRegister.ActiveLinkColor = Color.White;
-            this.linklbRegister.VisitedLinkColor = Color.White;
-            this.linklbRegister.ForeColor = Color.White;
-            this.linklbRegister.DisabledLinkColor = Color.White;   //
+            this.linklbRegister.LinkColor = Color.FromArgb(122, 186, 255);
+            this.linklbRegister.ActiveLinkColor = Color.FromArgb(186, 225, 255);
+            this.linklbRegister.VisitedLinkColor = Color.FromArgb(155, 206, 255);
+            this.linklbRegister.ForeColor = Color.FromArgb(122, 186, 255);
+            this.linklbRegister.DisabledLinkColor = Color.FromArgb(122, 186, 255);
             this.linklbRegister.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklbRegister_LinkClicked);
             // 
             // lkHelp
@@ -137,11 +137,11 @@ namespace ReviewMovie
             this.lkHelp.TabStop = true;
             this.lkHelp.Text = "Help";
             this.lkHelp.VisitedLinkColor = System.Drawing.Color.White;
-            this.lkHelp.LinkColor = Color.White;
-            this.lkHelp.ActiveLinkColor = Color.White;
-            this.lkHelp.VisitedLinkColor = Color.White;
-            this.lkHelp.ForeColor = Color.White;
-            this.lkHelp.DisabledLinkColor = Color.White;   //
+            this.lkHelp.LinkColor = Color.FromArgb(122, 186, 255);
+            this.lkHelp.ActiveLinkColor = Color.FromArgb(186, 225, 255);
+            this.lkHelp.VisitedLinkColor = Color.FromArgb(155, 206, 255);
+            this.lkHelp.ForeColor = Color.FromArgb(122, 186, 255);
+            this.lkHelp.DisabledLinkColor = Color.FromArgb(122, 186, 255);
             this.lkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lkHelp_LinkClicked);
             // 
             // btnLoginApiKey
@@ -183,7 +183,7 @@ namespace ReviewMovie
             // lbstatus
             // 
             this.lbstatus.Font = new System.Drawing.Font("Segoe UI", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbstatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(241)))), ((int)(((byte)(118)))));
+            this.lbstatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(77)))), ((int)(((byte)(79)))));
             this.lbstatus.Location = new System.Drawing.Point(44, 398);
             this.lbstatus.Name = "lbstatus";
             this.lbstatus.Size = new System.Drawing.Size(362, 30);
