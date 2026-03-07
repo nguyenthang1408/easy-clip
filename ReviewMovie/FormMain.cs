@@ -374,7 +374,8 @@ namespace ReviewMovie
                 : LanguageManager.Get(LangKeys.Main_RenderPart);
 
             // Content header
-            grViewHeader.Text = LanguageManager.Get(LangKeys.Main_MicIn);
+            grViewHeader.Text = string.Empty;
+            lbMicInTitle.Text = LanguageManager.Get(LangKeys.Main_MicIn);
             lbHeaderInputMedia.Text = LanguageManager.Get(LangKeys.Main_DragDropMedia);
             lbHeaderText.Text = LanguageManager.Get(LangKeys.Main_InputTextHeader);
 
