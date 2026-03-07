@@ -223,8 +223,8 @@ namespace ReviewMovie
                 return;
             }
 
-            // Keep header logo synced with application icon (iEasyClip.ico).
-            Bitmap logoBitmap = this.Icon?.ToBitmap() ?? EasyClip.Properties.Resources.ivoice;
+            // Always prioritize iEasyClip.ico so both screens follow one logo file.
+            Bitmap logoBitmap = LoadBrandLogoFromIco() ?? this.Icon?.ToBitmap() ?? EasyClip.Properties.Resources.ivoice;
             if (logoBitmap == null)
             {
                 return;
@@ -235,6 +235,27 @@ namespace ReviewMovie
             lblHeaderLogo.BackColor = Color.Transparent;
             lblHeaderLogo.ImageAlign = ContentAlignment.MiddleCenter;
             lblHeaderLogo.Image = new Bitmap(logoBitmap, new Size(24, 24));
+        }
+
+        private Bitmap LoadBrandLogoFromIco()
+        {
+            try
+            {
+                string iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "iEasyClip.ico");
+                if (!File.Exists(iconPath))
+                {
+                    return null;
+                }
+
+                using (var icon = new Icon(iconPath))
+                {
+                    return icon.ToBitmap();
+                }
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private void btnHeaderClose_Click(object sender, EventArgs e)

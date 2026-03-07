@@ -188,8 +188,8 @@ namespace ReviewMovie
                 return;
             }
 
-            // Keep login logo exactly same source as header title logo.
-            Bitmap logoBitmap = EasyClip.Properties.Resources.ivoice;
+            // Always prioritize iEasyClip.ico so both screens follow one logo file.
+            Bitmap logoBitmap = LoadBrandLogoFromIco() ?? this.Icon?.ToBitmap() ?? EasyClip.Properties.Resources.ivoice;
             if (logoBitmap == null)
             {
                 return;
@@ -203,6 +203,27 @@ namespace ReviewMovie
             int targetW = Math.Max(1, lblLogoIcon.Width - 12);
             int targetH = Math.Max(1, lblLogoIcon.Height - 12);
             lblLogoIcon.Image = new Bitmap(logoBitmap, new Size(targetW, targetH));
+        }
+
+        private Bitmap LoadBrandLogoFromIco()
+        {
+            try
+            {
+                string iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "iEasyClip.ico");
+                if (!File.Exists(iconPath))
+                {
+                    return null;
+                }
+
+                using (var icon = new Icon(iconPath))
+                {
+                    return icon.ToBitmap();
+                }
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private void DragArea_MouseDown(object sender, MouseEventArgs e)
