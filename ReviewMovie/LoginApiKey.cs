@@ -188,8 +188,8 @@ namespace ReviewMovie
                 return;
             }
 
-            // Use application icon (iEasyClip.ico) as the login brand mark.
-            Bitmap logoBitmap = this.Icon?.ToBitmap() ?? EasyClip.Properties.Resources.ivoice;
+            // Keep login logo exactly same source as header title logo.
+            Bitmap logoBitmap = EasyClip.Properties.Resources.ivoice;
             if (logoBitmap == null)
             {
                 return;
