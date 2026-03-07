@@ -353,7 +353,7 @@ namespace ReviewMovie
             this.txtAppID.IconSize = new System.Drawing.Size(18, 18);
             this.txtAppID.Lines = new string[] {
         "???"};
-            this.txtAppID.Location = new System.Drawing.Point(75, 51);
+            this.txtAppID.Location = new System.Drawing.Point(88, 51);
             this.txtAppID.MaxLength = 32767;
             this.txtAppID.Multiline = true;
             this.txtAppID.Name = "txtAppID";
@@ -362,7 +362,7 @@ namespace ReviewMovie
             this.txtAppID.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtAppID.SelectionLength = 0;
             this.txtAppID.SelectionStart = 0;
-            this.txtAppID.Size = new System.Drawing.Size(239, 40);
+            this.txtAppID.Size = new System.Drawing.Size(190, 40);
             this.txtAppID.TabIndex = 9;
             this.txtAppID.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtAppID.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -422,7 +422,7 @@ namespace ReviewMovie
             this.txtToken.IconSize = new System.Drawing.Size(18, 18);
             this.txtToken.Lines = new string[] {
         "???"};
-            this.txtToken.Location = new System.Drawing.Point(75, 101);
+            this.txtToken.Location = new System.Drawing.Point(88, 101);
             this.txtToken.MaxLength = 32767;
             this.txtToken.Multiline = true;
             this.txtToken.Name = "txtToken";
@@ -431,7 +431,7 @@ namespace ReviewMovie
             this.txtToken.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtToken.SelectionLength = 0;
             this.txtToken.SelectionStart = 0;
-            this.txtToken.Size = new System.Drawing.Size(239, 49);
+            this.txtToken.Size = new System.Drawing.Size(190, 49);
             this.txtToken.TabIndex = 12;
             this.txtToken.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtToken.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
@@ -589,7 +589,7 @@ namespace ReviewMovie
             this.label17.BorderColor = System.Drawing.Color.Transparent;
             this.label17.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label17.Location = new System.Drawing.Point(8, 379);
+            this.label17.Location = new System.Drawing.Point(8, 377);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(69, 20);
             this.label17.TabIndex = 123;
@@ -673,7 +673,7 @@ namespace ReviewMovie
             this.label16.BorderColor = System.Drawing.Color.Transparent;
             this.label16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label16.Location = new System.Drawing.Point(8, 315);
+            this.label16.Location = new System.Drawing.Point(8, 313);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(69, 20);
             this.label16.TabIndex = 120;
@@ -689,7 +689,7 @@ namespace ReviewMovie
             this.label15.BorderColor = System.Drawing.Color.Transparent;
             this.label15.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label15.Location = new System.Drawing.Point(248, 244);
+            this.label15.Location = new System.Drawing.Point(248, 242);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(20, 20);
             this.label15.TabIndex = 119;
@@ -785,7 +785,7 @@ namespace ReviewMovie
             this.label14.BorderColor = System.Drawing.Color.Transparent;
             this.label14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label14.Location = new System.Drawing.Point(130, 242);
+            this.label14.Location = new System.Drawing.Point(130, 240);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(69, 20);
             this.label14.TabIndex = 116;
@@ -864,7 +864,7 @@ namespace ReviewMovie
             this.label13.BorderColor = System.Drawing.Color.Transparent;
             this.label13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label13.Location = new System.Drawing.Point(173, 63);
+            this.label13.Location = new System.Drawing.Point(173, 61);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(50, 20);
             this.label13.TabIndex = 113;
@@ -920,7 +920,7 @@ namespace ReviewMovie
             this.label4.BorderColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label4.Location = new System.Drawing.Point(8, 242);
+            this.label4.Location = new System.Drawing.Point(8, 240);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(77, 20);
             this.label4.TabIndex = 111;
@@ -979,7 +979,7 @@ namespace ReviewMovie
             this.label12.BorderColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label12.Location = new System.Drawing.Point(8, 123);
+            this.label12.Location = new System.Drawing.Point(8, 121);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(72, 20);
             this.label12.TabIndex = 107;
@@ -1015,7 +1015,7 @@ namespace ReviewMovie
             this.label11.BorderColor = System.Drawing.Color.Transparent;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label11.Location = new System.Drawing.Point(8, 63);
+            this.label11.Location = new System.Drawing.Point(8, 61);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(72, 20);
             this.label11.TabIndex = 105;
@@ -1071,7 +1071,7 @@ namespace ReviewMovie
             this.label10.BorderColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label10.Location = new System.Drawing.Point(173, 33);
+            this.label10.Location = new System.Drawing.Point(173, 31);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(71, 20);
             this.label10.TabIndex = 103;
@@ -1107,7 +1107,7 @@ namespace ReviewMovie
             this.label9.BorderColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label9.Location = new System.Drawing.Point(8, 33);
+            this.label9.Location = new System.Drawing.Point(8, 31);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(72, 20);
             this.label9.TabIndex = 100;
@@ -1143,7 +1143,7 @@ namespace ReviewMovie
             this.label8.BorderColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label8.Location = new System.Drawing.Point(8, 153);
+            this.label8.Location = new System.Drawing.Point(8, 151);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(72, 20);
             this.label8.TabIndex = 98;
@@ -1250,7 +1250,7 @@ namespace ReviewMovie
             this.label7.BorderColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label7.Location = new System.Drawing.Point(8, 93);
+            this.label7.Location = new System.Drawing.Point(8, 91);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(72, 20);
             this.label7.TabIndex = 92;
@@ -1286,7 +1286,7 @@ namespace ReviewMovie
             this.label6.BorderColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label6.Location = new System.Drawing.Point(6, 347);
+            this.label6.Location = new System.Drawing.Point(6, 345);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(69, 20);
             this.label6.TabIndex = 17;
@@ -1302,7 +1302,7 @@ namespace ReviewMovie
             this.label5.BorderColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.label5.Location = new System.Drawing.Point(6, 271);
+            this.label5.Location = new System.Drawing.Point(6, 269);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(75, 20);
             this.label5.TabIndex = 15;
@@ -1376,11 +1376,11 @@ namespace ReviewMovie
             this.cboSiteNguon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cboSiteNguon.FormattingEnabled = true;
             this.cboSiteNguon.IntegralHeight = false;
-            this.cboSiteNguon.Location = new System.Drawing.Point(75, 25);
+            this.cboSiteNguon.Location = new System.Drawing.Point(88, 25);
             this.cboSiteNguon.Name = "cboSiteNguon";
             this.cboSiteNguon.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cboSiteNguon.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.cboSiteNguon.Size = new System.Drawing.Size(208, 24);
+            this.cboSiteNguon.Size = new System.Drawing.Size(190, 24);
             this.cboSiteNguon.TabIndex = 40;
             this.cboSiteNguon.SelectedIndexChanged += new System.EventHandler(this.cboSiteNguon_SelectedIndexChanged);
             // 
