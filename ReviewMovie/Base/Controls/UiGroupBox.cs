@@ -19,6 +19,7 @@ namespace ReviewMovie.Base.Controls
         private bool _shadowEnabled;
         private Color _shadowColor = Color.FromArgb(55, 38, 27, 92);
         private int _shadowDepth = 4;
+        private int _titleTopPadding = 2;
 
         private Font _titleFont;
 
@@ -57,6 +58,14 @@ namespace ReviewMovie.Base.Controls
 
         [Category("Title Style")]
         public Font TitleFont { get => _titleFont; set { _titleFont = value ?? _titleFont; Invalidate(); } }
+
+        [Category("Title Style")]
+        [DefaultValue(2)]
+        public int TitleTopPadding
+        {
+            get => _titleTopPadding;
+            set { _titleTopPadding = Math.Max(0, value); Invalidate(); }
+        }
 
         [Category("Shadow")]
         public bool ShadowEnabled { get => _shadowEnabled; set { _shadowEnabled = value; Invalidate(); } }
@@ -123,7 +132,11 @@ namespace ReviewMovie.Base.Controls
             }
 
             // Title region
-            var titleRect = new Rectangle(titlePad, 0, Math.Max(0, rect.Width - titlePad * 2), textHeight + titlePad);
+            var titleRect = new Rectangle(
+                titlePad,
+                _titleTopPadding,
+                Math.Max(0, rect.Width - titlePad * 2),
+                textHeight + titlePad);
             if (_titleBackColor.A > 0)
             {
                 using (var b = new SolidBrush(_titleBackColor))
