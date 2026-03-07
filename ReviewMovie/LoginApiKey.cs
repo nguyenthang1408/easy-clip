@@ -26,6 +26,10 @@ namespace ReviewMovie
         private readonly AppCodeService appCodeService;
         private readonly IConfigDataService _configService;
         private bool _appCodeActionsWired;
+        private const string AppCodeCopiedVi = "Đã sao chép App Code.";
+        private const string AppCodeCopiedEn = "App code copied.";
+        private const string AppCodeCopyFailedVi = "Không thể sao chép App Code.";
+        private const string AppCodeCopyFailedEn = "Cannot copy app code.";
 
         public LoginApiKey()
         {
@@ -74,6 +78,9 @@ namespace ReviewMovie
                 LanguageManager.SetLanguage(LanguageManager.Language.En);
             else
                 LanguageManager.SetLanguage(LanguageManager.Language.Vi);
+
+            // Ensure copy status text follows current combo selection immediately.
+            TranslateCopyStatusIfNeeded();
         }
 
         public void ApplyLanguage()
@@ -84,6 +91,32 @@ namespace ReviewMovie
             btnLoginApiKey.Text = LanguageManager.Get(LangKeys.Login_BtnLogin);
             lkHelp.Text = LanguageManager.Get(LangKeys.Login_Help);
             linklbRegister.Text = LanguageManager.Get(LangKeys.Login_Register);
+            TranslateCopyStatusIfNeeded();
+        }
+
+        private void TranslateCopyStatusIfNeeded()
+        {
+            string current = lbstatus.Text?.Trim();
+            if (string.IsNullOrEmpty(current))
+            {
+                return;
+            }
+
+            bool isCopySuccess = current == AppCodeCopiedVi || current == AppCodeCopiedEn;
+            bool isCopyFailed = current == AppCodeCopyFailedVi || current == AppCodeCopyFailedEn;
+            if (!isCopySuccess && !isCopyFailed)
+            {
+                return;
+            }
+
+            if (LanguageManager.CurrentLanguage == LanguageManager.Language.En)
+            {
+                lbstatus.Text = isCopySuccess ? AppCodeCopiedEn : AppCodeCopyFailedEn;
+            }
+            else
+            {
+                lbstatus.Text = isCopySuccess ? AppCodeCopiedVi : AppCodeCopyFailedVi;
+            }
         }
 
         private void SetupLoginUi()
@@ -332,15 +365,15 @@ namespace ReviewMovie
             {
                 Clipboard.SetText(appCode);
                 lbstatus.Text = LanguageManager.CurrentLanguage == LanguageManager.Language.En
-                    ? "App code copied."
-                    : "Đã sao chép App Code.";
+                    ? AppCodeCopiedEn
+                    : AppCodeCopiedVi;
                 lbstatus.ForeColor = Color.FromArgb(185, 246, 202);
             }
             catch
             {
                 lbstatus.Text = LanguageManager.CurrentLanguage == LanguageManager.Language.En
-                    ? "Cannot copy app code."
-                    : "Không thể sao chép App Code.";
+                    ? AppCodeCopyFailedEn
+                    : AppCodeCopyFailedVi;
                 lbstatus.ForeColor = Color.FromArgb(255, 77, 79);
             }
         }

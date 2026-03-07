@@ -139,7 +139,6 @@ namespace ReviewMovie
             this.tlpImportMedia = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
             this.txtImPortMedia = new System.Windows.Forms.TextBox();
             this.lbHeaderInputMedia = new ReviewMovie.Base.Controls.UiLabel();
-            this.lbMicInTitle = new ReviewMovie.Base.Controls.UiLabel();
             this.btnRecord = new ReviewMovie.Base.Controls.UiButton();
             this.tlpText = new ReviewMovie.Base.Controls.UiTableLayoutPanel();
             this.lbHeaderText = new ReviewMovie.Base.Controls.UiLabel();
@@ -1566,7 +1565,6 @@ namespace ReviewMovie
             this.tlpView.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
             this.tlpView.ColumnCount = 1;
             this.tlpView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpView.Controls.Add(this.dgvMainView, 0, 2);
             this.tlpView.Controls.Add(this.tsMenuView, 0, 1);
             this.tlpView.Controls.Add(this.grViewHeader, 0, 0);
@@ -1577,7 +1575,6 @@ namespace ReviewMovie
             this.tlpView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 87.22222F));
             this.tlpView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.77778F));
             this.tlpView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 529F));
-            this.tlpView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpView.Size = new System.Drawing.Size(877, 734);
             this.tlpView.TabIndex = 2;
             // 
@@ -1956,22 +1953,16 @@ namespace ReviewMovie
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
             this.tlpViewHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 179F));
             this.tlpViewHeader.Controls.Add(this.tlpImportMedia, 2, 0);
-            this.tlpViewHeader.Controls.Add(this.btnRecord, 0, 1);
+            this.tlpViewHeader.Controls.Add(this.btnRecord, 0, 0);
             this.tlpViewHeader.Controls.Add(this.tlpText, 1, 0);
             this.tlpViewHeader.Controls.Add(this.tlpHeaderButton, 3, 0);
-            this.tlpViewHeader.Controls.Add(this.lbMicInTitle, 0, 0);
             this.tlpViewHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpViewHeader.Location = new System.Drawing.Point(3, 16);
             this.tlpViewHeader.Name = "tlpViewHeader";
-            this.tlpViewHeader.RowCount = 2;
-            this.tlpViewHeader.RowStyles.Clear();
-            this.tlpViewHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.tlpViewHeader.RowCount = 1;
             this.tlpViewHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpViewHeader.Size = new System.Drawing.Size(865, 153);
             this.tlpViewHeader.TabIndex = 0;
-            this.tlpViewHeader.SetRowSpan(this.tlpText, 2);
-            this.tlpViewHeader.SetRowSpan(this.tlpImportMedia, 2);
-            this.tlpViewHeader.SetRowSpan(this.tlpHeaderButton, 2);
             // 
             // tlpImportMedia
             // 
@@ -2026,22 +2017,6 @@ namespace ReviewMovie
             this.lbHeaderInputMedia.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lbHeaderInputMedia.TextColor = System.Drawing.Color.White;
             // 
-            // lbMicInTitle
-            // 
-            this.lbMicInTitle.BackColor = System.Drawing.Color.Transparent;
-            this.lbMicInTitle.BackgroundColor = System.Drawing.Color.Transparent;
-            this.lbMicInTitle.BorderColor = System.Drawing.Color.Transparent;
-            this.lbMicInTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbMicInTitle.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbMicInTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.lbMicInTitle.Location = new System.Drawing.Point(3, 0);
-            this.lbMicInTitle.Name = "lbMicInTitle";
-            this.lbMicInTitle.Size = new System.Drawing.Size(93, 22);
-            this.lbMicInTitle.TabIndex = 4;
-            this.lbMicInTitle.Text = "Mic In";
-            this.lbMicInTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lbMicInTitle.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            // 
             // btnRecord
             // 
             this.btnRecord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -2059,10 +2034,10 @@ namespace ReviewMovie
             this.btnRecord.IconSize = new System.Drawing.Size(18, 18);
             this.btnRecord.Image = global::EasyClip.Properties.Resources.ivoice;
             this.btnRecord.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnRecord.Location = new System.Drawing.Point(3, 25);
+            this.btnRecord.Location = new System.Drawing.Point(3, 3);
             this.btnRecord.Name = "btnRecord";
             this.btnRecord.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
-            this.btnRecord.Size = new System.Drawing.Size(93, 125);
+            this.btnRecord.Size = new System.Drawing.Size(93, 147);
             this.btnRecord.TabIndex = 0;
             this.btnRecord.Text = "Record";
             this.btnRecord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2151,7 +2126,6 @@ namespace ReviewMovie
             this.tlpHeaderButton.BorderStyleEx = ReviewMovie.Base.Controls.Common.UiBorderStyle.None;
             this.tlpHeaderButton.ColumnCount = 1;
             this.tlpHeaderButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpHeaderButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpHeaderButton.Controls.Add(this.btnRenderVideoPart, 0, 2);
             this.tlpHeaderButton.Controls.Add(this.btnConvertAudio, 0, 0);
             this.tlpHeaderButton.Controls.Add(this.btnSaveAudio, 0, 1);
@@ -2159,7 +2133,6 @@ namespace ReviewMovie
             this.tlpHeaderButton.Location = new System.Drawing.Point(688, 3);
             this.tlpHeaderButton.Name = "tlpHeaderButton";
             this.tlpHeaderButton.RowCount = 3;
-            this.tlpHeaderButton.RowStyles.Clear();
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
@@ -2441,7 +2414,6 @@ namespace ReviewMovie
             // 
             this.tlpHeaderRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(45)))), ((int)(((byte)(204)))));
             this.tlpHeaderRight.ColumnCount = 1;
-            this.tlpHeaderRight.ColumnStyles.Clear();
             this.tlpHeaderRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpHeaderRight.Controls.Add(this.btnHeaderClose, 0, 0);
             this.tlpHeaderRight.Dock = System.Windows.Forms.DockStyle.Right;
@@ -2585,7 +2557,6 @@ namespace ReviewMovie
         private ReviewMovie.Base.Controls.UiTableLayoutPanel tlpImportMedia;
         private ReviewMovie.Base.Controls.UiTableLayoutPanel tlpText;
         private ReviewMovie.Base.Controls.UiLabel lbHeaderInputMedia;
-        private ReviewMovie.Base.Controls.UiLabel lbMicInTitle;
         private ReviewMovie.Base.Controls.UiLabel lbHeaderText;
         private System.Windows.Forms.TextBox txtImPortMedia;
         private ReviewMovie.Base.Controls.UiTableLayoutPanel tlpHeaderButton;
