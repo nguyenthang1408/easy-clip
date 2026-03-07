@@ -247,7 +247,7 @@ namespace ReviewMovie
 
         private static Bitmap CreateHighlightedLogo(Bitmap source)
         {
-            int pad = 10;
+            int pad = 15;
             int width = source.Width + pad * 2;
             int height = source.Height + pad * 2;
             var badge = new Bitmap(width, height);
