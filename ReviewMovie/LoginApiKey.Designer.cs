@@ -307,11 +307,13 @@ namespace ReviewMovie
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLogoIcon.Font = new System.Drawing.Font("Segoe UI Emoji", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLogoIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(202)))), ((int)(((byte)(40)))));
+            this.lblLogoIcon.Image = global::EasyClip.Properties.Resources.ivoice;
+            this.lblLogoIcon.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblLogoIcon.Location = new System.Drawing.Point(0, 0);
             this.lblLogoIcon.Name = "lblLogoIcon";
             this.lblLogoIcon.Size = new System.Drawing.Size(96, 96);
             this.lblLogoIcon.TabIndex = 0;
-            this.lblLogoIcon.Text = "🎬";
+            this.lblLogoIcon.Text = "";
             this.lblLogoIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblLogoIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 

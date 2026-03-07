@@ -158,12 +158,14 @@ namespace ReviewMovie
         // Cache GoogleTTSVoiceTemplate để tránh tạo lại mỗi lần đổi nguồn (network call nặng)
         private GoogleTTSVoiceTemplate _cachedGoogleTTS;
         private string _cachedGoogleTTSKey;
+        private bool _headerLogoApplied;
         #endregion
 
         #region Main_Init
         public FormMain(string appcode, string appSlugID, string apikey, GetVersionResponse loginResponse = null)
         {
             InitializeComponent();
+            ApplyHeaderLogoImage();
             this.toolTipPL = new ToolTip();
             this.Text = "EasyClip || " + "TPMEDIA";
 
@@ -212,6 +214,27 @@ namespace ReviewMovie
         {
             if (e.Button != MouseButtons.Left) return;
             Win32.BeginDrag(this);
+        }
+
+        private void ApplyHeaderLogoImage()
+        {
+            if (_headerLogoApplied || lblHeaderLogo == null)
+            {
+                return;
+            }
+
+            // Keep header logo synced with application icon (iEasyClip.ico).
+            Bitmap logoBitmap = this.Icon?.ToBitmap() ?? EasyClip.Properties.Resources.ivoice;
+            if (logoBitmap == null)
+            {
+                return;
+            }
+
+            _headerLogoApplied = true;
+            lblHeaderLogo.Text = string.Empty;
+            lblHeaderLogo.BackColor = Color.Transparent;
+            lblHeaderLogo.ImageAlign = ContentAlignment.MiddleCenter;
+            lblHeaderLogo.Image = new Bitmap(logoBitmap, new Size(24, 24));
         }
 
         private void btnHeaderClose_Click(object sender, EventArgs e)

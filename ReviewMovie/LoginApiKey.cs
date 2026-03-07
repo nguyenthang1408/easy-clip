@@ -26,6 +26,7 @@ namespace ReviewMovie
         private readonly AppCodeService appCodeService;
         private readonly IConfigDataService _configService;
         private bool _appCodeActionsWired;
+        private bool _brandLogoApplied;
         private const string AppCodeCopiedVi = "Đã sao chép App Code.";
         private const string AppCodeCopiedEn = "App code copied.";
         private const string AppCodeCopyFailedVi = "Không thể sao chép App Code.";
@@ -121,6 +122,8 @@ namespace ReviewMovie
 
         private void SetupLoginUi()
         {
+            ApplyBrandLogo();
+
             // Remove outer frame: let the card occupy full form.
             if (cardPanel != null)
             {
@@ -176,6 +179,30 @@ namespace ReviewMovie
                 close.HoverBackColor = UiTheme.CloseHover;
                 close.PressedBackColor = UiTheme.ClosePressed;
             }
+        }
+
+        private void ApplyBrandLogo()
+        {
+            if (_brandLogoApplied || lblLogoIcon == null)
+            {
+                return;
+            }
+
+            // Use application icon (iEasyClip.ico) as the login brand mark.
+            Bitmap logoBitmap = this.Icon?.ToBitmap() ?? EasyClip.Properties.Resources.ivoice;
+            if (logoBitmap == null)
+            {
+                return;
+            }
+
+            _brandLogoApplied = true;
+            lblLogoIcon.Text = string.Empty;
+            lblLogoIcon.BackColor = Color.Transparent;
+            lblLogoIcon.ImageAlign = ContentAlignment.MiddleCenter;
+
+            int targetW = Math.Max(1, lblLogoIcon.Width - 12);
+            int targetH = Math.Max(1, lblLogoIcon.Height - 12);
+            lblLogoIcon.Image = new Bitmap(logoBitmap, new Size(targetW, targetH));
         }
 
         private void DragArea_MouseDown(object sender, MouseEventArgs e)
