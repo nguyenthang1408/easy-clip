@@ -1362,7 +1362,7 @@ namespace ReviewMovie
             this.cboSiteNguon.Name = "cboSiteNguon";
             this.cboSiteNguon.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cboSiteNguon.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.cboSiteNguon.Size = new System.Drawing.Size(214, 24);
+            this.cboSiteNguon.Size = new System.Drawing.Size(208, 24);
             this.cboSiteNguon.TabIndex = 40;
             this.cboSiteNguon.SelectedIndexChanged += new System.EventHandler(this.cboSiteNguon_SelectedIndexChanged);
             // 
@@ -1448,7 +1448,7 @@ namespace ReviewMovie
             this.btnSaveVoiceSource.IconImage = null;
             this.btnSaveVoiceSource.IconSize = new System.Drawing.Size(18, 18);
             this.btnSaveVoiceSource.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnSaveVoiceSource.Location = new System.Drawing.Point(299, 25);
+            this.btnSaveVoiceSource.Location = new System.Drawing.Point(295, 25);
             this.btnSaveVoiceSource.Name = "btnSaveVoiceSource";
             this.btnSaveVoiceSource.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnSaveVoiceSource.Size = new System.Drawing.Size(58, 22);
@@ -1543,7 +1543,7 @@ namespace ReviewMovie
             this.cbProjectName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbProjectName.FormattingEnabled = true;
             this.cbProjectName.IntegralHeight = false;
-            this.cbProjectName.Location = new System.Drawing.Point(86, 31);
+            this.cbProjectName.Location = new System.Drawing.Point(86, 22);
             this.cbProjectName.Name = "cbProjectName";
             this.cbProjectName.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cbProjectName.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
