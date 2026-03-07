@@ -590,7 +590,7 @@ namespace ReviewMovie
             this.label17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label17.Location = new System.Drawing.Point(8, 379);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(69, 18);
+            this.label17.Size = new System.Drawing.Size(69, 20);
             this.label17.TabIndex = 123;
             this.label17.Text = "Cấu Hình :";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -673,7 +673,7 @@ namespace ReviewMovie
             this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label16.Location = new System.Drawing.Point(8, 315);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(69, 18);
+            this.label16.Size = new System.Drawing.Size(69, 20);
             this.label16.TabIndex = 120;
             this.label16.Text = "Ngôn Ngữ :";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -688,7 +688,7 @@ namespace ReviewMovie
             this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label15.Location = new System.Drawing.Point(248, 244);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(20, 18);
+            this.label15.Size = new System.Drawing.Size(20, 20);
             this.label15.TabIndex = 119;
             this.label15.Text = "->";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -783,7 +783,7 @@ namespace ReviewMovie
             this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label14.Location = new System.Drawing.Point(130, 242);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(69, 18);
+            this.label14.Size = new System.Drawing.Size(69, 20);
             this.label14.TabIndex = 116;
             this.label14.Text = "Hệ số tốc độ";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -861,7 +861,7 @@ namespace ReviewMovie
             this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label13.Location = new System.Drawing.Point(173, 63);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(50, 18);
+            this.label13.Size = new System.Drawing.Size(50, 20);
             this.label13.TabIndex = 113;
             this.label13.Text = "Thread :";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -916,7 +916,7 @@ namespace ReviewMovie
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label4.Location = new System.Drawing.Point(8, 242);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 18);
+            this.label4.Size = new System.Drawing.Size(77, 20);
             this.label4.TabIndex = 111;
             this.label4.Text = "Volumn gốc :";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -974,7 +974,7 @@ namespace ReviewMovie
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label12.Location = new System.Drawing.Point(8, 123);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(72, 18);
+            this.label12.Size = new System.Drawing.Size(72, 20);
             this.label12.TabIndex = 107;
             this.label12.Text = "Lựa Chọn :";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1009,7 +1009,7 @@ namespace ReviewMovie
             this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label11.Location = new System.Drawing.Point(8, 63);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(72, 18);
+            this.label11.Size = new System.Drawing.Size(72, 20);
             this.label11.TabIndex = 105;
             this.label11.Text = "% ZQuality :";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1064,7 +1064,7 @@ namespace ReviewMovie
             this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label10.Location = new System.Drawing.Point(173, 33);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(71, 18);
+            this.label10.Size = new System.Drawing.Size(71, 20);
             this.label10.TabIndex = 103;
             this.label10.Text = "FPS (InPut) :";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1099,7 +1099,7 @@ namespace ReviewMovie
             this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label9.Location = new System.Drawing.Point(8, 33);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(72, 18);
+            this.label9.Size = new System.Drawing.Size(72, 20);
             this.label9.TabIndex = 100;
             this.label9.Text = "% ZoomUp :";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1134,7 +1134,7 @@ namespace ReviewMovie
             this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label8.Location = new System.Drawing.Point(8, 153);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(72, 18);
+            this.label8.Size = new System.Drawing.Size(72, 20);
             this.label8.TabIndex = 98;
             this.label8.Text = "Hiệu ứng :";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1240,7 +1240,7 @@ namespace ReviewMovie
             this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label7.Location = new System.Drawing.Point(8, 93);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(72, 18);
+            this.label7.Size = new System.Drawing.Size(72, 20);
             this.label7.TabIndex = 92;
             this.label7.Text = "Chất lượng :";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1275,7 +1275,7 @@ namespace ReviewMovie
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label6.Location = new System.Drawing.Point(6, 347);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(69, 18);
+            this.label6.Size = new System.Drawing.Size(69, 20);
             this.label6.TabIndex = 17;
             this.label6.Text = "Giọng Đọc :";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1290,7 +1290,7 @@ namespace ReviewMovie
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.label5.Location = new System.Drawing.Point(6, 271);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(75, 18);
+            this.label5.Size = new System.Drawing.Size(75, 20);
             this.label5.TabIndex = 15;
             this.label5.Text = "Tốc Độ Đọc :";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
