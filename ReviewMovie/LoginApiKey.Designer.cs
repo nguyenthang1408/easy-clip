@@ -295,9 +295,9 @@ namespace ReviewMovie
             // 
             this.pnlLogo.BackColor = System.Drawing.Color.Transparent;
             this.pnlLogo.Controls.Add(this.lblLogoIcon);
-            this.pnlLogo.Location = new System.Drawing.Point(168, 35);
+            this.pnlLogo.Location = new System.Drawing.Point(162, 28);
             this.pnlLogo.Name = "pnlLogo";
-            this.pnlLogo.Size = new System.Drawing.Size(114, 114);
+            this.pnlLogo.Size = new System.Drawing.Size(126, 126);
             this.pnlLogo.TabIndex = 1;
             this.pnlLogo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
@@ -312,7 +312,7 @@ namespace ReviewMovie
             this.lblLogoIcon.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblLogoIcon.Location = new System.Drawing.Point(0, 0);
             this.lblLogoIcon.Name = "lblLogoIcon";
-            this.lblLogoIcon.Size = new System.Drawing.Size(114, 114);
+            this.lblLogoIcon.Size = new System.Drawing.Size(126, 126);
             this.lblLogoIcon.TabIndex = 0;
             this.lblLogoIcon.Text = "";
             this.lblLogoIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

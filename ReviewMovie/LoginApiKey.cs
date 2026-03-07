@@ -200,10 +200,9 @@ namespace ReviewMovie
             lblLogoIcon.BackColor = Color.Transparent;
             lblLogoIcon.ImageAlign = ContentAlignment.MiddleCenter;
 
-            // Slightly larger logo, still kept crisp.
-            const int maxDisplaySize = 78;
+            // Make logo more prominent on login screen.
+            const int maxDisplaySize = 96;
             float scale = Math.Min((float)maxDisplaySize / logoBitmap.Width, (float)maxDisplaySize / logoBitmap.Height);
-            scale = Math.Min(1f, scale); // never upscale
             int targetW = Math.Max(1, (int)Math.Round(logoBitmap.Width * scale));
             int targetH = Math.Max(1, (int)Math.Round(logoBitmap.Height * scale));
             var resized = ResizeBitmapHighQuality(logoBitmap, new Size(targetW, targetH));
@@ -221,8 +220,9 @@ namespace ReviewMovie
                 }
 
                 using (var icon = new Icon(iconPath))
+                using (var hiDpiIcon = new Icon(icon, new Size(128, 128)))
                 {
-                    return icon.ToBitmap();
+                    return hiDpiIcon.ToBitmap();
                 }
             }
             catch
@@ -247,7 +247,7 @@ namespace ReviewMovie
 
         private static Bitmap CreateHighlightedLogo(Bitmap source)
         {
-            int pad = 12;
+            int pad = 8;
             int width = source.Width + pad * 2;
             int height = source.Height + pad * 2;
             var badge = new Bitmap(width, height);
