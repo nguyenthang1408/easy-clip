@@ -1933,6 +1933,7 @@ namespace ReviewMovie
             this.grViewHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.grViewHeader.Location = new System.Drawing.Point(3, 3);
             this.grViewHeader.Name = "grViewHeader";
+            this.grViewHeader.Padding = new System.Windows.Forms.Padding(3, 24, 3, 3);
             this.grViewHeader.Size = new System.Drawing.Size(871, 172);
             this.grViewHeader.TabIndex = 0;
             this.grViewHeader.TabStop = false;
@@ -2136,10 +2137,10 @@ namespace ReviewMovie
             this.tlpHeaderButton.Location = new System.Drawing.Point(688, 3);
             this.tlpHeaderButton.Name = "tlpHeaderButton";
             this.tlpHeaderButton.RowCount = 3;
-            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpHeaderButton.RowStyles.Clear();
+            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpHeaderButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tlpHeaderButton.Size = new System.Drawing.Size(174, 147);
             this.tlpHeaderButton.TabIndex = 3;
             // 
