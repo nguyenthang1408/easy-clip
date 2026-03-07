@@ -584,6 +584,7 @@ namespace ReviewMovie
             // label17
             // 
             this.label17.BackColor = System.Drawing.Color.White;
+            this.label17.AutoSize = false;
             this.label17.BackgroundColor = System.Drawing.Color.White;
             this.label17.BorderColor = System.Drawing.Color.Transparent;
             this.label17.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -667,6 +668,7 @@ namespace ReviewMovie
             // label16
             // 
             this.label16.BackColor = System.Drawing.Color.White;
+            this.label16.AutoSize = false;
             this.label16.BackgroundColor = System.Drawing.Color.White;
             this.label16.BorderColor = System.Drawing.Color.Transparent;
             this.label16.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -682,6 +684,7 @@ namespace ReviewMovie
             // label15
             // 
             this.label15.BackColor = System.Drawing.Color.White;
+            this.label15.AutoSize = false;
             this.label15.BackgroundColor = System.Drawing.Color.White;
             this.label15.BorderColor = System.Drawing.Color.Transparent;
             this.label15.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -777,6 +780,7 @@ namespace ReviewMovie
             // label14
             // 
             this.label14.BackColor = System.Drawing.Color.White;
+            this.label14.AutoSize = false;
             this.label14.BackgroundColor = System.Drawing.Color.White;
             this.label14.BorderColor = System.Drawing.Color.Transparent;
             this.label14.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -855,6 +859,7 @@ namespace ReviewMovie
             // label13
             // 
             this.label13.BackColor = System.Drawing.Color.White;
+            this.label13.AutoSize = false;
             this.label13.BackgroundColor = System.Drawing.Color.White;
             this.label13.BorderColor = System.Drawing.Color.Transparent;
             this.label13.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -910,6 +915,7 @@ namespace ReviewMovie
             // label4
             // 
             this.label4.BackColor = System.Drawing.Color.White;
+            this.label4.AutoSize = false;
             this.label4.BackgroundColor = System.Drawing.Color.White;
             this.label4.BorderColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -968,6 +974,7 @@ namespace ReviewMovie
             // label12
             // 
             this.label12.BackColor = System.Drawing.Color.White;
+            this.label12.AutoSize = false;
             this.label12.BackgroundColor = System.Drawing.Color.White;
             this.label12.BorderColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1003,6 +1010,7 @@ namespace ReviewMovie
             // label11
             // 
             this.label11.BackColor = System.Drawing.Color.White;
+            this.label11.AutoSize = false;
             this.label11.BackgroundColor = System.Drawing.Color.White;
             this.label11.BorderColor = System.Drawing.Color.Transparent;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1058,6 +1066,7 @@ namespace ReviewMovie
             // label10
             // 
             this.label10.BackColor = System.Drawing.Color.White;
+            this.label10.AutoSize = false;
             this.label10.BackgroundColor = System.Drawing.Color.White;
             this.label10.BorderColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1093,6 +1102,7 @@ namespace ReviewMovie
             // label9
             // 
             this.label9.BackColor = System.Drawing.Color.White;
+            this.label9.AutoSize = false;
             this.label9.BackgroundColor = System.Drawing.Color.White;
             this.label9.BorderColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1128,6 +1138,7 @@ namespace ReviewMovie
             // label8
             // 
             this.label8.BackColor = System.Drawing.Color.White;
+            this.label8.AutoSize = false;
             this.label8.BackgroundColor = System.Drawing.Color.White;
             this.label8.BorderColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1234,6 +1245,7 @@ namespace ReviewMovie
             // label7
             // 
             this.label7.BackColor = System.Drawing.Color.White;
+            this.label7.AutoSize = false;
             this.label7.BackgroundColor = System.Drawing.Color.White;
             this.label7.BorderColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1269,6 +1281,7 @@ namespace ReviewMovie
             // label6
             // 
             this.label6.BackColor = System.Drawing.Color.White;
+            this.label6.AutoSize = false;
             this.label6.BackgroundColor = System.Drawing.Color.White;
             this.label6.BorderColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1284,6 +1297,7 @@ namespace ReviewMovie
             // label5
             // 
             this.label5.BackColor = System.Drawing.Color.White;
+            this.label5.AutoSize = false;
             this.label5.BackgroundColor = System.Drawing.Color.White;
             this.label5.BorderColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9F);
