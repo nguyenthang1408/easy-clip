@@ -331,12 +331,16 @@ namespace ReviewMovie
             try
             {
                 Clipboard.SetText(appCode);
-                lbstatus.Text = cbAppLanguage.SelectedIndex == 1 ? "App code copied." : "Đã sao chép App Code.";
+                lbstatus.Text = LanguageManager.CurrentLanguage == LanguageManager.Language.En
+                    ? "App code copied."
+                    : "Đã sao chép App Code.";
                 lbstatus.ForeColor = Color.FromArgb(185, 246, 202);
             }
             catch
             {
-                lbstatus.Text = cbAppLanguage.SelectedIndex == 1 ? "Cannot copy app code." : "Không thể sao chép App Code.";
+                lbstatus.Text = LanguageManager.CurrentLanguage == LanguageManager.Language.En
+                    ? "Cannot copy app code."
+                    : "Không thể sao chép App Code.";
                 lbstatus.ForeColor = Color.FromArgb(255, 77, 79);
             }
         }

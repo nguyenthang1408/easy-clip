@@ -491,7 +491,7 @@ namespace ReviewMovie
             this.grbConfigRender.TitleBackColor = System.Drawing.Color.Transparent;
             this.grbConfigRender.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.grbConfigRender.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.grbConfigRender.TitleTopPadding = 3;
+            this.grbConfigRender.TitleTopPadding = 5;
             // 
             // ckOpenPlayer
             // 
@@ -1436,7 +1436,7 @@ namespace ReviewMovie
             this.grbConfigVoice.TitleBackColor = System.Drawing.Color.Transparent;
             this.grbConfigVoice.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.grbConfigVoice.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.grbConfigVoice.TitleTopPadding = 3;
+            this.grbConfigVoice.TitleTopPadding = 5;
             // 
             // btnSaveVoiceSource
             // 
@@ -1485,7 +1485,7 @@ namespace ReviewMovie
             this.grbActionRender.TitleBackColor = System.Drawing.Color.Transparent;
             this.grbActionRender.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.grbActionRender.TitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.grbActionRender.TitleTopPadding = 3;
+            this.grbActionRender.TitleTopPadding = 5;
             // 
             // rbGPUused
             // 
