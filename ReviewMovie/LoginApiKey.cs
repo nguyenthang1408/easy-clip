@@ -188,8 +188,8 @@ namespace ReviewMovie
                 return;
             }
 
-            // Always prioritize iEasyClip.ico so both screens follow one logo file.
-            Bitmap logoBitmap = LoadBrandLogoFromIco() ?? this.Icon?.ToBitmap() ?? EasyClip.Properties.Resources.ivoice;
+            // Use iEasyClip.ico directly; fallback only to the static resource image.
+            Bitmap logoBitmap = LoadBrandLogoFromIco() ?? EasyClip.Properties.Resources.ivoice;
             if (logoBitmap == null)
             {
                 return;

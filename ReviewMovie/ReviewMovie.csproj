@@ -287,7 +287,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="iEasyClip.ico" />
+    <Content Include="iEasyClip.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="libwebp_x64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
