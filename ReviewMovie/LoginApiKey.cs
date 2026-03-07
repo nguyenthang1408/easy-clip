@@ -200,13 +200,14 @@ namespace ReviewMovie
             lblLogoIcon.BackColor = Color.Transparent;
             lblLogoIcon.ImageAlign = ContentAlignment.MiddleCenter;
 
-            // Keep login logo smaller to avoid blur/pixelation.
-            const int maxDisplaySize = 56;
+            // Slightly larger logo, still kept crisp.
+            const int maxDisplaySize = 72;
             float scale = Math.Min((float)maxDisplaySize / logoBitmap.Width, (float)maxDisplaySize / logoBitmap.Height);
             scale = Math.Min(1f, scale); // never upscale
             int targetW = Math.Max(1, (int)Math.Round(logoBitmap.Width * scale));
             int targetH = Math.Max(1, (int)Math.Round(logoBitmap.Height * scale));
-            lblLogoIcon.Image = ResizeBitmapHighQuality(logoBitmap, new Size(targetW, targetH));
+            var resized = ResizeBitmapHighQuality(logoBitmap, new Size(targetW, targetH));
+            lblLogoIcon.Image = CreateHighlightedLogo(resized);
         }
 
         private Bitmap LoadBrandLogoFromIco()
@@ -242,6 +243,32 @@ namespace ReviewMovie
                 g.DrawImage(source, new Rectangle(Point.Empty, targetSize));
             }
             return result;
+        }
+
+        private static Bitmap CreateHighlightedLogo(Bitmap source)
+        {
+            int pad = 12;
+            int width = source.Width + pad * 2;
+            int height = source.Height + pad * 2;
+            var badge = new Bitmap(width, height);
+            using (var g = Graphics.FromImage(badge))
+            {
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                // Soft glow to make logo stand out on purple background.
+                using (var outer = new SolidBrush(Color.FromArgb(85, 255, 255, 255)))
+                using (var inner = new SolidBrush(Color.FromArgb(145, 255, 255, 255)))
+                {
+                    g.FillEllipse(outer, 0, 0, width - 1, height - 1);
+                    g.FillEllipse(inner, 4, 4, width - 9, height - 9);
+                }
+
+                g.DrawImage(source, new Rectangle(pad, pad, source.Width, source.Height));
+            }
+            return badge;
         }
 
         private void DragArea_MouseDown(object sender, MouseEventArgs e)
@@ -298,8 +325,11 @@ namespace ReviewMovie
                 Region = null;
             }
 
-            // Card + logo (pills/buttons handle their own rounding)
-            UiHelpers.ApplyRoundRegion(pnlLogo, 14);
+            // Avoid rounded clipping artifacts on logo host.
+            if (pnlLogo != null && pnlLogo.Region != null)
+            {
+                pnlLogo.Region = null;
+            }
         }
 
         // Paint borders for card + pill panels (Designer-safe: standard Panels)

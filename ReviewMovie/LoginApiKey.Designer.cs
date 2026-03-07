@@ -283,7 +283,7 @@ namespace ReviewMovie
             // 
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(44, 150);
+            this.lblTitle.Location = new System.Drawing.Point(44, 156);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(362, 38);
             this.lblTitle.TabIndex = 2;
@@ -293,10 +293,11 @@ namespace ReviewMovie
             // 
             // pnlLogo
             // 
+            this.pnlLogo.BackColor = System.Drawing.Color.Transparent;
             this.pnlLogo.Controls.Add(this.lblLogoIcon);
-            this.pnlLogo.Location = new System.Drawing.Point(177, 40);
+            this.pnlLogo.Location = new System.Drawing.Point(171, 38);
             this.pnlLogo.Name = "pnlLogo";
-            this.pnlLogo.Size = new System.Drawing.Size(96, 96);
+            this.pnlLogo.Size = new System.Drawing.Size(108, 108);
             this.pnlLogo.TabIndex = 1;
             this.pnlLogo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragArea_MouseDown);
             // 
@@ -311,7 +312,7 @@ namespace ReviewMovie
             this.lblLogoIcon.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblLogoIcon.Location = new System.Drawing.Point(0, 0);
             this.lblLogoIcon.Name = "lblLogoIcon";
-            this.lblLogoIcon.Size = new System.Drawing.Size(96, 96);
+            this.lblLogoIcon.Size = new System.Drawing.Size(108, 108);
             this.lblLogoIcon.TabIndex = 0;
             this.lblLogoIcon.Text = "";
             this.lblLogoIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
