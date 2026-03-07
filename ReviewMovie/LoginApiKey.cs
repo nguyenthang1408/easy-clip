@@ -200,9 +200,13 @@ namespace ReviewMovie
             lblLogoIcon.BackColor = Color.Transparent;
             lblLogoIcon.ImageAlign = ContentAlignment.MiddleCenter;
 
-            int targetW = Math.Max(1, lblLogoIcon.Width - 12);
-            int targetH = Math.Max(1, lblLogoIcon.Height - 12);
-            lblLogoIcon.Image = new Bitmap(logoBitmap, new Size(targetW, targetH));
+            // Keep login logo smaller to avoid blur/pixelation.
+            const int maxDisplaySize = 56;
+            float scale = Math.Min((float)maxDisplaySize / logoBitmap.Width, (float)maxDisplaySize / logoBitmap.Height);
+            scale = Math.Min(1f, scale); // never upscale
+            int targetW = Math.Max(1, (int)Math.Round(logoBitmap.Width * scale));
+            int targetH = Math.Max(1, (int)Math.Round(logoBitmap.Height * scale));
+            lblLogoIcon.Image = ResizeBitmapHighQuality(logoBitmap, new Size(targetW, targetH));
         }
 
         private Bitmap LoadBrandLogoFromIco()
@@ -224,6 +228,20 @@ namespace ReviewMovie
             {
                 return null;
             }
+        }
+
+        private static Bitmap ResizeBitmapHighQuality(Bitmap source, Size targetSize)
+        {
+            var result = new Bitmap(targetSize.Width, targetSize.Height);
+            using (var g = Graphics.FromImage(result))
+            {
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                g.DrawImage(source, new Rectangle(Point.Empty, targetSize));
+            }
+            return result;
         }
 
         private void DragArea_MouseDown(object sender, MouseEventArgs e)

@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -234,7 +235,12 @@ namespace ReviewMovie
             lblHeaderLogo.Text = string.Empty;
             lblHeaderLogo.BackColor = Color.Transparent;
             lblHeaderLogo.ImageAlign = ContentAlignment.MiddleCenter;
-            lblHeaderLogo.Image = new Bitmap(logoBitmap, new Size(24, 24));
+            const int maxDisplaySize = 24;
+            float scale = Math.Min((float)maxDisplaySize / logoBitmap.Width, (float)maxDisplaySize / logoBitmap.Height);
+            scale = Math.Min(1f, scale); // never upscale
+            int targetW = Math.Max(1, (int)Math.Round(logoBitmap.Width * scale));
+            int targetH = Math.Max(1, (int)Math.Round(logoBitmap.Height * scale));
+            lblHeaderLogo.Image = ResizeBitmapHighQuality(logoBitmap, new Size(targetW, targetH));
         }
 
         private Bitmap LoadBrandLogoFromIco()
@@ -256,6 +262,20 @@ namespace ReviewMovie
             {
                 return null;
             }
+        }
+
+        private static Bitmap ResizeBitmapHighQuality(Bitmap source, Size targetSize)
+        {
+            var result = new Bitmap(targetSize.Width, targetSize.Height);
+            using (var g = Graphics.FromImage(result))
+            {
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                g.DrawImage(source, new Rectangle(Point.Empty, targetSize));
+            }
+            return result;
         }
 
         private void btnHeaderClose_Click(object sender, EventArgs e)
