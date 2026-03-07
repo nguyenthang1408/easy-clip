@@ -201,7 +201,7 @@ namespace ReviewMovie
             lblLogoIcon.ImageAlign = ContentAlignment.MiddleCenter;
 
             // Slightly larger logo, still kept crisp.
-            const int maxDisplaySize = 72;
+            const int maxDisplaySize = 78;
             float scale = Math.Min((float)maxDisplaySize / logoBitmap.Width, (float)maxDisplaySize / logoBitmap.Height);
             scale = Math.Min(1f, scale); // never upscale
             int targetW = Math.Max(1, (int)Math.Round(logoBitmap.Width * scale));
