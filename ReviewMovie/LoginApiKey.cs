@@ -27,6 +27,7 @@ namespace ReviewMovie
         private readonly IConfigDataService _configService;
         private bool _appCodeActionsWired;
         private bool _brandLogoApplied;
+        private static readonly Color ThemePurple = Color.FromArgb(79, 45, 204);
         private const string AppCodeCopiedVi = "Đã sao chép App Code.";
         private const string AppCodeCopiedEn = "App code copied.";
         private const string AppCodeCopyFailedVi = "Không thể sao chép App Code.";
@@ -124,9 +125,13 @@ namespace ReviewMovie
         {
             ApplyBrandLogo();
 
+            // Keep login background in the same purple theme as main header.
+            BackColor = ThemePurple;
+
             // Remove outer frame: let the card occupy full form.
             if (cardPanel != null)
             {
+                cardPanel.BackColor = ThemePurple;
                 cardPanel.Dock = DockStyle.Fill;
                 cardPanel.Location = Point.Empty;
                 cardPanel.Margin = Padding.Empty;
@@ -189,7 +194,7 @@ namespace ReviewMovie
             }
 
             // Use iEasyClip.ico directly; fallback only to the static resource image.
-            Bitmap logoBitmap = LoadBrandLogoFromIco() ?? EasyClip.Properties.Resources.ivoice;
+            Bitmap logoBitmap = LoadBrandLogoFromIco() ?? EasyClip.Properties.Resources.iEasyClip;
             if (logoBitmap == null)
             {
                 return;
@@ -206,7 +211,8 @@ namespace ReviewMovie
             int targetW = Math.Max(1, (int)Math.Round(logoBitmap.Width * scale));
             int targetH = Math.Max(1, (int)Math.Round(logoBitmap.Height * scale));
             var resized = ResizeBitmapHighQuality(logoBitmap, new Size(targetW, targetH));
-            lblLogoIcon.Image = CreateHighlightedLogo(resized);
+            var recolored = RecolorWarmAccentToTheme(resized);
+            lblLogoIcon.Image = CreateHighlightedLogo(recolored);
         }
 
         private Bitmap LoadBrandLogoFromIco()
@@ -271,6 +277,59 @@ namespace ReviewMovie
             return badge;
         }
 
+        private static Bitmap RecolorWarmAccentToTheme(Bitmap source)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            var result = new Bitmap(source.Width, source.Height);
+            for (int y = 0; y < source.Height; y++)
+            {
+                for (int x = 0; x < source.Width; x++)
+                {
+                    Color original = source.GetPixel(x, y);
+                    if (original.A == 0)
+                    {
+                        result.SetPixel(x, y, Color.Transparent);
+                        continue;
+                    }
+
+                    float hue = original.GetHue();
+                    bool isWarmAccent = hue >= 10f && hue <= 55f
+                        && original.GetSaturation() >= 0.30f
+                        && original.GetBrightness() >= 0.22f;
+
+                    if (!isWarmAccent)
+                    {
+                        result.SetPixel(x, y, original);
+                        continue;
+                    }
+
+                    result.SetPixel(x, y, BlendColor(original, ThemePurple, 0.82f));
+                }
+            }
+
+            return result;
+        }
+
+        private static Color BlendColor(Color baseColor, Color overlayColor, float alpha)
+        {
+            alpha = Math.Max(0f, Math.Min(1f, alpha));
+            int r = (int)Math.Round(baseColor.R * (1f - alpha) + overlayColor.R * alpha);
+            int g = (int)Math.Round(baseColor.G * (1f - alpha) + overlayColor.G * alpha);
+            int b = (int)Math.Round(baseColor.B * (1f - alpha) + overlayColor.B * alpha);
+            return Color.FromArgb(baseColor.A, ClampToByte(r), ClampToByte(g), ClampToByte(b));
+        }
+
+        private static int ClampToByte(int value)
+        {
+            if (value < 0) return 0;
+            if (value > 255) return 255;
+            return value;
+        }
+
         private void DragArea_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
@@ -308,8 +367,8 @@ namespace ReviewMovie
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            // Keep a clean white canvas to avoid outer-looking border.
-            e.Graphics.Clear(Color.White);
+            // Keep canvas aligned with the login purple theme.
+            e.Graphics.Clear(ThemePurple);
         }
 
         protected override void OnPaint(PaintEventArgs e)
