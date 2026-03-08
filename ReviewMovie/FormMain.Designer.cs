@@ -1352,13 +1352,14 @@ namespace ReviewMovie
             // lblstatus
             // 
             this.lblstatus.BackColor = System.Drawing.Color.White;
+            this.lblstatus.AutoSize = false;
             this.lblstatus.BackgroundColor = System.Drawing.Color.White;
             this.lblstatus.BorderColor = System.Drawing.Color.Transparent;
             this.lblstatus.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblstatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.lblstatus.Location = new System.Drawing.Point(15, 71);
+            this.lblstatus.Location = new System.Drawing.Point(15, 69);
             this.lblstatus.Name = "lblstatus";
-            this.lblstatus.Size = new System.Drawing.Size(16, 15);
+            this.lblstatus.Size = new System.Drawing.Size(337, 20);
             this.lblstatus.TabIndex = 16;
             this.lblstatus.Text = "...";
             this.lblstatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
