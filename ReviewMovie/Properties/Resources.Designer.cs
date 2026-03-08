@@ -133,6 +133,16 @@ namespace EasyClip.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap iEasyClip {
+            get {
+                object obj = ResourceManager.GetObject("iEasyClip", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ivoice {
             get {
                 object obj = ResourceManager.GetObject("ivoice", resourceCulture);
