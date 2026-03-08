@@ -142,7 +142,9 @@ namespace ReviewMovie.Base.Controls
             string content = Text ?? string.Empty;
             Size text = TextRenderer.MeasureText(content.Length == 0 ? " " : content, Font);
             int width = Math.Max(1, text.Width + _padding.Horizontal + (_borderSize * 2));
-            int height = Math.Max(1, text.Height + _padding.Vertical + (_borderSize * 2));
+            // Add a small vertical buffer so descenders (g, p, y, q) are not clipped
+            // when controls run with AutoSize=true on different DPI/font render paths.
+            int height = Math.Max(1, text.Height + _padding.Vertical + (_borderSize * 2) + 2);
             return new Size(width, height);
         }
 
