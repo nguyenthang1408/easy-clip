@@ -2461,7 +2461,7 @@ namespace ReviewMovie
             this.lblHeaderLogo.BackColor = System.Drawing.Color.Transparent;
             this.lblHeaderLogo.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.lblHeaderLogo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(45)))), ((int)(((byte)(204)))));
-            this.lblHeaderLogo.Image = global::EasyClip.Properties.Resources.iEasyClip;
+            this.lblHeaderLogo.Image = global::EasyClip.Properties.Resources.ivoice;
             this.lblHeaderLogo.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblHeaderLogo.Location = new System.Drawing.Point(12, 8);
             this.lblHeaderLogo.Name = "lblHeaderLogo";
