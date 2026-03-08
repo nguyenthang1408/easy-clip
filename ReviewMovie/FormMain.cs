@@ -247,13 +247,13 @@ namespace ReviewMovie
         {
             try
             {
-                string iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "iEasyClip.ico");
-                if (!File.Exists(iconPath))
+                string iconPath = ResolveBrandIconPath();
+                if (string.IsNullOrEmpty(iconPath))
                 {
                     return null;
                 }
 
-                using (var icon = new Icon(iconPath))
+                using (var icon = new Icon(iconPath, new Size(128, 128)))
                 {
                     return icon.ToBitmap();
                 }
@@ -262,6 +262,40 @@ namespace ReviewMovie
             {
                 return null;
             }
+        }
+
+        private static string ResolveBrandIconPath()
+        {
+            var candidateRoots = new[]
+            {
+                AppDomain.CurrentDomain.BaseDirectory,
+                Application.StartupPath,
+                Path.GetDirectoryName(typeof(FormMain).Assembly.Location),
+                Environment.CurrentDirectory
+            };
+
+            foreach (string root in candidateRoots.Where(p => !string.IsNullOrWhiteSpace(p)).Distinct())
+            {
+                string directCandidate = Path.Combine(root, "iEasyClip.ico");
+                if (File.Exists(directCandidate))
+                {
+                    return directCandidate;
+                }
+
+                string current = root;
+                for (int i = 0; i < 8 && !string.IsNullOrWhiteSpace(current); i++)
+                {
+                    string upwardCandidate = Path.Combine(current, "iEasyClip.ico");
+                    if (File.Exists(upwardCandidate))
+                    {
+                        return upwardCandidate;
+                    }
+
+                    current = Path.GetDirectoryName(current);
+                }
+            }
+
+            return null;
         }
 
         private static Bitmap ResizeBitmapHighQuality(Bitmap source, Size targetSize)
