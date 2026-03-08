@@ -179,7 +179,9 @@ namespace ReviewMovie.Base.Controls
             var textRect = Rectangle.Inflate(rect, -_padding.Left - _padding.Right, -_padding.Top - _padding.Bottom);
             textRect = new Rectangle(rect.Left + _padding.Left, rect.Top + _padding.Top, rect.Width - _padding.Horizontal, rect.Height - _padding.Vertical);
 
-            TextFormatFlags flags = TextFormatFlags.EndEllipsis | TextFormatFlags.NoPadding;
+            // Avoid NoPadding because it can clip descenders (g, p, y, q)
+            // on some fonts/sizes when controls are auto-sized.
+            TextFormatFlags flags = TextFormatFlags.EndEllipsis;
             switch (_textAlign)
             {
                 case ContentAlignment.TopLeft: flags |= TextFormatFlags.Top | TextFormatFlags.Left; break;
