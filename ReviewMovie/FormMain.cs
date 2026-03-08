@@ -160,6 +160,7 @@ namespace ReviewMovie
         private GoogleTTSVoiceTemplate _cachedGoogleTTS;
         private string _cachedGoogleTTSKey;
         private bool _headerLogoApplied;
+        private static readonly Color HeaderThemePurple = Color.FromArgb(79, 45, 204);
         #endregion
 
         #region Main_Init
@@ -224,8 +225,8 @@ namespace ReviewMovie
                 return;
             }
 
-            // Use iEasyClip.ico directly; fallback only to the static resource image.
-            Bitmap logoBitmap = LoadBrandLogoFromIco() ?? EasyClip.Properties.Resources.ivoice;
+            // Use iEasyClip.ico directly; fallback to branded static resource.
+            Bitmap logoBitmap = LoadBrandLogoFromIco() ?? EasyClip.Properties.Resources.iEasyClip;
             if (logoBitmap == null)
             {
                 return;
@@ -240,7 +241,8 @@ namespace ReviewMovie
             scale = Math.Min(1f, scale); // never upscale
             int targetW = Math.Max(1, (int)Math.Round(logoBitmap.Width * scale));
             int targetH = Math.Max(1, (int)Math.Round(logoBitmap.Height * scale));
-            lblHeaderLogo.Image = ResizeBitmapHighQuality(logoBitmap, new Size(targetW, targetH));
+            Bitmap resizedLogo = ResizeBitmapHighQuality(logoBitmap, new Size(targetW, targetH));
+            lblHeaderLogo.Image = RecolorWarmAccentToHeaderTheme(resizedLogo);
         }
 
         private Bitmap LoadBrandLogoFromIco()
@@ -276,6 +278,59 @@ namespace ReviewMovie
                 g.DrawImage(source, new Rectangle(Point.Empty, targetSize));
             }
             return result;
+        }
+
+        private static Bitmap RecolorWarmAccentToHeaderTheme(Bitmap source)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            var result = new Bitmap(source.Width, source.Height);
+            for (int y = 0; y < source.Height; y++)
+            {
+                for (int x = 0; x < source.Width; x++)
+                {
+                    Color original = source.GetPixel(x, y);
+                    if (original.A == 0)
+                    {
+                        result.SetPixel(x, y, Color.Transparent);
+                        continue;
+                    }
+
+                    float hue = original.GetHue();
+                    bool isWarmAccent = hue >= 10f && hue <= 55f
+                        && original.GetSaturation() >= 0.30f
+                        && original.GetBrightness() >= 0.22f;
+
+                    if (!isWarmAccent)
+                    {
+                        result.SetPixel(x, y, original);
+                        continue;
+                    }
+
+                    result.SetPixel(x, y, BlendColor(original, HeaderThemePurple, 0.82f));
+                }
+            }
+
+            return result;
+        }
+
+        private static Color BlendColor(Color baseColor, Color overlayColor, float alpha)
+        {
+            alpha = Math.Max(0f, Math.Min(1f, alpha));
+            int r = (int)Math.Round(baseColor.R * (1f - alpha) + overlayColor.R * alpha);
+            int g = (int)Math.Round(baseColor.G * (1f - alpha) + overlayColor.G * alpha);
+            int b = (int)Math.Round(baseColor.B * (1f - alpha) + overlayColor.B * alpha);
+            return Color.FromArgb(baseColor.A, ClampToByte(r), ClampToByte(g), ClampToByte(b));
+        }
+
+        private static int ClampToByte(int value)
+        {
+            if (value < 0) return 0;
+            if (value > 255) return 255;
+            return value;
         }
 
         private void btnHeaderClose_Click(object sender, EventArgs e)
