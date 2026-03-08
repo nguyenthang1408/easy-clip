@@ -382,7 +382,7 @@ namespace ReviewMovie
             this.btnOpenProject.IconImage = null;
             this.btnOpenProject.IconSize = new System.Drawing.Size(18, 18);
             this.btnOpenProject.ImageAlignEx = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnOpenProject.Location = new System.Drawing.Point(305, 25);
+            this.btnOpenProject.Location = new System.Drawing.Point(305, 26);
             this.btnOpenProject.Name = "btnOpenProject";
             this.btnOpenProject.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(108)))), ((int)(((byte)(0)))));
             this.btnOpenProject.Size = new System.Drawing.Size(69, 25);
@@ -1566,7 +1566,7 @@ namespace ReviewMovie
             this.cbProjectName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
             this.cbProjectName.FormattingEnabled = true;
             this.cbProjectName.IntegralHeight = false;
-            this.cbProjectName.Location = new System.Drawing.Point(92, 27);
+            this.cbProjectName.Location = new System.Drawing.Point(82, 28);
             this.cbProjectName.Name = "cbProjectName";
             this.cbProjectName.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(244)))));
             this.cbProjectName.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
